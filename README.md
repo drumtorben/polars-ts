@@ -2,7 +2,13 @@
 
 Welcome to the documentation for the **Polars Time Series Extension**.
 
-Check the [docs](https://drumtorben.github.io/polars-ts/).
+---
+
+**Documentation**: [https://drumtorben.github.io/polars-ts](https://drumtorben.github.io/polars-ts)
+
+**Source Code**: [https://github.com/drumtorben/polars-ts](https://github.com/drumtorben/polars-ts)
+
+---
 
 ## 📖 Overview
 

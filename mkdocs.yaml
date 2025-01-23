@@ -52,8 +52,12 @@ plugins:
             docstring_style: google
             filters: ""
 
+markdown_extensions:
+  - pymdownx.snippets:
+      base_path: "."
+
 nav:
-  - Home: index.md
+  - Home: readme.md
   - Reference: reference/
   - Contributing: contributing.md
 
