@@ -1,0 +1,76 @@
+[project]
+name = "polars-ts"
+version = "0.1.0"
+description = "Polars Time Series Extension"
+authors = [
+    { name = "Jack Rodenberg" },
+    { name = "Torben Windler" },
+]
+readme = "README.md"
+requires-python = ">=3.12, <3.13"
+dependencies = [
+    "polars>=1.20.0",
+]
+
+[project.urls]
+Source = "https://github.com/drumtorben/polars-ts.git"
+
+[dependency-groups]
+dev = [
+  "ipykernel>=6.29.5",
+  "pre-commit>=4.0.1",
+  "pytest>=8.3.4",
+  "pytest-cov>=6.0.0"
+]
+docs = [
+  "mkdocs>=1.6.1",
+  "mkdocs-material>=9.5.44",
+  "mkdocstrings>=0.27.0",
+  "mkdocstrings-python>=1.12.2",
+  "mkdocs-gen-files>=0.5.0",
+  "mkdocs-literate-nav>=0.6.1",
+  "mkdocs-section-index>=0.3.9",
+  "mkdocs-git-authors-plugin>=0.9.0"
+]
+
+[tool.uv]
+default-groups = ["dev", "docs"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+addopts = "--cov-config=.coveragerc"
+testpaths = ["tests", "src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "D", "B", "I", "ARG"]
+ignore = [
+  "B019",
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D106",
+  "D107",
+  "D203",
+  "D213",
+  "D417",
+]
+
+[tool.ruff.lint.pylint]
+max-positional-args = 1
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
