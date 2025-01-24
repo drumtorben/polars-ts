@@ -47,9 +47,17 @@ plugins:
       handlers:
         python:
           options:
-            #members_order: source
+            members_order: source
+            show_if_no_docstring: false
             show_root_toc_entry: true
+            show_docstring_attributes: true
+            docstring_section_style: table
             docstring_style: google
+            parameter_headings: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_root_heading: true
+            show_inheritance_diagram: true
             filters: ""
 
 markdown_extensions:

@@ -1,6 +1,6 @@
 [project]
 name = "polars-ts"
-version = "0.1.0"
+version = "0.2.0"
 description = "Polars Time Series Extension"
 authors = [
     { name = "Jack Rodenberg" },
@@ -9,7 +9,9 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12, <3.13"
 dependencies = [
+    "loguru>=0.7.3",
     "polars>=1.20.0",
+    "statsforecast>=2.0.0",
 ]
 
 [project.urls]
