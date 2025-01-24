@@ -19,10 +19,10 @@ class Kaboudan:
         n_folds: Number of backtesting folds (rolling-origin windows).
         block_size: Size of each block used during block-based shuffling.
         seed: Random seed for reproducible shuffling. Defaults to 42.
-        id_col: Name of the column identifying each time series group. Defaults to "unique_id".
-        time_col: Name of the column representing the chronological axis. Defaults to "ds".
-        value_col: Name of the column representing the target variable. Defaults to "y".
-        modified: Whether to use the modified Kaboudan metric, which applies clipping to zero. Defaults to True.
+        id_col: Name of the column identifying each time series group. Defaults to `unique_id`.
+        time_col: Name of the column representing the chronological axis. Defaults to `ds`.
+        value_col: Name of the column representing the target variable. Defaults to `y`.
+        modified: Whether to use the modified Kaboudan metric, which applies clipping to zero. Defaults to `True`.
 
     """
 
