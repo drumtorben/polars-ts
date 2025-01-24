@@ -19,6 +19,7 @@ class Metrics:
         n_folds: int = 0,
         seed: int = 42,
         modified: bool = True,
+        agg: bool = False,
     ) -> pl.Expr:
         kaboudan = Kaboudan(
             sf=sf,
@@ -27,5 +28,6 @@ class Metrics:
             n_folds=n_folds,
             seed=seed,
             modified=modified,
+            agg=agg,
         )
         return kaboudan.kaboudan_metric(self._df)

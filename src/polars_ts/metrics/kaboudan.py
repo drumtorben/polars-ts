@@ -1,3 +1,9 @@
+"""Kaboudan Metrics Module.
+
+Provides the `Kaboudan` class for computing Kaboudan and modified Kaboudan metrics to evaluate
+time series forecasting models using backtesting and block shuffling techniques.
+"""
+
 import random
 from dataclasses import dataclass
 
@@ -23,6 +29,7 @@ class Kaboudan:
         time_col: Name of the column representing the chronological axis. Defaults to `ds`.
         value_col: Name of the column representing the target variable. Defaults to `y`.
         modified: Whether to use the modified Kaboudan metric, which applies clipping to zero. Defaults to `True`.
+        agg: Whether to average the metrics over all the individual time series or not. Defaults to `True`.
 
     """
 
@@ -35,6 +42,7 @@ class Kaboudan:
     time_col: str = "ds"
     value_col: str = "y"
     modified: bool = True
+    agg: bool = False
 
     def block_shuffle_by_id(self, df: pl.DataFrame) -> pl.DataFrame:
         """Randomly shuffles rows in fixed-size blocks within each group identified by `id_col`.
@@ -154,8 +162,8 @@ class Kaboudan:
 
         # Compute SSE (or RMSE, etc.)
         model_names = [m.alias for m in self.sf.models]
-        sse = losses.rmse(cv_df, models=model_names, target_col=self.value_col).mean().drop(self.id_col)
-        return sse
+        errors = losses.rmse(cv_df, models=model_names, target_col=self.value_col)
+        return errors
 
     def kaboudan_metric(self, df: pl.DataFrame) -> pl.DataFrame:
         """Compute the Kaboudan Metric by comparing model errors before and after block-based shuffling.
@@ -188,9 +196,15 @@ class Kaboudan:
         sse_after = self.backtest(df_shuffled)
 
         # Compute the metric
-        scores = (sse_before / sse_after).select((1 - pl.all().sqrt()).name.keep())
+        scores = (sse_before.drop(self.id_col) / sse_after.drop(self.id_col)).select(
+            sse_before[self.id_col],
+            (1 - pl.all().sqrt()).name.keep(),
+        )
+
+        if self.agg:
+            scores = scores.drop(self.id_col).mean()
         if self.modified:
             # clip to zero
-            return scores.select(pl.all().clip(lower_bound=0))
+            return scores.with_columns(pl.exclude(self.id_col).clip(lower_bound=0))
         else:
             return scores
