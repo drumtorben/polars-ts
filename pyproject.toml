@@ -1,6 +1,6 @@
 [project]
 name = "polars-ts"
-version = "0.2.0"
+version = "0.1.0"
 description = "Polars Time Series Extension"
 authors = [
     { name = "Jack Rodenberg" },
