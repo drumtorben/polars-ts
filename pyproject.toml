@@ -9,6 +9,7 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12, <3.13"
 dependencies = [
+    "iprogress>=0.4",
     "loguru>=0.7.3",
     "polars>=1.20.0",
     "statsforecast>=2.0.0",

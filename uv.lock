@@ -324,6 +324,18 @@ wheels = [
 ]
 
 [[package]]
+name = "iprogress"
+version = "0.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c6/34/01dd785348674d9a056966a4bbadb602a74b01c3422b988376480d3631a1/IProgress-0.4.tar.gz", hash = "sha256:55c6bce8ad4401889330fb1125c0bf7810bfbfe0105c058f861ae91e962d51eb", size = 10209 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5c/92/46acb3eccee1d0e5581dea18455ebc2d25ec8da77d6c45d395882d4b9dd4/IProgress-0.4-py3-none-any.whl", hash = "sha256:098ba92780bf0eb3f2f3a0d4109e48d1f3c8ba57d821c6838f9ccb73e4fdc576", size = 11709 },
+]
+
+[[package]]
 name = "ipykernel"
 version = "6.29.5"
 source = { registry = "https://pypi.org/simple" }
@@ -828,6 +840,7 @@ name = "polars-ts"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "iprogress" },
     { name = "loguru" },
     { name = "polars" },
     { name = "statsforecast" },
@@ -853,6 +866,7 @@ docs = [
 
 [package.metadata]
 requires-dist = [
+    { name = "iprogress", specifier = ">=0.4" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "polars", specifier = ">=1.20.0" },
     { name = "statsforecast", specifier = ">=2.0.0" },
