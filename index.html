@@ -444,6 +444,83 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="reference/polars_ts/metrics/__init__/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Metrics
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Metrics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/polars_ts/metrics/kaboudan/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kaboudan
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -514,6 +591,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to use
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -540,6 +626,33 @@
 <hr />
 <h2 id="overview">📖 Overview</h2>
 <p>The <strong>Polars Time Series Extention</strong> offers a wide range of metrics, feature extractors, and various tools for time series forecasting.</p>
+<h2 id="how-to-use">How to use</h2>
+<p>The <code>polars-ts</code> plugin is available under the namespace <code>ts</code>.
+See the following example where we compute the Kaboudan metric:</p>
+<pre><code class="language-python">import polars as pl
+from statsforecast import StatsForecast
+from statsforecast.models import AutoETS, OptimizedTheta
+
+import polars_ts as pts  # noqa
+
+# Create sample dataframe with columns `unique_id`, `ds`, and `y`.
+df = (
+    pl.scan_parquet(&quot;https://datasets-nixtla.s3.amazonaws.com/m4-hourly.parquet&quot;)
+    .filter(pl.col(&quot;unique_id&quot;).is_in([&quot;H1&quot;, &quot;H2&quot;, &quot;H3&quot;]))
+    .collect()
+)
+
+# Define models
+season_length = 24
+models = [
+    OptimizedTheta(season_length=season_length, decomposition_type=&quot;additive&quot;),
+    AutoETS(season_length=season_length),
+]
+sf = StatsForecast(models=models, freq=1, n_jobs=-1)
+
+# Compute the Kaboudan metric in the `ts` namespace
+res = df.ts.kaboudan(sf, block_size=200, backtesting_start=0.5, n_folds=10)
+</code></pre>
 
 
 
