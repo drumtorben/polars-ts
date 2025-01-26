@@ -18,6 +18,10 @@ dependencies = [
     "loguru>=0.7.3",
     "statsforecast>=2.0.0",
     "pyarrow>=19.0.0",
+    #"polars-ts-rs",
+    "iprogress>=0.4",
+    "loguru>=0.7.3",
+    "statsforecast>=2.0.0",
 ]
 
 [project.urls]
