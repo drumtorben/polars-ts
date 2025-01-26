@@ -9,11 +9,16 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12, <3.13"
 dependencies = [
+    "maturin>=1.8.1",
     "polars>=1.20.0",
+    "polars-ts-rs",
 ]
 
 [project.urls]
 Source = "https://github.com/drumtorben/polars-ts.git"
+
+[tool.uv.sources]
+polars-ts-rs = { path = "./polars-ts-rs"}
 
 [dependency-groups]
 dev = [
@@ -35,6 +40,7 @@ docs = [
 
 [tool.uv]
 default-groups = ["dev", "docs"]
+reinstall-package = ["polars-ts-rs"]
 
 [build-system]
 requires = ["hatchling"]
