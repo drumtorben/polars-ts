@@ -1,5 +1,5 @@
 [project]
-name = "polars-ts"
+name = "polars-timeseries"
 version = "0.1.0"
 description = "Polars Time Series Extension"
 authors = [
@@ -48,6 +48,9 @@ reinstall-package = ["polars-ts-rs"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/polars_ts"]
 
 [tool.pytest.ini_options]
 addopts = "--cov-config=.coveragerc"

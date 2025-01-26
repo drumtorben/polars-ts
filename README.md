@@ -14,6 +14,22 @@ Welcome to the documentation for the **Polars Time Series Extension**.
 
 The **Polars Time Series Extention** offers a wide range of metrics, feature extractors, and various tools for time series forecasting.
 
+## Installation
+
+=== "uv"
+
+    ```bash
+    uv add polars-timeseries
+    ```
+
+=== "pip"
+
+    `pip install polars-timeseries`
+
+=== "poetry"
+
+    `poetry add polars-timeseries`
+
 ## How to use
 
 The `polars-ts` plugin is available under the namespace `ts`.

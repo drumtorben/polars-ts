@@ -856,15 +856,15 @@ wheels = [
 ]
 
 [[package]]
-name = "polars-ts"
+name = "polars-timeseries"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "iprogress" },
+    { name = "loguru" },
     { name = "maturin" },
     { name = "polars" },
     { name = "polars-ts-rs" },
-    { name = "iprogress" },
-    { name = "loguru" },
     { name = "statsforecast" },
 ]
 
@@ -888,11 +888,11 @@ docs = [
 
 [package.metadata]
 requires-dist = [
+    { name = "iprogress", specifier = ">=0.4" },
+    { name = "loguru", specifier = ">=0.7.3" },
     { name = "maturin", specifier = ">=1.8.1" },
     { name = "polars", specifier = ">=1.20.0" },
     { name = "polars-ts-rs", directory = "polars-ts-rs" },
-    { name = "iprogress", specifier = ">=0.4" },
-    { name = "loguru", specifier = ">=0.7.3" },
     { name = "statsforecast", specifier = ">=2.0.0" },
 ]
 

@@ -13,6 +13,7 @@ theme:
     - navigation.tabs.sticky
     - navigation.expand
     - navigation.top
+    - content.tabs.link
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -63,6 +64,9 @@ plugins:
 markdown_extensions:
   - pymdownx.snippets:
       base_path: "."
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 nav:
   - Home: index.md
