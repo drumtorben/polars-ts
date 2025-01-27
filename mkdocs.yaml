@@ -13,6 +13,7 @@ theme:
     - navigation.tabs.sticky
     - navigation.expand
     - navigation.top
+    - content.tabs.link
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -47,17 +48,28 @@ plugins:
       handlers:
         python:
           options:
-            #members_order: source
+            members_order: source
+            show_if_no_docstring: false
             show_root_toc_entry: true
+            show_docstring_attributes: true
+            docstring_section_style: table
             docstring_style: google
+            parameter_headings: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_root_heading: true
+            show_inheritance_diagram: true
             filters: ""
 
 markdown_extensions:
   - pymdownx.snippets:
       base_path: "."
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 nav:
-  - Home: readme.md
+  - Home: index.md
   - Reference: reference/
   - Contributing: contributing.md
 

@@ -1,5 +1,15 @@
-## v0.1.0 (2025-01-23)
+## v0.1.0
 
-### Chore
+### ✨ Features
+
+- Implement Kaboudan metric.
+
+### 📖 Documentation
+
+- Add automatic references to docstrings.
+- Access docs under [https://drumtorben.github.io/polars-ts/](https://drumtorben.github.io/polars-ts/).
+
+
+### 🛠️ Chore
 
 - Initialize Repo.
