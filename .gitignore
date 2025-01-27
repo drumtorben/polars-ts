@@ -175,3 +175,7 @@ cython_debug/
 
 # macOS
 .DS_Store
+
+# temporarily
+uv.lock
+.vscode/

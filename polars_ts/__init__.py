@@ -1,3 +1,5 @@
+from polars_ts.metrics import Metrics  # noqa
+
 from pathlib import Path
 
 import polars as pl

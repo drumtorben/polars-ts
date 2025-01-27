@@ -1421,8 +1421,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "polars-ts-rs"
-version = "0.1.0"
+name = "polars-ts"
+version = "0.2.0"
 dependencies = [
  "ordered-float",
  "polars",

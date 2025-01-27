@@ -7,7 +7,7 @@ from polars_ts.metrics.kaboudan import Kaboudan
 
 
 @dataclass
-@pl.api.register_dataframe_namespace("ts")
+@pl.api.register_dataframe_namespace("pts")
 class Metrics:
     _df: pl.DataFrame
 

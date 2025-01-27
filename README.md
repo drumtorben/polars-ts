@@ -16,23 +16,11 @@ The **Polars Time Series Extention** offers a wide range of metrics, feature ext
 
 ## Installation
 
-=== "uv"
-
-    ```bash
-    uv add polars-timeseries
-    ```
-
-=== "pip"
-
-    `pip install polars-timeseries`
-
-=== "poetry"
-
-    `poetry add polars-timeseries`
+`pip install polars-timeseries`
 
 ## How to use
 
-The `polars-ts` plugin is available under the namespace `ts`.
+The `polars-ts` plugin is available under the namespace `pts`.
 See the following example where we compute the Kaboudan metric:
 
 ```python
@@ -58,5 +46,5 @@ models = [
 sf = StatsForecast(models=models, freq=1, n_jobs=-1)
 
 # Compute the Kaboudan metric in the `ts` namespace
-res = df.ts.kaboudan(sf, block_size=200, backtesting_start=0.5, n_folds=10)
+res = df.pts.kaboudan(sf, block_size=200, backtesting_start=0.5, n_folds=10)
 ```
