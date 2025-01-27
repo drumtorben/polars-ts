@@ -178,4 +178,4 @@ cython_debug/
 
 # temporarily
 uv.lock
-.vscode
+.vscode/

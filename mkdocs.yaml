@@ -34,9 +34,14 @@ theme:
         icon: material/lightbulb
         name: "Switch to light mode"
 
+nav:
+  - Home: index.md
+  - Reference: reference/
+  - Contributing: contributing.md
+
 plugins:
   - search
-  - autorefs
+  #- autorefs
   - gen-files:
       scripts:
         - docs/gen_ref_pages.py
@@ -62,16 +67,12 @@ plugins:
             filters: ""
 
 markdown_extensions:
-  - pymdownx.snippets:
-      base_path: "."
-  - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
-
-nav:
-  - Home: index.md
-  - Reference: reference/
-  - Contributing: contributing.md
-
-watch:
-  - src/polars_ts
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
