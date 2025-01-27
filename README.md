@@ -16,19 +16,7 @@ The **Polars Time Series Extention** offers a wide range of metrics, feature ext
 
 ## Installation
 
-=== "uv"
-
-    ```bash
-    uv add polars-timeseries
-    ```
-
-=== "pip"
-
-    `pip install polars-timeseries`
-
-=== "poetry"
-
-    `poetry add polars-timeseries`
+`pip install polars-timeseries`
 
 ## How to use
 
