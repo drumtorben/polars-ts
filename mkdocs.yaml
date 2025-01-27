@@ -41,7 +41,7 @@ nav:
 
 plugins:
   - search
-  #- autorefs
+  - autorefs
   - gen-files:
       scripts:
         - docs/gen_ref_pages.py
@@ -59,7 +59,7 @@ plugins:
             show_docstring_attributes: true
             docstring_section_style: table
             docstring_style: google
-            parameter_headings: true
+            parameter_headings: false
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             show_root_heading: true
