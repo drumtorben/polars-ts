@@ -15,6 +15,8 @@ dependencies = [
     "statsforecast>=2.0.0",
     "pyarrow>=19.0.0",
     "maturin>=1.8.1",
+    "polars-ds>=0.7.0",
+    "statsmodels>=0.14.4",
 ]
 
 [project.urls]
@@ -25,7 +27,7 @@ dev = [
   "ipykernel>=6.29.5",
   "pre-commit>=4.0.1",
   "pytest>=8.3.4",
-  "pytest-cov>=6.0.0"
+  "pytest-cov>=6.0.0",
   "ipywidgets>=8.1.5",
   "hvplot>=0.11.2",
   "matplotlib>=3.10.0",
