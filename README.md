@@ -45,6 +45,6 @@ models = [
 ]
 sf = StatsForecast(models=models, freq=1, n_jobs=-1)
 
-# Compute the Kaboudan metric in the `ts` namespace
+# Compute the Kaboudan metric in the `pts` namespace
 res = df.pts.kaboudan(sf, block_size=200, backtesting_start=0.5, n_folds=10)
 ```

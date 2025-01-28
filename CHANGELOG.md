@@ -4,6 +4,7 @@
 
 - Implement Mann-Kendall's Trend Statistic.
 - Implement Seasonal Decomposition.
+- Implement Fourier Decomposition.
 
 ### 🛠️ Chore
 
@@ -19,7 +20,6 @@
 
 - Add automatic references to docstrings.
 - Access docs under [https://drumtorben.github.io/polars-ts/](https://drumtorben.github.io/polars-ts/).
-
 
 ### 🛠️ Chore
 
