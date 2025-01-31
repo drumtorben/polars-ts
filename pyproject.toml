@@ -43,11 +43,16 @@ docs = [
 ]
 
 [tool.uv]
+cache-keys = [{ file = "**/*.toml" }]
 default-groups = ["dev", "docs"]
 
 [build-system]
 requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-packages = ["polars-timeseries"]
 
 [tool.pytest.ini_options]
 addopts = "--cov-config=.coveragerc"
