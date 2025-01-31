@@ -1,8 +1,6 @@
 from typing import List, Literal
-
 import polars as pl
 import polars_ds as pds
-
 
 def fourier_decomposition(
     df: pl.DataFrame,
@@ -57,6 +55,31 @@ def fourier_decomposition(
         - `resid`: The residuals, computed as the difference between the original target and the sum of the trend and seasonal components.
 
     """
+    # Check if necessary columns exist in the dataframe
+    required_columns = [id_col, target_col, time_col]
+    for col in required_columns:
+        if col not in df.columns:
+            raise KeyError(f"Column '{col}' is missing from the DataFrame.")
+
+    # Validate ts_freq: ensure it's a positive integer
+    if not isinstance(ts_freq, int) or ts_freq <= 0:
+        raise ValueError(f"Invalid ts_freq '{ts_freq}'. It must be a positive integer.")
+    
+    # Validate freqs: ensure all frequencies are valid
+    valid_freqs = ["week", "month", "quarter", "day_of_week", "day_of_month", "day_of_year"]
+    for freq in freqs:
+        if freq not in valid_freqs:
+            raise ValueError(f"Invalid frequency '{freq}' in freqs. Allowed values are {valid_freqs}.")
+    
+    # Validate n_fourier_terms: ensure it's a positive integer
+    if not isinstance(n_fourier_terms, int) or n_fourier_terms <= 0:
+        raise ValueError(f"Invalid n_fourier_terms '{n_fourier_terms}'. It must be a positive integer.")
+    
+    # Ensure the dataframe is not empty
+    if df.shape[0] == 0:
+        raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
+    
+    # Define frequency mapping for temporal features
     freq_dict = {
         "week": pl.col(time_col).dt.week().alias("week"),
         "month": pl.col(time_col).dt.month().alias("month"),
@@ -66,34 +89,33 @@ def fourier_decomposition(
         "day_of_year": pl.col(time_col).dt.ordinal_day().alias("day_of_year"),
     }
 
-    # Trend: Rolling mean with window size = freq
+    # Trend: Rolling mean with window size = ts_freq
     trend_expr = pl.col(target_col).rolling_mean(window_size=ts_freq, center=True).over(id_col).alias("trend")
 
-    # generate date features for all keys in freq dict
+    # Generate date features for all keys in freq_dict
     date_features = [freq_dict[freq] for freq in freqs]
 
-    # generate harmonic pairs
+    # Generate harmonic pairs (sine and cosine components for each frequency)
     generate_harmonics = [
         [pl.col(freq).mul(i).sin().over(id_col).name.suffix(f"_sin_{i}") for freq in freqs]
         + [pl.col(freq).mul(i).cos().over(id_col).name.suffix(f"_cos_{i}") for freq in freqs]
         for i in range(1, n_fourier_terms + 1)
     ]
 
-    # flatten the nested lists into a single list of expressions
+    # Flatten the nested list of harmonic expressions
     harmonic_expr = [pair for sublist in generate_harmonics for pair in sublist]
 
-    # add date features and harmonics
+    # Add date features and harmonics to the dataframe
     df = df.with_columns(*date_features).with_columns(*harmonic_expr)
 
-    # these are all the sine/cosine pairs in the data, pds doesn't play nice with polars.selectors :(
+    # These are the sine/cosine pairs in the data
     independent_vars = [col for col in df.columns if "_cos" in col or "_sin" in col]
 
-    # detrend the series using Moving Averages, fit linear regression with fourier terms as features.
+    # Detrend the series using Moving Averages, and fit linear regression with Fourier terms as features
     result = (
         df.with_columns(trend_expr)
-        .drop_nulls()  # drop nulls created by moving average
+        .drop_nulls()  # Drop nulls created by moving average
         .with_columns(pl.col(target_col).sub(pl.col("trend")).over(id_col).alias(f"{target_col}_detrend"))
-        # fit linear regression on detrended data
         .with_columns(
             pds.lin_reg(*independent_vars, target=target_col + "_detrend", return_pred=True, l2_reg=0.001)
             .over(id_col)
@@ -101,6 +123,7 @@ def fourier_decomposition(
             .alias("seasonal")
         )
         .with_columns(pl.col("trend").add(pl.col("seasonal")).sub(pl.col(target_col)).over(id_col).alias("resid"))
+        
         .select(id_col, time_col, target_col, "trend", "seasonal", "resid")
     )
 
