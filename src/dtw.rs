@@ -1,18 +1,13 @@
 use polars::prelude::*;
-use itertools::iproduct;
 use std::collections::HashMap;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
+use rayon::prelude::*;
 
-
-/// Computes pairwise Dynamic Time Warping (DTW) between time series.
-///
-/// # Arguments
-/// * `df1` - First dataframe containing time series data with columns "unique_id" and "y".
-/// * `df2` - Second dataframe containing time series data with columns "unique_id" and "y".
-
-fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError>  {
+/// Groups a DataFrame by "unique_id" and aggregates the "y" column.
+/// (Casting "unique_id" as Utf8 and "y" as Float32.)
+fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
     Ok(df.clone().lazy()
         .select([
             col("unique_id").cast(DataType::String),
@@ -23,98 +18,115 @@ fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError>  {
     )
 }
 
-/// Classic O(n*m) DTW using a 2D DP matrix.
-///
-/// - `dp[i][j]` = minimal cumulative distance aligning
-///   `a[..i]` and `b[..j]`.
-/// - `a` has length n, `b` has length m.
+/// Optimized DTW distance implementation using two rows.
+/// This version uses O(m) memory instead of allocating the full (n+1)×(m+1) matrix.
 fn dtw_distance(a: &[f32], b: &[f32]) -> f32 {
     let n = a.len();
     let m = b.len();
-
-    // Allocate a (n+1) x (m+1) matrix, initialize to MAX
-    let mut dp = vec![vec![f32::MAX; m + 1]; n + 1];
-
-    // DP boundary initialization
-    dp[0][0] = 0.0;
-
-    // Fill DP
+    let mut prev = vec![f32::MAX; m + 1];
+    let mut curr = vec![f32::MAX; m + 1];
+    prev[0] = 0.0;
+    
     for i in 1..=n {
+        curr[0] = f32::MAX;
         for j in 1..=m {
             let cost = (a[i - 1] - b[j - 1]).abs();
-            let min_prev = dp[i - 1][j].min(dp[i][j - 1]).min(dp[i - 1][j - 1]);
-            dp[i][j] = cost + min_prev;
+            // Choose the best previous cell.
+            let min_prev = prev[j].min(curr[j - 1]).min(prev[j - 1]);
+            curr[j] = cost + min_prev;
         }
+        std::mem::swap(&mut prev, &mut curr);
     }
-    // The bottom-right corner holds the final DTW distance
-    dp[n][m]
+    prev[m]
 }
 
-#[pyfunction]
-pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResult<PyDataFrame> {
-    let a = input1.into();
-    let b = input2.into();
-    let df1 = get_groups(&a).unwrap().collect().unwrap();
-    let df2 = get_groups(&b).unwrap().collect().unwrap();
-
-    let ids1 = df_to_hashmap(&df1);
-    let ids2 = df_to_hashmap(&df2);
-
-    let mut results = Vec::new();
-
-    for ((id1, series1), (id2, series2)) in iproduct!(ids1.iter(), ids2.iter()) {
-        let distance = dtw_distance(series1, series2);
-        //println!("DTW distance between '{}' and '{}' = {}", id1, id2, distance);
-        results.push((id1.to_string(), id2.to_string(), distance))
-    }
-
-    // Step 4: Convert results to DataFrame
-    let columns = vec![
-        Column::new("id_1".into(), results.iter().map(|row| row.0.clone()).collect::<Vec<_>>()),
-        Column::new("id_2".into(), results.iter().map(|row| row.1.clone()).collect::<Vec<_>>()),
-        Column::new("dtw".into(), results.iter().map(|row| row.2).collect::<Vec<_>>()),
-    ];
-    let out_df = DataFrame::new(columns).unwrap();
-    Ok(PyDataFrame(out_df))
-}
-
+/// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f32>.
+///
+/// This version first collects the "unique_id" column and the list-of-f32
+/// from the "y" column into two vectors. Then, using a parallel index loop,
+/// it zips them together into a HashMap.
 fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f32>> {
-    let unique_id_col = df.column("unique_id").unwrap();
-    let y_col = df.column("y").unwrap();
-
-    // 1) Get the string IDs out of the UTF8 column.
-    let unique_id_iter = unique_id_col
+    // Retrieve the columns.
+    let unique_id_col = df.column("unique_id").expect("expected column unique_id");
+    let y_col = df.column("y").expect("expected column y");
+    
+    // Collect unique IDs into a Vec<String>.
+    let unique_ids: Vec<String> = unique_id_col
         .str()
-        .expect("expected a utf8 column for unique_id")
+        .expect("expected utf8 column for unique_id")
         .into_no_null_iter()
-        .map(|s| s.to_string());
-
-    // 2) Grab the list column as a ListChunked.
-    let y_list = y_col
+        .map(|s| s.to_string())
+        .collect();
+    
+    // Collect each list element into a Vec<f32>.
+    let y_lists: Vec<Vec<f32>> = y_col
         .list()
-        .expect("expected a List type for y");
-
-    // 3) For each element in the list column, we get back a Series.
-    //    Then we call .f32() on that Series (assuming it’s f32),
-    //    collect the values, and return a Vec<f32>.
-    // 3) Instead of `amortized_iter()`, use `into_iter()` to get `Option<Series>`.
-    let y_iter = y_list
+        .expect("expected a List type for y")
         .into_iter()
         .map(|opt_series| {
             let series = opt_series.expect("null entry in 'y' list column");
-            // Now you have a real Series, so you can call .f32().
             series
                 .f32()
                 .expect("expected a f32 Series inside the list")
-                // Convert to a Vec<f32> (assuming no nulls).
                 .into_no_null_iter()
                 .collect::<Vec<f32>>()
-        });
+        })
+        .collect();
+    
+    // Sanity-check that we have the same number of ids and y vectors.
+    assert_eq!(unique_ids.len(), y_lists.len(), "Mismatched lengths in unique_ids and y_lists");
+    
+    // Build the HashMap in parallel.
+    let hashmap: HashMap<String, Vec<f32>> = (0..unique_ids.len())
+        .into_par_iter()
+        .map(|i| (unique_ids[i].clone(), y_lists[i].clone()))
+        .collect();
+    hashmap
+}
 
-    // 4) Finally, zip the two iterators and build the HashMap.
-    let mut map = HashMap::new();
-    for (id, y_vals) in unique_id_iter.zip(y_iter) {
-        map.insert(id, y_vals);
-    }
-    map
+/// Compute pairwise DTW distances between time series in two DataFrames,
+/// using extensive parallelism.
+///
+/// # Arguments
+/// * `input1` - First PyDataFrame with columns "unique_id" and "y".
+/// * `input2` - Second PyDataFrame with columns "unique_id" and "y".
+///
+/// # Returns
+/// A PyDataFrame with columns "id_1", "id_2", and "dtw".
+#[pyfunction]
+pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResult<PyDataFrame> {
+    // Convert PyDataFrames to Polars DataFrames.
+    let df_a: DataFrame = input1.into();
+    let df_b: DataFrame = input2.into();
+
+    // Group each DataFrame by "unique_id" and aggregate the "y" column.
+    let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
+    let grouped_b = get_groups(&df_b).unwrap().collect().unwrap();
+
+    // Build HashMaps mapping unique_id -> time series (Vec<f32>).
+    let map_a = df_to_hashmap(&grouped_a);
+    let map_b = df_to_hashmap(&grouped_b);
+
+    // Compute all pairwise DTW distances.
+    // The outer loop (over map_a) is done in parallel.
+    let results: Vec<(String, String, f32)> = map_a.par_iter().flat_map(|(id1, series1)| {
+        map_b.iter().map(move |(id2, series2)| {
+            let distance = dtw_distance(series1, series2);
+            (id1.clone(), id2.clone(), distance)
+        }).collect::<Vec<_>>()
+    }).collect();
+
+    // Build output columns.
+    let id1s: Vec<String> = results.iter().map(|(id1, _, _)| id1.clone()).collect();
+    let id2s: Vec<String> = results.iter().map(|(_, id2, _)| id2.clone()).collect();
+    let dtw_vals: Vec<f32> = results.iter().map(|(_, _, dtw)| *dtw).collect();
+
+    // Create a new Polars DataFrame.
+    let columns = vec![
+        Column::new("id_1".into(), id1s),
+        Column::new("id_2".into(), id2s),
+        Column::new("dtw".into(), dtw_vals),
+    ];
+    let out_df = DataFrame::new(columns).unwrap();
+    Ok(PyDataFrame(out_df))
 }
