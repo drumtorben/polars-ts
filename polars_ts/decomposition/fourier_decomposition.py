@@ -57,9 +57,8 @@ def fourier_decomposition(
     """
     # Check if necessary columns exist in the dataframe
     required_columns = [id_col, target_col, time_col]
-    for col in required_columns:
-        if col not in df.columns:
-            raise KeyError(f"Column '{col}' is missing from the DataFrame.")
+
+    assert set(required_columns).issubset(df.columns), KeyError(f"Columns {set(required_columns).difference(df.columns)} are missing from the DataFrame.")
 
     # Validate ts_freq: ensure it's a positive integer
     if not isinstance(ts_freq, int) or ts_freq <= 0:
@@ -67,9 +66,8 @@ def fourier_decomposition(
     
     # Validate freqs: ensure all frequencies are valid
     valid_freqs = ["week", "month", "quarter", "day_of_week", "day_of_month", "day_of_year"]
-    for freq in freqs:
-        if freq not in valid_freqs:
-            raise ValueError(f"Invalid frequency '{freq}' in freqs. Allowed values are {valid_freqs}.")
+
+    assert freq in valid_freqs, ValueError(f'Invalid Frequency {freq}, please pass any combination of elements in {valid_freqs}')
     
     # Validate n_fourier_terms: ensure it's a positive integer
     if not isinstance(n_fourier_terms, int) or n_fourier_terms <= 0:
@@ -78,17 +76,19 @@ def fourier_decomposition(
     # Ensure the dataframe is not empty
     if df.shape[0] == 0:
         raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
-    
-    # Define frequency mapping for temporal features
-    freq_dict = {
-        "week": pl.col(time_col).dt.week().alias("week"),
-        "month": pl.col(time_col).dt.month().alias("month"),
-        "quarter": pl.col(time_col).dt.quarter().alias("quarter"),
-        "day_of_week": pl.col(time_col).dt.weekday().alias("day_of_week"),
-        "day_of_month": pl.col(time_col).dt.day().alias("day_of_month"),
-        "day_of_year": pl.col(time_col).dt.ordinal_day().alias("day_of_year"),
-    }
 
+    
+    # define expression list... 
+     expr_list = [pl.col(time_col).dt.week().alias("week"),
+        pl.col(time_col).dt.month().alias("month"),
+        pl.col(time_col).dt.quarter().alias("quarter"),
+        pl.col(time_col).dt.weekday().alias("day_of_week"),
+        pl.col(time_col).dt.day().alias("day_of_month"),
+        pl.col(time_col).dt.ordinal_day().alias("day_of_year")] 
+
+    # Define frequency mapping for temporal features
+    freq_dict = dict(zip(valid_freqs,expr_list))
+       
     # Trend: Rolling mean with window size = ts_freq
     trend_expr = pl.col(target_col).rolling_mean(window_size=ts_freq, center=True).over(id_col).alias("trend")
 
