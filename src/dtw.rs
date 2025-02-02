@@ -1,5 +1,5 @@
 use polars::prelude::*;
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeSet};
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
@@ -109,12 +109,33 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
 
     // Compute all pairwise DTW distances.
     // The outer loop (over map_a) is done in parallel.
-    let results: Vec<(String, String, f32)> = map_a.par_iter().flat_map(|(id1, series1)| {
-        map_b.iter().map(move |(id2, series2)| {
+    // If you want to compare only keys present in both maps,
+    // first compute the intersection and sort the keys.
+    let common_keys: BTreeSet<&String> = map_a
+    .keys()
+    .filter(|k| map_b.contains_key(*k))
+    .collect();
+
+    // Convert the sorted keys (BTreeSet iterates in sorted order) into a Vec.
+    let keys: Vec<&String> = common_keys.into_iter().collect();
+
+    // Now compute the DTW distances for each unique pair in parallel.
+    let results: Vec<(String, String, f32)> = keys
+    .par_iter()           // Parallelize the outer loop.
+    .enumerate()          // We need indices to limit the inner loop.
+    .flat_map_iter(|(i, &key1)| {
+        // Retrieve the time series for key1.
+        let series1 = &map_a[key1];
+        // Only iterate over keys that come after key1.
+        keys[i + 1..].iter().map(|&key2| {
+            let series2 = &map_b[key2];
+            // Compute the DTW distance.
             let distance = dtw_distance(series1, series2);
-            (id1.clone(), id2.clone(), distance)
-        }).collect::<Vec<_>>()
-    }).collect();
+            // Clone keys into owned Strings (if needed) for the result tuple.
+            (key1.clone(), key2.clone(), distance)
+        })
+    })
+    .collect();
 
     // Build output columns.
     let id1s: Vec<String> = results.iter().map(|(id1, _, _)| id1.clone()).collect();
