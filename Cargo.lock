@@ -2001,7 +2001,7 @@ dependencies = [
 
 [[package]]
 name = "polars-ts-rs"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "itertools 0.14.0",
  "ordered-float",
