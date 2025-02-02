@@ -96,8 +96,26 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f32>> {
 #[pyfunction]
 pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResult<PyDataFrame> {
     // Convert PyDataFrames to Polars DataFrames.
-    let df_a: DataFrame = input1.into();
-    let df_b: DataFrame = input2.into();
+    let df_1: DataFrame = input1.into();
+    let df_2: DataFrame = input2.into();
+
+    let uid_a_dtype = df_1.column("unique_id")
+        .expect("df_a must have unique_id")
+        .dtype().clone();
+
+    let uid_b_dtype = df_2.column("unique_id")
+        .expect("df_b must have unique_id")
+        .dtype().clone();
+
+    let df_a = df_1
+        .lazy()
+        .with_column(col("unique_id").cast(DataType::String))
+        .collect().unwrap();
+
+    let df_b = df_2
+        .lazy()
+        .with_column(col("unique_id").cast(DataType::String))
+        .collect().unwrap();
 
     // Group each DataFrame by "unique_id" and aggregate the "y" column.
     let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
@@ -156,5 +174,10 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
         Column::new("dtw".into(), dtw_vals),
     ];
     let out_df = DataFrame::new(columns).unwrap();
-    Ok(PyDataFrame(out_df))
+    let casted_out_df = out_df.clone().lazy()
+        .with_columns(vec![
+            col("id_1").cast(uid_a_dtype),
+            col("id_2").cast(uid_b_dtype),
+        ]).collect().unwrap();
+    Ok(PyDataFrame(casted_out_df))
 }
