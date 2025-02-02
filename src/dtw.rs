@@ -6,12 +6,12 @@ use pyo3::PyResult;
 use rayon::prelude::*;
 
 /// Groups a DataFrame by "unique_id" and aggregates the "y" column.
-/// (Casting "unique_id" as Utf8 and "y" as Float32.)
+/// (Casting "unique_id" as Utf8 and "y" as Float64.)
 fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
     Ok(df.clone().lazy()
         .select([
             col("unique_id").cast(DataType::String),
-            col("y").cast(DataType::Float32)
+            col("y").cast(DataType::Float64)
         ])
         .group_by([col("unique_id")])
         .agg([col("y")])
@@ -20,15 +20,15 @@ fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
 
 /// Optimized DTW distance implementation using two rows.
 /// This version uses O(m) memory instead of allocating the full (n+1)×(m+1) matrix.
-fn dtw_distance(a: &[f32], b: &[f32]) -> f32 {
+fn dtw_distance(a: &[f64], b: &[f64]) -> f64 {
     let n = a.len();
     let m = b.len();
-    let mut prev = vec![f32::MAX; m + 1];
-    let mut curr = vec![f32::MAX; m + 1];
+    let mut prev = vec![f64::MAX; m + 1];
+    let mut curr = vec![f64::MAX; m + 1];
     prev[0] = 0.0;
     
     for i in 1..=n {
-        curr[0] = f32::MAX;
+        curr[0] = f64::MAX;
         for j in 1..=m {
             let cost = (a[i - 1] - b[j - 1]).abs();
             // Choose the best previous cell.
@@ -40,12 +40,12 @@ fn dtw_distance(a: &[f32], b: &[f32]) -> f32 {
     prev[m]
 }
 
-/// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f32>.
+/// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f64>.
 ///
-/// This version first collects the "unique_id" column and the list-of-f32
+/// This version first collects the "unique_id" column and the list-of-f64
 /// from the "y" column into two vectors. Then, using a parallel index loop,
 /// it zips them together into a HashMap.
-fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f32>> {
+fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
     // Retrieve the columns.
     let unique_id_col = df.column("unique_id").expect("expected column unique_id");
     let y_col = df.column("y").expect("expected column y");
@@ -58,18 +58,18 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f32>> {
         .map(|s| s.to_string())
         .collect();
     
-    // Collect each list element into a Vec<f32>.
-    let y_lists: Vec<Vec<f32>> = y_col
+    // Collect each list element into a Vec<f64>.
+    let y_lists: Vec<Vec<f64>> = y_col
         .list()
         .expect("expected a List type for y")
         .into_iter()
         .map(|opt_series| {
             let series = opt_series.expect("null entry in 'y' list column");
             series
-                .f32()
-                .expect("expected a f32 Series inside the list")
+                .f64()
+                .expect("expected a f64 Series inside the list")
                 .into_no_null_iter()
-                .collect::<Vec<f32>>()
+                .collect::<Vec<f64>>()
         })
         .collect();
     
@@ -77,7 +77,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f32>> {
     assert_eq!(unique_ids.len(), y_lists.len(), "Mismatched lengths in unique_ids and y_lists");
     
     // Build the HashMap in parallel.
-    let hashmap: HashMap<String, Vec<f32>> = (0..unique_ids.len())
+    let hashmap: HashMap<String, Vec<f64>> = (0..unique_ids.len())
         .into_par_iter()
         .map(|i| (unique_ids[i].clone(), y_lists[i].clone()))
         .collect();
@@ -121,7 +121,7 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
     let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
     let grouped_b = get_groups(&df_b).unwrap().collect().unwrap();
 
-    // Build HashMaps mapping unique_id -> time series (Vec<f32>) for each input.
+    // Build HashMaps mapping unique_id -> time series (Vec<f64>) for each input.
     let raw_map_a = df_to_hashmap(&grouped_a);
     let raw_map_b = df_to_hashmap(&grouped_b);
 
@@ -131,11 +131,11 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
 
     // Create vectors of references for the keys and series. These are now references into the
     // data held by the Arc-ed maps.
-    let left_series_by_key: Vec<(&String, &Vec<f32>)> = map_a.iter().collect();
-    let right_series_by_key: Vec<(&String, &Vec<f32>)> = map_b.iter().collect();
+    let left_series_by_key: Vec<(&String, &Vec<f64>)> = map_a.iter().collect();
+    let right_series_by_key: Vec<(&String, &Vec<f64>)> = map_b.iter().collect();
 
     // Compute pairwise DTW distances: id_1 always comes from left, id_2 from right.
-    let results: Vec<(String, String, f32)> = left_series_by_key
+    let results: Vec<(String, String, f64)> = left_series_by_key
         .par_iter()
         .flat_map(|&(left_key, left_series)| {
             // Clone the Arc pointers for use in the inner closure.
@@ -165,7 +165,7 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
     // Build output columns.
     let id1s: Vec<String> = results.iter().map(|(id1, _, _)| id1.clone()).collect();
     let id2s: Vec<String> = results.iter().map(|(_, id2, _)| id2.clone()).collect();
-    let dtw_vals: Vec<f32> = results.iter().map(|(_, _, dtw)| *dtw).collect();
+    let dtw_vals: Vec<f64> = results.iter().map(|(_, _, dtw)| *dtw).collect();
 
     // Create a new Polars DataFrame.
     let columns = vec![

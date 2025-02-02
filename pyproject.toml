@@ -43,7 +43,7 @@ docs = [
 ]
 
 [tool.uv]
-cache-keys = [{ file = "**/*.toml" }]
+cache-keys = [{ file = "**/*.toml" }, { file = "**/src/*.rs"}]
 default-groups = ["dev", "docs"]
 
 [build-system]
