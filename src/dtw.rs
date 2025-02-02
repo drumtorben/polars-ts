@@ -1,5 +1,5 @@
 use polars::prelude::*;
-use std::collections::{HashMap, BTreeSet};
+use std::collections::HashMap;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
@@ -103,39 +103,46 @@ pub fn compute_pairwise_dtw(input1: PyDataFrame, input2: PyDataFrame) -> PyResul
     let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
     let grouped_b = get_groups(&df_b).unwrap().collect().unwrap();
 
-    // Build HashMaps mapping unique_id -> time series (Vec<f32>).
-    let map_a = df_to_hashmap(&grouped_a);
-    let map_b = df_to_hashmap(&grouped_b);
+    // Build HashMaps mapping unique_id -> time series (Vec<f32>) for each input.
+    let raw_map_a = df_to_hashmap(&grouped_a);
+    let raw_map_b = df_to_hashmap(&grouped_b);
 
-    // Compute all pairwise DTW distances.
-    // The outer loop (over map_a) is done in parallel.
-    // If you want to compare only keys present in both maps,
-    // first compute the intersection and sort the keys.
-    let common_keys: BTreeSet<&String> = map_a
-    .keys()
-    .filter(|k| map_b.contains_key(*k))
-    .collect();
+    // Wrap the maps in an Arc so that they can be shared safely across threads.
+    let map_a = Arc::new(raw_map_a);
+    let map_b = Arc::new(raw_map_b);
 
-    // Convert the sorted keys (BTreeSet iterates in sorted order) into a Vec.
-    let keys: Vec<&String> = common_keys.into_iter().collect();
+    // Create vectors of references for the keys and series. These are now references into the
+    // data held by the Arc-ed maps.
+    let left_series_by_key: Vec<(&String, &Vec<f32>)> = map_a.iter().collect();
+    let right_series_by_key: Vec<(&String, &Vec<f32>)> = map_b.iter().collect();
 
-    // Now compute the DTW distances for each unique pair in parallel.
-    let results: Vec<(String, String, f32)> = keys
-    .par_iter()           // Parallelize the outer loop.
-    .enumerate()          // We need indices to limit the inner loop.
-    .flat_map_iter(|(i, &key1)| {
-        // Retrieve the time series for key1.
-        let series1 = &map_a[key1];
-        // Only iterate over keys that come after key1.
-        keys[i + 1..].iter().map(|&key2| {
-            let series2 = &map_b[key2];
-            // Compute the DTW distance.
-            let distance = dtw_distance(series1, series2);
-            // Clone keys into owned Strings (if needed) for the result tuple.
-            (key1.clone(), key2.clone(), distance)
+    // Compute pairwise DTW distances: id_1 always comes from left, id_2 from right.
+    let results: Vec<(String, String, f32)> = left_series_by_key
+        .par_iter()
+        .flat_map(|&(left_key, left_series)| {
+            // Clone the Arc pointers for use in the inner closure.
+            let map_a = Arc::clone(&map_a);
+            let map_b = Arc::clone(&map_b);
+            right_series_by_key
+                .par_iter()
+                .filter_map(move |&(right_key, right_series)| {
+                    // Skip self-comparisons.
+                    if left_key == right_key {
+                        return None;
+                    }
+                    // If both keys are common (i.e. appear in both maps), enforce an ordering to avoid duplicates.
+                    if map_b.contains_key(left_key) && map_a.contains_key(right_key) {
+                        if left_key >= right_key {
+                            return None;
+                        }
+                    }
+                    // Compute the DTW distance.
+                    let distance = dtw_distance(left_series, right_series);
+                    Some((left_key.clone(), right_key.clone(), distance))
+                })
         })
-    })
-    .collect();
+        .collect();
+
 
     // Build output columns.
     let id1s: Vec<String> = results.iter().map(|(id1, _, _)| id1.clone()).collect();
