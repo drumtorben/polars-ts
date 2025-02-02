@@ -77,7 +77,6 @@ def fourier_decomposition(
     if df.shape[0] == 0:
         raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
 
-    
     # define expression list... 
      expr_list = [pl.col(time_col).dt.week().alias("week"),
         pl.col(time_col).dt.month().alias("month"),
