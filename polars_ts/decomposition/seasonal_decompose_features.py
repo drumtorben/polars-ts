@@ -27,24 +27,18 @@ def seasonal_decompose_features(
 
     Args:
         df: A Polars DataFrame containing the time series data with the following columns:
-
+        
             - `id_col`: Identifier for each time series (e.g., product, region, etc.)
             - `time_col`: Timestamp column indicating the time of each observation.
             - `target_col`: The column containing the values to be decomposed.
-
         ts_freq: The frequency of the time series. For example, `24` could represent daily seasonality in an hourly time series.
-
         seasonal_freqs: A list of seasonal frequencies to use for the MSTL mode. This is required only if `mode='mstl'`.
             Defaults to None.
-
         mode: The decomposition mode, one of {'simple', 'mstl'}. Defaults to 'simple'.
-
         id_col: The name of the column that identifies each individual time series within the DataFrame.
             Defaults to `unique_id`.
-
         time_col: The name of the column that contains the time or datetime information for each observation.
             Defaults to `ds`.
-
         target_col: The name of the column containing the time series data to be decomposed. Defaults to `y`.
 
 
