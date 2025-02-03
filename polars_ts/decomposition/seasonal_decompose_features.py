@@ -10,12 +10,12 @@ import polars as pl
 
 def seasonal_decompose_features(
     df: pl.DataFrame,
-    id_col: str,
-    time_col: str,
-    target_col: str,
     ts_freq: str,
     seasonal_freqs: Optional[List[int]] = None,  # Make seasonal_freqs optional, only when we use MSTL or STL is this needed 
-    mode: List[Literal['simple', 'mstl']] = 'simple'
+    mode: List[Literal['simple', 'mstl']] = 'simple',
+    id_col: str = "unique_id",
+    time_col: str = "ds",
+    target_col: str = "y",
 ):
     """
     Perform seasonal decomposition on a time series and compute additional features:
@@ -60,9 +60,9 @@ def seasonal_decompose_features(
     """
 
     # Check if necessary columns exist in the dataframe
-    required_columns = [id_col, target_col, time_col]
+    required_columns = {id_col, target_col, time_col}
 
-    assert set(required_columns).issubset(df.columns), KeyError(f"Columns {set(required_columns).difference(df.columns)} are missing from the DataFrame.")
+    assert required_columns.issubset(df.columns), KeyError(f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame.")
 
     # Validate ts_freq: ensure it's a positive integer
     if not isinstance(ts_freq, int) or ts_freq <= 0:
@@ -90,13 +90,13 @@ def seasonal_decompose_features(
 
     # Compute Resid Var as Std(R(t)) / Mean(y)
     resid_var_expr = (
-        pl.col('resid').std().truediv(pl.col(target_col).mean()).over(id_col).alias('resid_var')
+        pl.std('resid').truediv(pl.mean(target_col)).over(id_col).alias('resid_var')
     )
 
     # Compute Seasonal Strength MAX(0, 1 - Var(R(t)) / Var(S(t) + R(t))) 
     seasonal_strength_expr = (
         pl.col('resid').var()
-        .truediv(pl.col(f'seasonal').add(pl.col('resid')).var())
+        .truediv(pl.col('seasonal').add(pl.col('resid')).var())
         .sub(1).abs().clip(lower_bound=0)
         .over(id_col).alias('seasonal_strength')
     )
@@ -107,8 +107,7 @@ def seasonal_decompose_features(
         
         feats = (
             seas_decomp
-            .with_columns(trend_strength_expr, seasonal_strength_expr, resid_var_expr)
-            .select(id_col, 'trend_strength', 'seasonal_strength', 'resid_var')
+            .select(id_col, trend_strength_expr, seasonal_strength_expr, resid_var_expr)
             .unique(id_col)
         )
 
@@ -122,7 +121,7 @@ def seasonal_decompose_features(
         freq_mapper = {12:'1mo',
                         52:'1w',
                         4:'1q',
-                        24:'1h'
+                        24:'1h',
                         }
 
         assert ts_freq in freq_mapper.keys(), ValueError(f'Frequency must be one of {freq_mapper.keys()} for MSTL decompose..')
