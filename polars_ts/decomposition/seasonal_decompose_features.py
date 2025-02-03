@@ -122,6 +122,7 @@ def seasonal_decompose_features(
             52: "1w",
             4: "1q",
             24: "1h",
+            365:'1d'
         }
 
         assert ts_freq in freq_mapper.keys(), ValueError(
