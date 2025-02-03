@@ -9,8 +9,8 @@ __all__ = [
 ]
 
 import polars as pl
-from polars.plugins import register_plugin_function
 from polars._typing import IntoExpr
+from polars.plugins import register_plugin_function
 
 PLUGIN_PATH = Path(__file__).parent
 
