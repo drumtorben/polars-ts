@@ -63,12 +63,12 @@ def seasonal_decomposition(
     )
 
     # Adjust seasonal component to have mean = 0 (for additive)
-    seasonal_idx_expr = pl.col("seasonal_idx").sub(pl.col("seasonal_idx").mean().over(id_col)).alias(f"seasonal_{freq}")
+    seasonal_idx_expr = pl.col("seasonal_idx").sub(pl.col("seasonal_idx").mean().over(id_col)).alias(f"seasonal")
 
     # Residuals:
     # Original series - trend - seasonal components (additive)
     # Original series / trend / seasonal components (multiplicative)
-    residuals_expr = pl.col(target_col).pipe(func, pl.col("trend")).pipe(func, pl.col(f"seasonal_{freq}"))
+    residuals_expr = pl.col(target_col).pipe(func, pl.col("trend")).pipe(func, pl.col(f"seasonal"))
 
     df = (
         df.with_columns(period_idx, trend_expr)
