@@ -16,7 +16,7 @@ The **Polars Time Series Extention** offers a wide range of metrics, feature ext
 
 ## Installation
 
-=== "uv"
+=== "uv (recommended)"
     `uv add polars-timeseries`
 
 === "pip"

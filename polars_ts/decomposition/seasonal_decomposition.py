@@ -31,10 +31,9 @@ def seasonal_decomposition(
         ValueError: If the DataFrame is empty or doesn't have enough data to decompose.
     """
     # Check if the necessary columns exist in the dataframe
-    required_columns = [id_col, target_col, time_col]
+    required_columns = {id_col, target_col, time_col}
 
-    assert set(required_columns).issubset(df.columns), KeyError(f"Columns {set(required_columns).difference(df.columns)} are missing from the DataFrame.")
-
+    assert required_columns.issubset(df.columns), AssertionError(f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame.")
     
     # Ensure the dataframe is not empty
     if df.shape[0] == 0:

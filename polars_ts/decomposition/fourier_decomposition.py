@@ -56,9 +56,9 @@ def fourier_decomposition(
 
     """
     # Check if necessary columns exist in the dataframe
-    required_columns = [id_col, target_col, time_col]
+    required_columns = {id_col, target_col, time_col}
 
-    assert set(required_columns).issubset(df.columns), KeyError(f"Columns {set(required_columns).difference(df.columns)} are missing from the DataFrame.")
+    assert required_columns.issubset(df.columns), KeyError(f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame.")
 
     # Validate ts_freq: ensure it's a positive integer
     if not isinstance(ts_freq, int) or ts_freq <= 0:
@@ -67,7 +67,7 @@ def fourier_decomposition(
     # Validate freqs: ensure all frequencies are valid
     valid_freqs = ["week", "month", "quarter", "day_of_week", "day_of_month", "day_of_year"]
 
-    assert freq in valid_freqs, ValueError(f'Invalid Frequency {freq}, please pass any combination of elements in {valid_freqs}')
+    assert set(freqs).issubset(valid_freqs), KeyError(f'Invalid Frequencies {set(freqs).difference(valid_freqs)}, please pass any combination of elements in {valid_freqs}')
     
     # Validate n_fourier_terms: ensure it's a positive integer
     if not isinstance(n_fourier_terms, int) or n_fourier_terms <= 0:
@@ -78,12 +78,14 @@ def fourier_decomposition(
         raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
 
     # define expression list... 
-     expr_list = [pl.col(time_col).dt.week().alias("week"),
+    expr_list = [
+        pl.col(time_col).dt.week().alias("week"),
         pl.col(time_col).dt.month().alias("month"),
         pl.col(time_col).dt.quarter().alias("quarter"),
         pl.col(time_col).dt.weekday().alias("day_of_week"),
         pl.col(time_col).dt.day().alias("day_of_month"),
-        pl.col(time_col).dt.ordinal_day().alias("day_of_year")] 
+        pl.col(time_col).dt.ordinal_day().alias("day_of_year")
+    ] 
 
     # Define frequency mapping for temporal features
     freq_dict = dict(zip(valid_freqs,expr_list))

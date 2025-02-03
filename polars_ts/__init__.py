@@ -1,6 +1,12 @@
 from polars_ts.metrics import Metrics  # noqa
 
 from pathlib import Path
+from polars_ts_rs.polars_ts_rs import compute_pairwise_dtw
+
+__all__ = [
+    "compute_pairwise_dtw",
+    # plus any pure-Python symbols you want to expose
+]
 
 import polars as pl
 from polars.plugins import register_plugin_function

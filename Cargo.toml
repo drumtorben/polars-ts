@@ -1,19 +1,23 @@
 [package]
-name = "polars-ts"
-version = "0.2.0"
+name = "polars-ts-rs"
+version = "0.3.0"
 edition = "2021"
 
 [lib]
-name = "polars_ts"
+name = "polars_ts_rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-polars = { version = ">=0.32", features = ["lazy"] }
-pyo3 = { version = ">=0.18", features = ["extension-module", "abi3-py312"] }
-pyo3-polars = { version = "*", features = ["derive"] }
+pyo3 = { version = "0.23.4", features = ["extension-module", "abi3-py312"] }
+pyo3-polars = { version = "0.20.0", features = ["derive"] }
 ordered-float = "3"
 rayon = "1.7.0"
 serde = { version = "1", features = ["derive"] }
+itertools = "0.14.0"
+polars = { version = "0.46.0", features = ["lazy", "ndarray"] }
+polars-rows-iter = "0.9.1"
+polars-core = "0.46.0"
+polars-arrow = "0.46.0"
 
 [features]
 default = ["python"]

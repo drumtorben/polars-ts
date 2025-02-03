@@ -1,6 +1,6 @@
 [project]
 name = "polars-timeseries"
-version = "0.2.0"
+version = "0.3.0"
 description = "Polars Time Series Extension"
 authors = [
     { name = "Jack Rodenberg" },
@@ -43,11 +43,16 @@ docs = [
 ]
 
 [tool.uv]
+cache-keys = [{ file = "**/*.toml" }, { file = "**/src/*.rs"}]
 default-groups = ["dev", "docs"]
 
 [build-system]
 requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-packages = ["polars_ts"]
 
 [tool.pytest.ini_options]
 addopts = "--cov-config=.coveragerc"
