@@ -27,7 +27,7 @@ def test_invalid_method():
 # Test: Missing column
 def test_missing_column():
     df = create_sample_df().drop("y")  # Drop the target_col
-    with pytest.raises(KeyError, match="Column 'y' is missing from the DataFrame."):
+    with pytest.raises(AssertionError, match="Columns {'y'} are missing from the DataFrame."):
         seasonal_decomposition(df, freq=3)
     
 # Test: Invalid frequency
@@ -39,7 +39,7 @@ def test_invalid_frequency():
 # Test: Ensure exception is raised for missing columns
 def test_missing_time_column():
     df = create_sample_df().drop("ds")  # Drop the time column
-    with pytest.raises(KeyError, match="Column 'ds' is missing from the DataFrame."):
+    with pytest.raises(AssertionError, match="Columns {'ds'} are missing from the DataFrame."):
         seasonal_decomposition(df, freq=3)
 
 # Test: Ensure method works for multiplicative
