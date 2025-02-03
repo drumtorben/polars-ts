@@ -1,7 +1,5 @@
 from typing import Literal
-
 import polars as pl
-
 
 def seasonal_decomposition(
     df: pl.DataFrame,
@@ -27,7 +25,28 @@ def seasonal_decomposition(
     Returns:
         Polars DataFrame with the decomposed components: trend, seasonal component, and residuals.
 
+    Raises:
+        ValueError: If invalid `method` is passed.
+        KeyError: If specified columns do not exist in the DataFrame.
+        ValueError: If the DataFrame is empty or doesn't have enough data to decompose.
     """
+    # Check if the necessary columns exist in the dataframe
+    required_columns = {id_col, target_col, time_col}
+
+    assert required_columns.issubset(df.columns), AssertionError(f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame.")
+    
+    # Ensure the dataframe is not empty
+    if df.shape[0] == 0:
+        raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
+    
+    # Ensure the method is either 'additive' or 'multiplicative'
+    if method not in ["additive", "multiplicative"]:
+        raise ValueError(f"Invalid method '{method}'. Expected 'additive' or 'multiplicative'.")
+    
+    # Ensure freq is greater than 1 (seasonality cannot be 1 or less)
+    if freq <= 1:
+        raise ValueError(f"Invalid frequency '{freq}'. Frequency must be greater than 1.")
+    
     period_idx = pl.col(time_col).cum_count().mod(freq).over(id_col).alias("period_idx")
 
     # Trend: Rolling mean with window size = freq
