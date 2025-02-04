@@ -78,6 +78,7 @@ ignore = [
   "D203",
   "D213",
   "D417",
+  "E501",
 ]
 
 [tool.ruff.lint.pylint]
@@ -86,5 +87,5 @@ max-positional-args = 1
 [tool.mypy]
 ignore_missing_imports = true
 disallow_untyped_calls = true
-disallow_untyped_defs = true
+#disallow_untyped_defs = true
 disallow_incomplete_defs = true

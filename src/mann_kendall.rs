@@ -56,7 +56,7 @@ pub fn mann_kendall(inputs: &[Series]) -> PolarsResult<Series> {
     }
 
     // Accumulate S in reverse
-    let mut s_stat = 0i64; 
+    let mut s_stat = 0i64;
     for (i, &val) in vals.iter().enumerate().rev() {
         // Binary search to find the 1-based rank
         let c = unique.binary_search(&OrderedFloat(val)).unwrap() + 1;

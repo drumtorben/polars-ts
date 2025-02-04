@@ -1,9 +1,11 @@
-import pytest
+from datetime import datetime, timedelta
+
 import polars as pl
+import pytest
+
 from polars_ts.decomposition.seasonal_decompose_features import (
     seasonal_decompose_features,
 )  # Replace with actual import
-from datetime import datetime, timedelta
 
 
 @pytest.fixture

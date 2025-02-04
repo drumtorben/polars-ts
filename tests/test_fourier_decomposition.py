@@ -1,6 +1,8 @@
-import pytest
-import polars as pl
 from datetime import datetime, timedelta
+
+import polars as pl
+import pytest
+
 from polars_ts.decomposition.fourier_decomposition import fourier_decomposition  # Update this with the correct import
 
 
@@ -31,9 +33,9 @@ def test_fourier_decomposition_basic(sample_df):
 
     # Check if the resulting DataFrame contains the expected columns
     expected_columns = ["unique_id", "ds", "y", "trend", "seasonal", "resid"]
-    assert set(result.columns) == set(expected_columns), (
-        f"Expected columns: {expected_columns}, but got: {result.columns}"
-    )
+    assert set(result.columns) == set(
+        expected_columns
+    ), f"Expected columns: {expected_columns}, but got: {result.columns}"
 
     # Check if the result has the same number of rows
     assert result.height == 700, "Resulting DataFrame has incorrect number of rows"

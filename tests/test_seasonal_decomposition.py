@@ -1,5 +1,6 @@
-import pytest
 import polars as pl
+import pytest
+
 from polars_ts.decomposition.seasonal_decomposition import (
     seasonal_decomposition,
 )  # Make sure to import your actual function

@@ -14,20 +14,20 @@ def seasonal_decompose_features(
     seasonal_freqs: Optional[
         List[int]
     ] = None,  # Make seasonal_freqs optional, only when we use MSTL or STL is this needed
-    mode: List[Literal["simple", "mstl"]] = "simple",
+    mode: Literal["simple", "mstl"] = "simple",
     id_col: str = "unique_id",
     time_col: str = "ds",
     target_col: str = "y",
 ) -> pl.DataFrame:
     """Perform seasonal decomposition on a time series and compute additional features.
-    
+
     - Trend strength
     - Seasonal strength
     - Residual variance
 
     Args:
         df: A Polars DataFrame containing the time series data with the following columns:
-        
+
             - `id_col`: Identifier for each time series (e.g., product, region, etc.)
             - `time_col`: Timestamp column indicating the time of each observation.
             - `target_col`: The column containing the values to be decomposed.
@@ -117,13 +117,7 @@ def seasonal_decompose_features(
 
         # map integer frequency to known datetime offset in polars:
 
-        freq_mapper = {
-            12: "1mo",
-            52: "1w",
-            4: "1q",
-            24: "1h",
-            365:'1d'
-        }
+        freq_mapper = {12: "1mo", 52: "1w", 4: "1q", 24: "1h", 365: "1d"}
 
         assert ts_freq in freq_mapper.keys(), ValueError(
             f"Frequency must be one of {freq_mapper.keys()} for MSTL decompose.."

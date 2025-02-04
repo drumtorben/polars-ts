@@ -14,9 +14,9 @@ def fourier_decomposition(
     target_col: str = "y",
 ) -> pl.DataFrame:
     """Perform Fourier decomposition on a time series dataset.
-    
+
     Extract trend, seasonal, and residual components.
-    The decomposition is based on Fourier harmonics for 
+    The decomposition is based on Fourier harmonics for
     various temporal frequencies (e.g., week, month, quarter).
 
     Args:
@@ -34,14 +34,14 @@ def fourier_decomposition(
         n_fourier_terms: The number of Fourier terms (harmonics) to generate for each frequency.
             Higher values allow capturing more complex seasonal patterns.
         id_col: The name of the column that uniquely identifies each series (default: `unique_id`).
-        time_col: The name of the column containing the timestamps or time values. 
+        time_col: The name of the column containing the timestamps or time values.
             This is used to generate temporal features like "week", "month", etc. Defaults to `ds`.
-        target_col: The name of the target variable (column) whose seasonal and 
+        target_col: The name of the target variable (column) whose seasonal and
             trend components are being decomposed. Defaults to `y`.
 
     Returns:
         A DataFrame with the following columns:
-        
+
             - `id_col`: The original ID column.
             - `time_col`: The original time column.
             - `target_col`: The original target variable.

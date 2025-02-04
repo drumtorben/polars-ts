@@ -35,6 +35,6 @@ static ALLOC: PolarsAllocator = PolarsAllocator::new();
 fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     //m.add_function(wrap_pyfunction!(my_cool_function, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_dtw, m)?)?;
-    
+
     Ok(())
 }
