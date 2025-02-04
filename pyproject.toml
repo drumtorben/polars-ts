@@ -87,5 +87,4 @@ max-positional-args = 1
 [tool.mypy]
 ignore_missing_imports = true
 disallow_untyped_calls = true
-#disallow_untyped_defs = true
 disallow_incomplete_defs = true

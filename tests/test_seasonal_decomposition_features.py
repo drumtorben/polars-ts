@@ -9,7 +9,7 @@ from polars_ts.decomposition.seasonal_decompose_features import (
 
 
 @pytest.fixture
-def sample_dataframe():
+def sample_dataframe() -> pl.DataFrame:
     """Generate a larger sample dataframe for testing with 5 unique IDs and a 2-year datetime range."""
     # Create a datetime range for 2 years (730 days)
     date_range = [datetime(2020, 1, 1) + timedelta(days=i) for i in range(730)]

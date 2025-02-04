@@ -47,7 +47,8 @@ def fourier_decomposition(
             - `target_col`: The original target variable.
             - `trend`: The estimated trend component (using moving average).
             - `seasonal`: The seasonal component (estimated using Fourier harmonics).
-            - `resid`: The residuals, computed as the difference between the original target and the sum of the trend and seasonal components.
+            - `resid`: The residuals, computed as the difference between the original
+                target and the sum of the trend and seasonal components.
 
     """
     # Check if necessary columns exist in the dataframe
@@ -65,7 +66,8 @@ def fourier_decomposition(
     valid_freqs = ["week", "month", "quarter", "day_of_week", "day_of_month", "day_of_year"]
 
     assert set(freqs).issubset(valid_freqs), KeyError(
-        f"Invalid Frequencies {set(freqs).difference(valid_freqs)}, please pass any combination of elements in {valid_freqs}"
+        f"Invalid Frequencies {set(freqs).difference(valid_freqs)}, \
+            please pass any combination of elements in {valid_freqs}"
     )
 
     # Validate n_fourier_terms: ensure it's a positive integer
