@@ -14,24 +14,25 @@ def seasonal_decompose_features(
     seasonal_freqs: Optional[
         List[int]
     ] = None,  # Make seasonal_freqs optional, only when we use MSTL or STL is this needed
-    mode: List[Literal["simple", "mstl"]] = "simple",
+    mode: Literal["simple", "mstl"] = "simple",
     id_col: str = "unique_id",
     time_col: str = "ds",
     target_col: str = "y",
 ) -> pl.DataFrame:
     """Perform seasonal decomposition on a time series and compute additional features.
-    
+
     - Trend strength
     - Seasonal strength
     - Residual variance
 
     Args:
         df: A Polars DataFrame containing the time series data with the following columns:
-        
+
             - `id_col`: Identifier for each time series (e.g., product, region, etc.)
             - `time_col`: Timestamp column indicating the time of each observation.
             - `target_col`: The column containing the values to be decomposed.
-        ts_freq: The frequency of the time series. For example, `24` could represent daily seasonality in an hourly time series.
+        ts_freq: The frequency of the time series. For example, `24` could
+            represent daily seasonality in an hourly time series.
         seasonal_freqs: A list of seasonal frequencies to use for the MSTL mode. This is required only if `mode='mstl'`.
             Defaults to None.
         mode: The decomposition mode, one of {'simple', 'mstl'}. Defaults to 'simple'.
@@ -45,9 +46,12 @@ def seasonal_decompose_features(
     Returns:
         A DataFrame containing the following features for each unique `id_col`:
 
-            - `trend_strength`: A measure of how strong the trend component is in the time series (value between 0 and 1).
-            - `seasonal_strength`: A measure of how strong the seasonal component is in the time series (value between 0 and 1).
-            - `resid_var`: The ratio of the standard deviation of the residuals to the mean of the target variable (a measure of residual variance).
+            - `trend_strength`: A measure of how strong the trend component
+                is in the time series (value between 0 and 1).
+            - `seasonal_strength`: A measure of how strong the seasonal component
+                is in the time series (value between 0 and 1).
+            - `resid_var`: The ratio of the standard deviation of the residuals
+                to the mean of the target variable (a measure of residual variance).
 
     """
     # Check if necessary columns exist in the dataframe
@@ -117,13 +121,7 @@ def seasonal_decompose_features(
 
         # map integer frequency to known datetime offset in polars:
 
-        freq_mapper = {
-            12: "1mo",
-            52: "1w",
-            4: "1q",
-            24: "1h",
-            365:'1d'
-        }
+        freq_mapper = {12: "1mo", 52: "1w", 4: "1q", 24: "1h", 365: "1d"}
 
         assert ts_freq in freq_mapper.keys(), ValueError(
             f"Frequency must be one of {freq_mapper.keys()} for MSTL decompose.."

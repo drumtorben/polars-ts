@@ -47,7 +47,7 @@ class Kaboudan:
     def block_shuffle_by_id(self, df: pl.DataFrame) -> pl.DataFrame:
         """Randomly shuffles rows in fixed-size blocks within each group identified by `id_col`.
 
-        This method sorts the data by `id_col` and then by `time_col`. For each group:  
+        This method sorts the data by `id_col` and then by `time_col`. For each group:
 
         1. A zero-based row index (`__row_in_group`) is assigned using `cum_count()`.
         2. The method determines the number of blocks (`num_blocks`) by dividing the number of

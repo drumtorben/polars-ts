@@ -13,7 +13,7 @@ def seasonal_decomposition(
 ) -> pl.DataFrame:
     """Perform seasonal decomposition of time series data using either an additive or multiplicative method.
 
-    - Additive: `Y(t) = T(t) + S(t) + E(t)`  
+    - Additive: `Y(t) = T(t) + S(t) + E(t)`
     - Multiplicative: `Y(t) = T(t) * S(t) * E(t)`
 
     Args:

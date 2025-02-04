@@ -14,9 +14,9 @@ def fourier_decomposition(
     target_col: str = "y",
 ) -> pl.DataFrame:
     """Perform Fourier decomposition on a time series dataset.
-    
+
     Extract trend, seasonal, and residual components.
-    The decomposition is based on Fourier harmonics for 
+    The decomposition is based on Fourier harmonics for
     various temporal frequencies (e.g., week, month, quarter).
 
     Args:
@@ -34,20 +34,21 @@ def fourier_decomposition(
         n_fourier_terms: The number of Fourier terms (harmonics) to generate for each frequency.
             Higher values allow capturing more complex seasonal patterns.
         id_col: The name of the column that uniquely identifies each series (default: `unique_id`).
-        time_col: The name of the column containing the timestamps or time values. 
+        time_col: The name of the column containing the timestamps or time values.
             This is used to generate temporal features like "week", "month", etc. Defaults to `ds`.
-        target_col: The name of the target variable (column) whose seasonal and 
+        target_col: The name of the target variable (column) whose seasonal and
             trend components are being decomposed. Defaults to `y`.
 
     Returns:
         A DataFrame with the following columns:
-        
+
             - `id_col`: The original ID column.
             - `time_col`: The original time column.
             - `target_col`: The original target variable.
             - `trend`: The estimated trend component (using moving average).
             - `seasonal`: The seasonal component (estimated using Fourier harmonics).
-            - `resid`: The residuals, computed as the difference between the original target and the sum of the trend and seasonal components.
+            - `resid`: The residuals, computed as the difference between the original
+                target and the sum of the trend and seasonal components.
 
     """
     # Check if necessary columns exist in the dataframe
@@ -65,7 +66,8 @@ def fourier_decomposition(
     valid_freqs = ["week", "month", "quarter", "day_of_week", "day_of_month", "day_of_year"]
 
     assert set(freqs).issubset(valid_freqs), KeyError(
-        f"Invalid Frequencies {set(freqs).difference(valid_freqs)}, please pass any combination of elements in {valid_freqs}"
+        f"Invalid Frequencies {set(freqs).difference(valid_freqs)}, \
+            please pass any combination of elements in {valid_freqs}"
     )
 
     # Validate n_fourier_terms: ensure it's a positive integer
