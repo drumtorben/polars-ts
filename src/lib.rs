@@ -7,9 +7,13 @@ use dtw::compute_pairwise_dtw;
 use ddtw::compute_pairwise_ddtw;
 use wdtw::compute_pairwise_wdtw;
 use msm::compute_pairwise_msm;
+use dtw_multi::compute_pairwise_dtw_multi;
+use msm_multi::compute_pairwise_msm_multi;
 
 mod dtw;
+mod dtw_multi;
 mod msm;
+mod msm_multi;
 mod ddtw;
 mod wdtw;
 mod mann_kendall;
@@ -44,5 +48,7 @@ fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compute_pairwise_msm, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_ddtw, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_wdtw, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_pairwise_dtw_multi, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_pairwise_msm_multi, m)?)?;
     Ok(())
 }
