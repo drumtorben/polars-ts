@@ -143,7 +143,7 @@ fn df_to_hashmap_multivariate(df: &DataFrame) -> HashMap<String, Vec<Vec<f64>>> 
 /// * `input2` - Second PyDataFrame with columns "unique_id" and one or more dimension columns.
 /// * `metric` - Optional string to choose the distance metric: "manhattan" or "euclidean".
 ///              Defaults to "manhattan" if not provided or unrecognized.
-/// 
+///
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "dtw".
 #[pyfunction]

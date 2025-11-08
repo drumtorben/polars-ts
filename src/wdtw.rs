@@ -73,103 +73,103 @@ fn compute_weight_vector(len: usize, g: f64) -> Vec<f64> {
 /// Optimized WDTW distance implementation.
 /// This version uses the full matrix but with a bounding matrix to constrain the search space.
 /// The implementation follows the weighted cost matrix approach from the Python code.
-/// 
+///
 /// # Arguments
 /// * `a` - First time series as a slice of f64.
 /// * `b` - Second time series as a slice of f64.
 /// * `g` - Parameter that controls the weight penalty (default 0.05).
-/// 
+///
 /// # Returns
 /// The WDTW distance between the two time series.
 fn wdtw_distance(a: &[f64], b: &[f64], g: f64) -> f64 {
     let n = a.len();
     let m = b.len();
-    
+
     // Handle edge cases
     if n == 0 || m == 0 {
         return f64::INFINITY;
     }
-    
+
     // Precompute weight vector based on the maximum length
     let max_len = n.max(m);
     let weight_vector = compute_weight_vector(max_len, g);
-    
+
     // Create cost matrix with infinity padding
     let mut cost_matrix = vec![vec![f64::INFINITY; m + 1]; n + 1];
     cost_matrix[0][0] = 0.0;
-    
+
     // Fill the cost matrix
     for i in 1..=n {
         for j in 1..=m {
             // Weight based on absolute difference between indices
             let weight = weight_vector[((i-1) as isize - (j-1) as isize).abs() as usize];
-            
+
             // Squared difference (equivalent to sum in univariate case)
             let diff = (a[i-1] - b[j-1]).abs();
-            
+
             // Find the minimum previous cost
             let prev_min = cost_matrix[i-1][j-1]
                 .min(cost_matrix[i-1][j])
                 .min(cost_matrix[i][j-1]);
-            
+
             // Calculate the weighted cost
             cost_matrix[i][j] = prev_min + weight * diff;
         }
     }
-    
+
     // Return the final distance
     cost_matrix[n][m]
 }
 
 /// Memory-optimized WDTW distance implementation.
 /// This version uses O(m) memory by keeping only the current and previous rows.
-/// 
+///
 /// # Arguments
 /// * `a` - First time series as a slice of f64.
 /// * `b` - Second time series as a slice of f64.
 /// * `g` - Parameter that controls the weight penalty (default 0.05).
-/// 
+///
 /// # Returns
 /// The WDTW distance between the two time series.
 fn wdtw_distance_optimized(a: &[f64], b: &[f64], g: f64) -> f64 {
     let n = a.len();
     let m = b.len();
-    
+
     // Handle edge cases
     if n == 0 || m == 0 {
         return f64::INFINITY;
     }
-    
+
     // Precompute weight vector based on the maximum length
     let max_len = n.max(m);
     let weight_vector = compute_weight_vector(max_len, g);
-    
+
     // Create two rows for the cost matrix calculation
     let mut prev = vec![f64::INFINITY; m + 1];
     let mut curr = vec![f64::INFINITY; m + 1];
     prev[0] = 0.0;
-    
+
     // Fill the cost matrix row by row
     for i in 1..=n {
         curr[0] = f64::INFINITY;
         for j in 1..=m {
             // Weight based on absolute difference between indices
             let weight = weight_vector[((i-1) as isize - (j-1) as isize).abs() as usize];
-            
+
             // Squared difference
             let diff = (a[i-1] - b[j-1]).powi(2);
-            
+
             // Find the minimum previous cost
             let prev_min = prev[j-1].min(prev[j]).min(curr[j-1]);
-            
+
             // Calculate the weighted cost
             curr[j] = prev_min + weight * diff;
         }
-        
+
         // Swap rows for the next iteration
         std::mem::swap(&mut prev, &mut curr);
     }
-    
+
     // Return the final distance
     prev[m]
 }
@@ -186,13 +186,13 @@ fn wdtw_distance_optimized(a: &[f64], b: &[f64], g: f64) -> f64 {
 /// A PyDataFrame with columns "id_1", "id_2", and "wdtw".
 #[pyfunction]
 pub fn compute_pairwise_wdtw(
-    input1: PyDataFrame, 
-    input2: PyDataFrame, 
+    input1: PyDataFrame,
+    input2: PyDataFrame,
     g: Option<f64>
 ) -> PyResult<PyDataFrame> {
     // Set default value for g parameter
     let g_value = g.unwrap_or(0.05);
-    
+
     // Convert PyDataFrames to Polars DataFrames.
     let df_1: DataFrame = input1.into();
     let df_2: DataFrame = input2.into();
@@ -240,7 +240,7 @@ pub fn compute_pairwise_wdtw(
             let map_b = Arc::clone(&map_b);
             // Capture g_value for the inner closure
             let g = g_value;
-            
+
             right_series_by_key
                 .par_iter()
                 .filter_map(move |&(right_key, right_series)| {

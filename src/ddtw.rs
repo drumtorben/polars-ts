@@ -20,32 +20,32 @@ fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
 }
 
 /// Compute the derivative of a time series using the method from Keogh & Pazzani (2001).
-/// 
+///
 /// The derivative is calculated as:
 /// q'(i) = (q(i) - q(i-1) + ((q(i+1) - q(i-1))/2)) / 2
-/// 
+///
 /// This implementation handles the boundary conditions by returning a vector with length len(q) - 2.
 fn compute_derivative(q: &[f64]) -> Vec<f64> {
     if q.len() < 3 {
         return Vec::new(); // Not enough points to compute derivative
     }
-    
+
     // Preallocate output vector
     let mut derivative = Vec::with_capacity(q.len() - 2);
-    
+
     for i in 1..q.len() - 1 {
         // Calculate the derivative at point i
         // q'(i) = (q(i) - q(i-1) + ((q(i+1) - q(i-1))/2)) / 2
         let term1 = q[i] - q[i-1];
         let term2 = (q[i+1] - q[i-1]) / 2.0;
         let derivative_i = (term1 + term2) / 2.0;
-        
+
         // Alternatively, simplified as in the Python code:
         // let derivative_i = 0.25 * q[i+1] + 0.5 * q[i] - 0.75 * q[i-1];
-        
+
         derivative.push(derivative_i);
     }
-    
+
     derivative
 }
 
@@ -54,12 +54,12 @@ fn compute_derivative(q: &[f64]) -> Vec<f64> {
 fn dtw_distance(a: &[f64], b: &[f64]) -> f64 {
     let n = a.len();
     let m = b.len();
-    
+
     // Handle edge cases
     if n == 0 || m == 0 {
         return f64::INFINITY;
     }
-    
+
     let mut prev = vec![f64::MAX; m + 1];
     let mut curr = vec![f64::MAX; m + 1];
     prev[0] = 0.0;
@@ -83,12 +83,12 @@ fn ddtw_distance(a: &[f64], b: &[f64]) -> f64 {
     // Calculate derivatives
     let a_derivative = compute_derivative(a);
     let b_derivative = compute_derivative(b);
-    
+
     // Handle edge cases
     if a_derivative.is_empty() || b_derivative.is_empty() {
         return f64::INFINITY;
     }
-    
+
     // Compute DTW on derivatives
     dtw_distance(&a_derivative, &b_derivative)
 }

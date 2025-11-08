@@ -19,44 +19,44 @@ fn msm_cost(x: f64, y: f64, z: f64, c: f64) -> f64 {
 fn msm_distance(a: &[f64], b: &[f64], c: f64) -> f64 {
     let n = a.len();
     let m = b.len();
-    
+
     // Early return for empty sequences
     if n == 0 || m == 0 {
         return 0.0;
     }
-    
+
     let mut prev = vec![f64::MAX; m];
     let mut curr = vec![f64::MAX; m];
-    
+
     // Initialize first cell
     prev[0] = (a[0] - b[0]).abs();
-    
+
     // Initialize first row
     for j in 1..m {
         let cost = msm_cost(b[j], a[0], b[j-1], c);
         prev[j] = prev[j-1] + cost;
     }
-    
+
     // Main dynamic programming loop
     for i in 1..n {
         // Initialize first column of current row
         let cost = msm_cost(a[i], a[i-1], b[0], c);
         curr[0] = prev[0] + cost;
-        
+
         for j in 1..m {
             // Calculate the three possible transitions
             let d1 = prev[j-1] + (a[i] - b[j]).abs();  // Match
             let d2 = prev[j] + msm_cost(a[i], a[i-1], b[j], c);  // Delete
             let d3 = curr[j-1] + msm_cost(b[j], a[i], b[j-1], c);  // Insert
-            
+
             // Take the minimum cost
             curr[j] = d1.min(d2).min(d3);
         }
-        
+
         // Swap rows for next iteration
         std::mem::swap(&mut prev, &mut curr);
     }
-    
+
     // Final MSM distance is in the bottom-right corner
     prev[m-1]
 }
