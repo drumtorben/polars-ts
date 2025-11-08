@@ -1,9 +1,8 @@
 [project]
 name = "polars-timeseries"
-version = "0.3.0"
+version = "0.3.1"
 description = "Polars Time Series Extension"
 authors = [
-    { name = "Jack Rodenberg" },
     { name = "Torben Windler" },
 ]
 readme = "README.md"
