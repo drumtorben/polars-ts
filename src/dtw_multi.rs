@@ -147,6 +147,7 @@ fn df_to_hashmap_multivariate(df: &DataFrame) -> HashMap<String, Vec<Vec<f64>>> 
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "dtw".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, metric=None))]
 pub fn compute_pairwise_dtw_multi(input1: PyDataFrame, input2: PyDataFrame, metric: Option<String>) -> PyResult<PyDataFrame> {
     // Determine the distance metric.
     let distance_metric = match metric.as_deref() {

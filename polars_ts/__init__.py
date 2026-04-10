@@ -8,6 +8,9 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_wdtw,
     compute_pairwise_dtw_multi,
     compute_pairwise_msm_multi,
+    compute_pairwise_erp,
+    compute_pairwise_lcss,
+    compute_pairwise_twe,
 )
 
 __all__ = [
@@ -17,7 +20,9 @@ __all__ = [
     "compute_pairwise_msm",
     "compute_pairwise_dtw_multi",
     "compute_pairwise_msm_multi",
-    # plus any pure-Python symbols you want to expose
+    "compute_pairwise_erp",
+    "compute_pairwise_lcss",
+    "compute_pairwise_twe",
 ]
 
 import polars as pl
