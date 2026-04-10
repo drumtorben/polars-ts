@@ -98,6 +98,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "lcss".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, epsilon=None))]
 pub fn compute_pairwise_lcss(input1: PyDataFrame, input2: PyDataFrame, epsilon: Option<f64>) -> PyResult<PyDataFrame> {
     let eps = epsilon.unwrap_or(1.0);
 

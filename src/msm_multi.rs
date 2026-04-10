@@ -189,6 +189,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<Vec<f64>>> {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "msm".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, c=None))]
 pub fn compute_pairwise_msm_multi(
     input1: PyDataFrame,
     input2: PyDataFrame,

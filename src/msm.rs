@@ -125,6 +125,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "msm".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, c=None))]
 pub fn compute_pairwise_msm(input1: PyDataFrame, input2: PyDataFrame, c: Option<f64>) -> PyResult<PyDataFrame> {
     // Set default value for c parameter
     let c_value = c.unwrap_or(1.0);

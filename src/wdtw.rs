@@ -185,6 +185,7 @@ fn wdtw_distance_optimized(a: &[f64], b: &[f64], g: f64) -> f64 {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "wdtw".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, g=None))]
 pub fn compute_pairwise_wdtw(
     input1: PyDataFrame,
     input2: PyDataFrame,

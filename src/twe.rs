@@ -121,6 +121,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "twe".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, nu=None, lambda=None))]
 pub fn compute_pairwise_twe(input1: PyDataFrame, input2: PyDataFrame, nu: Option<f64>, lambda: Option<f64>) -> PyResult<PyDataFrame> {
     let nu_value = nu.unwrap_or(0.001);
     let lambda_value = lambda.unwrap_or(1.0);

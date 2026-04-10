@@ -16,12 +16,7 @@ fn erp_distance(a: &[f64], b: &[f64], g: f64) -> f64 {
     let mut prev = vec![0.0_f64; m + 1];
     let mut curr = vec![0.0_f64; m + 1];
 
-    // Initialize first column: cost of deleting all of a[0..i]
-    for i in 1..=n {
-        prev[0] = prev[0]; // will be set below
-    }
-    // Re-initialize properly
-    prev[0] = 0.0;
+    // Initialize first row: cost of inserting all of b[0..j]
     for j in 1..=m {
         prev[j] = prev[j - 1] + (b[j - 1] - g).abs();
     }
@@ -101,6 +96,7 @@ fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
 /// # Returns
 /// A PyDataFrame with columns "id_1", "id_2", and "erp".
 #[pyfunction]
+#[pyo3(signature = (input1, input2, g=None))]
 pub fn compute_pairwise_erp(input1: PyDataFrame, input2: PyDataFrame, g: Option<f64>) -> PyResult<PyDataFrame> {
     let g_value = g.unwrap_or(0.0);
 
