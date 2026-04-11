@@ -10,8 +10,8 @@ crate-type = ["cdylib"]
 [dependencies]
 pyo3 = { version = "0.24.2", features = ["extension-module", "abi3-py312"] }
 pyo3-polars = { version = "0.21.0", features = ["derive"] }
-ordered-float = "3"
-rayon = "1.7.0"
+ordered-float = "5"
+rayon = "1.10.0"
 serde = { version = "1", features = ["derive"] }
 itertools = "0.14.0"
 polars = { version = "0.48.1", features = ["lazy", "ndarray"] }
