@@ -23,7 +23,7 @@ def fourier_decomposition(
         df: The input Polars DataFrame containing the time series data.
         ts_freq: The number of periods within a seasonal cycle: 52 for weekly data,
             4 for quarterly data, 12 for monthly data, etc.
-        freqs : A tuple of frequencies to use for generating Fourier harmonics. Options include:
+        freqs: A tuple of frequencies to use for generating Fourier harmonics. Options include:
 
             - `week` (weekly frequency)
             - `month` (monthly frequency)
