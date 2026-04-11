@@ -1,4 +1,6 @@
 from polars_ts.metrics import Metrics  # noqa
+from polars_ts.decomposition import fourier_decomposition, seasonal_decomposition, seasonal_decompose_features  # noqa
+from polars_ts.models import SCUM  # noqa
 
 from pathlib import Path
 from polars_ts_rs.polars_ts_rs import (
@@ -23,13 +25,20 @@ __all__ = [
     "compute_pairwise_erp",
     "compute_pairwise_lcss",
     "compute_pairwise_twe",
+    "mann_kendall",
+    "fourier_decomposition",
+    "seasonal_decomposition",
+    "seasonal_decompose_features",
+    "Metrics",
+    "SCUM",
 ]
 
 import polars as pl
 from polars._typing import IntoExpr
 from polars.plugins import register_plugin_function
 
-PLUGIN_PATH = Path(__file__).parent
+import polars_ts_rs as _rs_mod
+PLUGIN_PATH = Path(_rs_mod.__file__).parent
 
 
 def mann_kendall(expr: IntoExpr) -> pl.Expr:

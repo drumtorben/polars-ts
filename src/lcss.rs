@@ -1,10 +1,11 @@
 use polars::prelude::*;
-use std::collections::HashMap;
 use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
 use rayon::prelude::*;
+
+use crate::utils::{get_groups, df_to_hashmap};
 
 /// LCSS (Longest Common Subsequence) distance.
 /// Two points match if their absolute difference is within `epsilon`.
@@ -39,53 +40,6 @@ fn lcss_distance(a: &[f64], b: &[f64], epsilon: f64) -> f64 {
     let lcss_len = prev[m] as f64;
     let min_len = n.min(m) as f64;
     1.0 - (lcss_len / min_len)
-}
-
-/// Groups a DataFrame by "unique_id" and aggregates the "y" column.
-fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
-    Ok(df.clone().lazy()
-        .select([
-            col("unique_id").cast(DataType::String),
-            col("y").cast(DataType::Float64)
-        ])
-        .group_by([col("unique_id")])
-        .agg([col("y")])
-    )
-}
-
-/// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f64>.
-fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
-    let unique_id_col = df.column("unique_id").expect("expected column unique_id");
-    let y_col = df.column("y").expect("expected column y");
-
-    let unique_ids: Vec<String> = unique_id_col
-        .str()
-        .expect("expected utf8 column for unique_id")
-        .into_no_null_iter()
-        .map(|s| s.to_string())
-        .collect();
-
-    let y_lists: Vec<Vec<f64>> = y_col
-        .list()
-        .expect("expected a List type for y")
-        .into_iter()
-        .map(|opt_series| {
-            let series = opt_series.expect("null entry in 'y' list column");
-            series
-                .f64()
-                .expect("expected a f64 Series inside the list")
-                .into_no_null_iter()
-                .collect::<Vec<f64>>()
-        })
-        .collect();
-
-    assert_eq!(unique_ids.len(), y_lists.len(), "Mismatched lengths in unique_ids and y_lists");
-
-    let hashmap: HashMap<String, Vec<f64>> = (0..unique_ids.len())
-        .into_par_iter()
-        .map(|i| (unique_ids[i].clone(), y_lists[i].clone()))
-        .collect();
-    hashmap
 }
 
 /// Compute pairwise LCSS distances between time series in two DataFrames.

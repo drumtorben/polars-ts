@@ -1,9 +1,10 @@
 use polars::prelude::*;
-use std::collections::HashMap;
 use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use rayon::prelude::*;
+
+use crate::utils::{get_groups_multivariate, df_to_hashmap_multivariate};
 
 /// Compute Manhattan distance between two vectors.
 fn manhattan_distance(a: &[f64], b: &[f64]) -> f64 {
@@ -48,7 +49,7 @@ fn cost_dependent(x: &[f64], y: &[f64], z: &[f64], c: f64) -> f64 {
 ///   dp[0,0] = manhattan_distance(a[0], b[0])
 ///   dp[i,0] = dp[i-1,0] + cost_dependent(a[i], a[i-1], b[0], c)
 ///   dp[0,j] = dp[0,j-1] + cost_dependent(b[j], b[j-1], a[0], c)
-/// and for i,j ≥ 1:
+/// and for i,j >= 1:
 ///   dp[i,j] = min{
 ///      dp[i-1,j-1] + manhattan_distance(a[i], b[j]),      // match
 ///      dp[i-1,j]   + cost_dependent(a[i], a[i-1], b[j], c),  // delete
@@ -92,92 +93,6 @@ fn msm_distance(a: &[Vec<f64>], b: &[Vec<f64>], c: f64) -> f64 {
     prev[m - 1]
 }
 
-/// Groups a DataFrame by "unique_id" and aggregates all dimension columns.
-/// Assumes that besides the "unique_id" column, every other column is a numeric dimension.
-fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
-    // Identify dimension columns: all columns except "unique_id"
-    let dims: Vec<_> = df.get_column_names()
-        .iter()
-        .filter(|&&name| name != "unique_id")
-        .map(|s| s.to_string())
-        .collect();
-
-    // Build aggregation expressions for each dimension column.
-    let agg_exprs: Vec<Expr> = dims.iter()
-        .map(|col_name| col(col_name).cast(DataType::Float64))
-        .collect();
-
-    // Group by unique_id and aggregate each dimension column into a list.
-    Ok(df.clone().lazy()
-        .select([col("unique_id").cast(DataType::String)]
-            .into_iter()
-            .chain(agg_exprs.iter().cloned())
-            .collect::<Vec<_>>())
-        .group_by([col("unique_id")])
-        .agg(agg_exprs)
-    )
-}
-
-/// Converts a grouped DataFrame into a HashMap mapping unique_id -> multivariate time series.
-/// Each row in the DataFrame must have a "unique_id" column and one list column per dimension.
-/// For each unique_id the time series is represented as Vec<Vec<f64>> where each inner Vec is a data point
-/// (with one entry per dimension).
-fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<Vec<f64>>> {
-    // Get the unique IDs.
-    let unique_id_col = df.column("unique_id").expect("expected column unique_id");
-    let unique_ids: Vec<String> = unique_id_col
-        .str()
-        .expect("expected Utf8 for unique_id")
-        .into_no_null_iter()
-        .map(|s| s.to_string())
-        .collect();
-
-    // Identify dimension columns: all columns except "unique_id".
-    let dims: Vec<&str> = df.get_column_names()
-        .iter()
-        .filter(|&&name| name != "unique_id")
-        .map(|s| s.as_str())
-        .collect();
-
-    // For each dimension, extract the list-of-f64 values.
-    // dims_data[d][i] gives the full list for unique_id[i] in dimension d.
-    let mut dims_data: Vec<Vec<Vec<f64>>> = Vec::with_capacity(dims.len());
-    for d in dims.iter() {
-        let col_series = df.column(d).expect("expected dimension column");
-        let lists: Vec<Vec<f64>> = col_series
-            .list()
-            .expect("expected list type in dimension column")
-            .into_iter()
-            .map(|opt_series| {
-                let series = opt_series.expect("null entry in dimension list");
-                series.f64()
-                    .expect("expected f64 Series inside the list")
-                    .into_no_null_iter()
-                    .collect::<Vec<f64>>()
-            })
-            .collect();
-        dims_data.push(lists);
-    }
-
-    // Build the multivariate time series for each unique_id.
-    let mut hashmap = HashMap::new();
-    let num_series = unique_ids.len();
-    for i in 0..num_series {
-        // For each unique_id, assume all dimensions have the same series length.
-        let series_len = dims_data[0][i].len();
-        let mut series: Vec<Vec<f64>> = Vec::with_capacity(series_len);
-        for t in 0..series_len {
-            let mut point: Vec<f64> = Vec::with_capacity(dims.len());
-            for d in 0..dims.len() {
-                point.push(dims_data[d][i][t]);
-            }
-            series.push(point);
-        }
-        hashmap.insert(unique_ids[i].clone(), series);
-    }
-    hashmap
-}
-
 /// Compute pairwise MSM distances between multivariate time series in two DataFrames,
 /// using parallelism.
 ///
@@ -217,12 +132,12 @@ pub fn compute_pairwise_msm_multi(
         .collect().unwrap();
 
     // Group each DataFrame by "unique_id" and aggregate the y-columns.
-    let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
-    let grouped_b = get_groups(&df_b).unwrap().collect().unwrap();
+    let grouped_a = get_groups_multivariate(&df_a).unwrap().collect().unwrap();
+    let grouped_b = get_groups_multivariate(&df_b).unwrap().collect().unwrap();
 
     // Convert grouped DataFrames into HashMaps mapping unique_id -> multivariate time series.
-    let raw_map_a = df_to_hashmap(&grouped_a);
-    let raw_map_b = df_to_hashmap(&grouped_b);
+    let raw_map_a = df_to_hashmap_multivariate(&grouped_a);
+    let raw_map_b = df_to_hashmap_multivariate(&grouped_b);
 
     let map_a = Arc::new(raw_map_a);
     let map_b = Arc::new(raw_map_b);
