@@ -5,6 +5,7 @@ use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
 use rayon::prelude::*;
 
+
 use crate::utils::{get_groups, df_to_hashmap};
 
 /// Compute the derivative of a time series using the method from Keogh & Pazzani (2001).
@@ -35,7 +36,7 @@ fn compute_derivative(q: &[f64]) -> Vec<f64> {
 }
 
 /// Optimized DTW distance implementation using two rows.
-/// This version uses O(m) memory instead of allocating the full (n+1)×(m+1) matrix.
+/// This version uses O(m) memory instead of allocating the full (n+1)x(m+1) matrix.
 fn dtw_distance(a: &[f64], b: &[f64]) -> f64 {
     let n = a.len();
     let m = b.len();
