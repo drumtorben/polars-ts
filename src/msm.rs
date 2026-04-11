@@ -4,7 +4,6 @@ use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
 use rayon::prelude::*;
-
 use crate::utils::{get_groups, df_to_hashmap};
 
 /// Helper function to calculate the MSM cost
@@ -16,7 +15,7 @@ fn msm_cost(x: f64, y: f64, z: f64, c: f64) -> f64 {
 }
 
 /// Optimized MSM distance implementation using two rows.
-/// This version uses O(m) memory instead of allocating the full n×m matrix.
+/// This version uses O(m) memory instead of allocating the full n*m matrix.
 fn msm_distance(a: &[f64], b: &[f64], c: f64) -> f64 {
     let n = a.len();
     let m = b.len();

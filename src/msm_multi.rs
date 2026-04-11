@@ -3,7 +3,6 @@ use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use rayon::prelude::*;
-
 use crate::utils::{get_groups_multivariate, df_to_hashmap_multivariate};
 
 /// Compute Manhattan distance between two vectors.
