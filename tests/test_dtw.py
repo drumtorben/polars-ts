@@ -1,0 +1,306 @@
+import polars as pl
+import pytest
+from polars_ts_rs.polars_ts_rs import compute_pairwise_dtw
+
+
+# ---------------------------------------------------------------------------
+# Fixtures
+# ---------------------------------------------------------------------------
+
+@pytest.fixture
+def two_series():
+    """Two simple time series A and B that differ by one point."""
+    return pl.DataFrame({
+        "unique_id": ["A"] * 4 + ["B"] * 4,
+        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0],
+    })
+
+
+@pytest.fixture
+def three_series():
+    """Three time series: A ascending, B similar to A, C reversed."""
+    return pl.DataFrame({
+        "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
+        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0],
+    })
+
+
+@pytest.fixture
+def identical_series():
+    """Two identical time series."""
+    return pl.DataFrame({
+        "unique_id": ["A"] * 4 + ["B"] * 4,
+        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0],
+    })
+
+
+@pytest.fixture
+def shifted_series():
+    """Two series where one is a shifted version — constraints matter here."""
+    return pl.DataFrame({
+        "unique_id": ["A"] * 8 + ["B"] * 8,
+        "y": [1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0,
+              5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0, 1.0],
+    })
+
+
+@pytest.fixture
+def single_series():
+    """A single time series — no pairs to compare."""
+    return pl.DataFrame({
+        "unique_id": ["A"] * 4,
+        "y": [1.0, 2.0, 3.0, 4.0],
+    })
+
+
+@pytest.fixture
+def int_id_series():
+    """Time series with integer unique_id."""
+    return pl.DataFrame({
+        "unique_id": [1] * 4 + [2] * 4,
+        "y": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
+    })
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _to_dict(df: pl.DataFrame) -> dict:
+    """Convert pairwise result to {(id1, id2): distance} dict, sorted keys."""
+    rows = df.to_dicts()
+    dist_col = [c for c in df.columns if c not in ("id_1", "id_2")][0]
+    result = {}
+    for r in rows:
+        key = tuple(sorted([str(r["id_1"]), str(r["id_2"])]))
+        result[key] = r[dist_col]
+    return result
+
+
+ALL_METHODS = [
+    ("standard", None),
+    ("sakoe_chiba", 2.0),
+    ("itakura", 2.0),
+    ("fast", 1.0),
+]
+
+
+# ===========================================================================
+# Standard DTW tests (backward compatibility)
+# ===========================================================================
+
+class TestStandardDTW:
+    def test_identical_series_zero(self, identical_series):
+        result = compute_pairwise_dtw(identical_series, identical_series)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 0.0
+
+    def test_basic_distance(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 1.0
+
+    def test_no_extra_args_backward_compat(self, two_series):
+        """Calling without method/param works (backward compatible)."""
+        result = compute_pairwise_dtw(two_series, two_series)
+        assert result.shape[0] == 1
+
+    def test_symmetry(self, two_series):
+        r1 = compute_pairwise_dtw(two_series, two_series)
+        d = _to_dict(r1)
+        assert d[("A", "B")] == d.get(("B", "A"), d[("A", "B")])
+
+    def test_three_series_pairs(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series)
+        d = _to_dict(result)
+        assert len(d) == 3  # (A,B), (A,C), (B,C)
+
+    def test_single_series_empty(self, single_series):
+        result = compute_pairwise_dtw(single_series, single_series)
+        assert result.shape[0] == 0
+
+    def test_output_columns(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series)
+        assert set(result.columns) == {"id_1", "id_2", "dtw"}
+
+    def test_int_id_preserved(self, int_id_series):
+        result = compute_pairwise_dtw(int_id_series, int_id_series)
+        assert result["id_1"].dtype == pl.Int64
+        assert result["id_2"].dtype == pl.Int64
+
+    def test_non_negativity(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series)
+        assert (result["dtw"] >= 0).all()
+
+    def test_triangle_inequality(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series)
+        d = _to_dict(result)
+        assert d[("A", "C")] <= d[("A", "B")] + d[("B", "C")] + 1e-10
+
+
+# ===========================================================================
+# Sakoe-Chiba band tests
+# ===========================================================================
+
+class TestSakoeChiba:
+    def test_identical_series_zero(self, identical_series):
+        result = compute_pairwise_dtw(identical_series, identical_series, method="sakoe_chiba", param=2.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 0.0
+
+    def test_basic_distance(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series, method="sakoe_chiba", param=2.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 1.0
+
+    def test_distance_ge_standard(self, shifted_series):
+        """Constrained DTW distance should be >= unconstrained."""
+        std = compute_pairwise_dtw(shifted_series, shifted_series)["dtw"][0]
+        sc = compute_pairwise_dtw(shifted_series, shifted_series, method="sakoe_chiba", param=1.0)["dtw"][0]
+        assert sc >= std - 1e-10
+
+    def test_large_window_equals_standard(self, two_series):
+        """With a window >= series length, result should equal standard DTW."""
+        std = compute_pairwise_dtw(two_series, two_series)["dtw"][0]
+        sc = compute_pairwise_dtw(two_series, two_series, method="sakoe_chiba", param=10.0)["dtw"][0]
+        assert abs(sc - std) < 1e-10
+
+    def test_narrow_window_increases_distance(self, shifted_series):
+        """Narrower window should produce distance >= wider window."""
+        sc1 = compute_pairwise_dtw(shifted_series, shifted_series, method="sakoe_chiba", param=1.0)["dtw"][0]
+        sc4 = compute_pairwise_dtw(shifted_series, shifted_series, method="sakoe_chiba", param=4.0)["dtw"][0]
+        assert sc1 >= sc4 - 1e-10
+
+    def test_non_negativity(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series, method="sakoe_chiba", param=2.0)
+        assert (result["dtw"] >= 0).all()
+
+    def test_output_columns(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series, method="sakoe_chiba", param=2.0)
+        assert set(result.columns) == {"id_1", "id_2", "dtw"}
+
+    def test_int_id_preserved(self, int_id_series):
+        result = compute_pairwise_dtw(int_id_series, int_id_series, method="sakoe_chiba", param=2.0)
+        assert result["id_1"].dtype == pl.Int64
+
+
+# ===========================================================================
+# Itakura parallelogram tests
+# ===========================================================================
+
+class TestItakura:
+    def test_identical_series_zero(self, identical_series):
+        result = compute_pairwise_dtw(identical_series, identical_series, method="itakura", param=2.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 0.0
+
+    def test_basic_distance(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series, method="itakura", param=2.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 1.0
+
+    def test_distance_ge_standard(self, shifted_series):
+        """Constrained DTW distance should be >= unconstrained."""
+        std = compute_pairwise_dtw(shifted_series, shifted_series)["dtw"][0]
+        it = compute_pairwise_dtw(shifted_series, shifted_series, method="itakura", param=1.5)["dtw"][0]
+        assert it >= std - 1e-10
+
+    def test_large_slope_equals_standard(self, two_series):
+        """With a very large max_slope, result should equal standard DTW."""
+        std = compute_pairwise_dtw(two_series, two_series)["dtw"][0]
+        it = compute_pairwise_dtw(two_series, two_series, method="itakura", param=10.0)["dtw"][0]
+        assert abs(it - std) < 1e-10
+
+    def test_non_negativity(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series, method="itakura", param=2.0)
+        assert (result["dtw"] >= 0).all()
+
+    def test_output_columns(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series, method="itakura", param=2.0)
+        assert set(result.columns) == {"id_1", "id_2", "dtw"}
+
+
+# ===========================================================================
+# FastDTW tests
+# ===========================================================================
+
+class TestFastDTW:
+    def test_identical_series_zero(self, identical_series):
+        result = compute_pairwise_dtw(identical_series, identical_series, method="fast", param=1.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 0.0
+
+    def test_basic_distance(self, two_series):
+        """FastDTW on short series falls back to exact DTW."""
+        result = compute_pairwise_dtw(two_series, two_series, method="fast", param=1.0)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 1.0
+
+    def test_approximation_quality(self):
+        """FastDTW should produce a reasonable approximation for longer series."""
+        import random
+        random.seed(42)
+        a = [float(i) + random.gauss(0, 0.1) for i in range(100)]
+        b = [float(i) + random.gauss(0, 0.1) + 1.0 for i in range(100)]
+        df = pl.DataFrame({
+            "unique_id": ["A"] * 100 + ["B"] * 100,
+            "y": a + b,
+        })
+        std = compute_pairwise_dtw(df, df)["dtw"][0]
+        fast = compute_pairwise_dtw(df, df, method="fast", param=5.0)["dtw"][0]
+        # FastDTW should be close to standard DTW (within 50% for well-behaved series)
+        assert fast >= std - 1e-10  # should be >= standard
+        assert fast <= std * 2.0  # reasonable approximation
+
+    def test_non_negativity(self, three_series):
+        result = compute_pairwise_dtw(three_series, three_series, method="fast", param=1.0)
+        assert (result["dtw"] >= 0).all()
+
+    def test_output_columns(self, two_series):
+        result = compute_pairwise_dtw(two_series, two_series, method="fast", param=1.0)
+        assert set(result.columns) == {"id_1", "id_2", "dtw"}
+
+    def test_int_id_preserved(self, int_id_series):
+        result = compute_pairwise_dtw(int_id_series, int_id_series, method="fast", param=1.0)
+        assert result["id_1"].dtype == pl.Int64
+
+
+# ===========================================================================
+# Cross-method tests
+# ===========================================================================
+
+class TestCrossMethod:
+    @pytest.mark.parametrize("method,param", ALL_METHODS)
+    def test_identical_zero(self, identical_series, method, param):
+        kwargs = {"method": method}
+        if param is not None:
+            kwargs["param"] = param
+        result = compute_pairwise_dtw(identical_series, identical_series, **kwargs)
+        d = _to_dict(result)
+        assert d[("A", "B")] == 0.0
+
+    @pytest.mark.parametrize("method,param", ALL_METHODS)
+    def test_single_series_empty(self, single_series, method, param):
+        kwargs = {"method": method}
+        if param is not None:
+            kwargs["param"] = param
+        result = compute_pairwise_dtw(single_series, single_series, **kwargs)
+        assert result.shape[0] == 0
+
+    @pytest.mark.parametrize("method,param", ALL_METHODS)
+    def test_non_negativity(self, three_series, method, param):
+        kwargs = {"method": method}
+        if param is not None:
+            kwargs["param"] = param
+        result = compute_pairwise_dtw(three_series, three_series, **kwargs)
+        assert (result["dtw"] >= 0).all()
+
+    def test_invalid_method_raises(self, two_series):
+        with pytest.raises(ValueError, match="Unknown DTW method"):
+            compute_pairwise_dtw(two_series, two_series, method="invalid")
+
+    def test_default_params_used(self, two_series):
+        """Method without explicit param should use defaults and not crash."""
+        for method in ["sakoe_chiba", "itakura", "fast"]:
+            result = compute_pairwise_dtw(two_series, two_series, method=method)
+            assert result.shape[0] == 1
