@@ -1,10 +1,11 @@
 use polars::prelude::*;
-use std::collections::HashMap;
 use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use pyo3::PyResult;
 use rayon::prelude::*;
+
+use crate::utils::{get_groups, df_to_hashmap};
 
 /// Helper function to calculate the MSM cost
 fn msm_cost(x: f64, y: f64, z: f64, c: f64) -> f64 {
@@ -59,59 +60,6 @@ fn msm_distance(a: &[f64], b: &[f64], c: f64) -> f64 {
 
     // Final MSM distance is in the bottom-right corner
     prev[m-1]
-}
-
-/// Groups a DataFrame by "unique_id" and aggregates the "y" column.
-/// (Casting "unique_id" as Utf8 and "y" as Float64.)
-fn get_groups(df: &DataFrame) -> Result<LazyFrame, PolarsError> {
-    Ok(df.clone().lazy()
-        .select([
-            col("unique_id").cast(DataType::String),
-            col("y").cast(DataType::Float64)
-        ])
-        .group_by([col("unique_id")])
-        .agg([col("y")])
-    )
-}
-
-/// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f64>.
-fn df_to_hashmap(df: &DataFrame) -> HashMap<String, Vec<f64>> {
-    // Retrieve the columns.
-    let unique_id_col = df.column("unique_id").expect("expected column unique_id");
-    let y_col = df.column("y").expect("expected column y");
-
-    // Collect unique IDs into a Vec<String>.
-    let unique_ids: Vec<String> = unique_id_col
-        .str()
-        .expect("expected utf8 column for unique_id")
-        .into_no_null_iter()
-        .map(|s| s.to_string())
-        .collect();
-
-    // Collect each list element into a Vec<f64>.
-    let y_lists: Vec<Vec<f64>> = y_col
-        .list()
-        .expect("expected a List type for y")
-        .into_iter()
-        .map(|opt_series| {
-            let series = opt_series.expect("null entry in 'y' list column");
-            series
-                .f64()
-                .expect("expected a f64 Series inside the list")
-                .into_no_null_iter()
-                .collect::<Vec<f64>>()
-        })
-        .collect();
-
-    // Sanity-check that we have the same number of ids and y vectors.
-    assert_eq!(unique_ids.len(), y_lists.len(), "Mismatched lengths in unique_ids and y_lists");
-
-    // Build the HashMap in parallel.
-    let hashmap: HashMap<String, Vec<f64>> = (0..unique_ids.len())
-        .into_par_iter()
-        .map(|i| (unique_ids[i].clone(), y_lists[i].clone()))
-        .collect();
-    hashmap
 }
 
 /// Compute pairwise MSM distances between time series in two DataFrames,
@@ -176,7 +124,7 @@ pub fn compute_pairwise_msm(input1: PyDataFrame, input2: PyDataFrame, c: Option<
             // Clone the Arc pointers for use in the inner closure.
             let map_a = Arc::clone(&map_a);
             let map_b = Arc::clone(&map_b);
-            // Capture g_value for the inner closure
+            // Capture c_value for the inner closure
             let c = c_value;
 
             right_series_by_key

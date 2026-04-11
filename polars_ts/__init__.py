@@ -1,4 +1,6 @@
 from polars_ts.metrics import Metrics  # noqa
+from polars_ts.decomposition import fourier_decomposition, seasonal_decomposition, seasonal_decompose_features  # noqa
+from polars_ts.models import SCUM  # noqa
 
 from pathlib import Path
 from polars_ts_rs.polars_ts_rs import (
@@ -23,6 +25,12 @@ __all__ = [
     "compute_pairwise_erp",
     "compute_pairwise_lcss",
     "compute_pairwise_twe",
+    "mann_kendall",
+    "fourier_decomposition",
+    "seasonal_decomposition",
+    "seasonal_decompose_features",
+    "Metrics",
+    "SCUM",
 ]
 
 import polars as pl

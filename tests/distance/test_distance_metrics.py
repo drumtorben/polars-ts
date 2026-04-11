@@ -7,69 +7,7 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_twe,
 )
 
-
-# ---------------------------------------------------------------------------
-# Fixtures
-# ---------------------------------------------------------------------------
-
-@pytest.fixture
-def two_series():
-    """Two simple time series A and B that differ by one point."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4,
-        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0],
-    })
-
-
-@pytest.fixture
-def three_series():
-    """Three time series: A ascending, B similar to A, C reversed."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
-        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0],
-    })
-
-
-@pytest.fixture
-def identical_series():
-    """Two identical time series."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4,
-        "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0],
-    })
-
-
-@pytest.fixture
-def single_series():
-    """A single time series — no pairs to compare."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4,
-        "y": [1.0, 2.0, 3.0, 4.0],
-    })
-
-
-@pytest.fixture
-def int_id_series():
-    """Time series with integer unique_id."""
-    return pl.DataFrame({
-        "unique_id": [1] * 4 + [2] * 4,
-        "y": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
-    })
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def _to_dict(df: pl.DataFrame) -> dict:
-    """Convert pairwise result to {(id1, id2): distance} dict, sorted keys."""
-    rows = df.to_dicts()
-    dist_col = [c for c in df.columns if c not in ("id_1", "id_2")][0]
-    result = {}
-    for r in rows:
-        key = tuple(sorted([str(r["id_1"]), str(r["id_2"])]))
-        result[key] = r[dist_col]
-    return result
+from tests.distance.conftest import _to_dict
 
 
 # ===========================================================================
@@ -128,7 +66,7 @@ class TestERP:
 
     def test_no_duplicate_pairs(self, three_series):
         result = compute_pairwise_erp(three_series, three_series)
-        # 3 series → 3 unique pairs
+        # 3 series -> 3 unique pairs
         assert result.height == 3
 
     def test_single_series_empty_result(self, single_series):
@@ -158,13 +96,13 @@ class TestLCSS:
     def test_basic_distance(self, two_series):
         result = compute_pairwise_lcss(two_series, two_series, epsilon=0.5)
         d = _to_dict(result)
-        # A=[1,2,3,4] B=[1,2,3,5]: 3 of 4 match within 0.5 → distance = 1-3/4 = 0.25
+        # A=[1,2,3,4] B=[1,2,3,5]: 3 of 4 match within 0.5 -> distance = 1-3/4 = 0.25
         assert d[("A", "B")] == 0.25
 
     def test_large_epsilon_all_match(self, three_series):
         result = compute_pairwise_lcss(three_series, three_series, epsilon=100.0)
         d = _to_dict(result)
-        # With huge epsilon everything matches → distance = 0
+        # With huge epsilon everything matches -> distance = 0
         for v in d.values():
             assert v == 0.0
 
@@ -175,7 +113,7 @@ class TestLCSS:
         })
         result = compute_pairwise_lcss(df, df, epsilon=0.001)
         d = _to_dict(result)
-        assert d[("A", "B")] == 1.0  # no matches → max distance
+        assert d[("A", "B")] == 1.0  # no matches -> max distance
 
     def test_range_zero_to_one(self, three_series):
         result = compute_pairwise_lcss(three_series, three_series)
@@ -231,7 +169,7 @@ class TestTWE:
     def test_basic_distance(self, two_series):
         result = compute_pairwise_twe(two_series, two_series)
         d = _to_dict(result)
-        assert d[("A", "B")] > 0  # not identical → positive distance
+        assert d[("A", "B")] > 0  # not identical -> positive distance
 
     def test_reversed_series_larger(self, three_series):
         result = compute_pairwise_twe(three_series, three_series)
