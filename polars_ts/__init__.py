@@ -37,7 +37,8 @@ import polars as pl
 from polars._typing import IntoExpr
 from polars.plugins import register_plugin_function
 
-PLUGIN_PATH = Path(__file__).parent
+import polars_ts_rs as _rs_mod
+PLUGIN_PATH = Path(_rs_mod.__file__).parent
 
 
 def mann_kendall(expr: IntoExpr) -> pl.Expr:
