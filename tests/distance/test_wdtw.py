@@ -1,5 +1,4 @@
 import polars as pl
-import pytest
 from polars_ts_rs.polars_ts_rs import compute_pairwise_wdtw
 
 from tests.distance.conftest import _to_dict
@@ -75,14 +74,18 @@ class TestWDTWProperties:
         assert d[("A", "C")] > d[("A", "B")]
 
     def test_different_dataframes(self):
-        df1 = pl.DataFrame({
-            "unique_id": ["X"] * 4,
-            "y": [1.0, 2.0, 3.0, 4.0],
-        })
-        df2 = pl.DataFrame({
-            "unique_id": ["Y"] * 4,
-            "y": [4.0, 3.0, 2.0, 1.0],
-        })
+        df1 = pl.DataFrame(
+            {
+                "unique_id": ["X"] * 4,
+                "y": [1.0, 2.0, 3.0, 4.0],
+            }
+        )
+        df2 = pl.DataFrame(
+            {
+                "unique_id": ["Y"] * 4,
+                "y": [4.0, 3.0, 2.0, 1.0],
+            }
+        )
         result = compute_pairwise_wdtw(df1, df2)
         assert result.shape[0] == 1
         assert result["wdtw"][0] > 0

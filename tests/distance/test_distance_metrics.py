@@ -1,5 +1,4 @@
 import polars as pl
-import pytest
 from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_dtw,
     compute_pairwise_erp,
@@ -9,10 +8,10 @@ from polars_ts_rs.polars_ts_rs import (
 
 from tests.distance.conftest import _to_dict
 
-
 # ===========================================================================
 # ERP tests
 # ===========================================================================
+
 
 class TestERP:
     def test_identical_series_zero_distance(self, identical_series):
@@ -39,10 +38,12 @@ class TestERP:
     def test_gap_value_affects_distance(self):
         # Use series of different lengths to force insertions/deletions
         # where the gap value matters
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 5,
-            "y": [1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0, 5.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 5,
+                "y": [1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0, 5.0],
+            }
+        )
         d0 = _to_dict(compute_pairwise_erp(df, df, g=0.0))
         d5 = _to_dict(compute_pairwise_erp(df, df, g=5.0))
         # Different gap values should produce different distances
@@ -87,6 +88,7 @@ class TestERP:
 # LCSS tests
 # ===========================================================================
 
+
 class TestLCSS:
     def test_identical_series_zero_distance(self, identical_series):
         result = compute_pairwise_lcss(identical_series, identical_series, epsilon=0.01)
@@ -107,10 +109,12 @@ class TestLCSS:
             assert v == 0.0
 
     def test_tiny_epsilon_no_match(self):
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 3,
-            "y": [1.0, 2.0, 3.0, 10.0, 20.0, 30.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 3,
+                "y": [1.0, 2.0, 3.0, 10.0, 20.0, 30.0],
+            }
+        )
         result = compute_pairwise_lcss(df, df, epsilon=0.001)
         d = _to_dict(result)
         assert d[("A", "B")] == 1.0  # no matches -> max distance
@@ -159,6 +163,7 @@ class TestLCSS:
 # ===========================================================================
 # TWE tests
 # ===========================================================================
+
 
 class TestTWE:
     def test_identical_series_zero_distance(self, identical_series):
@@ -227,6 +232,7 @@ class TestTWE:
 # Cross-metric consistency tests
 # ===========================================================================
 
+
 class TestCrossMetric:
     def test_identical_all_zero(self, identical_series):
         """All metrics should return 0 for identical series."""
@@ -262,14 +268,18 @@ class TestCrossMetric:
 
     def test_cross_dataframe(self):
         """Test comparing series across two different DataFrames."""
-        df1 = pl.DataFrame({
-            "unique_id": ["X"] * 3,
-            "y": [1.0, 2.0, 3.0],
-        })
-        df2 = pl.DataFrame({
-            "unique_id": ["Y"] * 3,
-            "y": [3.0, 2.0, 1.0],
-        })
+        df1 = pl.DataFrame(
+            {
+                "unique_id": ["X"] * 3,
+                "y": [1.0, 2.0, 3.0],
+            }
+        )
+        df2 = pl.DataFrame(
+            {
+                "unique_id": ["Y"] * 3,
+                "y": [3.0, 2.0, 1.0],
+            }
+        )
         erp = compute_pairwise_erp(df1, df2)
         lcss = compute_pairwise_lcss(df1, df2)
         twe = compute_pairwise_twe(df1, df2)

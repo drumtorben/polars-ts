@@ -1,5 +1,4 @@
 import polars as pl
-import pytest
 from polars_ts_rs.polars_ts_rs import compute_pairwise_ddtw
 
 from tests.distance.conftest import _to_dict
@@ -59,37 +58,47 @@ class TestDDTWProperties:
 
     def test_different_dataframes(self):
         """Cross-DataFrame comparison should work."""
-        df1 = pl.DataFrame({
-            "unique_id": ["X"] * 6,
-            "y": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0],
-        })
-        df2 = pl.DataFrame({
-            "unique_id": ["Y"] * 6,
-            "y": [6.0, 5.0, 4.0, 3.0, 2.0, 1.0],
-        })
+        df1 = pl.DataFrame(
+            {
+                "unique_id": ["X"] * 6,
+                "y": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0],
+            }
+        )
+        df2 = pl.DataFrame(
+            {
+                "unique_id": ["Y"] * 6,
+                "y": [6.0, 5.0, 4.0, 3.0, 2.0, 1.0],
+            }
+        )
         result = compute_pairwise_ddtw(df1, df2)
         assert result.shape[0] == 1
         assert result["ddtw"][0] > 0
 
     def test_derivative_sensitivity(self):
         """DDTW should be sensitive to shape, not offset.
-        A constant offset should not affect the derivative."""
+
+        A constant offset should not affect the derivative.
+        """
         base = [1.0, 2.0, 3.0, 4.0, 5.0]
         shifted = [x + 100.0 for x in base]
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 5 + ["B"] * 5,
-            "y": base + shifted,
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 5 + ["B"] * 5,
+                "y": base + shifted,
+            }
+        )
         result = compute_pairwise_ddtw(df, df)
         d = _to_dict(result)
         assert d[("A", "B")] == 0.0  # same derivative
 
     def test_short_series_handled(self):
         """Series with < 3 points can't compute derivatives; DDTW returns inf."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 2 + ["B"] * 2,
-            "y": [1.0, 2.0, 3.0, 4.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 2 + ["B"] * 2,
+                "y": [1.0, 2.0, 3.0, 4.0],
+            }
+        )
         result = compute_pairwise_ddtw(df, df)
         d = _to_dict(result)
         # With only 2 points, derivative is empty → should return inf
