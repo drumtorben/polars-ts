@@ -8,8 +8,13 @@ import random
 from dataclasses import dataclass
 
 import polars as pl
-from statsforecast import StatsForecast
-from utilsforecast import losses
+
+try:
+    from statsforecast import StatsForecast
+    from utilsforecast import losses
+except ImportError:
+    StatsForecast = None
+    losses = None
 
 
 @dataclass

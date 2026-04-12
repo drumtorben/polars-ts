@@ -4,7 +4,17 @@ import polars as pl
 import pytest
 from polars.testing import assert_frame_equal
 
-from polars_ts.metrics.kaboudan import Kaboudan
+forecast_available = True
+try:
+    import statsforecast  # noqa: F401
+    import utilsforecast  # noqa: F401
+
+    from polars_ts.metrics.kaboudan import Kaboudan
+except ImportError:
+    forecast_available = False
+    Kaboudan = None
+
+pytestmark = pytest.mark.skipif(not forecast_available, reason="statsforecast/utilsforecast not installed")
 
 
 # Sample data for testing

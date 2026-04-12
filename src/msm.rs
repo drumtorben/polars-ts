@@ -1,12 +1,9 @@
-use polars::prelude::*;
-use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
-use pyo3::PyResult;
-use rayon::prelude::*;
-use crate::utils::{get_groups, df_to_hashmap, cast_column};
 
-/// Helper function to calculate the MSM cost
+use crate::utils::compute_pairwise;
+
+/// Helper function to calculate the MSM cost.
 fn msm_cost(x: f64, y: f64, z: f64, c: f64) -> f64 {
     if (y <= x && x <= z) || (y >= x && x >= z) {
         return c;
@@ -14,148 +11,44 @@ fn msm_cost(x: f64, y: f64, z: f64, c: f64) -> f64 {
     c + (x - y).abs().min((x - z).abs())
 }
 
-/// Optimized MSM distance implementation using two rows.
-/// This version uses O(m) memory instead of allocating the full n*m matrix.
+/// Optimized MSM distance using O(m) memory.
 fn msm_distance(a: &[f64], b: &[f64], c: f64) -> f64 {
     let n = a.len();
     let m = b.len();
-
-    // Early return for empty sequences
     if n == 0 || m == 0 {
         return 0.0;
     }
 
     let mut prev = vec![f64::MAX; m];
     let mut curr = vec![f64::MAX; m];
-
-    // Initialize first cell
     prev[0] = (a[0] - b[0]).abs();
 
-    // Initialize first row
     for j in 1..m {
-        let cost = msm_cost(b[j], a[0], b[j-1], c);
-        prev[j] = prev[j-1] + cost;
+        prev[j] = prev[j - 1] + msm_cost(b[j], a[0], b[j - 1], c);
     }
 
-    // Main dynamic programming loop
     for i in 1..n {
-        // Initialize first column of current row
-        let cost = msm_cost(a[i], a[i-1], b[0], c);
-        curr[0] = prev[0] + cost;
-
+        curr[0] = prev[0] + msm_cost(a[i], a[i - 1], b[0], c);
         for j in 1..m {
-            // Calculate the three possible transitions
-            let d1 = prev[j-1] + (a[i] - b[j]).abs();  // Match
-            let d2 = prev[j] + msm_cost(a[i], a[i-1], b[j], c);  // Delete
-            let d3 = curr[j-1] + msm_cost(b[j], a[i], b[j-1], c);  // Insert
-
-            // Take the minimum cost
+            let d1 = prev[j - 1] + (a[i] - b[j]).abs();
+            let d2 = prev[j] + msm_cost(a[i], a[i - 1], b[j], c);
+            let d3 = curr[j - 1] + msm_cost(b[j], a[i], b[j - 1], c);
             curr[j] = d1.min(d2).min(d3);
         }
-
-        // Swap rows for next iteration
         std::mem::swap(&mut prev, &mut curr);
     }
-
-    // Final MSM distance is in the bottom-right corner
-    prev[m-1]
+    prev[m - 1]
 }
 
-/// Compute pairwise MSM distances between time series in two DataFrames,
-/// using extensive parallelism.
-///
-/// # Arguments
-/// * `input1` - First PyDataFrame with columns "unique_id" and "y".
-/// * `input2` - Second PyDataFrame with columns "unique_id" and "y".
-/// * `c` - Cost parameter for MSM distance (default 1.0).
-///
-/// # Returns
-/// A PyDataFrame with columns "id_1", "id_2", and "msm".
 #[pyfunction]
 #[pyo3(signature = (input1, input2, c=None))]
-pub fn compute_pairwise_msm(input1: PyDataFrame, input2: PyDataFrame, c: Option<f64>) -> PyResult<PyDataFrame> {
-    // Set default value for c parameter
+pub fn compute_pairwise_msm(
+    input1: PyDataFrame,
+    input2: PyDataFrame,
+    c: Option<f64>,
+) -> PyResult<PyDataFrame> {
     let c_value = c.unwrap_or(1.0);
-
-    // Convert PyDataFrames to Polars DataFrames.
-    let df_1: DataFrame = input1.into();
-    let df_2: DataFrame = input2.into();
-
-    let uid_a_dtype = df_1.column("unique_id")
-        .expect("df_a must have unique_id")
-        .dtype().clone();
-
-    let uid_b_dtype = df_2.column("unique_id")
-        .expect("df_b must have unique_id")
-        .dtype().clone();
-
-    let df_a = cast_column(&df_1, "unique_id", DataType::String).unwrap();
-
-    let df_b = cast_column(&df_2, "unique_id", DataType::String).unwrap();
-
-    // Group each DataFrame by "unique_id" and aggregate the "y" column.
-    let grouped_a = get_groups(&df_a).unwrap();
-    let grouped_b = get_groups(&df_b).unwrap();
-
-    // Build HashMaps mapping unique_id -> time series (Vec<f64>) for each input.
-    let raw_map_a = df_to_hashmap(&grouped_a);
-    let raw_map_b = df_to_hashmap(&grouped_b);
-
-    // Wrap the maps in an Arc so that they can be shared safely across threads.
-    let map_a = Arc::new(raw_map_a);
-    let map_b = Arc::new(raw_map_b);
-
-    // Create vectors of references for the keys and series. These are now references into the
-    // data held by the Arc-ed maps.
-    let left_series_by_key: Vec<(&String, &Vec<f64>)> = map_a.iter().collect();
-    let right_series_by_key: Vec<(&String, &Vec<f64>)> = map_b.iter().collect();
-
-    // Compute pairwise MSM distances: id_1 always comes from left, id_2 from right.
-    let results: Vec<(String, String, f64)> = left_series_by_key
-        .par_iter()
-        .flat_map(|&(left_key, left_series)| {
-            // Clone the Arc pointers for use in the inner closure.
-            let map_a = Arc::clone(&map_a);
-            let map_b = Arc::clone(&map_b);
-            // Capture c_value for the inner closure
-            let c = c_value;
-
-            right_series_by_key
-                .par_iter()
-                .filter_map(move |&(right_key, right_series)| {
-                    // Skip self-comparisons.
-                    if left_key == right_key {
-                        return None;
-                    }
-                    // If both keys are common (i.e. appear in both maps), enforce an ordering to avoid duplicates.
-                    if map_b.contains_key(left_key) && map_a.contains_key(right_key) {
-                        if left_key >= right_key {
-                            return None;
-                        }
-                    }
-                    // Compute the MSM distance.
-                    let distance = msm_distance(left_series, right_series, c);
-                    Some((left_key.clone(), right_key.clone(), distance))
-                })
-        })
-        .collect();
-
-    // Build output columns.
-    let id1s: Vec<String> = results.iter().map(|(id1, _, _)| id1.clone()).collect();
-    let id2s: Vec<String> = results.iter().map(|(_, id2, _)| id2.clone()).collect();
-    let msm_vals: Vec<f64> = results.iter().map(|(_, _, msm)| *msm).collect();
-
-    // Create a new Polars DataFrame.
-    let columns = vec![
-        Column::new("id_1".into(), id1s),
-        Column::new("id_2".into(), id2s),
-        Column::new("msm".into(), msm_vals),
-    ];
-    let out_df = DataFrame::new(columns).unwrap();
-    let mut casted_out_df = out_df;
-    let id1_casted = casted_out_df.column("id_1").unwrap().cast(&uid_a_dtype).unwrap().take_materialized_series();
-    let _ = casted_out_df.replace("id_1", id1_casted).unwrap();
-    let id2_casted = casted_out_df.column("id_2").unwrap().cast(&uid_b_dtype).unwrap().take_materialized_series();
-    let _ = casted_out_df.replace("id_2", id2_casted).unwrap();
-    Ok(PyDataFrame(casted_out_df))
+    compute_pairwise(input1, input2, "msm", move |a, b| {
+        msm_distance(a, b, c_value)
+    })
 }

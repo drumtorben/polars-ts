@@ -5,6 +5,14 @@ import pytest
 
 from polars_ts.decomposition.fourier_decomposition import fourier_decomposition  # Update this with the correct import
 
+pds_available = True
+try:
+    import polars_ds  # noqa: F401
+except ImportError:
+    pds_available = False
+
+pytestmark = pytest.mark.skipif(not pds_available, reason="polars-ds not installed")
+
 
 @pytest.fixture
 def sample_df():

@@ -59,7 +59,12 @@ pub fn mann_kendall(inputs: &[Series]) -> PolarsResult<Series> {
     let mut s_stat = 0i64;
     for (i, &val) in vals.iter().enumerate().rev() {
         // Binary search to find the 1-based rank
-        let c = unique.binary_search(&OrderedFloat(val)).unwrap() + 1;
+        // Safety: val is guaranteed to be in unique since unique was built from vals.
+        // Use unwrap_or to avoid any theoretical panic (e.g. NaN edge cases).
+        let c = match unique.binary_search(&OrderedFloat(val)) {
+            Ok(idx) => idx + 1,
+            Err(_) => continue,  // skip values not found (should never happen)
+        };
         let less = query(&fen, c - 1);
         let equal = query(&fen, c) - less;
         s_stat += (n as i64 - 1 - i as i64) - 2 * less - equal;

@@ -2,8 +2,13 @@ from typing import List, Literal, Optional
 
 import polars as pl
 import polars.selectors as cs
-from statsforecast.feature_engineering import mstl_decomposition
-from statsforecast.models import MSTL
+
+try:
+    from statsforecast.feature_engineering import mstl_decomposition
+    from statsforecast.models import MSTL
+except ImportError:
+    mstl_decomposition = None
+    MSTL = None
 
 from polars_ts.decomposition.seasonal_decomposition import seasonal_decomposition
 
@@ -56,28 +61,27 @@ def seasonal_decompose_features(
     """
     # Check if necessary columns exist in the dataframe
     required_columns = {id_col, target_col, time_col}
-
-    assert required_columns.issubset(df.columns), KeyError(
-        f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame."
-    )
+    missing = required_columns.difference(df.columns)
+    if missing:
+        raise KeyError(f"Columns {missing} are missing from the DataFrame.")
 
     # Validate ts_freq: ensure it's a positive integer
     if not isinstance(ts_freq, int) or ts_freq <= 0:
         raise ValueError(f"Invalid ts_freq '{ts_freq}'. It must be a positive integer.")
 
-        # Ensure the dataframe is not empty
+    # Ensure the dataframe is not empty
     if len(df) == 0:
         raise ValueError("The DataFrame is empty. Cannot perform decomposition on an empty DataFrame.")
 
-    assert mode in ["mstl", "simple"], ValueError(
-        'Must Pick a mode "mstl" or "simple" to specify type of decomposition...'
-    )
+    if mode not in ["mstl", "simple"]:
+        raise ValueError('Must Pick a mode "mstl" or "simple" to specify type of decomposition...')
 
     if seasonal_freqs is None and mode == "mstl":
         raise ValueError("Must Specify atleast one seasonal freq in MSTL mode...")
 
     if seasonal_freqs is not None:
-        assert all(isinstance(freq, int) for freq in seasonal_freqs), "All Seasonal Frequencies must be integers"
+        if not all(isinstance(freq, int) for freq in seasonal_freqs):
+            raise TypeError("All Seasonal Frequencies must be integers")
 
     # Compute Trend Strength as MAX( 0, 1 - Var(R(t)) / Var(T(t) + R(t)))
     trend_strength_expr = (
@@ -116,16 +120,20 @@ def seasonal_decompose_features(
 
     # MSTL Mode (Only populate seasonal_freqs if mstl is active)
     elif mode == "mstl":
+        if mstl_decomposition is None or MSTL is None:
+            raise ImportError(
+                "statsforecast is required for MSTL decomposition. "
+                "Install it with: pip install polars-timeseries[forecast]"
+            )
+
         if seasonal_freqs is None:
             raise ValueError("For 'mstl' mode, 'seasonal_freqs' must be provided.")
 
         # map integer frequency to known datetime offset in polars:
-
         freq_mapper = {12: "1mo", 52: "1w", 4: "1q", 24: "1h", 365: "1d"}
 
-        assert ts_freq in freq_mapper.keys(), ValueError(
-            f"Frequency must be one of {freq_mapper.keys()} for MSTL decompose.."
-        )
+        if ts_freq not in freq_mapper:
+            raise ValueError(f"Frequency must be one of {list(freq_mapper.keys())} for MSTL decompose..")
 
         # force columns to be renamed
         col_remapper = {id_col: "unique_id", time_col: "ds", target_col: "y"}
