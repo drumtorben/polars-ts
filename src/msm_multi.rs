@@ -3,7 +3,7 @@ use std::sync::Arc;
 use pyo3::prelude::*;
 use pyo3_polars::PyDataFrame;
 use rayon::prelude::*;
-use crate::utils::{get_groups_multivariate, df_to_hashmap_multivariate};
+use crate::utils::{get_groups_multivariate, df_to_hashmap_multivariate, cast_column};
 
 /// Compute Manhattan distance between two vectors.
 fn manhattan_distance(a: &[f64], b: &[f64]) -> f64 {
@@ -123,16 +123,12 @@ pub fn compute_pairwise_msm_multi(
         .dtype().clone();
 
     // Cast unique_id to String.
-    let df_a = df_1.lazy()
-        .with_column(col("unique_id").cast(DataType::String))
-        .collect().unwrap();
-    let df_b = df_2.lazy()
-        .with_column(col("unique_id").cast(DataType::String))
-        .collect().unwrap();
+    let df_a = cast_column(&df_1, "unique_id", DataType::String).unwrap();
+    let df_b = cast_column(&df_2, "unique_id", DataType::String).unwrap();
 
     // Group each DataFrame by "unique_id" and aggregate the y-columns.
-    let grouped_a = get_groups_multivariate(&df_a).unwrap().collect().unwrap();
-    let grouped_b = get_groups_multivariate(&df_b).unwrap().collect().unwrap();
+    let grouped_a = get_groups_multivariate(&df_a).unwrap();
+    let grouped_b = get_groups_multivariate(&df_b).unwrap();
 
     // Convert grouped DataFrames into HashMaps mapping unique_id -> multivariate time series.
     let raw_map_a = df_to_hashmap_multivariate(&grouped_a);
@@ -181,12 +177,10 @@ pub fn compute_pairwise_msm_multi(
         Column::new("msm_multi".into(), msm_vals),
     ];
     let out_df = DataFrame::new(columns).unwrap();
-    let casted_out_df = out_df.clone().lazy()
-        .with_columns(vec![
-            col("id_1").cast(uid_a_dtype),
-            col("id_2").cast(uid_b_dtype),
-        ])
-        .collect()
-        .unwrap();
+    let mut casted_out_df = out_df;
+    let id1_casted = casted_out_df.column("id_1").unwrap().cast(&uid_a_dtype).unwrap().take_materialized_series();
+    let _ = casted_out_df.replace("id_1", id1_casted).unwrap();
+    let id2_casted = casted_out_df.column("id_2").unwrap().cast(&uid_b_dtype).unwrap().take_materialized_series();
+    let _ = casted_out_df.replace("id_2", id2_casted).unwrap();
     Ok(PyDataFrame(casted_out_df))
 }

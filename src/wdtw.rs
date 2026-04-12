@@ -6,7 +6,7 @@ use pyo3::PyResult;
 use rayon::prelude::*;
 
 
-use crate::utils::{get_groups, df_to_hashmap};
+use crate::utils::{get_groups, df_to_hashmap, cast_column};
 
 /// Precompute weight vector for WDTW calculation.
 /// The weight vector is calculated as:
@@ -155,19 +155,13 @@ pub fn compute_pairwise_wdtw(
         .expect("df_b must have unique_id")
         .dtype().clone();
 
-    let df_a = df_1
-        .lazy()
-        .with_column(col("unique_id").cast(DataType::String))
-        .collect().unwrap();
+    let df_a = cast_column(&df_1, "unique_id", DataType::String).unwrap();
 
-    let df_b = df_2
-        .lazy()
-        .with_column(col("unique_id").cast(DataType::String))
-        .collect().unwrap();
+    let df_b = cast_column(&df_2, "unique_id", DataType::String).unwrap();
 
     // Group each DataFrame by "unique_id" and aggregate the "y" column.
-    let grouped_a = get_groups(&df_a).unwrap().collect().unwrap();
-    let grouped_b = get_groups(&df_b).unwrap().collect().unwrap();
+    let grouped_a = get_groups(&df_a).unwrap();
+    let grouped_b = get_groups(&df_b).unwrap();
 
     // Build HashMaps mapping unique_id -> time series (Vec<f64>) for each input.
     let raw_map_a = df_to_hashmap(&grouped_a);
@@ -223,10 +217,10 @@ pub fn compute_pairwise_wdtw(
         Column::new("wdtw".into(), wdtw_vals),
     ];
     let out_df = DataFrame::new(columns).unwrap();
-    let casted_out_df = out_df.clone().lazy()
-        .with_columns(vec![
-            col("id_1").cast(uid_a_dtype),
-            col("id_2").cast(uid_b_dtype),
-        ]).collect().unwrap();
+    let mut casted_out_df = out_df;
+    let id1_casted = casted_out_df.column("id_1").unwrap().cast(&uid_a_dtype).unwrap().take_materialized_series();
+    let _ = casted_out_df.replace("id_1", id1_casted).unwrap();
+    let id2_casted = casted_out_df.column("id_2").unwrap().cast(&uid_b_dtype).unwrap().take_materialized_series();
+    let _ = casted_out_df.replace("id_2", id2_casted).unwrap();
     Ok(PyDataFrame(casted_out_df))
 }
