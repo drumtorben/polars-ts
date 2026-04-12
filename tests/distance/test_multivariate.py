@@ -7,64 +7,75 @@ from polars_ts_rs.polars_ts_rs import (
 
 from tests.distance.conftest import _to_dict
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture
 def two_multi_series():
     """Two multivariate time series with 2 dimensions."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4,
-        "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0],
-        "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 0.0],
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4,
+            "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0],
+            "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 0.0],
+        }
+    )
 
 
 @pytest.fixture
 def three_multi_series():
     """Three multivariate time series with 2 dimensions."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
-        "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0],
-        "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 0.0, 1.0, 2.0, 3.0, 4.0],
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
+            "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 5.0, 4.0, 3.0, 2.0, 1.0],
+            "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 0.0, 1.0, 2.0, 3.0, 4.0],
+        }
+    )
 
 
 @pytest.fixture
 def identical_multi_series():
     """Two identical multivariate time series."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4,
-        "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0],
-        "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 1.0],
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4,
+            "y1": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0],
+            "y2": [4.0, 3.0, 2.0, 1.0, 4.0, 3.0, 2.0, 1.0],
+        }
+    )
 
 
 @pytest.fixture
 def single_multi_series():
-    """A single multivariate time series."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4,
-        "y1": [1.0, 2.0, 3.0, 4.0],
-        "y2": [4.0, 3.0, 2.0, 1.0],
-    })
+    """Return a single multivariate time series."""
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4,
+            "y1": [1.0, 2.0, 3.0, 4.0],
+            "y2": [4.0, 3.0, 2.0, 1.0],
+        }
+    )
 
 
 @pytest.fixture
 def int_id_multi_series():
     """Multivariate time series with integer unique_id."""
-    return pl.DataFrame({
-        "unique_id": [1] * 4 + [2] * 4,
-        "y1": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
-        "y2": [4.0, 3.0, 2.0, 1.0, 1.0, 2.0, 3.0, 4.0],
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": [1] * 4 + [2] * 4,
+            "y1": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
+            "y2": [4.0, 3.0, 2.0, 1.0, 1.0, 2.0, 3.0, 4.0],
+        }
+    )
 
 
 # ===========================================================================
 # Multivariate DTW tests
 # ===========================================================================
+
 
 class TestMultivariateDTW:
     def test_identical_series_zero(self, identical_multi_series):
@@ -139,12 +150,14 @@ class TestMultivariateDTW:
 
     def test_three_dimensions(self):
         """Works with 3+ dimension columns."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 3,
-            "x": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
-            "y": [4.0, 5.0, 6.0, 6.0, 5.0, 4.0],
-            "z": [7.0, 8.0, 9.0, 9.0, 8.0, 7.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 3,
+                "x": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
+                "y": [4.0, 5.0, 6.0, 6.0, 5.0, 4.0],
+                "z": [7.0, 8.0, 9.0, 9.0, 8.0, 7.0],
+            }
+        )
         result = compute_pairwise_dtw_multi(df, df)
         assert result.shape[0] == 1
         assert result["dtw_multi"][0] > 0
@@ -153,6 +166,7 @@ class TestMultivariateDTW:
 # ===========================================================================
 # Multivariate MSM tests
 # ===========================================================================
+
 
 class TestMultivariateMSM:
     def test_identical_series_zero(self, identical_multi_series):
@@ -198,11 +212,13 @@ class TestMultivariateMSM:
 
     def test_c_parameter_affects_distance(self):
         """Different c values should produce different distances when inserts/deletes are needed."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 5,
-            "y1": [1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0, 5.0],
-            "y2": [3.0, 2.0, 1.0, 3.0, 2.0, 1.0, 0.0, -1.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 5,
+                "y1": [1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0, 5.0],
+                "y2": [3.0, 2.0, 1.0, 3.0, 2.0, 1.0, 0.0, -1.0],
+            }
+        )
         d_low = _to_dict(compute_pairwise_msm_multi(df, df, c=0.1))
         d_high = _to_dict(compute_pairwise_msm_multi(df, df, c=10.0))
         assert d_low[("A", "B")] != d_high[("A", "B")]
@@ -220,12 +236,14 @@ class TestMultivariateMSM:
 
     def test_three_dimensions(self):
         """Works with 3+ dimension columns."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 3,
-            "x": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
-            "y": [4.0, 5.0, 6.0, 6.0, 5.0, 4.0],
-            "z": [7.0, 8.0, 9.0, 9.0, 8.0, 7.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 3,
+                "x": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
+                "y": [4.0, 5.0, 6.0, 6.0, 5.0, 4.0],
+                "z": [7.0, 8.0, 9.0, 9.0, 8.0, 7.0],
+            }
+        )
         result = compute_pairwise_msm_multi(df, df)
         assert result.shape[0] == 1
         assert result["msm_multi"][0] > 0

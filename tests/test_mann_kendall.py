@@ -1,5 +1,6 @@
 import polars as pl
 import pytest
+
 from polars_ts import mann_kendall
 
 
@@ -55,6 +56,7 @@ class TestMannKendallRange:
     def test_result_between_minus_one_and_one(self):
         """The normalized statistic should always be in [-1, 1]."""
         import random
+
         random.seed(42)
         values = [random.gauss(0, 1) for _ in range(50)]
         df = pl.DataFrame({"y": values})
@@ -78,13 +80,13 @@ class TestMannKendallRange:
 class TestMannKendallWithGroupBy:
     def test_group_by_usage(self):
         """Mann-Kendall should work inside a group_by context."""
-        df = pl.DataFrame({
-            "group": ["A"] * 5 + ["B"] * 5,
-            "y": [1.0, 2.0, 3.0, 4.0, 5.0, 5.0, 4.0, 3.0, 2.0, 1.0],
-        })
-        result = df.group_by("group").agg(
-            mann_kendall("y").alias("mk")
-        ).sort("group")
+        df = pl.DataFrame(
+            {
+                "group": ["A"] * 5 + ["B"] * 5,
+                "y": [1.0, 2.0, 3.0, 4.0, 5.0, 5.0, 4.0, 3.0, 2.0, 1.0],
+            }
+        )
+        result = df.group_by("group").agg(mann_kendall("y").alias("mk")).sort("group")
 
         # Explode the aggregated list column to get scalar values
         result = result.explode("mk")

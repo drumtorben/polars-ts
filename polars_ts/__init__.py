@@ -34,10 +34,10 @@ __all__ = [
 ]
 
 import polars as pl
+import polars_ts_rs as _rs_mod
 from polars._typing import IntoExpr
 from polars.plugins import register_plugin_function
 
-import polars_ts_rs as _rs_mod
 PLUGIN_PATH = Path(_rs_mod.__file__).parent
 
 

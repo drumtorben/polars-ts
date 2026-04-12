@@ -9,11 +9,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "polars>=1.30.0,<2.0.0",
-    "iprogress>=0.4",
-    "loguru>=0.7.3",
     "statsforecast>=2.0.0",
-    "pyarrow>=20.0.0",
-    "maturin>=1.9.0",
     "polars-ds>=0.10.0",
     "statsmodels>=0.14.5",
 ]
