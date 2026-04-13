@@ -36,7 +36,9 @@ theme:
 
 nav:
   - Home: index.md
-  - Reference: reference/
+  - Reference:
+      - Python API: reference/
+      - Rust API: reference/rust/
   - Contributing: contributing.md
 
 plugins:
@@ -45,6 +47,7 @@ plugins:
   - gen-files:
       scripts:
         - docs/gen_ref_pages.py
+        - docs/gen_rust_ref_pages.py
   - literate-nav:
       nav_file: SUMMARY.md
   - section-index
@@ -80,3 +83,4 @@ markdown_extensions:
 
 watch:
   - polars_ts
+  - src
