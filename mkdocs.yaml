@@ -36,6 +36,9 @@ theme:
 
 nav:
   - Home: index.md
+  - Guides:
+      - Distance Metrics: distance-metrics.md
+      - Clustering Guide: clustering-guide.md
   - Reference:
       - Python API: reference/
       - Rust API: reference/rust/

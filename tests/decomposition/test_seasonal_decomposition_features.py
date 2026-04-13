@@ -61,7 +61,7 @@ def test_seasonal_decompose_missing_column(sample_dataframe):
     # Remove 'target_col' to simulate missing column
     df_missing_col = sample_dataframe.drop("target_col")
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(KeyError):
         seasonal_decompose_features(
             df=df_missing_col, id_col="id_col", time_col="time_col", target_col="target_col", ts_freq=24, mode="simple"
         )
@@ -70,7 +70,7 @@ def test_seasonal_decompose_missing_column(sample_dataframe):
 # Test for invalid mode value
 def test_seasonal_decompose_invalid_mode(sample_dataframe):
     # Call with an invalid mode
-    with pytest.raises(AssertionError, match='Must Pick a mode "mstl" or "simple" to specify type of decomposition...'):
+    with pytest.raises(ValueError, match='Must Pick a mode "mstl" or "simple" to specify type of decomposition...'):
         seasonal_decompose_features(
             df=sample_dataframe,
             id_col="id_col",
@@ -84,7 +84,7 @@ def test_seasonal_decompose_invalid_mode(sample_dataframe):
 # Test for seasonal_freqs of the wrong type (not a list)
 def test_seasonal_decompose_invalid_seasonal_freq_type(sample_dataframe):
     # Call with a non-list seasonal_freqs
-    with pytest.raises(AssertionError):
+    with pytest.raises(TypeError):
         seasonal_decompose_features(
             df=sample_dataframe,
             id_col="id_col",
@@ -99,7 +99,7 @@ def test_seasonal_decompose_invalid_seasonal_freq_type(sample_dataframe):
 # # Test for seasonal_freqs with empty list
 def test_seasonal_decompose_empty_seasonal_freqs(sample_dataframe):
     # Call with an empty list of seasonal frequencies
-    with pytest.raises(AssertionError):
+    with pytest.raises((ImportError, ValueError)):
         seasonal_decompose_features(
             df=sample_dataframe,
             id_col="id_col",

@@ -1607,9 +1607,20 @@ version = "0.3.1"
 source = { editable = "." }
 dependencies = [
     { name = "polars" },
+]
+
+[package.optional-dependencies]
+all = [
     { name = "polars-ds" },
     { name = "statsforecast" },
-    { name = "statsmodels" },
+    { name = "utilsforecast" },
+]
+decomposition = [
+    { name = "polars-ds" },
+]
+forecast = [
+    { name = "statsforecast" },
+    { name = "utilsforecast" },
 ]
 
 [package.dev-dependencies]
@@ -1635,10 +1646,12 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "polars", specifier = ">=1.30.0,<2.0.0" },
-    { name = "polars-ds", specifier = ">=0.10.0" },
-    { name = "statsforecast", specifier = ">=2.0.0" },
-    { name = "statsmodels", specifier = ">=0.14.5" },
+    { name = "polars-ds", marker = "extra == 'decomposition'", specifier = ">=0.10.0" },
+    { name = "polars-timeseries", extras = ["forecast", "decomposition"], marker = "extra == 'all'" },
+    { name = "statsforecast", marker = "extra == 'forecast'", specifier = ">=2.0.0" },
+    { name = "utilsforecast", marker = "extra == 'forecast'", specifier = ">=0.2.0" },
 ]
+provides-extras = ["forecast", "decomposition", "all"]
 
 [package.metadata.requires-dev]
 dev = [

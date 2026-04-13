@@ -36,9 +36,9 @@ def seasonal_decomposition(
     # Check if the necessary columns exist in the dataframe
     required_columns = {id_col, target_col, time_col}
 
-    assert required_columns.issubset(df.columns), AssertionError(
-        f"Columns {required_columns.difference(df.columns)} are missing from the DataFrame."
-    )
+    missing = required_columns.difference(df.columns)
+    if missing:
+        raise KeyError(f"Columns {missing} are missing from the DataFrame.")
 
     # Ensure the dataframe is not empty
     if len(df) == 0:

@@ -9,10 +9,13 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "polars>=1.30.0,<2.0.0",
-    "statsforecast>=2.0.0",
-    "polars-ds>=0.10.0",
-    "statsmodels>=0.14.5",
+    "pyarrow>=15.0.0",
 ]
+
+[project.optional-dependencies]
+forecast = ["statsforecast>=2.0.0", "utilsforecast>=0.2.0"]
+decomposition = ["polars-ds>=0.10.0"]
+all = ["polars-timeseries[forecast,decomposition]"]
 
 [project.urls]
 Source = "https://github.com/drumtorben/polars-ts.git"
