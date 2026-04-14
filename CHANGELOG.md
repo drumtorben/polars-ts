@@ -1,4 +1,4 @@
-## v0.3.2 (Unreleased)
+## v0.4.0 (2026-04-14)
 
 ### Features
 
