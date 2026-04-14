@@ -9,9 +9,7 @@ def clusterable_series():
     """Three pairs of similar series: (A,B) close, (C,D) close, (E,F) close."""
     return pl.DataFrame(
         {
-            "unique_id": (
-                ["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5 + ["E"] * 5 + ["F"] * 5
-            ),
+            "unique_id": (["A"] * 5 + ["B"] * 5 + ["C"] * 5 + ["D"] * 5 + ["E"] * 5 + ["F"] * 5),
             "y": (
                 [1.0, 1.0, 1.0, 1.0, 1.0]  # A - flat low
                 + [1.0, 1.0, 1.0, 1.0, 1.1]  # B - flat low (close to A)
@@ -49,7 +47,7 @@ class TestKmedoidsOutput:
 class TestKmedoidsCorrectness:
     def test_similar_series_same_cluster(self, clusterable_series):
         result = kmedoids(clusterable_series, k=3)
-        cluster_map = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list()))
+        cluster_map = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False))
         # A and B should be in the same cluster
         assert cluster_map["A"] == cluster_map["B"]
         # C and D should be in the same cluster
@@ -59,7 +57,7 @@ class TestKmedoidsCorrectness:
 
     def test_dissimilar_series_different_clusters(self, clusterable_series):
         result = kmedoids(clusterable_series, k=3)
-        cluster_map = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list()))
+        cluster_map = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False))
         # The three groups should be in different clusters
         assert len({cluster_map["A"], cluster_map["C"], cluster_map["E"]}) == 3
 
@@ -109,7 +107,6 @@ class TestKmedoidsEdgeCases:
         )
         result = kmedoids(df, k=1)
         assert result["unique_id"].dtype == pl.Int64
-
 
     def test_invalid_method_raises(self):
         df = pl.DataFrame({"unique_id": ["A"] * 3 + ["B"] * 3, "y": [1.0, 2.0, 3.0] * 2})

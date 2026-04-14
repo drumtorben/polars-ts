@@ -11,9 +11,12 @@ def train_data():
     return pl.DataFrame(
         {
             "unique_id": (
-                ["train_A1"] * 5 + ["train_A2"] * 5
-                + ["train_B1"] * 5 + ["train_B2"] * 5
-                + ["train_C1"] * 5 + ["train_C2"] * 5
+                ["train_A1"] * 5
+                + ["train_A2"] * 5
+                + ["train_B1"] * 5
+                + ["train_B2"] * 5
+                + ["train_C1"] * 5
+                + ["train_C2"] * 5
             ),
             "y": (
                 [1.0, 1.0, 1.0, 1.0, 1.0]  # class A - flat low
@@ -23,11 +26,7 @@ def train_data():
                 + [1.0, 5.0, 1.0, 5.0, 1.0]  # class C - oscillating
                 + [1.0, 5.0, 1.0, 5.0, 1.1]
             ),
-            "label": (
-                ["A"] * 5 + ["A"] * 5
-                + ["B"] * 5 + ["B"] * 5
-                + ["C"] * 5 + ["C"] * 5
-            ),
+            "label": (["A"] * 5 + ["A"] * 5 + ["B"] * 5 + ["B"] * 5 + ["C"] * 5 + ["C"] * 5),
         }
     )
 
@@ -66,14 +65,14 @@ class TestKnnOutput:
 class TestKnnCorrectness:
     def test_perfect_classification_k1(self, train_data, test_data):
         result = knn_classify(train_data, test_data, k=1)
-        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list()))
+        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list(), strict=False))
         assert preds["test_1"] == "A"
         assert preds["test_2"] == "B"
         assert preds["test_3"] == "C"
 
     def test_perfect_classification_k2(self, train_data, test_data):
         result = knn_classify(train_data, test_data, k=2)
-        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list()))
+        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list(), strict=False))
         assert preds["test_1"] == "A"
         assert preds["test_2"] == "B"
         assert preds["test_3"] == "C"
@@ -96,9 +95,7 @@ class TestKnnEdgeCases:
         assert result.shape[0] == 3
 
     def test_missing_label_col_raises(self, test_data):
-        train_no_label = pl.DataFrame(
-            {"unique_id": ["A"] * 3, "y": [1.0, 2.0, 3.0]}
-        )
+        train_no_label = pl.DataFrame({"unique_id": ["A"] * 3, "y": [1.0, 2.0, 3.0]})
         with pytest.raises(ValueError, match="label column"):
             knn_classify(train_no_label, test_data, k=1)
 
@@ -110,9 +107,7 @@ class TestKnnEdgeCases:
                 "label": ["low"] * 4 + ["high"] * 4,
             }
         )
-        test = pl.DataFrame(
-            {"unique_id": [3] * 4, "y": [1.0, 1.0, 1.0, 1.1]}
-        )
+        test = pl.DataFrame({"unique_id": [3] * 4, "y": [1.0, 1.0, 1.0, 1.1]})
         result = knn_classify(train, test, k=1)
         assert result["unique_id"].dtype == pl.Int64
         assert result["predicted_label"].to_list() == ["low"]
@@ -124,17 +119,27 @@ class TestKnnRepeatedValues:
         train = pl.DataFrame(
             {
                 "unique_id": ["A"] * 6 + ["B"] * 6,
-                "y": [0.0, 0.0, 0.0, 0.0, 0.0, 10.0,  # A: flat then spike
-                      10.0, 10.0, 10.0, 10.0, 10.0, 0.0],  # B: flat then drop
+                "y": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    10.0,  # A: flat then spike
+                    10.0,
+                    10.0,
+                    10.0,
+                    10.0,
+                    10.0,
+                    0.0,
+                ],  # B: flat then drop
                 "label": ["spike"] * 6 + ["drop"] * 6,
             }
         )
         # Test series matches A's pattern (flat then spike)
-        test = pl.DataFrame(
-            {"unique_id": ["X"] * 6, "y": [0.0, 0.0, 0.0, 0.0, 0.0, 9.5]}
-        )
+        test = pl.DataFrame({"unique_id": ["X"] * 6, "y": [0.0, 0.0, 0.0, 0.0, 0.0, 9.5]})
         result = knn_classify(train, test, k=1)
-        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list()))
+        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list(), strict=False))
         assert preds["X"] == "spike"
 
     def test_custom_column_names(self):
@@ -146,12 +151,14 @@ class TestKnnRepeatedValues:
                 "class": ["low"] * 4 + ["high"] * 4,
             }
         )
-        test = pl.DataFrame(
-            {"series_name": ["X"] * 4, "value": [5.0, 5.0, 5.0, 4.9]}
-        )
+        test = pl.DataFrame({"series_name": ["X"] * 4, "value": [5.0, 5.0, 5.0, 4.9]})
         result = knn_classify(
-            train, test, k=1,
-            id_col="series_name", target_col="value", label_col="class",
+            train,
+            test,
+            k=1,
+            id_col="series_name",
+            target_col="value",
+            label_col="class",
         )
         assert result.columns == ["series_name", "predicted_label"]
         assert result["predicted_label"].to_list() == ["high"]
