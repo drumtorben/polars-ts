@@ -61,3 +61,34 @@ def test_valid_multiplicative():
     assert "trend" in result.columns, "Result should contain 'trend' column"
     assert "seasonal" in result.columns, "Result should contain 'seasonal' column"
     assert "resid" in result.columns, "Result should contain 'resid' column"
+
+
+# Test: anomaly_threshold adds is_anomaly column
+def test_anomaly_threshold_adds_column():
+    df = create_sample_df()
+    result = seasonal_decomposition(df, freq=3, anomaly_threshold=2.0)
+    assert "is_anomaly" in result.columns, "Result should contain 'is_anomaly' column"
+    assert result["is_anomaly"].dtype == pl.Boolean
+
+
+# Test: no anomaly column when threshold is not set
+def test_no_anomaly_column_without_threshold():
+    df = create_sample_df()
+    result = seasonal_decomposition(df, freq=3)
+    assert "is_anomaly" not in result.columns
+
+
+# Test: anomaly_threshold flags outliers correctly
+def test_anomaly_threshold_flags_outliers():
+    # Create a series with a clear outlier
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 12,
+            "ds": [f"2020-{m:02d}-01" for m in range(1, 13)],
+            "y": [10.0, 12.0, 11.0, 10.0, 11.0, 100.0, 10.0, 12.0, 11.0, 10.0, 11.0, 10.0],
+        }
+    ).with_columns(pl.col("ds").str.to_date("%Y-%m-%d"))
+    result = seasonal_decomposition(df, freq=3, anomaly_threshold=1.5)
+    assert "is_anomaly" in result.columns
+    # At least one anomaly should be flagged
+    assert result["is_anomaly"].sum() >= 1

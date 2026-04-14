@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Literal
 
 import polars as pl
@@ -10,6 +12,7 @@ def seasonal_decomposition(
     id_col: str = "unique_id",
     target_col: str = "y",
     time_col: str = "ds",
+    anomaly_threshold: float | None = None,
 ) -> pl.DataFrame:
     """Perform seasonal decomposition of time series data using either an additive or multiplicative method.
 
@@ -23,9 +26,12 @@ def seasonal_decomposition(
         id_col: The column to group by (e.g., for multiple time series). Defaults to `unique_id`.
         target_col: The column containing the time series values to decompose. Defaults to `y`.
         time_col: The column containing the time values. Defaults to `ds`.
+        anomaly_threshold: If provided, adds an ``is_anomaly`` boolean column that is True
+            when ``|resid| > threshold * std(resid)`` per group. Defaults to None (no anomaly column).
 
     Returns:
         A DataFrame with the decomposed components: trend, seasonal component, and residuals.
+        When ``anomaly_threshold`` is set, an additional ``is_anomaly`` column is included.
 
     Raises:
         ValueError: If invalid `method` is passed.
@@ -84,5 +90,11 @@ def seasonal_decomposition(
         # drop nulls created by centered moving average
         .drop_nulls()
     )
+
+    if anomaly_threshold is not None:
+        df = df.with_columns(
+            (pl.col("resid").abs() > anomaly_threshold * pl.col("resid").std().over(id_col))
+            .alias("is_anomaly")
+        )
 
     return df

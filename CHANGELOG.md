@@ -15,6 +15,7 @@
 
 ### Improvements
 
+- Add unified `compute_pairwise_distance(method=...)` API — single entry point for all 9 distance metrics.
 - Deduplicate Rust distance code into shared `utils.rs` (grouping, hashing, parallel pairwise).
 - Optimize all distance metrics to O(m) memory with two-row DP.
 - Add `#[pyo3(signature)]` annotations for Rust safety with pyo3 0.24+.
@@ -30,8 +31,10 @@
 
 ### Tests
 
-- Add 286 tests covering all distance metrics, decomposition, trend, changepoint, and edge cases.
+- Add 290+ tests covering all distance metrics, unified API, decomposition, trend, changepoint, anomaly detection, and edge cases.
 - Add input validation, edge case, and parallelism stress tests for distance metrics.
+- Add Sen's slope and CUSUM tests with group-by, error handling, and robustness checks.
+- Add anomaly threshold tests for seasonal decomposition.
 
 ## v0.3.0
 
