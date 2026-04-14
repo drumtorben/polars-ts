@@ -61,7 +61,7 @@ jobs:
       - name: Verify import works
         run: uv run python -c "from polars_ts import compute_pairwise_dtw; print('OK')"
       - name: Run distance tests
-        run: uv run pytest tests/distance/ tests/test_mann_kendall.py
+        run: uv run pytest tests/distance/ tests/test_mann_kendall.py tests/test_sens_slope.py tests/test_cusum.py
 
   test-polars-compat:
     name: Test polars ${{ matrix.polars-version }}
