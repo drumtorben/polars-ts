@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../__init__/">
+        <link rel="prev" href="../lcss/">
       
       
-        <link rel="next" href="../../models/__init__/">
+        <link rel="next" href="../msm/">
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
-        <title>Kaboudan - Polars Time Series Extension</title>
+        <title>Mann-Kendall Trend Test - Polars Time Series Extension</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.metrics.kaboudan" class="md-skip">
+        <a href="#mann-kendall-trend-test" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kaboudan
+              Mann-Kendall Trend Test
             
           </span>
         </div>
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -246,7 +246,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../distance-metrics/" class="md-tabs__link">
+        <a href="../../../distance-metrics/" class="md-tabs__link">
           
   
   
@@ -277,7 +277,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../__init__/" class="md-tabs__link">
+        <a href="../../polars_ts/__init__/" class="md-tabs__link">
           
   
   
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../contributing/" class="md-tabs__link">
+      <a href="../../../contributing/" class="md-tabs__link">
         
   
   
@@ -339,7 +339,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -369,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -434,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../distance-metrics/" class="md-nav__link">
+      <a href="../../../distance-metrics/" class="md-nav__link">
         
   
   
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../clustering-guide/" class="md-nav__link">
+      <a href="../../../clustering-guide/" class="md-nav__link">
         
   
   
@@ -530,8 +530,6 @@
                 
   
   
-    
-  
   
   
     
@@ -542,11 +540,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
         
           
           <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
@@ -562,7 +562,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
             Python API
@@ -573,8 +573,6 @@
                 
   
   
-    
-  
   
   
     
@@ -585,15 +583,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/__init__/" class="md-nav__link ">
               
   
   
@@ -612,7 +612,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1">
             <span class="md-nav__icon md-icon"></span>
             Polars ts
@@ -626,7 +626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../_distance_dispatch/" class="md-nav__link">
+      <a href="../../polars_ts/_distance_dispatch/" class="md-nav__link">
         
   
   
@@ -649,7 +649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distance/" class="md-nav__link">
+      <a href="../../polars_ts/distance/" class="md-nav__link">
         
   
   
@@ -689,7 +689,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../changepoint/__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -722,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/cusum/" class="md-nav__link">
+      <a href="../../polars_ts/changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -770,7 +770,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../classification/__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/classification/__init__/" class="md-nav__link ">
               
   
   
@@ -803,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/knn/" class="md-nav__link">
+      <a href="../../polars_ts/classification/knn/" class="md-nav__link">
         
   
   
@@ -851,7 +851,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -884,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
+      <a href="../../polars_ts/clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -932,7 +932,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../decomposition/__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -965,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
+      <a href="../../polars_ts/decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -988,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
+      <a href="../../polars_ts/decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -1011,7 +1011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
+      <a href="../../polars_ts/decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -1039,8 +1039,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1051,15 +1049,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_7" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_7" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/metrics/__init__/" class="md-nav__link ">
               
   
   
@@ -1078,7 +1078,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_7">
             <span class="md-nav__icon md-icon"></span>
             Metrics
@@ -1089,30 +1089,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Kaboudan
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../polars_ts/metrics/kaboudan/" class="md-nav__link">
         
   
   
@@ -1123,90 +1103,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kaboudan
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kaboudan">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Kaboudan
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" Kaboudan">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.block_shuffle_by_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;block_shuffle_by_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.split_in_blocks_by_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;split_in_blocks_by_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.backtest" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;backtest
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.kaboudan_metric" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;kaboudan_metric
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1244,7 +1140,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../models/__init__/" class="md-nav__link ">
+            <a href="../../polars_ts/models/__init__/" class="md-nav__link ">
               
   
   
@@ -1277,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/scum/" class="md-nav__link">
+      <a href="../../polars_ts/models/scum/" class="md-nav__link">
         
   
   
@@ -1321,8 +1217,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1331,13 +1229,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -1353,7 +1249,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Rust API
@@ -1367,7 +1263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/ddtw/" class="md-nav__link">
+      <a href="../ddtw/" class="md-nav__link">
         
   
   
@@ -1390,7 +1286,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw/" class="md-nav__link">
+      <a href="../dtw/" class="md-nav__link">
         
   
   
@@ -1413,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw_multi/" class="md-nav__link">
+      <a href="../dtw_multi/" class="md-nav__link">
         
   
   
@@ -1436,7 +1332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/erp/" class="md-nav__link">
+      <a href="../erp/" class="md-nav__link">
         
   
   
@@ -1459,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/lcss/" class="md-nav__link">
+      <a href="../lcss/" class="md-nav__link">
         
   
   
@@ -1479,10 +1375,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../rust/mann_kendall/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Mann-Kendall Trend Test
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1493,6 +1411,74 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#python-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mann_kendall" class="md-nav__link">
+    <span class="md-ellipsis">
+      mann_kendall
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Internal Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query" class="md-nav__link">
+    <span class="md-ellipsis">
+      query
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1505,7 +1491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm/" class="md-nav__link">
+      <a href="../msm/" class="md-nav__link">
         
   
   
@@ -1528,7 +1514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm_multi/" class="md-nav__link">
+      <a href="../msm_multi/" class="md-nav__link">
         
   
   
@@ -1551,7 +1537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/sens_slope/" class="md-nav__link">
+      <a href="../sens_slope/" class="md-nav__link">
         
   
   
@@ -1574,7 +1560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/twe/" class="md-nav__link">
+      <a href="../twe/" class="md-nav__link">
         
   
   
@@ -1597,7 +1583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/utils/" class="md-nav__link">
+      <a href="../utils/" class="md-nav__link">
         
   
   
@@ -1620,7 +1606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/wdtw/" class="md-nav__link">
+      <a href="../wdtw/" class="md-nav__link">
         
   
   
@@ -1658,7 +1644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/" class="md-nav__link">
+      <a href="../../../contributing/" class="md-nav__link">
         
   
   
@@ -1690,6 +1676,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1698,56 +1686,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan" class="md-nav__link">
+  <a href="#python-api" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kaboudan
+      Python API
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kaboudan">
+    <nav class="md-nav" aria-label="Python API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan" class="md-nav__link">
+  <a href="#mann_kendall" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Kaboudan
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" Kaboudan">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.block_shuffle_by_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;block_shuffle_by_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.split_in_blocks_by_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;split_in_blocks_by_id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.backtest" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;backtest
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.metrics.kaboudan.Kaboudan.kaboudan_metric" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;kaboudan_metric
+      mann_kendall
     </span>
   </a>
   
@@ -1755,6 +1706,25 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Internal Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query" class="md-nav__link">
+    <span class="md-ellipsis">
+      query
+    </span>
+  </a>
   
 </li>
         
@@ -1782,550 +1752,42 @@
   
 
 
-  <h1>Kaboudan</h1>
-
-<div class="doc doc-object doc-module">
-
-
-
-<h2 id="polars_ts.metrics.kaboudan" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.metrics.kaboudan</code>
-
-
-</h2>
-
-    <div class="doc doc-contents first">
-
-        <p>Kaboudan Metrics Module.</p>
-<p>Provides the <code>Kaboudan</code> class for computing Kaboudan and modified Kaboudan metrics to evaluate
-time series forecasting models using backtesting and block shuffling techniques.</p>
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="polars_ts.metrics.kaboudan.Kaboudan" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>Kaboudan</code>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
-  </span>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-
-        <p>A class for computing the Kaboudan and modified Kaboudan metrics.</p>
-<p>It uses StatsForecast for backtesting and block shuffling operations
-to measure model performance under controlled perturbations.</p>
-
-
-<p><span class="doc-section-title">Attributes:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.sf">sf</span></code></td>
-            <td>
-                  <code><span title="statsforecast.StatsForecast">StatsForecast</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>StatsForecast instance for model training and evaluation.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.backtesting_start">backtesting_start</span></code></td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Fraction of the data used as the initial training set.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.n_folds">n_folds</span></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of backtesting folds (rolling-origin windows).</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.block_size">block_size</span></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Size of each block used during block-based shuffling.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.seed">seed</span></code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Random seed for reproducible shuffling. Defaults to 42.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.id_col">id_col</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Name of the column identifying each time series group. Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.time_col">time_col</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Name of the column representing the chronological axis. Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.value_col">value_col</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Name of the column representing the target variable. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.modified">modified</span></code></td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Whether to use the modified Kaboudan metric, which applies clipping to zero. Defaults to <code>True</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="polars_ts.metrics.kaboudan.Kaboudan.agg">agg</span></code></td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Whether to average the metrics over all the individual time series or not. Defaults to <code>True</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="polars_ts.metrics.kaboudan.Kaboudan.block_shuffle_by_id" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">block_shuffle_by_id</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Randomly shuffles rows in fixed-size blocks within each group identified by <code>id_col</code>.</p>
-<p>This method sorts the data by <code>id_col</code> and then by <code>time_col</code>. For each group:</p>
-<ol>
-<li>A zero-based row index (<code>__row_in_group</code>) is assigned using <code>cum_count()</code>.</li>
-<li>The method determines the number of blocks (<code>num_blocks</code>) by dividing the number of
-rows in the first group by <code>self.block_size</code> and forcing at least one block.</li>
-<li>Each row is assigned a <code>__chunk_id</code> based on integer division of <code>__row_in_group</code> by <code>num_blocks</code>.</li>
-<li>The DataFrame is then partitioned by both <code>id_col</code> and <code>__chunk_id</code>, producing blocks.</li>
-<li>These blocks are randomly shuffled, concatenated, and finally re-sorted by <code>id_col</code>
-and <code>time_col</code> within each group.</li>
-</ol>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame containing at least <code>id_col</code>, <code>time_col</code>, and <code>value_col</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A new DataFrame in which each group's rows are rearranged by randomly shuffling             the entire blocks. The shuffle is reproducible if a seed is set (<code>self.seed</code>).</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="polars_ts.metrics.kaboudan.Kaboudan.split_in_blocks_by_id" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">split_in_blocks_by_id</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Split each group's time series into <code>n_folds</code> sequential blocks.</p>
-<p>First, the DataFrame is sorted <code>by id_col</code> and <code>time_col</code>. Then, for each group (identified
-by <code>id_col</code>), a zero-based row index is assigned in <code>row_index</code>. Finally, <code>block</code> is
-computed by scaling <code>row_index</code> by the ratio <code>(n_folds / group_size)</code> for that group,
-flooring the result, and shifting by 1 to make blocks range from 1 to <code>n_folds</code>.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A DataFrame containing columns matching <code>id_col</code>, <code>time_col</code>, and <code>value_col</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A new DataFrame with one additional <code>block</code> column.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="polars_ts.metrics.kaboudan.Kaboudan.backtest" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">backtest</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Perform rolling-origin backtesting on the provided DataFrame using cross-validation.</p>
-<p>This method implements a multi-step cross-validation approach by:</p>
-<ol>
-<li>Computing the minimal series length among all groups in the DataFrame.</li>
-<li>Determining the initial training length (<code>history_len</code>) as <code>backtesting_start * min_len</code>,
-and setting the test length (<code>test_len</code>) as the remainder.</li>
-<li>Dividing the test portion into <code>n_folds</code> sequential segments. Each segment length
-determines the forecast horizon (<code>h</code>) and <code>step_size</code>.</li>
-<li>Calling StatsForecast's <code>cross_validation()</code> method with <code>h</code> and <code>step_size</code> both equal to
-the segment length.</li>
-</ol>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame that must contain at least the columns <code>id_col</code>, <code>time_col</code>, and <code>value_col</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame (or Series) of root mean squared error (RMSE) values, averaged across             the rolling-origin folds for each model. Columns represent different models.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="polars_ts.metrics.kaboudan.Kaboudan.kaboudan_metric" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">kaboudan_metric</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Compute the Kaboudan Metric by comparing model errors before and after block-based shuffling.</p>
-<p>This method first calculates a baseline error using <code>backtest</code>. Then it applies
-<code>block_shuffle_by_id</code> to shuffle each group's rows, re-performs <code>backtest</code> on the shuffled data,
-and compares the two sets of errors. The final metric indicates how much performance
-degrades due to the block shuffle.</p>
-<p>Steps:</p>
-<ol>
-<li>Compute the baseline RMSE (<code>sse_before</code>) for the unshuffled data.</li>
-<li>Shuffle the data in blocks (<code>block_shuffle_by_id</code>).</li>
-<li>Compute the RMSE (<code>sse_after</code>) of the shuffled data.</li>
-<li>Compute the ratio <code>sse_before / sse_after</code> and transform it by <code>(1 - sqrt(ratio))</code>.</li>
-</ol>
-<p>If <code>modified</code> is True, the resulting metric is clipped at 0 to avoid negative values.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame with columns for <code>id_col</code>, <code>time_col</code>, and <code>value_col</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame containing columns of Kaboudan Metric values for each model.             If <code>modified</code> is True, negative values are clipped to zero.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h1 id="mann-kendall-trend-test">Mann-Kendall Trend Test</h1>
+<p><em>Source: <code>src/mann_kendall.rs</code></em></p>
+<p>This module provides an implementation of the Mann-Kendall trend test for Polars Series.</p>
+<p>The Mann-Kendall test checks for a trend in a time series by comparing each data point
+to subsequent data points. It computes a statistic <code>S</code> indicating how many pairs are
+in increasing vs. decreasing order and then normalizes it via
+[ S / (0.5 * n * (n - 1)) ], matching standard Mann-Kendall definitions.</p>
+<h2 id="python-api">Python API</h2>
+<h3 id="mann_kendall">mann_kendall</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">mann_kendall</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Apply the Mann-Kendall trend test to the first Series in <code>inputs</code>.</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inputs</code></td>
+<td>a slice of Series, with the first entry expected to be a float Series (f64).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<p>A single-valued Float64 Series containing the normalized Mann-Kendall statistic.
+This matches the Python version <code>mk_stat = S / (0.5 * n * (n - 1))</code>.</p>
+<p><strong>Errors</strong></p>
+<p>Returns an error if the first Series is not of f64 type or if it contains nulls.</p>
+<h2 id="internal-functions">Internal Functions</h2>
+<p>These are internal Rust functions not directly callable from Python.</p>
+<h3 id="query">query</h3>
+<p>Query how many increments occur up to and including index <code>i</code> in the Fenwick tree.</p>
 
 
 
@@ -2382,10 +1844,10 @@ degrades due to the block shuffle.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>

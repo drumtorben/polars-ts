@@ -1,0 +1,2560 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../clustering-guide/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Distance Metrics - Polars Time Series Extension</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#distance-metric-comparison-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Polars Time Series Extension
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Distance Metrics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/drumtorben/polars-ts.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    polars-ts
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/polars_ts/__init__/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Polars Time Series Extension
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/drumtorben/polars-ts.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    polars-ts
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Distance Metrics
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance Metrics
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Comparison Table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metric-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metric Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dtw-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. DTW (Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sakoe-chiba-dtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Sakoe-Chiba DTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-itakura-dtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Itakura DTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-fastdtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. FastDTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ddtw-derivative-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. DDTW (Derivative Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-wdtw-weighted-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. WDTW (Weighted Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-msm-move-split-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. MSM (Move-Split-Merge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-erp-edit-distance-with-real-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. ERP (Edit Distance with Real Penalty)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-lcss-longest-common-subsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. LCSS (Longest Common Subsequence)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-twe-time-warp-edit-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. TWE (Time Warp Edit Distance)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-specific-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain-Specific Guidance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain-Specific Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finance-stock-prices-returns-macro-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finance (Stock Prices, Returns, Macro Indicators)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iot-sensor-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      IoT / Sensor Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speech-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech / Audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gesture-motion-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gesture / Motion Capture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-scale-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large-Scale Exploration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory-analysis-gps-vehicle-pedestrian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trajectory Analysis (GPS, Vehicle, Pedestrian)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-metric-decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a Metric: Decision Flowchart
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clustering-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clustering Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python API
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Polars ts
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Polars ts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/_distance_dispatch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+     distance dispatch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/distance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/changepoint/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Changepoint
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_3" id="__nav_3_1_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Changepoint
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/changepoint/cusum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cusum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/classification/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Classification
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_4" id="__nav_3_1_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            Classification
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/classification/knn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Knn
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/clustering/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Clustering
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_5" id="__nav_3_1_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            Clustering
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/clustering/kmedoids/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kmedoids
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/decomposition/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Decomposition
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_6" id="__nav_3_1_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Decomposition
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/decomposition/fourier_decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fourier decomposition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/decomposition/seasonal_decompose_features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Seasonal decompose features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/decomposition/seasonal_decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Seasonal decomposition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/metrics/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Metrics
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_7" id="__nav_3_1_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            Metrics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/metrics/kaboudan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kaboudan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/polars_ts/models/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_8" id="__nav_3_1_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            Models
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/polars_ts/models/scum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust API
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/ddtw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Derivative DTW (DDTW)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/dtw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dynamic Time Warping (DTW)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/dtw_multi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multivariate DTW
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/erp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Edit Distance with Real Penalty (ERP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/lcss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Longest Common Subsequence (LCSS)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/mann_kendall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mann-Kendall Trend Test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/msm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Move-Split-Merge (MSM)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/msm_multi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multivariate MSM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/sens_slope/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    sens_slope
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/twe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Time Warp Edit Distance (TWE)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utilities
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/rust/wdtw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Weighted DTW (WDTW)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Comparison Table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metric-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metric Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Metric Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dtw-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. DTW (Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sakoe-chiba-dtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Sakoe-Chiba DTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-itakura-dtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Itakura DTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-fastdtw" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. FastDTW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ddtw-derivative-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. DDTW (Derivative Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-wdtw-weighted-dynamic-time-warping" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. WDTW (Weighted Dynamic Time Warping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-msm-move-split-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. MSM (Move-Split-Merge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-erp-edit-distance-with-real-penalty" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. ERP (Edit Distance with Real Penalty)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-lcss-longest-common-subsequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. LCSS (Longest Common Subsequence)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-twe-time-warp-edit-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. TWE (Time Warp Edit Distance)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-specific-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Domain-Specific Guidance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain-Specific Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finance-stock-prices-returns-macro-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finance (Stock Prices, Returns, Macro Indicators)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iot-sensor-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      IoT / Sensor Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speech-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speech / Audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gesture-motion-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gesture / Motion Capture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-scale-exploration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large-Scale Exploration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trajectory-analysis-gps-vehicle-pedestrian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trajectory Analysis (GPS, Vehicle, Pedestrian)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-metric-decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a Metric: Decision Flowchart
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="distance-metric-comparison-guide">Distance Metric Comparison Guide</h1>
+<p><code>polars_ts</code> provides 10 time-series distance metrics implemented in Rust for high performance. This guide covers each metric in detail and offers domain-specific recommendations.</p>
+<p>All functions accept Polars DataFrames with columns <code>"unique_id"</code> (series identifier) and <code>"y"</code> (numeric values). They return a pairwise distance matrix as a DataFrame.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s2">&quot;unique_id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">],</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">})</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="quick-comparison-table">Quick Comparison Table</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>True Metric?</th>
+<th>Complexity</th>
+<th>Handles Shifts?</th>
+<th>Noise Robust?</th>
+<th>Key Param</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DTW</td>
+<td>No</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>Moderate</td>
+<td>--</td>
+</tr>
+<tr>
+<td>Sakoe-Chiba DTW</td>
+<td>No</td>
+<td>O(n*w)</td>
+<td>Partial (within band)</td>
+<td>Moderate</td>
+<td><code>param</code> (band width)</td>
+</tr>
+<tr>
+<td>Itakura DTW</td>
+<td>No</td>
+<td>O(n*m) constrained</td>
+<td>Partial (within parallelogram)</td>
+<td>Moderate</td>
+<td><code>param</code> (slope factor)</td>
+</tr>
+<tr>
+<td>FastDTW</td>
+<td>No</td>
+<td>O(n) approx</td>
+<td>Yes</td>
+<td>Moderate</td>
+<td><code>param</code> (radius)</td>
+</tr>
+<tr>
+<td>DDTW</td>
+<td>No</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>High</td>
+<td>--</td>
+</tr>
+<tr>
+<td>WDTW</td>
+<td>No</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>High</td>
+<td><code>g</code> (weight decay)</td>
+</tr>
+<tr>
+<td>MSM</td>
+<td>Yes</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>High</td>
+<td><code>c</code> (split/merge cost)</td>
+</tr>
+<tr>
+<td>ERP</td>
+<td>Yes</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>High</td>
+<td><code>g</code> (gap penalty ref)</td>
+</tr>
+<tr>
+<td>LCSS</td>
+<td>No</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>Very High</td>
+<td><code>epsilon</code> (match threshold)</td>
+</tr>
+<tr>
+<td>TWE</td>
+<td>Yes</td>
+<td>O(n*m)</td>
+<td>Yes</td>
+<td>High</td>
+<td><code>nu</code> (stiffness), <code>lambda_</code> (penalty)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="metric-details">Metric Details</h2>
+<h3 id="1-dtw-dynamic-time-warping">1. DTW (Dynamic Time Warping)</h3>
+<p><strong>Description:</strong> The classic elastic distance measure for time series. DTW finds the optimal alignment between two sequences by warping the time axis, minimizing the total Euclidean distance between aligned points.</p>
+<p><strong>How it works:</strong> Builds a cost matrix where each cell (i, j) represents the cumulative cost of aligning the first i points of one series with the first j points of the other. The optimal warping path is found via dynamic programming.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Handles time shifts and variable-speed patterns</li>
+<li>Intuitive and well-studied</li>
+<li>No parameters to tune</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>O(n*m) complexity can be slow for long series</li>
+<li>Not a true metric (violates triangle inequality)</li>
+<li>Susceptible to pathological warping paths</li>
+</ul>
+<p><strong>When to use:</strong> General-purpose time-series comparison where series may be shifted or locally stretched.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="2-sakoe-chiba-dtw">2. Sakoe-Chiba DTW</h3>
+<p><strong>Description:</strong> A constrained variant of DTW that restricts the warping path to a fixed-width band around the diagonal. This prevents excessive warping and reduces computation time.</p>
+<p><strong>How it works:</strong> Same dynamic programming approach as DTW, but cells outside a symmetric band of width <code>param</code> around the diagonal are set to infinity, forcing the alignment to stay close to the diagonal.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Faster than unconstrained DTW</li>
+<li>Prevents pathological alignments</li>
+<li>Simple single parameter</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Cannot handle large time shifts exceeding the band width</li>
+<li>Band width must be chosen a priori</li>
+</ul>
+<p><strong>When to use:</strong> When you know the maximum expected temporal offset between series, or when you need faster DTW with controlled warping.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;sakoe_chiba&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="3-itakura-dtw">3. Itakura DTW</h3>
+<p><strong>Description:</strong> A constrained DTW variant that restricts the warping path to lie within a parallelogram (Itakura parallelogram). This limits the allowed slope of the warping path, preventing both excessive compression and expansion.</p>
+<p><strong>How it works:</strong> The parallelogram constraint enforces a maximum and minimum slope on the warping path. The <code>param</code> value controls the slope factor -- higher values allow more warping flexibility.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Prevents both excessive compression and stretching</li>
+<li>More nuanced constraint than a fixed band</li>
+<li>Good for speech and audio where tempo varies smoothly</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Less intuitive parameter than Sakoe-Chiba</li>
+<li>Can be too restrictive for highly variable series</li>
+</ul>
+<p><strong>When to use:</strong> When temporal distortion is smooth and gradual, especially in speech and audio domains.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;itakura&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="4-fastdtw">4. FastDTW</h3>
+<p><strong>Description:</strong> An approximate DTW algorithm that operates in linear time and space. It uses a multi-resolution approach: coarsen the series, compute DTW at low resolution, then refine the path at progressively finer resolutions.</p>
+<p><strong>How it works:</strong> The series are recursively downsampled by half. DTW is computed at the coarsest level, and the resulting path is projected upward and expanded by <code>param</code> (radius) cells at each finer level to define the search neighborhood.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>O(n) time and space complexity</li>
+<li>Practical for very long time series</li>
+<li>Accuracy close to exact DTW for reasonable radius values</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Approximate -- can miss the true optimal alignment</li>
+<li>Accuracy degrades if radius is too small</li>
+<li>Not a true metric</li>
+</ul>
+<p><strong>When to use:</strong> Large-scale exploratory analysis, very long time series, or when exact DTW is too slow.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="5-ddtw-derivative-dynamic-time-warping">5. DDTW (Derivative Dynamic Time Warping)</h3>
+<p><strong>Description:</strong> Applies DTW to the first derivatives of the time series rather than the raw values. This makes the comparison shape-based rather than value-based.</p>
+<p><strong>How it works:</strong> Estimates the discrete derivative of each series (using the average of left and right finite differences), then runs standard DTW on the derivative sequences.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Invariant to vertical offset (baseline shifts)</li>
+<li>Focuses on shape rather than amplitude</li>
+<li>No extra parameters beyond standard DTW</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Derivative estimation amplifies noise</li>
+<li>Loses absolute magnitude information</li>
+<li>Slightly more expensive due to derivative computation</li>
+</ul>
+<p><strong>When to use:</strong> When the shape of the series matters more than its absolute values, e.g., comparing trends regardless of baseline level.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_ddtw</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_ddtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="6-wdtw-weighted-dynamic-time-warping">6. WDTW (Weighted Dynamic Time Warping)</h3>
+<p><strong>Description:</strong> A variant of DTW that applies a multiplicative weight penalty based on the phase difference between aligned points. Points aligned far from the diagonal receive higher penalties.</p>
+<p><strong>How it works:</strong> A logistic weight function controlled by parameter <code>g</code> assigns weights to each cell based on |i - j|. Small <code>g</code> values produce nearly uniform weights (behaves like DTW); large <code>g</code> values heavily penalize off-diagonal alignments.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Smooth penalty discourages excessive warping without hard cutoffs</li>
+<li>Single intuitive parameter</li>
+<li>Retains DTW flexibility while adding regularization</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Not a true metric</li>
+<li>Choosing <code>g</code> requires experimentation</li>
+<li>Same O(n*m) complexity as standard DTW</li>
+</ul>
+<p><strong>When to use:</strong> When you want DTW behavior but with soft penalization of excessive warping, particularly for noisy series.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_wdtw</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_wdtw</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="7-msm-move-split-merge">7. MSM (Move-Split-Merge)</h3>
+<p><strong>Description:</strong> An edit-distance-style metric that uses three operations -- Move (change a value), Split (duplicate a point), and Merge (combine two points) -- each with cost <code>c</code>. It is a true metric.</p>
+<p><strong>How it works:</strong> Dynamic programming computes the minimum cost of transforming one series into the other using move, split, and merge operations. The parameter <code>c</code> controls the cost of split and merge relative to moves.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>True metric (satisfies triangle inequality)</li>
+<li>Invariant to certain transformations depending on <code>c</code></li>
+<li>Good theoretical properties for indexing and clustering</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Less intuitive than DTW</li>
+<li>Cost parameter <code>c</code> requires domain knowledge to set</li>
+<li>O(n*m) complexity</li>
+</ul>
+<p><strong>When to use:</strong> When metric properties are needed (e.g., for metric-tree indexing, k-medoids clustering), or when you need principled handling of insertions and deletions.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_msm</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_msm</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="8-erp-edit-distance-with-real-penalty">8. ERP (Edit Distance with Real Penalty)</h3>
+<p><strong>Description:</strong> A true metric that combines edit distance with a real-valued gap penalty. Unmatched points are compared against a fixed reference value <code>g</code> (often 0), making it robust to noise and partial matches.</p>
+<p><strong>How it works:</strong> Dynamic programming with three operations: match (Euclidean cost), insert-gap (cost is |point - g|), and delete-gap (cost is |point - g|). The parameter <code>g</code> acts as a reference level for gap penalties.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>True metric</li>
+<li>Handles series of different lengths gracefully</li>
+<li>Gap reference <code>g</code> provides noise robustness</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Sensitive to the choice of <code>g</code></li>
+<li>O(n*m) complexity</li>
+<li>Less commonly used than DTW, so less community tooling</li>
+</ul>
+<p><strong>When to use:</strong> When metric properties are required and series may have missing segments or different lengths. Works well for zero-centered or normalized data with <code>g=0.0</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_erp</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_erp</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="9-lcss-longest-common-subsequence">9. LCSS (Longest Common Subsequence)</h3>
+<p><strong>Description:</strong> Measures similarity by finding the longest subsequence of points that match within a threshold <code>epsilon</code>. The distance is derived from the length of this subsequence.</p>
+<p><strong>How it works:</strong> Two points match if their absolute difference is at most <code>epsilon</code>. Dynamic programming finds the longest sequence of such matches (not necessarily contiguous). The distance is typically <code>1 - LCSS_length / min(n, m)</code>.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Extremely robust to noise and outliers (mismatched points are simply skipped)</li>
+<li>Intuitive threshold parameter</li>
+<li>Good for partial matching</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Not a true metric</li>
+<li>Only considers match/no-match, losing fine-grained distance information</li>
+<li><code>epsilon</code> must be tuned relative to data scale</li>
+</ul>
+<p><strong>When to use:</strong> Noisy environments where outliers are common, or when you care about structural similarity rather than exact amplitude matching.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_lcss</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_lcss</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="10-twe-time-warp-edit-distance">10. TWE (Time Warp Edit Distance)</h3>
+<p><strong>Description:</strong> A true metric that combines DTW-style elastic matching with edit-distance-style insert/delete operations. It uses a stiffness parameter <code>nu</code> and a gap penalty <code>lambda_</code>.</p>
+<p><strong>How it works:</strong> Dynamic programming considers three operations: match (with temporal stiffness <code>nu</code> controlling how much consecutive point spacing matters), delete, and insert (both penalized by <code>lambda_</code>). The stiffness parameter makes TWE sensitive to the temporal regularity of the alignment.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>True metric</li>
+<li>Two parameters allow fine-grained control over warping vs. gap behavior</li>
+<li>Good balance between DTW and edit distance</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Two parameters to tune</li>
+<li>Less widely known than DTW</li>
+<li>O(n*m) complexity</li>
+</ul>
+<p><strong>When to use:</strong> When you need metric properties and want control over both elastic warping and gap penalties. Particularly useful for trajectory and motion data.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_twe</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">compute_pairwise_twe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="domain-specific-guidance">Domain-Specific Guidance</h2>
+<h3 id="finance-stock-prices-returns-macro-indicators">Finance (Stock Prices, Returns, Macro Indicators)</h3>
+<p>Financial time series often have regime shifts, trends, and varying volatility. Shape-based comparison is usually more meaningful than raw value comparison.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>DDTW</strong> -- Compares return profiles (derivatives) rather than price levels, which is more meaningful since absolute price is often arbitrary.</li>
+<li><strong>WDTW</strong> (g=0.05 to 0.1) -- Allows flexible alignment with soft warping penalty, useful for comparing securities that move similarly but with slight lead/lag.</li>
+<li><strong>MSM</strong> -- True metric, good for clustering financial instruments into groups for portfolio construction.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_ddtw</span><span class="p">,</span> <span class="n">compute_pairwise_wdtw</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># Compare return shapes (ignoring price levels)</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">shape_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_ddtw</span><span class="p">(</span><span class="n">stocks_df</span><span class="p">,</span> <span class="n">stocks_df</span><span class="p">)</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># Flexible alignment with controlled warping</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">aligned_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_wdtw</span><span class="p">(</span><span class="n">stocks_df</span><span class="p">,</span> <span class="n">stocks_df</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="iot-sensor-data">IoT / Sensor Data</h3>
+<p>Sensor data is often noisy, may contain dropouts, and can have varying sampling rates. Robustness to noise and missing data is critical.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>LCSS</strong> (epsilon tuned to sensor noise floor) -- Excellent noise robustness; outlier readings are simply ignored.</li>
+<li><strong>ERP</strong> (g=0.0 for zero-centered data) -- Handles gaps and dropouts gracefully as a true metric.</li>
+<li><strong>Sakoe-Chiba DTW</strong> -- Faster than full DTW, suitable for real-time or near-real-time processing with bounded sensor lag.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_lcss</span><span class="p">,</span> <span class="n">compute_pairwise_erp</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Robust to noisy sensor readings</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">noisy_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_lcss</span><span class="p">(</span><span class="n">sensor_df</span><span class="p">,</span> <span class="n">sensor_df</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Handle sensor dropouts with gap penalty</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">gap_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_erp</span><span class="p">(</span><span class="n">sensor_df</span><span class="p">,</span> <span class="n">sensor_df</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="speech-audio">Speech / Audio</h3>
+<p>Speech signals exhibit smooth tempo variation and local frequency shifts. Constraints that enforce gradual warping are well-suited here.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>Itakura DTW</strong> (param=1.5 to 3.0) -- The parallelogram constraint naturally models gradual tempo changes in speech.</li>
+<li><strong>WDTW</strong> (g=0.1 to 0.5) -- Soft warping penalty accommodates pronunciation variation.</li>
+<li><strong>DTW</strong> -- The unconstrained baseline remains strong for general speech comparison.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Smooth tempo variation constraint</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">speech_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">mfcc_df</span><span class="p">,</span> <span class="n">mfcc_df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;itakura&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="gesture-motion-capture">Gesture / Motion Capture</h3>
+<p>Gesture data involves 3D trajectories performed at varying speeds. Metrics need to handle speed variation while preserving spatial structure.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>TWE</strong> -- True metric with stiffness control; low <code>nu</code> allows flexible speed variation, <code>lambda_</code> penalizes skipped frames.</li>
+<li><strong>MSM</strong> -- True metric that handles split/merge of motion segments naturally.</li>
+<li><strong>DTW</strong> -- Reliable baseline for gesture recognition.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_twe</span><span class="p">,</span> <span class="n">compute_pairwise_msm</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># Flexible speed, penalize skipped frames</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">gesture_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_twe</span><span class="p">(</span><span class="n">motion_df</span><span class="p">,</span> <span class="n">motion_df</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Edit-based comparison</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">edit_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_msm</span><span class="p">(</span><span class="n">motion_df</span><span class="p">,</span> <span class="n">motion_df</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="large-scale-exploration">Large-Scale Exploration</h3>
+<p>When working with thousands of long time series, computational cost dominates. Approximate or constrained methods are essential.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>FastDTW</strong> (param=5 to 20) -- Linear-time approximation, the go-to choice for large datasets.</li>
+<li><strong>Sakoe-Chiba DTW</strong> (narrow band) -- Reduces quadratic cost significantly with a tight band.</li>
+<li><strong>LCSS</strong> -- Can be pruned efficiently and provides coarse but fast similarity.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_dtw</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1"># Fast approximate DTW for large datasets</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">approx_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">large_df</span><span class="p">,</span> <span class="n">large_df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;fast&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1"># Constrained DTW with narrow band</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">band_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_dtw</span><span class="p">(</span><span class="n">large_df</span><span class="p">,</span> <span class="n">large_df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;sakoe_chiba&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="trajectory-analysis-gps-vehicle-pedestrian">Trajectory Analysis (GPS, Vehicle, Pedestrian)</h3>
+<p>Trajectories involve spatial paths with temporal components. Metrics that handle gaps (stops, signal loss) and provide true metric properties for spatial indexing are preferred.</p>
+<p><strong>Recommended metrics:</strong></p>
+<ul>
+<li><strong>ERP</strong> (g=0.0) -- True metric, handles GPS signal dropouts as gaps against a reference point.</li>
+<li><strong>TWE</strong> -- True metric with temporal stiffness; good for distinguishing paths taken at different speeds.</li>
+<li><strong>LCSS</strong> (epsilon tuned to spatial tolerance) -- Ignores GPS jitter and noise, focuses on structural path similarity.</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">polars_ts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_pairwise_erp</span><span class="p">,</span> <span class="n">compute_pairwise_twe</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Handle GPS dropouts</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">traj_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_erp</span><span class="p">(</span><span class="n">gps_df</span><span class="p">,</span> <span class="n">gps_df</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># Speed-sensitive trajectory comparison</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">speed_distances</span> <span class="o">=</span> <span class="n">compute_pairwise_twe</span><span class="p">(</span><span class="n">gps_df</span><span class="p">,</span> <span class="n">gps_df</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="choosing-a-metric-decision-flowchart">Choosing a Metric: Decision Flowchart</h2>
+<ol>
+<li>
+<p><strong>Do you need true metric properties?</strong> (e.g., for metric trees, k-medoids, triangle inequality pruning)</p>
+<ul>
+<li>Yes: Choose from <strong>MSM</strong>, <strong>ERP</strong>, or <strong>TWE</strong></li>
+<li>No: Continue below</li>
+</ul>
+</li>
+<li>
+<p><strong>Is noise/outlier robustness the top priority?</strong></p>
+<ul>
+<li>Yes: Use <strong>LCSS</strong> (set <code>epsilon</code> to your noise tolerance)</li>
+<li>No: Continue below</li>
+</ul>
+</li>
+<li>
+<p><strong>Do you care about shape rather than absolute values?</strong></p>
+<ul>
+<li>Yes: Use <strong>DDTW</strong></li>
+<li>No: Continue below</li>
+</ul>
+</li>
+<li>
+<p><strong>Are your series very long (&gt;10,000 points) or do you have many series?</strong></p>
+<ul>
+<li>Yes: Use <strong>FastDTW</strong> or <strong>Sakoe-Chiba DTW</strong></li>
+<li>No: Continue below</li>
+</ul>
+</li>
+<li>
+<p><strong>Do you want controlled warping without hard boundaries?</strong></p>
+<ul>
+<li>Yes: Use <strong>WDTW</strong></li>
+<li>No: Use standard <strong>DTW</strong></li>
+</ul>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
