@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Any, Literal
 
 import polars as pl
-
 from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
@@ -92,6 +91,7 @@ def compute_pairwise_distance(
         >>> compute_pairwise_distance(df, df, method="dtw")
         >>> compute_pairwise_distance(df, df, method="lcss", epsilon=0.5)
         >>> compute_pairwise_distance(df, df, method="dtw", dtw_method="sakoe_chiba", param=3.0)
+
     """
     if method not in _ALL_METHODS:
         raise ValueError(f"Unknown method {method!r}. Choose from: {sorted(_ALL_METHODS)}")

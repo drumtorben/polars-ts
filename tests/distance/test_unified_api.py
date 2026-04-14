@@ -4,14 +4,14 @@ import polars as pl
 import pytest
 
 from polars_ts import (
+    compute_pairwise_ddtw,
     compute_pairwise_distance,
     compute_pairwise_dtw,
-    compute_pairwise_ddtw,
-    compute_pairwise_wdtw,
-    compute_pairwise_msm,
     compute_pairwise_erp,
     compute_pairwise_lcss,
+    compute_pairwise_msm,
     compute_pairwise_twe,
+    compute_pairwise_wdtw,
 )
 
 
