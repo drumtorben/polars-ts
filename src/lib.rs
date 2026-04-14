@@ -22,6 +22,7 @@ mod erp;
 mod lcss;
 mod twe;
 mod mann_kendall;
+mod sens_slope;
 
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();

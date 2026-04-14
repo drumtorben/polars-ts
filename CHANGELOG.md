@@ -15,6 +15,7 @@
 
 ### Improvements
 
+- Add unified `compute_pairwise_distance(method=...)` API — single entry point for all 9 distance metrics.
 - Deduplicate Rust distance code into shared `utils.rs` (grouping, hashing, parallel pairwise).
 - Optimize all distance metrics to O(m) memory with two-row DP.
 - Add `#[pyo3(signature)]` annotations for Rust safety with pyo3 0.24+.
