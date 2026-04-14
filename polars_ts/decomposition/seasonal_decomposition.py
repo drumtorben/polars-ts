@@ -93,8 +93,7 @@ def seasonal_decomposition(
 
     if anomaly_threshold is not None:
         df = df.with_columns(
-            (pl.col("resid").abs() > anomaly_threshold * pl.col("resid").std().over(id_col))
-            .alias("is_anomaly")
+            (pl.col("resid").abs() > anomaly_threshold * pl.col("resid").std().over(id_col)).alias("is_anomaly")
         )
 
     return df

@@ -19,11 +19,18 @@ from polars_ts_rs.polars_ts_rs import (
 )
 
 _UNIVARIATE_METHODS = {
-    "dtw", "ddtw", "wdtw", "msm", "erp", "lcss", "twe",
+    "dtw",
+    "ddtw",
+    "wdtw",
+    "msm",
+    "erp",
+    "lcss",
+    "twe",
 }
 
 _MULTIVARIATE_METHODS = {
-    "dtw_multi", "msm_multi",
+    "dtw_multi",
+    "msm_multi",
 }
 
 _ALL_METHODS = _UNIVARIATE_METHODS | _MULTIVARIATE_METHODS
@@ -33,8 +40,15 @@ def compute_pairwise_distance(
     input1: pl.DataFrame,
     input2: pl.DataFrame,
     method: Literal[
-        "dtw", "ddtw", "wdtw", "msm", "erp", "lcss", "twe",
-        "dtw_multi", "msm_multi",
+        "dtw",
+        "ddtw",
+        "wdtw",
+        "msm",
+        "erp",
+        "lcss",
+        "twe",
+        "dtw_multi",
+        "msm_multi",
     ] = "dtw",
     **kwargs: Any,
 ) -> pl.DataFrame:
@@ -78,12 +92,9 @@ def compute_pairwise_distance(
         >>> compute_pairwise_distance(df, df, method="dtw")
         >>> compute_pairwise_distance(df, df, method="lcss", epsilon=0.5)
         >>> compute_pairwise_distance(df, df, method="dtw", dtw_method="sakoe_chiba", param=3.0)
-
     """
     if method not in _ALL_METHODS:
-        raise ValueError(
-            f"Unknown method {method!r}. Choose from: {sorted(_ALL_METHODS)}"
-        )
+        raise ValueError(f"Unknown method {method!r}. Choose from: {sorted(_ALL_METHODS)}")
 
     if method == "dtw":
         _check_kwargs(kwargs, {"dtw_method", "param"}, method)

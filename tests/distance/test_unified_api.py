@@ -60,11 +60,12 @@ class TestUnifiedKwargs:
     @pytest.fixture
     def divergent_series(self):
         """Series designed to show parameter sensitivity in distance metrics."""
-        return pl.DataFrame({
-            "unique_id": ["A"] * 8 + ["B"] * 8,
-            "y": [1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0,
-                   5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0, 1.0],
-        })
+        return pl.DataFrame(
+            {
+                "unique_id": ["A"] * 8 + ["B"] * 8,
+                "y": [1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0, 1.0],
+            }
+        )
 
     def test_wdtw_g_changes_result(self, divergent_series):
         r1 = compute_pairwise_distance(divergent_series, divergent_series, method="wdtw", g=0.01)
@@ -93,23 +94,17 @@ class TestUnifiedKwargs:
 
     def test_dtw_with_sakoe_chiba(self, two_series):
         r_std = compute_pairwise_distance(two_series, two_series, method="dtw")
-        r_sc = compute_pairwise_distance(
-            two_series, two_series, method="dtw", dtw_method="sakoe_chiba", param=1.0
-        )
+        r_sc = compute_pairwise_distance(two_series, two_series, method="dtw", dtw_method="sakoe_chiba", param=1.0)
         # Constrained DTW distance >= unconstrained
         assert r_sc["dtw"].to_list()[0] >= r_std["dtw"].to_list()[0] - 1e-10
 
     def test_dtw_with_itakura(self, two_series):
-        result = compute_pairwise_distance(
-            two_series, two_series, method="dtw", dtw_method="itakura", param=2.0
-        )
+        result = compute_pairwise_distance(two_series, two_series, method="dtw", dtw_method="itakura", param=2.0)
         assert len(result) > 0
         assert result["dtw"][0] >= 0
 
     def test_dtw_with_fast(self, two_series):
-        result = compute_pairwise_distance(
-            two_series, two_series, method="dtw", dtw_method="fast", param=1.0
-        )
+        result = compute_pairwise_distance(two_series, two_series, method="dtw", dtw_method="fast", param=1.0)
         assert len(result) > 0
         assert result["dtw"][0] >= 0
 
@@ -157,11 +152,13 @@ class TestUnifiedMultivariate:
 
     @pytest.fixture
     def multi_series(self):
-        return pl.DataFrame({
-            "unique_id": ["A"] * 4 + ["B"] * 4,
-            "y": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
-            "z": [2.0, 3.0, 4.0, 5.0, 5.0, 4.0, 3.0, 2.0],
-        })
+        return pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4 + ["B"] * 4,
+                "y": [1.0, 2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 1.0],
+                "z": [2.0, 3.0, 4.0, 5.0, 5.0, 4.0, 3.0, 2.0],
+            }
+        )
 
     def test_dtw_multi(self, multi_series):
         result = compute_pairwise_distance(multi_series, multi_series, method="dtw_multi")
@@ -172,7 +169,5 @@ class TestUnifiedMultivariate:
         assert len(result) > 0
 
     def test_dtw_multi_with_metric(self, multi_series):
-        result = compute_pairwise_distance(
-            multi_series, multi_series, method="dtw_multi", metric="euclidean"
-        )
+        result = compute_pairwise_distance(multi_series, multi_series, method="dtw_multi", metric="euclidean")
         assert len(result) > 0

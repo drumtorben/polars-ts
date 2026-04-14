@@ -37,14 +37,10 @@ def cusum(
     if df.is_empty():
         raise ValueError("The DataFrame is empty. Cannot compute CUSUM on an empty DataFrame.")
 
-    result = df.with_columns(
-        pl.col(target_col).sub(pl.col(target_col).mean().over(id_col)).alias("__cusum_dev")
-    )
+    result = df.with_columns(pl.col(target_col).sub(pl.col(target_col).mean().over(id_col)).alias("__cusum_dev"))
 
     if normalize:
-        result = result.with_columns(
-            pl.col(target_col).std().over(id_col).alias("__cusum_std")
-        )
+        result = result.with_columns(pl.col(target_col).std().over(id_col).alias("__cusum_std"))
         result = result.with_columns(
             pl.when(pl.col("__cusum_std") > 0.0)
             .then(pl.col("__cusum_dev") / pl.col("__cusum_std"))
@@ -54,8 +50,6 @@ def cusum(
             .alias("cusum")
         ).drop("__cusum_dev", "__cusum_std")
     else:
-        result = result.with_columns(
-            pl.col("__cusum_dev").cum_sum().over(id_col).alias("cusum")
-        ).drop("__cusum_dev")
+        result = result.with_columns(pl.col("__cusum_dev").cum_sum().over(id_col).alias("cusum")).drop("__cusum_dev")
 
     return result

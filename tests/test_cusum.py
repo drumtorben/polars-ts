@@ -14,10 +14,12 @@ class TestCusumBasic:
 
     def test_step_function(self):
         """CUSUM should show a clear V-shape at a mean shift."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 10,
-            "y": [1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0, 5.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 10,
+                "y": [1.0, 1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0, 5.0],
+            }
+        )
         result = cusum(df, normalize=False)
         vals = result["cusum"].to_list()
         # CUSUM decreases below zero in the first half (below mean)
@@ -49,10 +51,12 @@ class TestCusumBasic:
 class TestCusumMultiGroup:
     def test_multiple_groups(self):
         """CUSUM should compute independently per group."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 4 + ["B"] * 4,
-            "y": [1.0, 1.0, 1.0, 1.0, 10.0, 20.0, 30.0, 40.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4 + ["B"] * 4,
+                "y": [1.0, 1.0, 1.0, 1.0, 10.0, 20.0, 30.0, 40.0],
+            }
+        )
         result = cusum(df, normalize=False)
         a_vals = result.filter(pl.col("unique_id") == "A")["cusum"].to_list()
         assert a_vals == pytest.approx([0.0, 0.0, 0.0, 0.0])
