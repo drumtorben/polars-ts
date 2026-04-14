@@ -9,10 +9,13 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,
+    compute_pairwise_edr,
     compute_pairwise_erp,
+    compute_pairwise_frechet,
     compute_pairwise_lcss,
     compute_pairwise_msm,
     compute_pairwise_msm_multi,
+    compute_pairwise_sbd,
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
@@ -25,6 +28,9 @@ _UNIVARIATE_METHODS = {
     "erp",
     "lcss",
     "twe",
+    "sbd",
+    "frechet",
+    "edr",
 }
 
 _MULTIVARIATE_METHODS = {
@@ -46,6 +52,9 @@ def compute_pairwise_distance(
         "erp",
         "lcss",
         "twe",
+        "sbd",
+        "frechet",
+        "edr",
         "dtw_multi",
         "msm_multi",
     ] = "dtw",
@@ -73,6 +82,9 @@ def compute_pairwise_distance(
             - ``lcss`` — Longest Common Subsequence. Accepts ``epsilon`` (threshold, default 1.0).
             - ``twe`` — Time Warp Edit Distance. Accepts ``nu`` (stiffness, default 0.001)
               and ``lambda_`` (edit penalty, default 1.0).
+            - ``sbd`` — Shape-Based Distance via normalized cross-correlation. No extra parameters.
+            - ``frechet`` — Discrete Frechet distance. No extra parameters.
+            - ``edr`` — Edit Distance on Real sequences. Accepts ``epsilon`` (threshold, default 0.1).
 
             **Multivariate:**
 
@@ -134,6 +146,18 @@ def compute_pairwise_distance(
             # Rust param is named "lambda" which is a Python reserved word
             twe_kw["lambda"] = kwargs["lambda_"]
         return compute_pairwise_twe(input1, input2, **twe_kw)
+
+    if method == "sbd":
+        _check_kwargs(kwargs, set(), method)
+        return compute_pairwise_sbd(input1, input2)
+
+    if method == "frechet":
+        _check_kwargs(kwargs, set(), method)
+        return compute_pairwise_frechet(input1, input2)
+
+    if method == "edr":
+        _check_kwargs(kwargs, {"epsilon"}, method)
+        return compute_pairwise_edr(input1, input2, **_pick(kwargs, "epsilon"))
 
     if method == "dtw_multi":
         _check_kwargs(kwargs, {"metric"}, method)

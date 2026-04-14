@@ -1,6 +1,6 @@
 [project]
 name = "polars-timeseries"
-version = "0.4.0"
+version = "0.5.0"
 description = "Polars Time Series Extension"
 authors = [
     { name = "Torben Windler" },
@@ -29,6 +29,7 @@ dev = [
   "ipywidgets>=8.1.5",
   "hvplot>=0.11.2",
   "matplotlib>=3.10.0",
+  "mypy>=1.11.0",
 ]
 docs = [
   "mkdocs>=1.6.1",

@@ -9,8 +9,8 @@ use rayon::prelude::*;
 /// Cast a column in-place to the given DataType, returning a new DataFrame.
 pub fn cast_column(df: &DataFrame, col_name: &str, dtype: DataType) -> Result<DataFrame, PolarsError> {
     let mut df = df.clone();
-    let casted = df.column(col_name)?.cast(&dtype)?.take_materialized_series();
-    let _ = df.replace(col_name, casted)?;
+    let casted = df.column(col_name)?.cast(&dtype)?;
+    let _ = df.with_column(casted)?;
     Ok(df)
 }
 
@@ -34,12 +34,11 @@ pub fn get_groups(df: &DataFrame) -> Result<DataFrame, PolarsError> {
     // Select only the columns we need
     let df = df.select(["unique_id", "y"])?;
 
-    // Group by unique_id and aggregate all columns into lists
-    #[allow(deprecated)]
-    let mut result = df.group_by(["unique_id"])?.agg_list()?;
-    // agg_list renames columns to "{name}_agg_list", rename back
-    result.rename("y_agg_list", "y".into())?;
-    Ok(result)
+    // Group by unique_id and aggregate y into lists via lazy API
+    df.lazy()
+        .group_by([col("unique_id")])
+        .agg([col("y")])
+        .collect()
 }
 
 /// Optimized conversion of a grouped DataFrame into a HashMap mapping id -> Vec<f64>.
@@ -90,7 +89,7 @@ pub fn df_to_hashmap(df: &DataFrame) -> PyResult<HashMap<String, Vec<f64>>> {
 pub fn get_groups_multivariate(df: &DataFrame) -> Result<DataFrame, PolarsError> {
     let dims: Vec<String> = df.get_column_names()
         .iter()
-        .filter(|&&name| name != "unique_id")
+        .filter(|s| s.as_str() != "unique_id")
         .map(|s| s.to_string())
         .collect();
 
@@ -100,15 +99,12 @@ pub fn get_groups_multivariate(df: &DataFrame) -> Result<DataFrame, PolarsError>
         df = cast_column(&df, dim.as_str(), DataType::Float64)?;
     }
 
-    // Group by unique_id and aggregate all columns into lists
-    #[allow(deprecated)]
-    let mut result = df.group_by(["unique_id"])?.agg_list()?;
-    // agg_list renames columns to "{name}_agg_list", rename back
-    for dim in &dims {
-        let agg_name = format!("{}_agg_list", dim);
-        result.rename(agg_name.as_str(), dim.clone().into())?;
-    }
-    Ok(result)
+    // Group by unique_id and aggregate all dimension columns into lists via lazy API
+    let agg_exprs: Vec<Expr> = dims.iter().map(|d| col(d.as_str())).collect();
+    df.lazy()
+        .group_by([col("unique_id")])
+        .agg(agg_exprs)
+        .collect()
 }
 
 /// Converts a grouped DataFrame into a HashMap mapping unique_id -> multivariate time series.
@@ -124,7 +120,7 @@ pub fn df_to_hashmap_multivariate(df: &DataFrame) -> PyResult<HashMap<String, Ve
 
     let dims: Vec<&str> = df.get_column_names()
         .iter()
-        .filter(|&&name| name != "unique_id")
+        .filter(|s| s.as_str() != "unique_id")
         .map(|s| s.as_str())
         .collect();
 
@@ -324,17 +320,15 @@ fn build_output_df(
     let id1_casted = out_df.column("id_1")
         .map_err(|e| PyValueError::new_err(e.to_string()))?
         .cast(uid_a_dtype)
-        .map_err(|e| PyValueError::new_err(e.to_string()))?
-        .take_materialized_series();
-    let _ = out_df.replace("id_1", id1_casted)
+        .map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let _ = out_df.with_column(id1_casted)
         .map_err(|e| PyValueError::new_err(e.to_string()))?;
 
     let id2_casted = out_df.column("id_2")
         .map_err(|e| PyValueError::new_err(e.to_string()))?
         .cast(uid_b_dtype)
-        .map_err(|e| PyValueError::new_err(e.to_string()))?
-        .take_materialized_series();
-    let _ = out_df.replace("id_2", id2_casted)
+        .map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let _ = out_df.with_column(id2_casted)
         .map_err(|e| PyValueError::new_err(e.to_string()))?;
 
     Ok(PyDataFrame(out_df))

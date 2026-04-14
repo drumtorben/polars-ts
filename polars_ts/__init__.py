@@ -8,10 +8,13 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,
+    compute_pairwise_edr,
     compute_pairwise_erp,
+    compute_pairwise_frechet,
     compute_pairwise_lcss,
     compute_pairwise_msm,
     compute_pairwise_msm_multi,
+    compute_pairwise_sbd,
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
@@ -66,6 +69,22 @@ def __getattr__(name: str):
         from polars_ts.changepoint.cusum import cusum
 
         return cusum
+    if name == "TimeSeriesKNNClassifier":
+        from polars_ts.classification.knn import TimeSeriesKNNClassifier
+
+        return TimeSeriesKNNClassifier
+    if name == "KShapeClassifier":
+        from polars_ts.classification.kshape_classifier import KShapeClassifier
+
+        return KShapeClassifier
+    if name == "TimeSeriesKMedoids":
+        from polars_ts.clustering.kmedoids import TimeSeriesKMedoids
+
+        return TimeSeriesKMedoids
+    if name == "KShape":
+        from polars_ts.clustering.kshape import KShape
+
+        return KShape
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -80,6 +99,9 @@ __all__ = [
     "compute_pairwise_erp",
     "compute_pairwise_lcss",
     "compute_pairwise_twe",
+    "compute_pairwise_sbd",
+    "compute_pairwise_frechet",
+    "compute_pairwise_edr",
     "mann_kendall",
     "sens_slope",
     "cusum",
@@ -88,4 +110,8 @@ __all__ = [
     "seasonal_decompose_features",
     "Metrics",
     "SCUM",
+    "TimeSeriesKNNClassifier",
+    "KShapeClassifier",
+    "TimeSeriesKMedoids",
+    "KShape",
 ]

@@ -1,0 +1,13 @@
+[run]
+source = polars_ts
+
+[report]
+fail_under = 65
+show_missing = true
+exclude_lines =
+    pragma: no cover
+    if TYPE_CHECKING:
+    raise NotImplementedError
+
+[xml]
+output = coverage.xml
