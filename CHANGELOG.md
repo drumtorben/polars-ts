@@ -1,3 +1,16 @@
+## v0.4.1 (Unreleased)
+
+### Features
+
+- Add k-Medoids (PAM) time series clustering (`kmedoids`) using any of the 9 distance metrics.
+- Add k-Nearest Neighbors time series classification (`knn_classify`) using any of the 9 distance metrics.
+- Add shared distance dispatch utility (`_distance_dispatch`) for reuse across clustering and classification.
+
+### Tests
+
+- Add 32 tests covering clustering output, correctness, edge cases, and multiple distance metrics.
+- Add classification tests covering correctness, custom columns, repeated values, and multiple metrics.
+
 ## v0.4.0 (Unreleased)
 
 ### Features

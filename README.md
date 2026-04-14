@@ -28,6 +28,13 @@ A high-performance time series analysis toolkit for [Polars](https://pola.rs), w
 | Multivariate DTW | `compute_pairwise_dtw_multi` | `metric`: manhattan, euclidean |
 | Multivariate MSM | `compute_pairwise_msm_multi` | `c`: move cost |
 
+### Classification & Clustering (Python, built on distance metrics)
+
+| Algorithm | Function | Key Parameters |
+|-----------|----------|----------------|
+| k-Nearest Neighbors | `knn_classify` | `k`, `method` (any distance metric) |
+| k-Medoids (PAM) | `kmedoids` | `k`, `method` (any distance metric), `seed` |
+
 ### Trend & Changepoint Detection (Rust)
 
 - **Mann-Kendall test** &mdash; non-parametric trend detection
@@ -81,6 +88,43 @@ result = pts.compute_pairwise_dtw(df, df)
 
 # With Sakoe-Chiba band constraint
 result = pts.compute_pairwise_dtw(df, df, method="sakoe_chiba", param=2)
+```
+
+### K-Medoids clustering
+
+```python
+import polars as pl
+import polars_ts as pts
+
+df = pl.DataFrame({
+    "unique_id": ["A"] * 5 + ["B"] * 5 + ["C"] * 5,
+    "y": [1.0, 1.0, 1.0, 1.0, 1.0,   # flat low
+          5.0, 5.0, 5.0, 5.0, 5.0,   # flat high
+          1.0, 5.0, 1.0, 5.0, 1.0],  # oscillating
+})
+
+clusters = pts.kmedoids(df, k=3, method="dtw")
+# Returns: DataFrame with [unique_id, cluster]
+```
+
+### K-NN classification
+
+```python
+import polars as pl
+import polars_ts as pts
+
+train = pl.DataFrame({
+    "unique_id": ["t1"] * 4 + ["t2"] * 4,
+    "y": [1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0],
+    "label": ["low"] * 4 + ["high"] * 4,
+})
+test = pl.DataFrame({
+    "unique_id": ["x1"] * 4,
+    "y": [1.0, 1.0, 1.0, 1.1],
+})
+
+predictions = pts.knn_classify(train, test, k=1, method="dtw")
+# Returns: DataFrame with [unique_id, predicted_label]
 ```
 
 ### Mann-Kendall trend test
