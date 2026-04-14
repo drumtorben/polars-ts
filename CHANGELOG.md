@@ -31,10 +31,8 @@
 
 ### Tests
 
-- Add 290+ tests covering all distance metrics, unified API, decomposition, trend, changepoint, anomaly detection, and edge cases.
+- Add 286 tests covering all distance metrics, decomposition, trend, changepoint, and edge cases.
 - Add input validation, edge case, and parallelism stress tests for distance metrics.
-- Add Sen's slope and CUSUM tests with group-by, error handling, and robustness checks.
-- Add anomaly threshold tests for seasonal decomposition.
 
 ## v0.3.0
 
