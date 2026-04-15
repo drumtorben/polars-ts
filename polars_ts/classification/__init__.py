@@ -1,4 +1,9 @@
-from polars_ts.classification.knn import TimeSeriesKNNClassifier
-from polars_ts.classification.kshape_classifier import KShapeClassifier
+def __getattr__(name: str):
+    if name == "knn_classify":
+        from polars_ts.classification.knn import knn_classify
 
-__all__ = ["TimeSeriesKNNClassifier", "KShapeClassifier"]
+        return knn_classify
+    raise AttributeError(f"module 'polars_ts.classification' has no attribute {name!r}")
+
+
+__all__ = ["knn_classify"]

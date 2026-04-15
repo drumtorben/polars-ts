@@ -1,4 +1,4 @@
-"""k-Nearest Neighbors classifier for time series using any distance metric."""
+"""K-Nearest Neighbors classification for time series using precomputed distances."""
 
 from __future__ import annotations
 
@@ -7,104 +7,93 @@ from typing import Any
 
 import polars as pl
 
-from polars_ts.distance import compute_pairwise_distance
+from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
 
 
-class TimeSeriesKNNClassifier:
-    """k-Nearest Neighbors classifier for time series.
+def knn_classify(
+    train_df: pl.DataFrame,
+    test_df: pl.DataFrame,
+    k: int = 3,
+    method: str = "dtw",
+    id_col: str = "unique_id",
+    target_col: str = "y",
+    label_col: str = "label",
+    **distance_kwargs: Any,
+) -> pl.DataFrame:
+    """K-Nearest Neighbors time series classification.
 
-    Uses the unified distance API to compute pairwise distances between
-    time series, then classifies based on majority vote of k nearest neighbors.
+    Parameters
+    ----------
+    train_df
+        Training DataFrame with columns ``id_col``, ``target_col``, and ``label_col``.
+        The ``label_col`` must have one label per ``id_col``.
+    test_df
+        Test DataFrame with columns ``id_col`` and ``target_col``.
+    k
+        Number of nearest neighbors.
+    method
+        Distance metric name (e.g. ``"dtw"``, ``"erp"``, ``"lcss"``).
+    id_col
+        Column identifying each time series.
+    target_col
+        Column with the time series values.
+    label_col
+        Column with class labels in the training data.
+    **distance_kwargs
+        Extra keyword arguments forwarded to the distance function.
 
-    Args:
-        k: Number of nearest neighbors. Default 1.
-        metric: Distance metric name (any metric supported by
-            ``compute_pairwise_distance``). Default ``"dtw"``.
-        **metric_kwargs: Additional keyword arguments passed to the distance function.
-
-    Examples:
-        >>> clf = TimeSeriesKNNClassifier(k=1, metric="dtw")
-        >>> clf.fit(train_df, label_col="label")
-        >>> predictions = clf.predict(test_df)
+    Returns
+    -------
+    pl.DataFrame
+        DataFrame with columns ``[id_col, "predicted_label"]``.
 
     """
+    if label_col not in train_df.columns:
+        raise ValueError(f"Training data must contain label column {label_col!r}")
 
-    def __init__(self, k: int = 1, metric: str = "dtw", **metric_kwargs: Any) -> None:
-        self.k = k
-        self.metric = metric
-        self.metric_kwargs = metric_kwargs
-        self._train_df: pl.DataFrame | None = None
-        self._labels: dict[str, str] = {}
+    # Build label lookup: str(id) -> label
+    label_df = (
+        train_df.group_by(id_col)
+        .agg(pl.col(label_col).first())
+        .select(pl.col(id_col).cast(pl.String).alias("_id"), label_col)
+    )
+    label_map = dict(zip(label_df["_id"].to_list(), label_df[label_col].to_list(), strict=False))
 
-    def fit(self, df: pl.DataFrame, *, label_col: str = "label") -> TimeSeriesKNNClassifier:
-        """Fit the classifier with labeled training data.
+    # Prepare DataFrames for distance computation (just id + values)
+    train_dist = train_df.select(pl.col(id_col).alias("unique_id"), pl.col(target_col).alias("y"))
+    test_dist = test_df.select(pl.col(id_col).alias("unique_id"), pl.col(target_col).alias("y"))
 
-        Args:
-            df: DataFrame with columns ``unique_id``, ``y``, and a label column.
-                Each ``unique_id`` should have exactly one label.
-            label_col: Name of the column containing class labels.
+    # Compute cross-distances
+    pairwise = compute_distances(train_dist, test_dist, method=method, **distance_kwargs)
+    dist = pairwise_to_dict(pairwise)
 
-        Returns:
-            self
+    train_ids = set(train_dist["unique_id"].unique().to_list())
+    test_ids = test_df[id_col].unique().sort().to_list()
+    test_str_ids = [str(tid) for tid in test_ids]
 
-        """
-        labels_df = df.select("unique_id", label_col).unique(subset=["unique_id"])
-        self._labels = dict(
-            zip(
-                labels_df["unique_id"].cast(pl.String).to_list(),
-                labels_df[label_col].cast(pl.String).to_list(),
-            )
-        )
-        self._train_df = df.select("unique_id", "y")
-        return self
+    # Classify each test series
+    predictions = []
+    for test_id, test_str in zip(test_ids, test_str_ids, strict=False):
+        # Get distances to all training series
+        distances = []
+        for train_id in train_ids:
+            d = dist.get((test_str, str(train_id)))
+            if d is not None:
+                distances.append((train_id, d))
 
-    def predict(self, df: pl.DataFrame) -> pl.DataFrame:
-        """Predict class labels for test time series.
+        # Sort by distance, take k nearest
+        distances.sort(key=lambda x: x[1])
+        neighbors = distances[:k]
 
-        Args:
-            df: DataFrame with columns ``unique_id`` and ``y``.
+        # Majority vote
+        votes = Counter(label_map[str(n[0])] for n in neighbors)
+        predicted = votes.most_common(1)[0][0]
+        predictions.append((test_id, predicted))
 
-        Returns:
-            DataFrame with columns ``unique_id`` and ``predicted_label``.
-
-        """
-        if self._train_df is None:
-            raise RuntimeError("Call fit() before predict()")
-
-        test_df = df.select("unique_id", "y")
-        distances = compute_pairwise_distance(
-            test_df, self._train_df, method=self.metric, **self.metric_kwargs
-        )
-
-        dist_col = [c for c in distances.columns if c not in ("id_1", "id_2")][0]
-        predictions: dict[str, str] = {}
-
-        test_ids = test_df["unique_id"].unique().cast(pl.String).to_list()
-        for test_id in test_ids:
-            # Get distances from this test series to all training series
-            dists = distances.filter(
-                (pl.col("id_1").cast(pl.String) == test_id)
-                | (pl.col("id_2").cast(pl.String) == test_id)
-            )
-
-            # Build (train_id, distance) pairs
-            neighbors: list[tuple[str, float]] = []
-            for row in dists.to_dicts():
-                id1 = str(row["id_1"])
-                id2 = str(row["id_2"])
-                train_id = id2 if id1 == test_id else id1
-                if train_id in self._labels:
-                    neighbors.append((train_id, row[dist_col]))
-
-            # Sort by distance, take k nearest
-            neighbors.sort(key=lambda x: x[1])
-            k_nearest = neighbors[: self.k]
-
-            # Majority vote
-            if k_nearest:
-                votes = Counter(self._labels[n[0]] for n in k_nearest)
-                predictions[test_id] = votes.most_common(1)[0][0]
-
-        pred_ids = list(predictions.keys())
-        pred_labels = [predictions[uid] for uid in pred_ids]
-        return pl.DataFrame({"unique_id": pred_ids, "predicted_label": pred_labels})
+    return pl.DataFrame(
+        {
+            id_col: [p[0] for p in predictions],
+            "predicted_label": [p[1] for p in predictions],
+        },
+        schema={id_col: test_df[id_col].dtype, "predicted_label": train_df[label_col].dtype},
+    )

@@ -1,143 +1,111 @@
-"""k-Medoids clustering (PAM) for time series using precomputed distance matrices."""
+"""K-Medoids (PAM) clustering for time series using precomputed distances."""
 
 from __future__ import annotations
 
+import random
 from typing import Any
 
 import polars as pl
 
-from polars_ts.distance import compute_pairwise_distance
+from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
 
 
-class TimeSeriesKMedoids:
-    """k-Medoids (PAM) clustering for time series.
+def kmedoids(
+    df: pl.DataFrame,
+    k: int,
+    method: str = "dtw",
+    max_iter: int = 100,
+    seed: int = 42,
+    id_col: str = "unique_id",
+    target_col: str = "y",
+    **distance_kwargs: Any,
+) -> pl.DataFrame:
+    """K-Medoids (PAM) clustering over time series.
 
-    Computes a full pairwise distance matrix using the unified distance API,
-    then applies the PAM (Partitioning Around Medoids) algorithm to find
-    cluster assignments.
+    Parameters
+    ----------
+    df
+        DataFrame with columns ``id_col`` and ``target_col``.
+    k
+        Number of clusters.
+    method
+        Distance metric name (e.g. ``"dtw"``, ``"erp"``, ``"lcss"``).
+    max_iter
+        Maximum swap iterations.
+    seed
+        Random seed for initial medoid selection.
+    id_col
+        Column identifying each time series.
+    target_col
+        Column with the time series values.
+    **distance_kwargs
+        Extra keyword arguments forwarded to the distance function.
 
-    Args:
-        n_clusters: Number of clusters.
-        metric: Distance metric name. Default ``"dtw"``.
-        max_iter: Maximum number of PAM iterations. Default 100.
-        **metric_kwargs: Additional keyword arguments passed to the distance function.
-
-    Examples:
-        >>> km = TimeSeriesKMedoids(n_clusters=2, metric="dtw")
-        >>> result = km.fit(df)
-        >>> result.labels_
+    Returns
+    -------
+    pl.DataFrame
+        DataFrame with columns ``[id_col, "cluster"]``.
 
     """
+    ids = df[id_col].unique().sort().to_list()
+    n = len(ids)
+    if k < 1:
+        raise ValueError("k must be >= 1")
+    if k > n:
+        raise ValueError(f"k ({k}) must be <= number of series ({n})")
 
-    def __init__(
-        self,
-        n_clusters: int = 2,
-        metric: str = "dtw",
-        max_iter: int = 100,
-        **metric_kwargs: Any,
-    ) -> None:
-        self.n_clusters = n_clusters
-        self.metric = metric
-        self.max_iter = max_iter
-        self.metric_kwargs = metric_kwargs
-        self.labels_: pl.DataFrame | None = None
-        self.medoids_: list[str] = []
-        self._dist_matrix: dict[tuple[str, str], float] = {}
+    # Rename columns if needed to match the expected format
+    dist_df = df.select(pl.col(id_col).alias("unique_id"), pl.col(target_col).alias("y"))
+    pairwise = compute_distances(dist_df, dist_df, method=method, **distance_kwargs)
+    dist = pairwise_to_dict(pairwise)
 
-    def fit(self, df: pl.DataFrame) -> TimeSeriesKMedoids:
-        """Fit k-Medoids clustering.
+    # Self-distance is 0
+    str_ids = [str(i) for i in ids]
+    for sid in str_ids:
+        dist[(sid, sid)] = 0.0
 
-        Args:
-            df: DataFrame with columns ``unique_id`` and ``y``.
+    def _total_cost(assignments: dict[str, str]) -> float:
+        return sum(dist[(sid, assignments[sid])] for sid in str_ids)
 
-        Returns:
-            self, with ``labels_`` and ``medoids_`` populated.
+    def _assign(medoids: list[str]) -> dict[str, str]:
+        assignment: dict[str, str] = {}
+        for sid in str_ids:
+            best = min(medoids, key=lambda m: dist[(sid, m)])
+            assignment[sid] = best
+        return assignment
 
-        """
-        ts_df = df.select("unique_id", "y")
-        ids = sorted(ts_df["unique_id"].unique().cast(pl.String).to_list())
-        n = len(ids)
+    # Initialize medoids randomly
+    rng = random.Random(seed)
+    medoids = rng.sample(str_ids, k)
 
-        if n < self.n_clusters:
-            raise ValueError(
-                f"Cannot create {self.n_clusters} clusters from {n} time series"
-            )
+    assignments = _assign(medoids)
+    current_cost = _total_cost(assignments)
 
-        # Compute pairwise distance matrix
-        distances = compute_pairwise_distance(
-            ts_df, ts_df, method=self.metric, **self.metric_kwargs
-        )
-        dist_col = [c for c in distances.columns if c not in ("id_1", "id_2")][0]
-
-        # Build symmetric distance lookup
-        dist: dict[tuple[str, str], float] = {}
-        for row in distances.to_dicts():
-            id1 = str(row["id_1"])
-            id2 = str(row["id_2"])
-            d = row[dist_col]
-            dist[(id1, id2)] = d
-            dist[(id2, id1)] = d
-        for uid in ids:
-            dist[(uid, uid)] = 0.0
-        self._dist_matrix = dist
-
-        # Initialize medoids: pick first n_clusters ids (deterministic)
-        medoids = ids[: self.n_clusters]
-
-        # PAM swap phase
-        for _ in range(self.max_iter):
-            # Assign each point to nearest medoid
-            assignments = self._assign(ids, medoids)
-
-            # Try swapping each medoid with each non-medoid
-            improved = False
-            best_cost = self._total_cost(ids, medoids)
-            for mi, m in enumerate(medoids):
-                for candidate in ids:
-                    if candidate in medoids:
-                        continue
-                    new_medoids = medoids.copy()
-                    new_medoids[mi] = candidate
-                    cost = self._total_cost(ids, new_medoids)
-                    if cost < best_cost:
-                        best_cost = cost
-                        medoids = new_medoids
-                        improved = True
-
-            if not improved:
+    # PAM swap loop
+    for _ in range(max_iter):
+        improved = False
+        for i, _med in enumerate(medoids):
+            non_medoids = [s for s in str_ids if s not in medoids]
+            for candidate in non_medoids:
+                new_medoids = medoids[:i] + [candidate] + medoids[i + 1 :]
+                new_assignments = _assign(new_medoids)
+                new_cost = _total_cost(new_assignments)
+                if new_cost < current_cost - 1e-12:
+                    medoids = new_medoids
+                    assignments = new_assignments
+                    current_cost = new_cost
+                    improved = True
+                    break
+            if improved:
                 break
+        if not improved:
+            break
 
-        # Final assignment
-        assignments = self._assign(ids, medoids)
-        self.medoids_ = medoids
-        self.labels_ = pl.DataFrame({
-            "unique_id": ids,
-            "cluster": [assignments[uid] for uid in ids],
-        })
-        return self
+    # Map medoids to cluster labels 0..k-1
+    medoid_to_label = {m: i for i, m in enumerate(sorted(medoids))}
+    rows = [(orig_id, medoid_to_label[assignments[str(orig_id)]]) for orig_id in ids]
 
-    def _assign(self, ids: list[str], medoids: list[str]) -> dict[str, int]:
-        """Assign each id to its nearest medoid."""
-        assignments: dict[str, int] = {}
-        for uid in ids:
-            best_cluster = 0
-            best_dist = float("inf")
-            for ci, m in enumerate(medoids):
-                d = self._dist_matrix.get((uid, m), float("inf"))
-                if d < best_dist:
-                    best_dist = d
-                    best_cluster = ci
-            assignments[uid] = best_cluster
-        return assignments
-
-    def _total_cost(self, ids: list[str], medoids: list[str]) -> float:
-        """Compute total cost (sum of distances to nearest medoid)."""
-        total = 0.0
-        for uid in ids:
-            min_dist = float("inf")
-            for m in medoids:
-                d = self._dist_matrix.get((uid, m), float("inf"))
-                if d < min_dist:
-                    min_dist = d
-            total += min_dist
-        return total
+    return pl.DataFrame(
+        {id_col: [r[0] for r in rows], "cluster": [r[1] for r in rows]},
+        schema={id_col: df[id_col].dtype, "cluster": pl.Int64},
+    )

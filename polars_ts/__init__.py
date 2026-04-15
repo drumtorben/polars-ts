@@ -69,22 +69,14 @@ def __getattr__(name: str):
         from polars_ts.changepoint.cusum import cusum
 
         return cusum
-    if name == "TimeSeriesKNNClassifier":
-        from polars_ts.classification.knn import TimeSeriesKNNClassifier
+    if name == "kmedoids":
+        from polars_ts.clustering.kmedoids import kmedoids
 
-        return TimeSeriesKNNClassifier
-    if name == "KShapeClassifier":
-        from polars_ts.classification.kshape_classifier import KShapeClassifier
+        return kmedoids
+    if name == "knn_classify":
+        from polars_ts.classification.knn import knn_classify
 
-        return KShapeClassifier
-    if name == "TimeSeriesKMedoids":
-        from polars_ts.clustering.kmedoids import TimeSeriesKMedoids
-
-        return TimeSeriesKMedoids
-    if name == "KShape":
-        from polars_ts.clustering.kshape import KShape
-
-        return KShape
+        return knn_classify
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -110,8 +102,6 @@ __all__ = [
     "seasonal_decompose_features",
     "Metrics",
     "SCUM",
-    "TimeSeriesKNNClassifier",
-    "KShapeClassifier",
-    "TimeSeriesKMedoids",
-    "KShape",
+    "kmedoids",
+    "knn_classify",
 ]

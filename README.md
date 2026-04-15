@@ -83,6 +83,47 @@ result = pts.compute_pairwise_dtw(df, df)
 result = pts.compute_pairwise_dtw(df, df, method="sakoe_chiba", param=2)
 ```
 
+### K-Medoids clustering
+
+```python
+import polars as pl
+import polars_ts as pts
+
+df = pl.DataFrame({
+    "group": ["A"] * 10 + ["B"] * 10,
+    "y": list(range(10)) + [10 - x for x in range(10)],
+})
+
+    "unique_id": ["A"] * 5 + ["B"] * 5 + ["C"] * 5,
+    "y": [1.0, 1.0, 1.0, 1.0, 1.0,   # flat low
+          5.0, 5.0, 5.0, 5.0, 5.0,   # flat high
+          1.0, 5.0, 1.0, 5.0, 1.0],  # oscillating
+})
+
+clusters = pts.kmedoids(df, k=3, method="dtw")
+# Returns: DataFrame with [unique_id, cluster]
+```
+
+### K-NN classification
+
+```python
+import polars as pl
+import polars_ts as pts
+
+train = pl.DataFrame({
+    "unique_id": ["t1"] * 4 + ["t2"] * 4,
+    "y": [1.0, 1.0, 1.0, 1.0, 5.0, 5.0, 5.0, 5.0],
+    "label": ["low"] * 4 + ["high"] * 4,
+})
+test = pl.DataFrame({
+    "unique_id": ["x1"] * 4,
+    "y": [1.0, 1.0, 1.0, 1.1],
+})
+
+predictions = pts.knn_classify(train, test, k=1, method="dtw")
+# Returns: DataFrame with [unique_id, predicted_label]
+```
+
 ### Mann-Kendall trend test
 
 ```python
@@ -99,6 +140,19 @@ result = df.group_by("group").agg(
     pts.sens_slope(pl.col("y")).alias("slope"),
 )
 ```
+
+### Seasonal decomposition
+
+```python
+import polars as pl
+import polars_ts as pts
+
+df = pl.DataFrame({
+    "unique_id": ["A"] * 48,
+    "ds": list(range(48)),
+    "y": [10 + 5 * (i % 12 > 5) + 0.5 * i for i in range(48)],
+})
+
 
 ### Seasonal decomposition
 
