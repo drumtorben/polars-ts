@@ -38,10 +38,12 @@ class TestEDRDirect:
 
     def test_completely_different(self):
         """Series with no matching points should have high EDR."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 3 + ["B"] * 3,
-            "y": [0.0, 0.0, 0.0, 100.0, 100.0, 100.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 3,
+                "y": [0.0, 0.0, 0.0, 100.0, 100.0, 100.0],
+            }
+        )
         result = compute_pairwise_edr(df, df, epsilon=0.01)
         d = _to_dict(result)
         assert d[("A", "B")] == pytest.approx(1.0, abs=1e-10)
@@ -64,9 +66,7 @@ class TestEDRUnifiedAPI:
         assert ("A", "B") in d
 
     def test_epsilon_kwarg(self, identical_series):
-        result = compute_pairwise_distance(
-            identical_series, identical_series, method="edr", epsilon=0.5
-        )
+        result = compute_pairwise_distance(identical_series, identical_series, method="edr", epsilon=0.5)
         d = _to_dict(result)
         assert d[("A", "B")] == pytest.approx(0.0, abs=1e-10)
 

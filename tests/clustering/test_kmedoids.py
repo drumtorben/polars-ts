@@ -6,16 +6,18 @@ from polars_ts.clustering import TimeSeriesKMedoids
 
 @pytest.fixture
 def cluster_data():
-    """Data with two clear clusters: ascending and descending."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4 + ["D"] * 4,
-        "y": (
-            [1.0, 2.0, 3.0, 4.0]    # ascending A
-            + [1.0, 2.0, 3.0, 4.5]  # ascending B (similar to A)
-            + [4.0, 3.0, 2.0, 1.0]  # descending C
-            + [4.5, 3.0, 2.0, 1.0]  # descending D (similar to C)
-        ),
-    })
+    """Create data with two clear clusters: ascending and descending."""
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4 + ["D"] * 4,
+            "y": (
+                [1.0, 2.0, 3.0, 4.0]  # ascending A
+                + [1.0, 2.0, 3.0, 4.5]  # ascending B (similar to A)
+                + [4.0, 3.0, 2.0, 1.0]  # descending C
+                + [4.5, 3.0, 2.0, 1.0]  # descending D (similar to C)
+            ),
+        }
+    )
 
 
 class TestTimeSeriesKMedoids:
@@ -35,9 +37,7 @@ class TestTimeSeriesKMedoids:
     def test_two_clusters(self, cluster_data):
         km = TimeSeriesKMedoids(n_clusters=2, metric="dtw")
         km.fit(cluster_data)
-        labels = dict(
-            zip(km.labels_["unique_id"].to_list(), km.labels_["cluster"].to_list())
-        )
+        labels = dict(zip(km.labels_["unique_id"].to_list(), km.labels_["cluster"].to_list(), strict=False))
         # A and B should be in the same cluster, C and D in another
         assert labels["A"] == labels["B"]
         assert labels["C"] == labels["D"]
@@ -52,13 +52,15 @@ class TestTimeSeriesKMedoids:
         km = TimeSeriesKMedoids(n_clusters=1, metric="dtw")
         km.fit(cluster_data)
         labels = km.labels_["cluster"].to_list()
-        assert all(l == 0 for l in labels)
+        assert all(label == 0 for label in labels)
 
     def test_too_many_clusters_raises(self):
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 4,
-            "y": [1.0, 2.0, 3.0, 4.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4,
+                "y": [1.0, 2.0, 3.0, 4.0],
+            }
+        )
         km = TimeSeriesKMedoids(n_clusters=5)
         with pytest.raises(ValueError, match="Cannot create"):
             km.fit(df)
@@ -70,13 +72,13 @@ class TestTimeSeriesKMedoids:
             assert km.labels_ is not None
 
     def test_identical_series_same_cluster(self):
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
-            "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 9.0, 8.0, 7.0, 6.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
+                "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 9.0, 8.0, 7.0, 6.0],
+            }
+        )
         km = TimeSeriesKMedoids(n_clusters=2, metric="dtw")
         km.fit(df)
-        labels = dict(
-            zip(km.labels_["unique_id"].to_list(), km.labels_["cluster"].to_list())
-        )
+        labels = dict(zip(km.labels_["unique_id"].to_list(), km.labels_["cluster"].to_list(), strict=False))
         assert labels["A"] == labels["B"]

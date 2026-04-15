@@ -31,9 +31,7 @@ class KShapeClassifier:
         self.max_iter = max_iter
         self._centroids: list[tuple[str, np.ndarray]] = []
 
-    def fit(
-        self, df: pl.DataFrame, *, label_col: str = "label"
-    ) -> KShapeClassifier:
+    def fit(self, df: pl.DataFrame, *, label_col: str = "label") -> KShapeClassifier:
         """Fit the classifier by computing k-Shape centroids for each class.
 
         Args:
@@ -49,6 +47,7 @@ class KShapeClassifier:
             zip(
                 labels_df["unique_id"].cast(pl.String).to_list(),
                 labels_df[label_col].cast(pl.String).to_list(),
+                strict=False,
             )
         )
 
@@ -57,9 +56,7 @@ class KShapeClassifier:
 
         for cls in classes:
             cls_ids = [uid for uid, lbl in label_map.items() if lbl == cls]
-            cls_df = df.filter(pl.col("unique_id").cast(pl.String).is_in(cls_ids)).select(
-                "unique_id", "y"
-            )
+            cls_df = df.filter(pl.col("unique_id").cast(pl.String).is_in(cls_ids)).select("unique_id", "y")
 
             n_series = len(cls_ids)
             n_centroids = min(self.n_centroids_per_class, n_series)
@@ -68,9 +65,7 @@ class KShapeClassifier:
                 # Just compute mean z-normalized shape
                 series_list = []
                 for uid in cls_ids:
-                    vals = cls_df.filter(
-                        pl.col("unique_id").cast(pl.String) == uid
-                    )["y"].to_numpy()
+                    vals = cls_df.filter(pl.col("unique_id").cast(pl.String) == uid)["y"].to_numpy()
                     series_list.append(_zscore(vals.astype(np.float64)))
                 centroid = np.mean(series_list, axis=0)
                 self._centroids.append((cls, _zscore(centroid)))

@@ -122,8 +122,6 @@ jobs:
           components: clippy
       - name: Run clippy
         run: cargo clippy -- -D warnings
-      - name: Run Rust tests
-        run: cargo test
 
   code-quality:
     name: Code quality

@@ -104,9 +104,7 @@ class KShape:
 
         n = len(ids)
         if n < self.n_clusters:
-            raise ValueError(
-                f"Cannot create {self.n_clusters} clusters from {n} time series"
-            )
+            raise ValueError(f"Cannot create {self.n_clusters} clusters from {n} time series")
 
         length = max(len(s) for s in series_list)
 
@@ -153,8 +151,10 @@ class KShape:
                     centroids[ci] = _shape_extraction(members, length)
 
         self.centroids_ = centroids
-        self.labels_ = pl.DataFrame({
-            "unique_id": ids,
-            "cluster": assignments,
-        })
+        self.labels_ = pl.DataFrame(
+            {
+                "unique_id": ids,
+                "cluster": assignments,
+            }
+        )
         return self

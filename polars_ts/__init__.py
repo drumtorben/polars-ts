@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import polars as pl
 import polars_ts_rs as _rs_mod
@@ -44,7 +45,7 @@ def sens_slope(expr: IntoExpr) -> pl.Expr:
     )
 
 
-def __getattr__(name: str):
+def __getattr__(name: str) -> Any:
     if name == "Metrics":
         from polars_ts.metrics import Metrics
 
@@ -77,6 +78,22 @@ def __getattr__(name: str):
         from polars_ts.classification.knn import knn_classify
 
         return knn_classify
+    if name == "TimeSeriesKNNClassifier":
+        from polars_ts.classification.knn import TimeSeriesKNNClassifier
+
+        return TimeSeriesKNNClassifier
+    if name == "KShapeClassifier":
+        from polars_ts.classification.kshape_classifier import KShapeClassifier
+
+        return KShapeClassifier
+    if name == "TimeSeriesKMedoids":
+        from polars_ts.clustering.kmedoids import TimeSeriesKMedoids
+
+        return TimeSeriesKMedoids
+    if name == "KShape":
+        from polars_ts.clustering.kshape import KShape
+
+        return KShape
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -104,4 +121,8 @@ __all__ = [
     "SCUM",
     "kmedoids",
     "knn_classify",
+    "TimeSeriesKNNClassifier",
+    "KShapeClassifier",
+    "TimeSeriesKMedoids",
+    "KShape",
 ]

@@ -26,10 +26,12 @@ class TestSBDDirect:
         assert d[("A", "B")] < d[("A", "C")]
 
     def test_negated_series_high_distance(self):
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 4 + ["B"] * 4,
-            "y": [1.0, 2.0, 3.0, 4.0, -1.0, -2.0, -3.0, -4.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4 + ["B"] * 4,
+                "y": [1.0, 2.0, 3.0, 4.0, -1.0, -2.0, -3.0, -4.0],
+            }
+        )
         result = compute_pairwise_sbd(df, df)
         d = _to_dict(result)
         # Negated series are anti-correlated, SBD should be > 1.0

@@ -7,30 +7,32 @@ from polars_ts.classification import TimeSeriesKNNClassifier
 @pytest.fixture
 def train_data():
     """Training data with two classes: sine-like (A, B) and constant (C, D)."""
-    return pl.DataFrame({
-        "unique_id": ["A"] * 8 + ["B"] * 8 + ["C"] * 8 + ["D"] * 8,
-        "y": (
-            [0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0]   # sine-like A
-            + [0.0, 0.9, 0.0, -0.9, 0.0, 0.9, 0.0, -0.9]  # sine-like B
-            + [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]    # constant C
-            + [4.9, 5.1, 5.0, 5.0, 4.9, 5.1, 5.0, 5.0]    # near-constant D
-        ),
-        "label": (
-            ["sine"] * 8 + ["sine"] * 8 + ["constant"] * 8 + ["constant"] * 8
-        ),
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": ["A"] * 8 + ["B"] * 8 + ["C"] * 8 + ["D"] * 8,
+            "y": (
+                [0.0, 1.0, 0.0, -1.0, 0.0, 1.0, 0.0, -1.0]  # sine-like A
+                + [0.0, 0.9, 0.0, -0.9, 0.0, 0.9, 0.0, -0.9]  # sine-like B
+                + [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]  # constant C
+                + [4.9, 5.1, 5.0, 5.0, 4.9, 5.1, 5.0, 5.0]  # near-constant D
+            ),
+            "label": (["sine"] * 8 + ["sine"] * 8 + ["constant"] * 8 + ["constant"] * 8),
+        }
+    )
 
 
 @pytest.fixture
 def test_data():
     """Test data: one sine-like, one constant."""
-    return pl.DataFrame({
-        "unique_id": ["X"] * 8 + ["Y"] * 8,
-        "y": (
-            [0.0, 0.8, 0.0, -0.8, 0.0, 0.8, 0.0, -0.8]  # sine-like
-            + [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]   # constant
-        ),
-    })
+    return pl.DataFrame(
+        {
+            "unique_id": ["X"] * 8 + ["Y"] * 8,
+            "y": (
+                [0.0, 0.8, 0.0, -0.8, 0.0, 0.8, 0.0, -0.8]  # sine-like
+                + [5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0]  # constant
+            ),
+        }
+    )
 
 
 class TestTimeSeriesKNNClassifier:
@@ -48,7 +50,7 @@ class TestTimeSeriesKNNClassifier:
         clf.fit(train_data, label_col="label")
         result = clf.predict(test_data)
 
-        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list()))
+        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list(), strict=False))
         assert preds["X"] == "sine"
         assert preds["Y"] == "constant"
 
@@ -57,7 +59,7 @@ class TestTimeSeriesKNNClassifier:
         clf.fit(train_data, label_col="label")
         result = clf.predict(test_data)
 
-        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list()))
+        preds = dict(zip(result["unique_id"].to_list(), result["predicted_label"].to_list(), strict=False))
         assert preds["X"] == "sine"
         assert preds["Y"] == "constant"
 

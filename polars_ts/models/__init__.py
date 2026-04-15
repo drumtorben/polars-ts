@@ -1,4 +1,7 @@
-def __getattr__(name: str):
+from typing import Any
+
+
+def __getattr__(name: str) -> Any:
     if name == "SCUM":
         try:
             from polars_ts.models.scum import SCUM

@@ -22,7 +22,7 @@ class Metrics:
         seed: int = 42,
         modified: bool = True,
         agg: bool = False,
-    ) -> pl.Expr:
+    ) -> pl.DataFrame:
         if _StatsForecast is None:
             raise ImportError(
                 "statsforecast is required for Metrics.kaboudan(). "

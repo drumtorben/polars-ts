@@ -26,20 +26,24 @@ class TestFrechetDirect:
 
     def test_known_value(self):
         """Frechet distance between [0, 1] and [0, 2] should be 1.0."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 2 + ["B"] * 2,
-            "y": [0.0, 1.0, 0.0, 2.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 2 + ["B"] * 2,
+                "y": [0.0, 1.0, 0.0, 2.0],
+            }
+        )
         result = compute_pairwise_frechet(df, df)
         d = _to_dict(result)
         assert d[("A", "B")] == pytest.approx(1.0, abs=1e-10)
 
     def test_constant_offset(self):
         """Series offset by constant c should have Frechet = c."""
-        df = pl.DataFrame({
-            "unique_id": ["A"] * 4 + ["B"] * 4,
-            "y": [0.0, 1.0, 2.0, 3.0, 5.0, 6.0, 7.0, 8.0],
-        })
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 4 + ["B"] * 4,
+                "y": [0.0, 1.0, 2.0, 3.0, 5.0, 6.0, 7.0, 8.0],
+            }
+        )
         result = compute_pairwise_frechet(df, df)
         d = _to_dict(result)
         assert d[("A", "B")] == pytest.approx(5.0, abs=1e-10)
