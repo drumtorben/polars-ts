@@ -99,12 +99,7 @@ def mape(
 
     """
     filtered = df.filter(pl.col(actual_col) != 0)
-    expr = (
-        ((pl.col(actual_col) - pl.col(predicted_col)) / pl.col(actual_col))
-        .abs()
-        .mean()
-        .alias("mape")
-    )
+    expr = ((pl.col(actual_col) - pl.col(predicted_col)) / pl.col(actual_col)).abs().mean().alias("mape")
     if id_col is not None:
         return filtered.group_by(id_col).agg(expr).sort(id_col)
     return filtered.select(expr).item()
@@ -140,11 +135,7 @@ def smape(
     """
     denom = pl.col(actual_col).abs() + pl.col(predicted_col).abs()
     filtered = df.filter(denom != 0)
-    expr = (
-        (2 * (pl.col(actual_col) - pl.col(predicted_col)).abs() / denom)
-        .mean()
-        .alias("smape")
-    )
+    expr = (2 * (pl.col(actual_col) - pl.col(predicted_col)).abs() / denom).mean().alias("smape")
     if id_col is not None:
         return filtered.group_by(id_col).agg(expr).sort(id_col)
     return filtered.select(expr).item()
@@ -192,12 +183,7 @@ def mase(
     # Compute per-group naive MAE (seasonal lag difference)
     naive_mae = (
         sorted_df.with_columns(
-            (
-                pl.col(actual_col)
-                - pl.col(actual_col).shift(season_length).over(id_col)
-            )
-            .abs()
-            .alias("__naive_err")
+            (pl.col(actual_col) - pl.col(actual_col).shift(season_length).over(id_col)).abs().alias("__naive_err")
         )
         .group_by(id_col)
         .agg(pl.col("__naive_err").mean().alias("__naive_mae"))
@@ -211,11 +197,7 @@ def mase(
     # Join and compute MASE (0/0 = 0 when both forecast and naive are perfect)
     result = forecast_mae.join(naive_mae, on=id_col).with_columns(
         pl.when(pl.col("__naive_mae") == 0)
-        .then(
-            pl.when(pl.col("__forecast_mae") == 0)
-            .then(0.0)
-            .otherwise(float("inf"))
-        )
+        .then(pl.when(pl.col("__forecast_mae") == 0).then(0.0).otherwise(float("inf")))
         .otherwise(pl.col("__forecast_mae") / pl.col("__naive_mae"))
         .alias("mase")
     )
@@ -263,9 +245,7 @@ def crps(
     if quantile_cols is None:
         quantile_cols = [c for c in df.columns if c.startswith("q_")]
     if not quantile_cols:
-        raise ValueError(
-            "No quantile columns found. Provide quantile_cols or use columns named 'q_0.1', 'q_0.5', etc."
-        )
+        raise ValueError("No quantile columns found. Provide quantile_cols or use columns named 'q_0.1', 'q_0.5', etc.")
 
     if quantiles is None:
         try:
@@ -277,30 +257,20 @@ def crps(
             ) from e
 
     if len(quantiles) != len(quantile_cols):
-        raise ValueError(
-            f"Length mismatch: {len(quantiles)} quantiles vs {len(quantile_cols)} columns"
-        )
+        raise ValueError(f"Length mismatch: {len(quantiles)} quantiles vs {len(quantile_cols)} columns")
 
     # Pinball loss for each quantile: q * max(y - y_q, 0) + (1-q) * max(y_q - y, 0)
     pinball_exprs = []
     for q, col in zip(quantiles, quantile_cols, strict=True):
         error = pl.col(actual_col) - pl.col(col)
-        pinball = (
-            pl.when(error >= 0)
-            .then(q * error)
-            .otherwise((q - 1) * error)
-        )
+        pinball = pl.when(error >= 0).then(q * error).otherwise((q - 1) * error)
         pinball_exprs.append(pinball.alias(f"__pinball_{col}"))
 
     with_pinball = df.with_columns(pinball_exprs)
     pinball_cols = [f"__pinball_{c}" for c in quantile_cols]
 
     # Average across quantiles, then across samples
-    avg_expr = (
-        pl.concat_list(pinball_cols)
-        .list.mean()
-        .alias("__avg_pinball")
-    )
+    avg_expr = pl.concat_list(pinball_cols).list.mean().alias("__avg_pinball")
     with_avg = with_pinball.with_columns(avg_expr)
 
     crps_expr = pl.col("__avg_pinball").mean().alias("crps")

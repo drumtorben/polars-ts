@@ -98,9 +98,7 @@ def silhouette_score(
         only one cluster or one sample.
 
     """
-    samples = silhouette_samples(
-        df, labels, method, id_col, target_col, **distance_kwargs
-    )
+    samples = silhouette_samples(df, labels, method, id_col, target_col, **distance_kwargs)
     values = samples["silhouette"].to_list()
     if not values:
         return 0.0
@@ -138,9 +136,7 @@ def silhouette_samples(
         DataFrame with columns ``id_col``, ``"cluster"``, and ``"silhouette"``.
 
     """
-    ids, id_to_cluster, dist = _build_dist_matrix(
-        df, labels, method, id_col, target_col, **distance_kwargs
-    )
+    ids, id_to_cluster, dist = _build_dist_matrix(df, labels, method, id_col, target_col, **distance_kwargs)
 
     clusters = set(id_to_cluster.values())
 
@@ -215,9 +211,7 @@ def davies_bouldin_score(
         Davies-Bouldin index. Returns 0.0 if there is only one cluster.
 
     """
-    ids, id_to_cluster, dist = _build_dist_matrix(
-        df, labels, method, id_col, target_col, **distance_kwargs
-    )
+    ids, id_to_cluster, dist = _build_dist_matrix(df, labels, method, id_col, target_col, **distance_kwargs)
 
     cluster_members = _group_by_cluster(id_to_cluster)
     cluster_ids = sorted(cluster_members.keys())
@@ -296,9 +290,7 @@ def calinski_harabasz_score(
         or fewer than ``k + 1`` samples.
 
     """
-    ids, id_to_cluster, dist = _build_dist_matrix(
-        df, labels, method, id_col, target_col, **distance_kwargs
-    )
+    ids, id_to_cluster, dist = _build_dist_matrix(df, labels, method, id_col, target_col, **distance_kwargs)
 
     cluster_members = _group_by_cluster(id_to_cluster)
     cluster_ids = sorted(cluster_members.keys())

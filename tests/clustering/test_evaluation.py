@@ -15,29 +15,20 @@ def two_cluster_data():
     return pl.DataFrame(
         {
             "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4 + ["D"] * 4,
-            "y": (
-                [1.0, 2.0, 3.0, 4.0]
-                + [1.0, 2.0, 3.0, 4.5]
-                + [4.0, 3.0, 2.0, 1.0]
-                + [4.5, 3.0, 2.0, 1.0]
-            ),
+            "y": ([1.0, 2.0, 3.0, 4.0] + [1.0, 2.0, 3.0, 4.5] + [4.0, 3.0, 2.0, 1.0] + [4.5, 3.0, 2.0, 1.0]),
         }
     )
 
 
 @pytest.fixture
 def two_cluster_labels():
-    return pl.DataFrame(
-        {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 1, 1]}
-    )
+    return pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 1, 1]})
 
 
 @pytest.fixture
 def bad_labels():
     """Wrong clustering: mix ascending and descending in same cluster."""
-    return pl.DataFrame(
-        {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 0, 1]}
-    )
+    return pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 0, 1]})
 
 
 @pytest.fixture
@@ -68,9 +59,7 @@ class TestSilhouetteScore:
         assert -1.0 <= score <= 1.0
 
     def test_single_cluster_returns_zero(self, two_cluster_data):
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]})
         assert silhouette_score(two_cluster_data, labels, method="dtw") == 0.0
 
     def test_single_sample(self):
@@ -116,17 +105,13 @@ class TestSilhouetteSamples:
         assert abs(mean_from_samples - score) < 1e-10
 
     def test_single_cluster(self, two_cluster_data):
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]})
         result = silhouette_samples(two_cluster_data, labels, method="dtw")
         assert all(v == 0.0 for v in result["silhouette"].to_list())
 
     def test_cluster_column_preserved(self, two_cluster_data, two_cluster_labels):
         result = silhouette_samples(two_cluster_data, two_cluster_labels, method="dtw")
-        cluster_map = dict(
-            zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False)
-        )
+        cluster_map = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False))
         label_map = dict(
             zip(
                 two_cluster_labels["unique_id"].to_list(),
@@ -152,9 +137,7 @@ class TestDaviesBouldinScore:
         assert score >= 0.0
 
     def test_single_cluster_returns_zero(self, two_cluster_data):
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]})
         assert davies_bouldin_score(two_cluster_data, labels, method="dtw") == 0.0
 
     def test_different_metrics(self, two_cluster_data, two_cluster_labels):
@@ -170,9 +153,7 @@ class TestDaviesBouldinScore:
             }
         )
         labels = pl.DataFrame({"ts_id": ["A", "B", "C"], "cluster": [0, 0, 1]})
-        score = davies_bouldin_score(
-            df, labels, method="dtw", id_col="ts_id", target_col="value"
-        )
+        score = davies_bouldin_score(df, labels, method="dtw", id_col="ts_id", target_col="value")
         assert score >= 0.0
 
 
@@ -190,9 +171,7 @@ class TestCalinskiHarabaszScore:
         assert score >= 0.0
 
     def test_single_cluster_returns_zero(self, two_cluster_data):
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 0, 0, 0]})
         assert calinski_harabasz_score(two_cluster_data, labels, method="dtw") == 0.0
 
     def test_n_equals_k_returns_zero(self):
@@ -208,29 +187,18 @@ class TestCalinskiHarabaszScore:
 
     def test_different_metrics(self, two_cluster_data, two_cluster_labels):
         for metric in ["dtw", "msm", "erp"]:
-            score = calinski_harabasz_score(
-                two_cluster_data, two_cluster_labels, method=metric
-            )
+            score = calinski_harabasz_score(two_cluster_data, two_cluster_labels, method=metric)
             assert score >= 0.0
 
     def test_custom_columns(self):
         df = pl.DataFrame(
             {
                 "ts_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4 + ["D"] * 4,
-                "value": (
-                    [1.0, 2.0, 3.0, 4.0]
-                    + [1.0, 2.0, 3.0, 4.5]
-                    + [4.0, 3.0, 2.0, 1.0]
-                    + [4.5, 3.0, 2.0, 1.0]
-                ),
+                "value": ([1.0, 2.0, 3.0, 4.0] + [1.0, 2.0, 3.0, 4.5] + [4.0, 3.0, 2.0, 1.0] + [4.5, 3.0, 2.0, 1.0]),
             }
         )
-        labels = pl.DataFrame(
-            {"ts_id": ["A", "B", "C", "D"], "cluster": [0, 0, 1, 1]}
-        )
-        score = calinski_harabasz_score(
-            df, labels, method="dtw", id_col="ts_id", target_col="value"
-        )
+        labels = pl.DataFrame({"ts_id": ["A", "B", "C", "D"], "cluster": [0, 0, 1, 1]})
+        score = calinski_harabasz_score(df, labels, method="dtw", id_col="ts_id", target_col="value")
         assert score > 0.0
 
 
@@ -267,16 +235,12 @@ class TestIntegrationWithKMedoids:
 class TestEdgeCases:
     def test_all_singleton_clusters_silhouette(self, two_cluster_data):
         """Each series in its own cluster — a_i=0, b_i>0, so silhouette=1.0."""
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 2, 3]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 2, 3]})
         score = silhouette_score(two_cluster_data, labels, method="dtw")
         assert score == 1.0
 
     def test_all_singleton_clusters_davies_bouldin(self, two_cluster_data):
-        labels = pl.DataFrame(
-            {"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 2, 3]}
-        )
+        labels = pl.DataFrame({"unique_id": ["A", "B", "C", "D"], "cluster": [0, 1, 2, 3]})
         score = davies_bouldin_score(two_cluster_data, labels, method="dtw")
         assert score >= 0.0
 

@@ -1,12 +1,9 @@
 """Tests for forecast error metrics (MAE, RMSE, MAPE, sMAPE, MASE, CRPS)."""
 
-import math
-
 import polars as pl
 import pytest
 
 from polars_ts.metrics.forecast import crps, mae, mape, mase, rmse, smape
-
 
 # --- Fixtures ---
 
@@ -19,7 +16,7 @@ def perfect_forecast():
 
 @pytest.fixture
 def simple_forecast():
-    """Simple forecast with known errors."""
+    """Return simple forecast with known errors."""
     return pl.DataFrame({"y": [1.0, 2.0, 3.0, 4.0], "y_hat": [1.5, 2.5, 2.5, 3.5]})
 
 
@@ -254,21 +251,13 @@ class TestCRPS:
         assert score > 0.0
 
     def test_wider_intervals_higher_crps(self):
-        df_tight = pl.DataFrame(
-            {"y": [10.0], "q_0.1": [9.0], "q_0.5": [10.0], "q_0.9": [11.0]}
-        )
-        df_wide = pl.DataFrame(
-            {"y": [10.0], "q_0.1": [5.0], "q_0.5": [10.0], "q_0.9": [15.0]}
-        )
+        df_tight = pl.DataFrame({"y": [10.0], "q_0.1": [9.0], "q_0.5": [10.0], "q_0.9": [11.0]})
+        df_wide = pl.DataFrame({"y": [10.0], "q_0.1": [5.0], "q_0.5": [10.0], "q_0.9": [15.0]})
         assert crps(df_wide) > crps(df_tight)
 
     def test_biased_forecast_higher_crps(self):
-        df_centered = pl.DataFrame(
-            {"y": [10.0], "q_0.1": [8.0], "q_0.5": [10.0], "q_0.9": [12.0]}
-        )
-        df_biased = pl.DataFrame(
-            {"y": [10.0], "q_0.1": [18.0], "q_0.5": [20.0], "q_0.9": [22.0]}
-        )
+        df_centered = pl.DataFrame({"y": [10.0], "q_0.1": [8.0], "q_0.5": [10.0], "q_0.9": [12.0]})
+        df_biased = pl.DataFrame({"y": [10.0], "q_0.1": [18.0], "q_0.5": [20.0], "q_0.9": [22.0]})
         assert crps(df_biased) > crps(df_centered)
 
     def test_per_group(self):
@@ -294,9 +283,7 @@ class TestCRPS:
             crps(df, quantile_cols=["q_0.5"], quantiles=[0.1, 0.5])
 
     def test_non_negative(self):
-        df = pl.DataFrame(
-            {"y": [10.0, 20.0], "q_0.5": [12.0, 18.0]}
-        )
+        df = pl.DataFrame({"y": [10.0, 20.0], "q_0.5": [12.0, 18.0]})
         assert crps(df) >= 0.0
 
 
@@ -320,9 +307,7 @@ class TestMetricsNamespace:
         assert perfect_forecast.pts.smape() == 0.0
 
     def test_crps_via_namespace(self):
-        df = pl.DataFrame(
-            {"y": [10.0], "q_0.1": [8.0], "q_0.5": [10.0], "q_0.9": [12.0]}
-        )
+        df = pl.DataFrame({"y": [10.0], "q_0.1": [8.0], "q_0.5": [10.0], "q_0.9": [12.0]})
         assert df.pts.crps() > 0.0
 
 
