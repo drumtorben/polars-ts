@@ -2,6 +2,15 @@ from dataclasses import dataclass
 
 import polars as pl
 
+from polars_ts.metrics.forecast import (
+    crps,
+    mae,
+    mape,
+    mase,
+    rmse,
+    smape,
+)
+
 try:
     from statsforecast import StatsForecast as _StatsForecast
 except ImportError:
@@ -12,6 +21,63 @@ except ImportError:
 @pl.api.register_dataframe_namespace("pts")
 class Metrics:
     _df: pl.DataFrame
+
+    def mae(
+        self,
+        actual_col: str = "y",
+        predicted_col: str = "y_hat",
+        id_col: str | None = None,
+    ) -> pl.DataFrame | float:
+        """Mean Absolute Error. See :func:`polars_ts.metrics.forecast.mae`."""
+        return mae(self._df, actual_col, predicted_col, id_col)
+
+    def rmse(
+        self,
+        actual_col: str = "y",
+        predicted_col: str = "y_hat",
+        id_col: str | None = None,
+    ) -> pl.DataFrame | float:
+        """Root Mean Squared Error. See :func:`polars_ts.metrics.forecast.rmse`."""
+        return rmse(self._df, actual_col, predicted_col, id_col)
+
+    def mape(
+        self,
+        actual_col: str = "y",
+        predicted_col: str = "y_hat",
+        id_col: str | None = None,
+    ) -> pl.DataFrame | float:
+        """Mean Absolute Percentage Error. See :func:`polars_ts.metrics.forecast.mape`."""
+        return mape(self._df, actual_col, predicted_col, id_col)
+
+    def smape(
+        self,
+        actual_col: str = "y",
+        predicted_col: str = "y_hat",
+        id_col: str | None = None,
+    ) -> pl.DataFrame | float:
+        """Symmetric MAPE. See :func:`polars_ts.metrics.forecast.smape`."""
+        return smape(self._df, actual_col, predicted_col, id_col)
+
+    def mase(
+        self,
+        actual_col: str = "y",
+        predicted_col: str = "y_hat",
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+        season_length: int = 1,
+    ) -> pl.DataFrame | float:
+        """Mean Absolute Scaled Error. See :func:`polars_ts.metrics.forecast.mase`."""
+        return mase(self._df, actual_col, predicted_col, id_col, time_col, season_length)
+
+    def crps(
+        self,
+        actual_col: str = "y",
+        quantile_cols: list[str] | None = None,
+        quantiles: list[float] | None = None,
+        id_col: str | None = None,
+    ) -> pl.DataFrame | float:
+        """CRPS (quantile approximation). See :func:`polars_ts.metrics.forecast.crps`."""
+        return crps(self._df, actual_col, quantile_cols, quantiles, id_col)
 
     def kaboudan(
         self,
