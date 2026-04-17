@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../seasonal_decompose_features/">
+        <link rel="prev" href="../kmedoids/">
       
       
-        <link rel="next" href="../../metrics/__init__/">
+        <link rel="next" href="../../decomposition/__init__/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Seasonal decomposition - Polars Time Series Extension</title>
+        <title>Kshape - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-skip">
+        <a href="#polars_ts.clustering.kshape" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Seasonal decomposition
+              Kshape
             
           </span>
         </div>
@@ -854,8 +854,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -864,17 +866,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_5" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -893,7 +893,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -907,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/evaluation/" class="md-nav__link">
+      <a href="../evaluation/" class="md-nav__link">
         
   
   
@@ -930,139 +930,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
+      <a href="../kmedoids/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kmedoids
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/kshape/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Kshape
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_6" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    Decomposition
-    
-  </span>
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_3_1_1_6" id="__nav_3_1_1_6_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1_1_6">
-            <span class="md-nav__icon md-icon"></span>
-            Decomposition
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fourier_decomposition/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fourier decomposition
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../seasonal_decompose_features/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Seasonal decompose features
     
   </span>
   
@@ -1092,7 +965,7 @@
   
   
   <span class="md-ellipsis">
-    Seasonal decomposition
+    Kshape
     
   </span>
   
@@ -1105,7 +978,7 @@
   
   
   <span class="md-ellipsis">
-    Seasonal decomposition
+    Kshape
     
   </span>
   
@@ -1126,19 +999,61 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
+    <nav class="md-nav" aria-label=" kshape">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" KShape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
     </span>
   </a>
   
@@ -1153,6 +1068,133 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Decomposition
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_6" id="__nav_3_1_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Decomposition
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fourier decomposition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Seasonal decompose features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Seasonal decomposition
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1817,19 +1859,61 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
+    <nav class="md-nav" aria-label=" kshape">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" KShape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
     </span>
   </a>
   
@@ -1859,19 +1943,113 @@
   
 
 
-  <h1>Seasonal decomposition</h1>
+  <h1>Kshape</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.decomposition.seasonal_decomposition</code>
+<h2 id="polars_ts.clustering.kshape" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.kshape</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>k-Shape clustering for time series using Shape-Based Distance (SBD).</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.clustering.kshape.KShape" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>KShape</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>k-Shape clustering for time series.</p>
+<p>Uses Shape-Based Distance (SBD) and shape extraction to iteratively
+refine cluster centroids and assignments.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_clusters</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of clusters. Default 2.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_iter</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum number of iterations. Default 100.</p>
+              </div>
+            </td>
+            <td>
+                  <code>100</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="language-pycon highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span> <span class="o">=</span> <span class="n">KShape</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">labels_</span>
+</span></code></pre></div>
+
 
 
 
@@ -1896,19 +2074,15 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_decomposition</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">anomaly_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h4 id="polars_ts.clustering.kshape.KShape.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Perform seasonal decomposition of time series data using either an additive or multiplicative method.</p>
-<ul>
-<li>Additive: <code>Y(t) = T(t) + S(t) + E(t)</code></li>
-<li>Multiplicative: <code>Y(t) = T(t) * S(t) * E(t)</code></li>
-</ul>
+        <p>Fit k-Shape clustering.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1931,108 +2105,11 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Polars DataFrame containing the time series data.</p>
+                <p>DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
               </div>
             </td>
             <td>
                 <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>freq</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The seasonal period (e.g., 12 for monthly data with yearly seasonality).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>method</code>
-            </td>
-            <td>
-                  <code><span title="typing.Literal">Literal</span>[&#39;additive&#39;, &#39;multiplicative&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The decomposition method (<code>additive</code> or <code>multiplicative</code>).</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;additive&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>id_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column to group by (e.g., for multiple time series). Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;unique_id&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>target_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time series values to decompose. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;y&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>time_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time values. Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;ds&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>anomaly_threshold</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span> | None</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If provided, adds an <code>is_anomaly</code> boolean column that is True
-when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to None (no anomaly column).</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2050,21 +2127,11 @@ when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to Non
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
+                  <code><a class="autorefs autorefs-internal" title="            KShape (polars_ts.clustering.kshape.KShape)" href="#polars_ts.clustering.kshape.KShape">KShape</a></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A DataFrame with the decomposed components: trend, seasonal component, and residuals.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>When <code>anomaly_threshold</code> is set, an additional <code>is_anomaly</code> column is included.</p>
+                <p>self, with <code>labels_</code> and <code>centroids_</code> populated.</p>
               </div>
             </td>
           </tr>
@@ -2072,47 +2139,70 @@ when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to Non
     </table>
 
 
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If invalid <code>method</code> is passed.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="KeyError">KeyError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If specified columns do not exist in the DataFrame.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If the DataFrame is empty or doesn't have enough data to decompose.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kshape._zscore" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_zscore</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Z-normalize a 1-D array. Returns zeros if std is zero.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kshape._sbd" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_sbd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Shape-Based Distance between two z-normalized series.</p>
+<p>Returns (distance, y_shifted) where y_shifted is y aligned to x.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kshape._shape_extraction" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_shape_extraction</span><span class="p">(</span><span class="n">cluster_series</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract centroid shape via eigenvalue decomposition (Paparrizos &amp; Gravano).</p>
+<p>Computes the first eigenvector of the cross-correlation matrix S^T * S,
+which maximizes the sum of squared normalized cross-correlations.</p>
 
 
     </div>

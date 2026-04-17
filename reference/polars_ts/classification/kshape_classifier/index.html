@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../seasonal_decompose_features/">
+        <link rel="prev" href="../knn/">
       
       
-        <link rel="next" href="../../metrics/__init__/">
+        <link rel="next" href="../../clustering/__init__/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Seasonal decomposition - Polars Time Series Extension</title>
+        <title>Kshape classifier - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-skip">
+        <a href="#polars_ts.classification.kshape_classifier" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Seasonal decomposition
+              Kshape classifier
             
           </span>
         </div>
@@ -750,8 +750,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -760,17 +762,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../classification/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -789,7 +789,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_4">
             <span class="md-nav__icon md-icon"></span>
             Classification
@@ -803,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/knn/" class="md-nav__link">
+      <a href="../knn/" class="md-nav__link">
         
   
   
@@ -823,10 +823,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../classification/kshape_classifier/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Kshape classifier
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -837,6 +857,72 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape_classifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" kshape_classifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShapeClassifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" KShapeClassifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -981,8 +1067,6 @@
                 
   
   
-    
-  
   
   
     
@@ -993,15 +1077,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_6" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_6" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -1020,7 +1106,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_6">
             <span class="md-nav__icon md-icon"></span>
             Decomposition
@@ -1034,7 +1120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fourier_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -1057,7 +1143,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../seasonal_decompose_features/" class="md-nav__link">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -1077,30 +1163,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Seasonal decomposition
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -1111,48 +1177,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1817,21 +1841,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.classification.kshape_classifier" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape_classifier
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
+    <nav class="md-nav" aria-label=" kshape_classifier">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShapeClassifier
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" KShapeClassifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1859,19 +1907,114 @@
   
 
 
-  <h1>Seasonal decomposition</h1>
+  <h1>Kshape classifier</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.decomposition.seasonal_decomposition</code>
+<h2 id="polars_ts.classification.kshape_classifier" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.classification.kshape_classifier</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>k-Shape nearest-centroid classifier for time series.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.classification.kshape_classifier.KShapeClassifier" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>KShapeClassifier</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Nearest-centroid classifier using SBD and k-Shape centroids.</p>
+<p>Fits k-Shape clustering per class on training data to extract
+representative centroids, then classifies test series by nearest
+centroid distance (SBD).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_centroids_per_class</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of k-Shape centroids per class. Default 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_iter</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum k-Shape iterations per class. Default 100.</p>
+              </div>
+            </td>
+            <td>
+                  <code>100</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="language-pycon highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">KShapeClassifier</span><span class="p">(</span><span class="n">n_centroids_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_df</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_df</span><span class="p">)</span>
+</span></code></pre></div>
+
 
 
 
@@ -1896,19 +2039,15 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_decomposition</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">anomaly_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h4 id="polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Perform seasonal decomposition of time series data using either an additive or multiplicative method.</p>
-<ul>
-<li>Additive: <code>Y(t) = T(t) + S(t) + E(t)</code></li>
-<li>Multiplicative: <code>Y(t) = T(t) * S(t) * E(t)</code></li>
-</ul>
+        <p>Fit the classifier by computing k-Shape centroids for each class.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1931,7 +2070,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Polars DataFrame containing the time series data.</p>
+                <p>DataFrame with columns <code>unique_id</code>, <code>y</code>, and a label column.</p>
               </div>
             </td>
             <td>
@@ -1940,99 +2079,90 @@
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>freq</code>
+                <code>label_col</code>
             </td>
             <td>
-                  <code><span title="int">int</span></code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The seasonal period (e.g., 12 for monthly data with yearly seasonality).</p>
+                <p>Name of the column containing class labels.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;label&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            KShapeClassifier (polars_ts.classification.kshape_classifier.KShapeClassifier)" href="#polars_ts.classification.kshape_classifier.KShapeClassifier">KShapeClassifier</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>self</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Predict class labels for test time series.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>df</code>
+            </td>
+            <td>
+                  <code><span title="polars.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
               </div>
             </td>
             <td>
                 <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>method</code>
-            </td>
-            <td>
-                  <code><span title="typing.Literal">Literal</span>[&#39;additive&#39;, &#39;multiplicative&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The decomposition method (<code>additive</code> or <code>multiplicative</code>).</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;additive&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>id_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column to group by (e.g., for multiple time series). Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;unique_id&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>target_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time series values to decompose. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;y&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>time_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time values. Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;ds&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>anomaly_threshold</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span> | None</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If provided, adds an <code>is_anomaly</code> boolean column that is True
-when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to None (no anomaly column).</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2054,60 +2184,7 @@ when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to Non
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A DataFrame with the decomposed components: trend, seasonal component, and residuals.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>When <code>anomaly_threshold</code> is set, an additional <code>is_anomaly</code> column is included.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If invalid <code>method</code> is passed.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="KeyError">KeyError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If specified columns do not exist in the DataFrame.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If the DataFrame is empty or doesn't have enough data to decompose.</p>
+                <p>DataFrame with columns <code>unique_id</code> and <code>predicted_label</code>.</p>
               </div>
             </td>
           </tr>
@@ -2118,6 +2195,15 @@ when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to Non
     </div>
 
 </div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
 
 
 

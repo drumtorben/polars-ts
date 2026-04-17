@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../seasonal_decompose_features/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../../metrics/__init__/">
+        <link rel="next" href="../kmedoids/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Seasonal decomposition - Polars Time Series Extension</title>
+        <title>Evaluation - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-skip">
+        <a href="#polars_ts.clustering.evaluation" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Seasonal decomposition
+              Evaluation
             
           </span>
         </div>
@@ -854,8 +854,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -864,17 +866,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_5" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -893,7 +893,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -904,10 +904,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../clustering/evaluation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Evaluation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -918,6 +938,198 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;evaluation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation._build_dist_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_dist_matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation._group_by_cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_group_by_cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation._find_medoids" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_find_medoids
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;silhouette_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" silhouette_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;silhouette_samples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" silhouette_samples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;davies_bouldin_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" davies_bouldin_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;calinski_harabasz_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" calinski_harabasz_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -930,7 +1142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
+      <a href="../kmedoids/" class="md-nav__link">
         
   
   
@@ -953,7 +1165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kshape/" class="md-nav__link">
+      <a href="../kshape/" class="md-nav__link">
         
   
   
@@ -981,8 +1193,6 @@
                 
   
   
-    
-  
   
   
     
@@ -993,15 +1203,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_6" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_6" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -1020,7 +1232,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_6">
             <span class="md-nav__icon md-icon"></span>
             Decomposition
@@ -1034,7 +1246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fourier_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -1057,7 +1269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../seasonal_decompose_features/" class="md-nav__link">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -1077,30 +1289,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Seasonal decomposition
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -1111,48 +1303,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1817,21 +1967,171 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.evaluation" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;evaluation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decomposition">
+    <nav class="md-nav" aria-label=" evaluation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="md-nav__link">
+  <a href="#polars_ts.clustering.evaluation._build_dist_matrix" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decomposition
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_dist_matrix
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation._group_by_cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_group_by_cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation._find_medoids" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_find_medoids
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;silhouette_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" silhouette_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;silhouette_samples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" silhouette_samples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.silhouette_samples--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;davies_bouldin_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" davies_bouldin_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.davies_bouldin_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;calinski_harabasz_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" calinski_harabasz_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.evaluation.calinski_harabasz_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1859,19 +2159,21 @@
   
 
 
-  <h1>Seasonal decomposition</h1>
+  <h1>Evaluation</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.decomposition.seasonal_decomposition</code>
+<h2 id="polars_ts.clustering.evaluation" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.evaluation</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>Clustering evaluation metrics for time series using precomputed distances.</p>
 
 
 
@@ -1896,223 +2198,206 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.decomposition.seasonal_decomposition.seasonal_decomposition" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_decomposition</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">anomaly_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h3 id="polars_ts.clustering.evaluation._build_dist_matrix" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_dist_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Perform seasonal decomposition of time series data using either an additive or multiplicative method.</p>
-<ul>
-<li>Additive: <code>Y(t) = T(t) + S(t) + E(t)</code></li>
-<li>Multiplicative: <code>Y(t) = T(t) * S(t) * E(t)</code></li>
-</ul>
+        <p>Compute distance matrix and cluster assignments.</p>
+<p>Returns (ids, id_to_cluster, dist_dict).</p>
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Polars DataFrame containing the time series data.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>freq</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The seasonal period (e.g., 12 for monthly data with yearly seasonality).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>method</code>
-            </td>
-            <td>
-                  <code><span title="typing.Literal">Literal</span>[&#39;additive&#39;, &#39;multiplicative&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The decomposition method (<code>additive</code> or <code>multiplicative</code>).</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;additive&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>id_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column to group by (e.g., for multiple time series). Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;unique_id&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>target_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time series values to decompose. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;y&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>time_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The column containing the time values. Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;ds&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>anomaly_threshold</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span> | None</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If provided, adds an <code>is_anomaly</code> boolean column that is True
-when <code>|resid| &gt; threshold * std(resid)</code> per group. Defaults to None (no anomaly column).</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
 
 
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A DataFrame with the decomposed components: trend, seasonal component, and residuals.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>When <code>anomaly_threshold</code> is set, an additional <code>is_anomaly</code> column is included.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+<h3 id="polars_ts.clustering.evaluation._group_by_cluster" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_group_by_cluster</span><span class="p">(</span><span class="n">id_to_cluster</span><span class="p">)</span></code>
+
+</h3>
 
 
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If invalid <code>method</code> is passed.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="KeyError">KeyError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If specified columns do not exist in the DataFrame.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If the DataFrame is empty or doesn't have enough data to decompose.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+    <div class="doc doc-contents ">
+
+        <p>Group series IDs by their cluster assignment.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.evaluation._find_medoids" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_find_medoids</span><span class="p">(</span><span class="n">cluster_members</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Find the medoid (member with min total distance) for each cluster.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.evaluation.silhouette_score" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">silhouette_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute the mean silhouette score for a clustering result.</p>
+<p>The silhouette score for each sample measures how similar it is to its own
+cluster compared to the nearest other cluster. Values range from -1 to 1,
+where higher is better.</p>
+<h5 id="polars_ts.clustering.evaluation.silhouette_score--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+labels
+    DataFrame with columns <code>id_col</code> and <code>"cluster"</code> (e.g. from <code>kmedoids</code>).
+method
+    Distance metric name (e.g. <code>"dtw"</code>, <code>"erp"</code>).
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+<h5 id="polars_ts.clustering.evaluation.silhouette_score--returns">Returns</h5>
+<p>float
+    Mean silhouette score across all samples. Returns 0.0 if there is
+    only one cluster or one sample.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.evaluation.silhouette_samples" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">silhouette_samples</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute the silhouette score for each individual sample.</p>
+<h5 id="polars_ts.clustering.evaluation.silhouette_samples--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+labels
+    DataFrame with columns <code>id_col</code> and <code>"cluster"</code>.
+method
+    Distance metric name.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+<h5 id="polars_ts.clustering.evaluation.silhouette_samples--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>id_col</code>, <code>"cluster"</code>, and <code>"silhouette"</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.evaluation.davies_bouldin_score" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">davies_bouldin_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute the Davies-Bouldin index for a clustering result.</p>
+<p>Lower values indicate better clustering. The index measures the average
+similarity between each cluster and its most similar cluster, where
+similarity is the ratio of within-cluster distances to between-cluster
+distances. Uses medoids instead of centroids, which is standard for
+non-Euclidean distance metrics.</p>
+<h5 id="polars_ts.clustering.evaluation.davies_bouldin_score--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+labels
+    DataFrame with columns <code>id_col</code> and <code>"cluster"</code>.
+method
+    Distance metric name.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+<h5 id="polars_ts.clustering.evaluation.davies_bouldin_score--returns">Returns</h5>
+<p>float
+    Davies-Bouldin index. Returns 0.0 if there is only one cluster.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.evaluation.calinski_harabasz_score" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">calinski_harabasz_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute the Calinski-Harabasz index for a clustering result.</p>
+<p>Higher values indicate better-defined clusters. The index is the ratio
+of between-cluster dispersion to within-cluster dispersion, adjusted
+for the number of clusters and samples.</p>
+<p>.. note::
+    This is a medoid-based adaptation of the standard Calinski-Harabasz
+    index (which assumes Euclidean centroids). Results are meaningful for
+    comparing clusterings under the same metric but may not be directly
+    comparable to Euclidean implementations.</p>
+<h5 id="polars_ts.clustering.evaluation.calinski_harabasz_score--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+labels
+    DataFrame with columns <code>id_col</code> and <code>"cluster"</code>.
+method
+    Distance metric name.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+<h5 id="polars_ts.clustering.evaluation.calinski_harabasz_score--returns">Returns</h5>
+<p>float
+    Calinski-Harabasz index. Returns 0.0 if there is only one cluster
+    or fewer than <code>k + 1</code> samples.</p>
 
 
     </div>
