@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Callable
+
 import polars as pl
 
-_EXTRACTORS: dict[str, object] = {
+_EXTRACTORS: dict[str, Callable[[pl.Expr], pl.Expr]] = {
     "day_of_week": lambda c: c.dt.weekday().alias("day_of_week"),
     "day_of_month": lambda c: c.dt.day().alias("day_of_month"),
     "day_of_year": lambda c: c.dt.ordinal_day().alias("day_of_year"),
