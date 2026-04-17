@@ -1,6 +1,7 @@
 from typing import Any
 
 _BASELINE_NAMES = {"naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"}
+_MULTISTEP_NAMES = {"RecursiveForecaster", "DirectForecaster"}
 
 
 def __getattr__(name: str) -> Any:
@@ -16,7 +17,19 @@ def __getattr__(name: str) -> Any:
         from polars_ts.models import baselines
 
         return getattr(baselines, name)
+    if name in _MULTISTEP_NAMES:
+        from polars_ts.models import multistep
+
+        return getattr(multistep, name)
     raise AttributeError(f"module 'polars_ts.models' has no attribute {name!r}")
 
 
-__all__ = ["SCUM", "naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"]
+__all__ = [
+    "SCUM",
+    "naive_forecast",
+    "seasonal_naive_forecast",
+    "moving_average_forecast",
+    "fft_forecast",
+    "RecursiveForecaster",
+    "DirectForecaster",
+]

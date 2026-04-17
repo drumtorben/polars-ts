@@ -133,7 +133,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.metrics import forecast as _fm
 
         return getattr(_fm, name)
-    if name in {"naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"}:
+    if name in {
+        "naive_forecast",
+        "seasonal_naive_forecast",
+        "moving_average_forecast",
+        "fft_forecast",
+        "RecursiveForecaster",
+        "DirectForecaster",
+    }:
         from polars_ts import models as _models
 
         return getattr(_models, name)
@@ -195,4 +202,6 @@ __all__ = [
     "seasonal_naive_forecast",
     "moving_average_forecast",
     "fft_forecast",
+    "RecursiveForecaster",
+    "DirectForecaster",
 ]
