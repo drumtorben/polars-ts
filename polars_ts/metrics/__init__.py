@@ -219,3 +219,50 @@ class Metrics:
         from polars_ts.transforms.differencing import undifference
 
         return undifference(self._df, order, period, target_col, id_col, time_col)
+
+    def expanding_window_cv(
+        self,
+        n_splits: int = 5,
+        horizon: int = 1,
+        step: int = 1,
+        gap: int = 0,
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+    ):
+        """Expand-window CV. See :func:`polars_ts.validation.splits.expanding_window_cv`."""
+        from polars_ts.validation.splits import expanding_window_cv
+
+        return expanding_window_cv(self._df, n_splits, horizon, step, gap, id_col, time_col)
+
+    def sliding_window_cv(
+        self,
+        n_splits: int = 5,
+        train_size: int = 10,
+        horizon: int = 1,
+        step: int = 1,
+        gap: int = 0,
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+    ):
+        """Slide-window CV. See :func:`polars_ts.validation.splits.sliding_window_cv`."""
+        from polars_ts.validation.splits import sliding_window_cv
+
+        return sliding_window_cv(self._df, n_splits, train_size, horizon, step, gap, id_col, time_col)
+
+    def rolling_origin_cv(
+        self,
+        n_splits: int = 5,
+        initial_train_size: int | None = None,
+        horizon: int = 1,
+        step: int = 1,
+        gap: int = 0,
+        fixed_train_size: int | None = None,
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+    ):
+        """Roll-origin CV. See :func:`polars_ts.validation.splits.rolling_origin_cv`."""
+        from polars_ts.validation.splits import rolling_origin_cv
+
+        return rolling_origin_cv(
+            self._df, n_splits, initial_train_size, horizon, step, gap, fixed_train_size, id_col, time_col
+        )

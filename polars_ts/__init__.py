@@ -125,6 +125,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import transforms as _tr
 
         return getattr(_tr, name)
+    if name in {"expanding_window_cv", "sliding_window_cv", "rolling_origin_cv"}:
+        from polars_ts import validation as _val
+
+        return getattr(_val, name)
     if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
         from polars_ts.metrics import forecast as _fm
 
@@ -174,6 +178,9 @@ __all__ = [
     "inverse_boxcox_transform",
     "difference",
     "undifference",
+    "expanding_window_cv",
+    "sliding_window_cv",
+    "rolling_origin_cv",
     "mae",
     "rmse",
     "mape",
