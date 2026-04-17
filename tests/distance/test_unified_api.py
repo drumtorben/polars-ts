@@ -7,9 +7,12 @@ from polars_ts import (
     compute_pairwise_ddtw,
     compute_pairwise_distance,
     compute_pairwise_dtw,
+    compute_pairwise_edr,
     compute_pairwise_erp,
+    compute_pairwise_frechet,
     compute_pairwise_lcss,
     compute_pairwise_msm,
+    compute_pairwise_sbd,
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
@@ -53,6 +56,21 @@ class TestUnifiedDispatch:
         direct = compute_pairwise_twe(two_series, two_series)
         assert unified["twe"].to_list() == pytest.approx(direct["twe"].to_list())
 
+    def test_sbd_matches_direct(self, two_series):
+        unified = compute_pairwise_distance(two_series, two_series, method="sbd")
+        direct = compute_pairwise_sbd(two_series, two_series)
+        assert unified["sbd"].to_list() == pytest.approx(direct["sbd"].to_list())
+
+    def test_frechet_matches_direct(self, two_series):
+        unified = compute_pairwise_distance(two_series, two_series, method="frechet")
+        direct = compute_pairwise_frechet(two_series, two_series)
+        assert unified["frechet"].to_list() == pytest.approx(direct["frechet"].to_list())
+
+    def test_edr_matches_direct(self, two_series):
+        unified = compute_pairwise_distance(two_series, two_series, method="edr", epsilon=0.5)
+        direct = compute_pairwise_edr(two_series, two_series, epsilon=0.5)
+        assert unified["edr"].to_list() == pytest.approx(direct["edr"].to_list())
+
 
 class TestUnifiedKwargs:
     """Verify that keyword arguments are passed through and affect the result."""
@@ -86,6 +104,17 @@ class TestUnifiedKwargs:
         r1 = compute_pairwise_distance(divergent_series, divergent_series, method="lcss", epsilon=0.01)
         r2 = compute_pairwise_distance(divergent_series, divergent_series, method="lcss", epsilon=100.0)
         assert r1["lcss"].to_list() != pytest.approx(r2["lcss"].to_list(), abs=1e-6)
+
+    def test_twe_nu_changes_result(self, divergent_series):
+        """Cover the nu parameter passthrough (distance.py line 144)."""
+        r1 = compute_pairwise_distance(divergent_series, divergent_series, method="twe", nu=0.001)
+        r2 = compute_pairwise_distance(divergent_series, divergent_series, method="twe", nu=10.0)
+        assert r1["twe"].to_list() != pytest.approx(r2["twe"].to_list(), abs=1e-6)
+
+    def test_edr_epsilon_changes_result(self, divergent_series):
+        r1 = compute_pairwise_distance(divergent_series, divergent_series, method="edr", epsilon=0.01)
+        r2 = compute_pairwise_distance(divergent_series, divergent_series, method="edr", epsilon=100.0)
+        assert r1["edr"].to_list() != pytest.approx(r2["edr"].to_list(), abs=1e-6)
 
     def test_twe_lambda_changes_result(self, divergent_series):
         r1 = compute_pairwise_distance(divergent_series, divergent_series, method="twe", lambda_=0.001)

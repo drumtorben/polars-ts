@@ -1,17 +1,34 @@
-## v0.4.1 (Unreleased)
+## v0.5.0 (2026-04-16)
 
 ### Features
 
-- Add k-Medoids (PAM) time series clustering (`kmedoids`) using any of the 9 distance metrics.
-- Add k-Nearest Neighbors time series classification (`knn_classify`) using any of the 9 distance metrics.
+- Add KShape time series clustering using shape-based distance with centroid computation.
+- Add KShape time series classifier.
+- Add k-Medoids (PAM) time series clustering (`kmedoids`) using any of the 12 distance metrics.
+- Add k-Nearest Neighbors time series classification (`knn_classify`) using any of the 12 distance metrics.
+- Add SBD (Shape-Based Distance) metric (`compute_pairwise_sbd`).
+- Add Frechet distance metric (`compute_pairwise_frechet`).
+- Add EDR (Edit Distance on Real Sequences) metric (`compute_pairwise_edr`).
+
+### Improvements
+
 - Add shared distance dispatch utility (`_distance_dispatch`) for reuse across clustering and classification.
+- Upgrade Rust dependencies: pyo3 0.25, polars crate 0.49.1.
+- Add `py.typed` marker for PEP 561 type hint distribution.
+- Add lazy import system for optional dependencies (`forecast`, `decomposition`).
+- CI: add coverage reporting, MkDocs deployment workflow, polars compatibility matrix (1.30–1.33).
 
 ### Tests
 
-- Add 32 tests covering clustering output, correctness, edge cases, and multiple distance metrics.
-- Add classification tests covering correctness, custom columns, repeated values, and multiple metrics.
+- Add 85 tests for k-NN classification covering correctness, custom columns, and multiple metrics.
+- Add 84 tests for k-Medoids clustering covering output, correctness, edge cases, and multiple metrics.
+- Add 90 tests for KShape clustering.
+- Add 85 tests for KShape classifier.
+- Add tests for SBD, Frechet, EDR distance metrics.
+- Add unified API tests for all 12 distance metrics.
+- Add 52 lazy import tests for optional dependency handling.
 
-## v0.4.0 (Unreleased)
+## v0.4.0 (2026-04-14)
 
 ### Features
 

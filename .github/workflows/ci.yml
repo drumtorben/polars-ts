@@ -38,7 +38,28 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
       - name: Run test suite
-        run: uv run pytest --cov=polars_ts
+        run: uv run pytest --cov=polars_ts --cov-report=xml
+
+  mypy:
+    name: Type checking
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install dependencies
+        run: uv sync --group dev
+      - name: Run mypy
+        run: uv run mypy polars_ts/
 
   test-minimal-deps:
     name: Test minimal deps (polars only)
@@ -69,7 +90,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        polars-version: ["1.30.0", "1.31.0"]
+        polars-version: ["1.30.0", "1.31.0", "1.32.0", "1.33.0"]
     steps:
       - uses: actions/checkout@v4
       - name: Install uv

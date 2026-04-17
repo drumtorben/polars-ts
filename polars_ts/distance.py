@@ -9,10 +9,13 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,
+    compute_pairwise_edr,
     compute_pairwise_erp,
+    compute_pairwise_frechet,
     compute_pairwise_lcss,
     compute_pairwise_msm,
     compute_pairwise_msm_multi,
+    compute_pairwise_sbd,
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
@@ -25,6 +28,9 @@ _UNIVARIATE_METHODS = {
     "erp",
     "lcss",
     "twe",
+    "sbd",
+    "frechet",
+    "edr",
 }
 
 _MULTIVARIATE_METHODS = {
@@ -46,6 +52,9 @@ def compute_pairwise_distance(
         "erp",
         "lcss",
         "twe",
+        "sbd",
+        "frechet",
+        "edr",
         "dtw_multi",
         "msm_multi",
     ] = "dtw",
@@ -142,6 +151,18 @@ def compute_pairwise_distance(
     if method == "msm_multi":
         _check_kwargs(kwargs, {"c"}, method)
         return compute_pairwise_msm_multi(input1, input2, **_pick(kwargs, "c"))
+
+    if method == "sbd":
+        _check_kwargs(kwargs, set(), method)
+        return compute_pairwise_sbd(input1, input2)
+
+    if method == "frechet":
+        _check_kwargs(kwargs, set(), method)
+        return compute_pairwise_frechet(input1, input2)
+
+    if method == "edr":
+        _check_kwargs(kwargs, {"epsilon"}, method)
+        return compute_pairwise_edr(input1, input2, **_pick(kwargs, "epsilon"))
 
     # unreachable due to the check above, but keeps mypy happy
     raise ValueError(f"Unknown method {method!r}")

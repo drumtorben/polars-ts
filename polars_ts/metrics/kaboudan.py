@@ -149,7 +149,10 @@ class Kaboudan:
         """
         # 1) Compute minimum series length across groups (if multiple series).
         size_df = df.group_by(self.id_col).agg(pl.count(self.time_col).alias("series_length"))
-        min_len = size_df["series_length"].min()
+        min_len_raw = size_df["series_length"].min()
+        if min_len_raw is None or not isinstance(min_len_raw, (int, float)):
+            raise ValueError("Cannot compute series length: no data found")
+        min_len: int = int(min_len_raw)
 
         # 2) Derive training/test sizes based on `backtesting_start`
         history_len = int(min_len * self.backtesting_start)  # length of initial training portion

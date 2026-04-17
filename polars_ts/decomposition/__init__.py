@@ -1,4 +1,7 @@
-def __getattr__(name: str):
+from typing import Any
+
+
+def __getattr__(name: str) -> Any:
     if name == "fourier_decomposition":
         from polars_ts.decomposition.fourier_decomposition import fourier_decomposition
 

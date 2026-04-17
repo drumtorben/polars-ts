@@ -10,6 +10,72 @@ import polars as pl
 from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
 
 
+class TimeSeriesKNNClassifier:
+    """K-Nearest Neighbors time series classifier.
+
+    Parameters
+    ----------
+    k
+        Number of nearest neighbors. Default 3.
+    metric
+        Distance metric name (e.g. ``"dtw"``, ``"erp"``, ``"lcss"``). Default ``"dtw"``.
+    **distance_kwargs
+        Extra keyword arguments forwarded to the distance function.
+
+    """
+
+    def __init__(self, k: int = 3, metric: str = "dtw", **distance_kwargs: Any) -> None:
+        self.k = k
+        self.metric = metric
+        self.distance_kwargs = distance_kwargs
+        self._train_df: pl.DataFrame | None = None
+        self._label_col: str = "label"
+
+    def fit(self, df: pl.DataFrame, *, label_col: str = "label") -> TimeSeriesKNNClassifier:
+        """Fit the classifier with training data.
+
+        Parameters
+        ----------
+        df
+            Training DataFrame with columns ``unique_id``, ``y``, and ``label_col``.
+        label_col
+            Name of the column containing class labels.
+
+        Returns
+        -------
+        self
+
+        """
+        self._train_df = df
+        self._label_col = label_col
+        return self
+
+    def predict(self, df: pl.DataFrame) -> pl.DataFrame:
+        """Predict class labels for test time series.
+
+        Parameters
+        ----------
+        df
+            Test DataFrame with columns ``unique_id`` and ``y``.
+
+        Returns
+        -------
+        pl.DataFrame
+            DataFrame with columns ``unique_id`` and ``predicted_label``.
+
+        """
+        if self._train_df is None:
+            raise RuntimeError("Call fit() before predict()")
+        return knn_classify(
+            self._train_df,
+            df,
+            k=self.k,
+            method=self.metric,
+            label_col=self._label_col,
+            **self.distance_kwargs,
+        )
+
+
 def knn_classify(
     train_df: pl.DataFrame,
     test_df: pl.DataFrame,

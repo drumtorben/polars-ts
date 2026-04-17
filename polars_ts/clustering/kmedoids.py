@@ -10,6 +10,97 @@ import polars as pl
 from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
 
 
+class TimeSeriesKMedoids:
+    """K-Medoids (PAM) time series clustering.
+
+    Parameters
+    ----------
+    n_clusters
+        Number of clusters. Default 2.
+    metric
+        Distance metric name (e.g. ``"dtw"``, ``"erp"``, ``"lcss"``). Default ``"dtw"``.
+    max_iter
+        Maximum swap iterations. Default 100.
+    seed
+        Random seed for initial medoid selection. Default 42.
+    **distance_kwargs
+        Extra keyword arguments forwarded to the distance function.
+
+    """
+
+    def __init__(
+        self,
+        n_clusters: int = 2,
+        metric: str = "dtw",
+        max_iter: int = 100,
+        seed: int = 42,
+        **distance_kwargs: Any,
+    ) -> None:
+        self.n_clusters = n_clusters
+        self.metric = metric
+        self.max_iter = max_iter
+        self.seed = seed
+        self.distance_kwargs = distance_kwargs
+        self.labels_: pl.DataFrame | None = None
+        self.medoids_: list[str] = []
+
+    def fit(self, df: pl.DataFrame) -> TimeSeriesKMedoids:
+        """Fit k-medoids clustering.
+
+        Parameters
+        ----------
+        df
+            DataFrame with columns ``unique_id`` and ``y``.
+
+        Returns
+        -------
+        self
+
+        """
+        ids = df["unique_id"].unique().sort().to_list()
+        n = len(ids)
+        if self.n_clusters > n:
+            raise ValueError(f"Cannot create {self.n_clusters} clusters from {n} time series")
+
+        result = kmedoids(
+            df,
+            k=self.n_clusters,
+            method=self.metric,
+            max_iter=self.max_iter,
+            seed=self.seed,
+            **self.distance_kwargs,
+        )
+        self.labels_ = result
+
+        # Extract medoids: for each cluster, pick the series with min total distance
+        # to other members. For simplicity, use the first member per cluster from the
+        # sorted result as a proxy (the PAM algorithm already selected medoids).
+        dist_df = df.select(
+            pl.col("unique_id").alias("unique_id"),
+            pl.col("y").alias("y"),
+        )
+        pairwise = compute_distances(dist_df, dist_df, method=self.metric, **self.distance_kwargs)
+        dist = pairwise_to_dict(pairwise)
+
+        cluster_map: dict[int, list[str]] = {}
+        for row in result.to_dicts():
+            cid = row["cluster"]
+            uid = str(row["unique_id"])
+            cluster_map.setdefault(cid, []).append(uid)
+
+        medoids = []
+        for cid in sorted(cluster_map):
+            members = cluster_map[cid]
+            best_medoid = min(
+                members,
+                key=lambda m: sum(dist.get((m, o), 0.0) for o in members),
+            )
+            medoids.append(best_medoid)
+        self.medoids_ = medoids
+
+        return self
+
+
 def kmedoids(
     df: pl.DataFrame,
     k: int,

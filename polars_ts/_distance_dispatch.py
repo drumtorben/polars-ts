@@ -9,10 +9,13 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,
+    compute_pairwise_edr,
     compute_pairwise_erp,
+    compute_pairwise_frechet,
     compute_pairwise_lcss,
     compute_pairwise_msm,
     compute_pairwise_msm_multi,
+    compute_pairwise_sbd,
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
@@ -25,6 +28,9 @@ _DISTANCE_FUNCS = {
     "erp": compute_pairwise_erp,
     "lcss": compute_pairwise_lcss,
     "twe": compute_pairwise_twe,
+    "sbd": compute_pairwise_sbd,
+    "frechet": compute_pairwise_frechet,
+    "edr": compute_pairwise_edr,
     "dtw_multi": compute_pairwise_dtw_multi,
     "msm_multi": compute_pairwise_msm_multi,
 }
@@ -37,6 +43,9 @@ _VALID_KWARGS = {
     "erp": {"g"},
     "lcss": {"epsilon"},
     "twe": {"nu", "lambda_"},
+    "sbd": set(),
+    "frechet": set(),
+    "edr": {"epsilon"},
     "dtw_multi": {"metric"},
     "msm_multi": {"c"},
 }

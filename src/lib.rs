@@ -10,6 +10,9 @@ use msm_multi::compute_pairwise_msm_multi;
 use erp::compute_pairwise_erp;
 use lcss::compute_pairwise_lcss;
 use twe::compute_pairwise_twe;
+use sbd::compute_pairwise_sbd;
+use frechet::compute_pairwise_frechet;
+use edr::compute_pairwise_edr;
 
 mod utils;
 mod dtw;
@@ -21,6 +24,9 @@ mod wdtw;
 mod erp;
 mod lcss;
 mod twe;
+mod sbd;
+mod frechet;
+mod edr;
 mod mann_kendall;
 mod sens_slope;
 
@@ -40,5 +46,8 @@ fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compute_pairwise_erp, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_lcss, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_twe, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_pairwise_sbd, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_pairwise_frechet, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_pairwise_edr, m)?)?;
     Ok(())
 }
