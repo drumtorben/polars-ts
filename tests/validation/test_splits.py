@@ -165,6 +165,73 @@ def test_single_group():
 # --- validation ---
 
 
+def test_exact_fold_content():
+    """Verify exact train/test timestamps to catch off-by-one errors."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 6,
+            "ds": [date(2024, 1, i) for i in range(1, 7)],
+            "y": [10.0, 20.0, 30.0, 40.0, 50.0, 60.0],
+        }
+    )
+    folds = list(expanding_window_cv(df, n_splits=2, horizon=2, step=1))
+    # 6 time points, n_splits=2, horizon=2, step=1
+    # initial_train_size = 6 - 1*1 - 0 - 2 = 3
+    # Fold 0: train=[Jan1,Jan2,Jan3], test=[Jan4,Jan5]
+    # Fold 1: train=[Jan1,Jan2,Jan3,Jan4], test=[Jan5,Jan6]
+    t0, s0 = folds[0]
+    assert t0["y"].to_list() == [10.0, 20.0, 30.0]
+    assert s0["y"].to_list() == [40.0, 50.0]
+
+    t1, s1 = folds[1]
+    assert t1["y"].to_list() == [10.0, 20.0, 30.0, 40.0]
+    assert s1["y"].to_list() == [50.0, 60.0]
+
+
+def test_explicit_initial_train_size():
+    df = _make_df()  # 10 time points, 2 groups
+    folds = list(rolling_origin_cv(df, n_splits=2, initial_train_size=3, horizon=2))
+    # Fold 0: train has 3 time steps * 2 groups = 6 rows
+    train0, _ = folds[0]
+    assert len(train0) == 6
+
+
+def test_gap_and_step_combined():
+    df = _make_df()  # 10 time points
+    gap = 2
+    step = 2
+    folds = list(expanding_window_cv(df, n_splits=2, horizon=1, step=step, gap=gap))
+    for train, test in folds:
+        all_times = sorted(df["ds"].unique().to_list())
+        train_max_idx = all_times.index(train["ds"].max())
+        test_min_idx = all_times.index(test["ds"].min())
+        assert test_min_idx - train_max_idx == gap + 1
+
+
+def test_initial_less_than_fixed_raises():
+    df = _make_df()
+    with pytest.raises(ValueError, match="initial_train_size"):
+        list(rolling_origin_cv(df, n_splits=2, initial_train_size=3, fixed_train_size=5, horizon=1))
+
+
+def test_invalid_n_splits_raises():
+    df = _make_df()
+    with pytest.raises(ValueError, match="n_splits"):
+        list(expanding_window_cv(df, n_splits=0, horizon=1))
+
+
+def test_invalid_horizon_raises():
+    df = _make_df()
+    with pytest.raises(ValueError, match="horizon"):
+        list(expanding_window_cv(df, n_splits=2, horizon=0))
+
+
+def test_invalid_negative_gap_raises():
+    df = _make_df()
+    with pytest.raises(ValueError, match="gap"):
+        list(expanding_window_cv(df, n_splits=2, horizon=1, gap=-1))
+
+
 def test_insufficient_data_raises():
     df = _make_df()
     with pytest.raises(ValueError, match="Not enough"):

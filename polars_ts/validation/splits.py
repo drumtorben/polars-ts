@@ -193,6 +193,13 @@ def _rolling_origin_splits(
     # Compute initial_train_size if not given
     if initial_train_size is None:
         initial_train_size = n_times - (n_splits - 1) * step - gap - horizon
+        # Ensure initial_train_size is at least fixed_train_size
+        if fixed_train_size is not None:
+            initial_train_size = max(initial_train_size, fixed_train_size)
+    elif fixed_train_size is not None and initial_train_size < fixed_train_size:
+        raise ValueError(
+            f"initial_train_size ({initial_train_size}) must be >= " f"fixed_train_size ({fixed_train_size})"
+        )
     if initial_train_size < 1:
         raise ValueError(
             f"Not enough time points ({n_times}) for {n_splits} folds "
