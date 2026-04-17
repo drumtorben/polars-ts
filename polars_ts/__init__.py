@@ -114,6 +114,17 @@ def __getattr__(name: str) -> Any:
         from polars_ts import features as _feat
 
         return getattr(_feat, name)
+    if name in {
+        "log_transform",
+        "inverse_log_transform",
+        "boxcox_transform",
+        "inverse_boxcox_transform",
+        "difference",
+        "undifference",
+    }:
+        from polars_ts import transforms as _tr
+
+        return getattr(_tr, name)
     if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
         from polars_ts.metrics import forecast as _fm
 
@@ -157,6 +168,12 @@ __all__ = [
     "rolling_features",
     "calendar_features",
     "fourier_features",
+    "log_transform",
+    "inverse_log_transform",
+    "boxcox_transform",
+    "inverse_boxcox_transform",
+    "difference",
+    "undifference",
     "mae",
     "rmse",
     "mape",
