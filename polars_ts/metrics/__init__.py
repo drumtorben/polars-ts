@@ -106,3 +106,52 @@ class Metrics:
             agg=agg,
         )
         return kaboudan.kaboudan_metric(self._df)
+
+    def lag_features(
+        self,
+        lags: list[int],
+        target_col: str = "y",
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+    ) -> pl.DataFrame:
+        """Create lag features. See :func:`polars_ts.features.lags.lag_features`."""
+        from polars_ts.features.lags import lag_features
+
+        return lag_features(self._df, lags, target_col, id_col, time_col)
+
+    def rolling_features(
+        self,
+        windows: list[int],
+        aggs: list[str] | None = None,
+        target_col: str = "y",
+        id_col: str = "unique_id",
+        time_col: str = "ds",
+        center: bool = False,
+        min_samples: int | None = None,
+    ) -> pl.DataFrame:
+        """Create rolling features. See :func:`polars_ts.features.rolling.rolling_features`."""
+        from polars_ts.features.rolling import rolling_features
+
+        return rolling_features(self._df, windows, aggs, target_col, id_col, time_col, center, min_samples)
+
+    def calendar_features(
+        self,
+        features: list[str] | None = None,
+        time_col: str = "ds",
+    ) -> pl.DataFrame:
+        """Extract calendar features. See :func:`polars_ts.features.calendar.calendar_features`."""
+        from polars_ts.features.calendar import calendar_features
+
+        return calendar_features(self._df, features, time_col)
+
+    def fourier_features(
+        self,
+        period: float,
+        n_harmonics: int = 1,
+        time_col: str = "ds",
+        id_col: str = "unique_id",
+    ) -> pl.DataFrame:
+        """Generate Fourier features. See :func:`polars_ts.features.fourier.fourier_features`."""
+        from polars_ts.features.fourier import fourier_features
+
+        return fourier_features(self._df, period, n_harmonics, time_col, id_col)
