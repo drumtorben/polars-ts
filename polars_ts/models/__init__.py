@@ -2,7 +2,6 @@ from typing import Any
 
 _BASELINE_NAMES = {"naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"}
 
-
 def __getattr__(name: str) -> Any:
     if name == "SCUM":
         try:

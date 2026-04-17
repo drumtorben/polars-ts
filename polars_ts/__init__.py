@@ -110,25 +110,6 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.evaluation import calinski_harabasz_score
 
         return calinski_harabasz_score
-    if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
-        from polars_ts import features as _feat
-
-        return getattr(_feat, name)
-    if name in {
-        "log_transform",
-        "inverse_log_transform",
-        "boxcox_transform",
-        "inverse_boxcox_transform",
-        "difference",
-        "undifference",
-    }:
-        from polars_ts import transforms as _tr
-
-        return getattr(_tr, name)
-    if name in {"expanding_window_cv", "sliding_window_cv", "rolling_origin_cv"}:
-        from polars_ts import validation as _val
-
-        return getattr(_val, name)
     if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
         from polars_ts.metrics import forecast as _fm
 
@@ -172,19 +153,6 @@ __all__ = [
     "silhouette_samples",
     "davies_bouldin_score",
     "calinski_harabasz_score",
-    "lag_features",
-    "rolling_features",
-    "calendar_features",
-    "fourier_features",
-    "log_transform",
-    "inverse_log_transform",
-    "boxcox_transform",
-    "inverse_boxcox_transform",
-    "difference",
-    "undifference",
-    "expanding_window_cv",
-    "sliding_window_cv",
-    "rolling_origin_cv",
     "mae",
     "rmse",
     "mape",
