@@ -307,9 +307,9 @@ class EnbPI:
         for gid, _X_g, y_g in group_data:
             resids: list[float] = []
             for i in range(len(y_g)):
-                preds = oob_preds[offset + i]
-                if preds:
-                    agg_pred = np.mean(preds)
+                oob_for_sample = oob_preds[offset + i]
+                if oob_for_sample:
+                    agg_pred = np.mean(oob_for_sample)
                     resids.append(abs(float(y_g[i]) - agg_pred))
             offset += len(y_g)
             self.residuals_[gid] = resids
