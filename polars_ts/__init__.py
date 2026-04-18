@@ -144,6 +144,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"WeightedEnsemble", "StackingForecaster"}:
+        from polars_ts import ensemble as _ens
+
+        return getattr(_ens, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -204,4 +208,6 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "WeightedEnsemble",
+    "StackingForecaster",
 ]
