@@ -64,8 +64,8 @@ def detect_outliers(
         iqr = q3 - q1
         lower = q1 - threshold * iqr
         upper = q3 + threshold * iqr
-        is_out = (pl.col(target_col) < lower) | (pl.col(target_col) > upper)
-        return sorted_df.with_columns(is_out.alias("is_outlier"))
+        iqr_outlier = (pl.col(target_col) < lower) | (pl.col(target_col) > upper)
+        return sorted_df.with_columns(iqr_outlier.alias("is_outlier"))
 
     if method == "hampel":
         assert window is not None
