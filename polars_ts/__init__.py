@@ -140,10 +140,29 @@ def __getattr__(name: str) -> Any:
         "fft_forecast",
         "RecursiveForecaster",
         "DirectForecaster",
+        "ses_forecast",
+        "holt_forecast",
+        "holt_winters_forecast",
     }:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name == "impute":
+        from polars_ts.imputation import impute
+
+        return impute
+    if name in {"detect_outliers", "treat_outliers"}:
+        from polars_ts import outliers as _outliers
+
+        return getattr(_outliers, name)
+    if name == "resample":
+        from polars_ts.resampling import resample
+
+        return resample
+    if name in {"acf", "pacf", "ljung_box"}:
+        from polars_ts import diagnostics as _diag
+
+        return getattr(_diag, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -204,4 +223,14 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "ses_forecast",
+    "holt_forecast",
+    "holt_winters_forecast",
+    "impute",
+    "detect_outliers",
+    "treat_outliers",
+    "resample",
+    "acf",
+    "pacf",
+    "ljung_box",
 ]
