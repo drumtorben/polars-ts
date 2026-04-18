@@ -114,11 +114,33 @@ def __getattr__(name: str) -> Any:
         from polars_ts import features as _feat
 
         return getattr(_feat, name)
+    if name in {
+        "log_transform",
+        "inverse_log_transform",
+        "boxcox_transform",
+        "inverse_boxcox_transform",
+        "difference",
+        "undifference",
+    }:
+        from polars_ts import transforms as _tr
+
+        return getattr(_tr, name)
+    if name in {"expanding_window_cv", "sliding_window_cv", "rolling_origin_cv"}:
+        from polars_ts import validation as _val
+
+        return getattr(_val, name)
     if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
         from polars_ts.metrics import forecast as _fm
 
         return getattr(_fm, name)
-    if name in {"naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"}:
+    if name in {
+        "naive_forecast",
+        "seasonal_naive_forecast",
+        "moving_average_forecast",
+        "fft_forecast",
+        "RecursiveForecaster",
+        "DirectForecaster",
+    }:
         from polars_ts import models as _models
 
         return getattr(_models, name)
@@ -161,6 +183,15 @@ __all__ = [
     "rolling_features",
     "calendar_features",
     "fourier_features",
+    "log_transform",
+    "inverse_log_transform",
+    "boxcox_transform",
+    "inverse_boxcox_transform",
+    "difference",
+    "undifference",
+    "expanding_window_cv",
+    "sliding_window_cv",
+    "rolling_origin_cv",
     "mae",
     "rmse",
     "mape",
@@ -171,4 +202,6 @@ __all__ = [
     "seasonal_naive_forecast",
     "moving_average_forecast",
     "fft_forecast",
+    "RecursiveForecaster",
+    "DirectForecaster",
 ]
