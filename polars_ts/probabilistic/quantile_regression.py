@@ -143,6 +143,11 @@ class QuantileRegressor:
         rows: list[dict[str, Any]] = []
         for group_id, group_df in sorted_df.group_by(self.id_col, maintain_order=True):
             values = group_df[self.target_col].to_list()
+            if len(values) < max_lag:
+                raise ValueError(
+                    f"Series {group_id[0]!r} has {len(values)} observations "
+                    f"but max(lags)={max_lag} — too short to predict"
+                )
             last_time = group_df[self.time_col][-1]
             buffer = list(values[-max_lag:])
             future_times = _make_future_dates(last_time, freq, h)

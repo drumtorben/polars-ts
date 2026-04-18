@@ -37,6 +37,8 @@ def conformal_interval(
     cal_residuals
         DataFrame containing calibration residuals. For symmetric mode,
         this should contain absolute residuals ``|y - y_hat|``.
+        For asymmetric mode, this should contain signed residuals
+        ``y - y_hat`` (positive means model under-predicted).
     predictions
         DataFrame with point forecasts in ``predicted_col``.
     coverage
@@ -50,7 +52,7 @@ def conformal_interval(
     symmetric
         If ``True``, use ``|residual|`` for symmetric intervals.
         If ``False``, compute separate upper/lower bounds from signed
-        residuals.
+        residuals ``y - y_hat``.
 
     Returns
     -------
@@ -85,6 +87,28 @@ def _conformal_quantile(residuals: list[float], coverage: float) -> float:
     return float(np.quantile(arr, level))
 
 
+def _conformal_quantile_lower(residuals: list[float], alpha_half: float) -> float:
+    """Compute finite-sample-corrected lower conformal quantile."""
+    n = len(residuals)
+    if n == 0:
+        return 0.0
+    level = math.floor((n + 1) * alpha_half) / n
+    level = max(level, 0.0)
+    arr = np.array(residuals, dtype=np.float64)
+    return float(np.quantile(arr, level))
+
+
+def _conformal_quantile_upper(residuals: list[float], alpha_half: float) -> float:
+    """Compute finite-sample-corrected upper conformal quantile."""
+    n = len(residuals)
+    if n == 0:
+        return 0.0
+    level = math.ceil((n + 1) * (1 - alpha_half)) / n
+    level = min(level, 1.0)
+    arr = np.array(residuals, dtype=np.float64)
+    return float(np.quantile(arr, level))
+
+
 def _symmetric_interval(
     cal_residuals: pl.DataFrame,
     predictions: pl.DataFrame,
@@ -93,23 +117,24 @@ def _symmetric_interval(
     predicted_col: str,
     id_col: str | None,
 ) -> pl.DataFrame:
+    """Compute symmetric conformal intervals using |residual| quantiles."""
     if id_col is not None and id_col in cal_residuals.columns:
-        # Per-group conformal quantiles
-        group_q: dict[Any, float] = {}
+        # Per-group conformal quantiles → join for vectorized interval computation
+        group_rows: list[dict[str, Any]] = []
         for group_id, group_df in cal_residuals.group_by(id_col, maintain_order=True):
             resids = group_df[residual_col].drop_nulls().to_list()
-            group_q[group_id[0]] = _conformal_quantile(resids, coverage)
+            group_rows.append({id_col: group_id[0], "__q_hat": _conformal_quantile(resids, coverage)})
 
-        rows = predictions.to_dicts()
-        for row in rows:
-            q_hat = group_q.get(row[id_col], 0.0)
-            row["y_hat_lower"] = row[predicted_col] - q_hat
-            row["y_hat_upper"] = row[predicted_col] + q_hat
-
-        schema = dict(predictions.schema)
-        schema["y_hat_lower"] = pl.Float64()
-        schema["y_hat_upper"] = pl.Float64()
-        return pl.DataFrame(rows, schema=schema)
+        q_df = pl.DataFrame(group_rows, schema={id_col: predictions.schema[id_col], "__q_hat": pl.Float64()})
+        result = (
+            predictions.join(q_df, on=id_col, how="left")
+            .with_columns(
+                (pl.col(predicted_col) - pl.col("__q_hat").fill_null(0.0)).alias("y_hat_lower"),
+                (pl.col(predicted_col) + pl.col("__q_hat").fill_null(0.0)).alias("y_hat_upper"),
+            )
+            .drop("__q_hat")
+        )
+        return result
 
     # Global conformal quantile
     resids = cal_residuals[residual_col].drop_nulls().to_list()
@@ -128,32 +153,34 @@ def _asymmetric_interval(
     predicted_col: str,
     id_col: str | None,
 ) -> pl.DataFrame:
+    """Compute asymmetric conformal intervals using signed residual quantiles."""
     alpha = 1 - coverage
 
     if id_col is not None and id_col in cal_residuals.columns:
-        group_bounds: dict[Any, tuple[float, float]] = {}
+        group_rows: list[dict[str, Any]] = []
         for group_id, group_df in cal_residuals.group_by(id_col, maintain_order=True):
             signed = group_df[residual_col].drop_nulls().to_list()
-            arr = np.array(signed, dtype=np.float64)
-            lower_q = float(np.quantile(arr, alpha / 2))
-            upper_q = float(np.quantile(arr, 1 - alpha / 2))
-            group_bounds[group_id[0]] = (lower_q, upper_q)
+            lower_q = _conformal_quantile_lower(signed, alpha / 2)
+            upper_q = _conformal_quantile_upper(signed, alpha / 2)
+            group_rows.append({id_col: group_id[0], "__lower_q": lower_q, "__upper_q": upper_q})
 
-        rows = predictions.to_dicts()
-        for row in rows:
-            lower_q, upper_q = group_bounds.get(row[id_col], (0.0, 0.0))
-            row["y_hat_lower"] = row[predicted_col] + lower_q
-            row["y_hat_upper"] = row[predicted_col] + upper_q
-
-        schema = dict(predictions.schema)
-        schema["y_hat_lower"] = pl.Float64()
-        schema["y_hat_upper"] = pl.Float64()
-        return pl.DataFrame(rows, schema=schema)
+        q_df = pl.DataFrame(
+            group_rows,
+            schema={id_col: predictions.schema[id_col], "__lower_q": pl.Float64(), "__upper_q": pl.Float64()},
+        )
+        result = (
+            predictions.join(q_df, on=id_col, how="left")
+            .with_columns(
+                (pl.col(predicted_col) + pl.col("__lower_q").fill_null(0.0)).alias("y_hat_lower"),
+                (pl.col(predicted_col) + pl.col("__upper_q").fill_null(0.0)).alias("y_hat_upper"),
+            )
+            .drop("__lower_q", "__upper_q")
+        )
+        return result
 
     signed = cal_residuals[residual_col].drop_nulls().to_list()
-    arr = np.array(signed, dtype=np.float64)
-    lower_q = float(np.quantile(arr, alpha / 2))
-    upper_q = float(np.quantile(arr, 1 - alpha / 2))
+    lower_q = _conformal_quantile_lower(signed, alpha / 2)
+    upper_q = _conformal_quantile_upper(signed, alpha / 2)
     return predictions.with_columns(
         (pl.col(predicted_col) + lower_q).alias("y_hat_lower"),
         (pl.col(predicted_col) + upper_q).alias("y_hat_upper"),
@@ -166,6 +193,12 @@ class EnbPI:
     A conformal method that produces adaptive prediction intervals
     using bootstrap aggregation of out-of-bag residuals. Intervals
     adapt over time via the ``update`` method.
+
+    .. note::
+
+       Interval width is currently constant across all forecast steps.
+       In practice, prediction uncertainty grows with the horizon due to
+       error accumulation in recursive prediction.
 
     Parameters
     ----------
@@ -314,6 +347,10 @@ class EnbPI:
         for group_id, group_df in sorted_df.group_by(self.id_col, maintain_order=True):
             gid = group_id[0]
             values = group_df[self.target_col].to_list()
+            if len(values) < max_lag:
+                raise ValueError(
+                    f"Series {gid!r} has {len(values)} observations but max(lags)={max_lag} — too short to predict"
+                )
             last_time = group_df[self.time_col][-1]
             buffer = list(values[-max_lag:])
             future_times = _make_future_dates(last_time, freq, h)
