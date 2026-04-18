@@ -41,10 +41,33 @@ A high-performance time series analysis toolkit for [Polars](https://pola.rs), w
 - **Decomposition features** &mdash; trend/seasonal strength extraction (simple or MSTL)
 - **Anomaly flagging** &mdash; residual-based anomaly detection from any decomposition
 
+### Feature Engineering (Python)
+
+- **Lag features** &mdash; create lagged versions of a target column per group
+- **Rolling features** &mdash; rolling window aggregations (mean, std, min, max, sum, median, var)
+- **Calendar features** &mdash; extract day_of_week, month, quarter, is_weekend, etc. from datetime columns
+- **Fourier features** &mdash; sin/cos pairs for seasonal modelling with configurable harmonics
+
+### Target Transforms (Python)
+
+- **Log transform** &mdash; log1p / expm1 with automatic validation and lossless inversion
+- **Box-Cox transform** &mdash; parametric power transform with configurable lambda
+- **Differencing** &mdash; configurable order and seasonal period with metadata for lossless inversion
+
+All transforms are group-aware, invertible, and accessible as standalone functions or via the `df.pts` namespace.
+
+### Validation Strategies (Python)
+
+- **Expanding window CV** &mdash; growing training window cross-validation
+- **Sliding window CV** &mdash; fixed-size training window cross-validation
+- **Rolling origin CV** &mdash; general rolling-origin with configurable initial/fixed train size
+
 ### Forecasting
 
 - **SCUM** &mdash; ensemble model combining AutoARIMA, AutoETS, AutoCES, and DynamicOptimizedTheta
 - **Kaboudan metric** &mdash; model robustness evaluation via block-shuffle backtesting
+- **Baseline models** &mdash; naive, seasonal naive, moving average, and FFT-based forecasts
+- **Multi-step strategies** &mdash; `RecursiveForecaster` (iterative) and `DirectForecaster` (one model per horizon)
 
 ## Installation
 
