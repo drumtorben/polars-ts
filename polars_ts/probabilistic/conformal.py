@@ -366,13 +366,15 @@ class EnbPI:
                 y_hat = float(np.mean(preds))
                 buffer.append(y_hat)
 
-                rows.append({
-                    self.id_col: gid,
-                    self.time_col: future_times[step],
-                    "y_hat": y_hat,
-                    "y_hat_lower": y_hat - q_hat,
-                    "y_hat_upper": y_hat + q_hat,
-                })
+                rows.append(
+                    {
+                        self.id_col: gid,
+                        self.time_col: future_times[step],
+                        "y_hat": y_hat,
+                        "y_hat_lower": y_hat - q_hat,
+                        "y_hat_upper": y_hat + q_hat,
+                    }
+                )
 
         schema: dict[str, Any] = {
             self.id_col: df.schema[self.id_col],
