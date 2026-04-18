@@ -110,6 +110,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.evaluation import calinski_harabasz_score
 
         return calinski_harabasz_score
+    if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
+        from polars_ts import features as _feat
+
+        return getattr(_feat, name)
     if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
         from polars_ts.metrics import forecast as _fm
 
@@ -153,6 +157,10 @@ __all__ = [
     "silhouette_samples",
     "davies_bouldin_score",
     "calinski_harabasz_score",
+    "lag_features",
+    "rolling_features",
+    "calendar_features",
+    "fourier_features",
     "mae",
     "rmse",
     "mape",
