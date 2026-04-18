@@ -29,7 +29,7 @@ def log_transform(
     if orig_col in df.columns:
         raise ValueError(f"Column {orig_col!r} already exists — transform may have been applied already")
 
-    min_val = df[target_col].min()
+    min_val: float | None = df[target_col].min()  # type: ignore[assignment]
     if min_val is not None and min_val <= -1:
         raise ValueError(f"log1p requires values > -1, found {min_val}")
 
