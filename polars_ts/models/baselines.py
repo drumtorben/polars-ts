@@ -78,7 +78,7 @@ def naive_forecast(
         for t in future_times:
             rows.append({id_col: row[id_col], time_col: t, "y_hat": row["__last_val"]})
 
-    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64}
+    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64()}
     return pl.DataFrame(rows, schema=schema).sort(id_col, time_col)
 
 
@@ -136,7 +136,7 @@ def seasonal_naive_forecast(
         for i, t in enumerate(future_times):
             rows.append({id_col: group_id[0], time_col: t, "y_hat": float(season[i % len(season)])})
 
-    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64}
+    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64()}
     return pl.DataFrame(rows, schema=schema).sort(id_col, time_col)
 
 
@@ -191,7 +191,7 @@ def moving_average_forecast(
         for t in future_times:
             rows.append({id_col: group_id[0], time_col: t, "y_hat": avg})
 
-    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64}
+    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64()}
     return pl.DataFrame(rows, schema=schema).sort(id_col, time_col)
 
 
@@ -268,5 +268,5 @@ def fft_forecast(
                 val += 2 * np.abs(mask[idx]) / n * np.cos(2 * np.pi * freqs[idx] * t + np.angle(mask[idx]))
             rows.append({id_col: group_id[0], time_col: future_times[step], "y_hat": float(val)})
 
-    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64}
+    schema = {id_col: df.schema[id_col], time_col: df.schema[time_col], "y_hat": pl.Float64()}
     return pl.DataFrame(rows, schema=schema).sort(id_col, time_col)

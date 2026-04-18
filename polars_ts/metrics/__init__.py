@@ -1,3 +1,4 @@
+from collections.abc import Generator
 from dataclasses import dataclass
 
 import polars as pl
@@ -228,7 +229,7 @@ class Metrics:
         gap: int = 0,
         id_col: str = "unique_id",
         time_col: str = "ds",
-    ):
+    ) -> Generator[tuple[pl.DataFrame, pl.DataFrame], None, None]:
         """Expand-window CV. See :func:`polars_ts.validation.splits.expanding_window_cv`."""
         from polars_ts.validation.splits import expanding_window_cv
 
@@ -243,7 +244,7 @@ class Metrics:
         gap: int = 0,
         id_col: str = "unique_id",
         time_col: str = "ds",
-    ):
+    ) -> Generator[tuple[pl.DataFrame, pl.DataFrame], None, None]:
         """Slide-window CV. See :func:`polars_ts.validation.splits.sliding_window_cv`."""
         from polars_ts.validation.splits import sliding_window_cv
 
@@ -259,7 +260,7 @@ class Metrics:
         fixed_train_size: int | None = None,
         id_col: str = "unique_id",
         time_col: str = "ds",
-    ):
+    ) -> Generator[tuple[pl.DataFrame, pl.DataFrame], None, None]:
         """Roll-origin CV. See :func:`polars_ts.validation.splits.rolling_origin_cv`."""
         from polars_ts.validation.splits import rolling_origin_cv
 
