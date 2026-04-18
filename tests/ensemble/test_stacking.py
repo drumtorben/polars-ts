@@ -103,12 +103,8 @@ class TestStackingForecaster:
         sf = StackingForecaster(LinearRegression())
         sf.fit([cv1, cv2], actuals)
 
-        test1 = pl.DataFrame(
-            {"unique_id": ["A", "B"], "ds": [date(2024, 1, 4)] * 2, "y_hat": [40.0, 400.0]}
-        )
-        test2 = pl.DataFrame(
-            {"unique_id": ["A", "B"], "ds": [date(2024, 1, 4)] * 2, "y_hat": [38.0, 390.0]}
-        )
+        test1 = pl.DataFrame({"unique_id": ["A", "B"], "ds": [date(2024, 1, 4)] * 2, "y_hat": [40.0, 400.0]})
+        test2 = pl.DataFrame({"unique_id": ["A", "B"], "ds": [date(2024, 1, 4)] * 2, "y_hat": [38.0, 390.0]})
         result = sf.predict([test1, test2])
         assert len(result) == 2
 

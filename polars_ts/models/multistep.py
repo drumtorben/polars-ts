@@ -172,7 +172,7 @@ class RecursiveForecaster:
                 buffer.append(pred)
                 rows.append({self.id_col: group_id[0], self.time_col: future_times[step], "y_hat": pred})
 
-        schema = {self.id_col: df.schema[self.id_col], self.time_col: df.schema[self.time_col], "y_hat": pl.Float64}
+        schema = {self.id_col: df.schema[self.id_col], self.time_col: df.schema[self.time_col], "y_hat": pl.Float64()}
         return pl.DataFrame(rows, schema=schema).sort(self.id_col, self.time_col)
 
 
@@ -309,5 +309,5 @@ class DirectForecaster:
                 pred = float(estimator.predict(x_row)[0])
                 rows.append({self.id_col: group_id[0], self.time_col: future_times[step], "y_hat": pred})
 
-        schema = {self.id_col: df.schema[self.id_col], self.time_col: df.schema[self.time_col], "y_hat": pl.Float64}
+        schema = {self.id_col: df.schema[self.id_col], self.time_col: df.schema[self.time_col], "y_hat": pl.Float64()}
         return pl.DataFrame(rows, schema=schema).sort(self.id_col, self.time_col)
