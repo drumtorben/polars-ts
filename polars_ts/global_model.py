@@ -282,8 +282,8 @@ class GlobalForecaster:
             return df
         for col in self.static_features:
             if col in self.static_encoders_:
-                mapping = self.static_encoders_[col]
-                encoded = df[col].map_elements(lambda x, m=mapping: m.get(x, -1), return_dtype=pl.Int64)
+                enc_map: dict[Any, int] = self.static_encoders_[col]
+                encoded = df[col].map_elements(lambda x, m=enc_map: m.get(x, -1), return_dtype=pl.Int64)
                 df = df.with_columns(encoded.alias(f"__static_{col}").cast(pl.Float64))
             else:
                 df = df.with_columns(pl.col(col).cast(pl.Float64).alias(f"__static_{col}"))
