@@ -144,6 +144,26 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"target_encode", "holiday_features", "interaction_features", "time_embeddings"}:
+        from polars_ts.features import advanced as _adv
+
+        return getattr(_adv, name)
+    if name in {"bias_detect", "bias_correct"}:
+        from polars_ts import bias as _bias
+
+        return getattr(_bias, name)
+    if name in {"calibration_table", "pit_histogram", "reliability_diagram"}:
+        from polars_ts import calibration as _cal
+
+        return getattr(_cal, name)
+    if name == "permutation_importance":
+        from polars_ts.importance import permutation_importance
+
+        return permutation_importance
+    if name == "isolation_forest_detect":
+        from polars_ts.anomaly_forest import isolation_forest_detect
+
+        return isolation_forest_detect
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -204,4 +224,15 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "target_encode",
+    "holiday_features",
+    "interaction_features",
+    "time_embeddings",
+    "bias_detect",
+    "bias_correct",
+    "calibration_table",
+    "pit_histogram",
+    "reliability_diagram",
+    "permutation_importance",
+    "isolation_forest_detect",
 ]
