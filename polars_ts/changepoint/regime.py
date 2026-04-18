@@ -95,7 +95,7 @@ def regime_detect(
             gamma = np.exp(log_gamma)
 
             # Log-likelihood
-            log_lik = _logsumexp(log_alpha[-1])
+            log_lik = float(_logsumexp(log_alpha[-1]))
             if abs(log_lik - log_lik_prev) < tol:
                 break
             log_lik_prev = log_lik
