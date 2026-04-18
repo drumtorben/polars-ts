@@ -310,7 +310,7 @@ class EnbPI:
                 oob_for_sample = oob_preds[offset + i]
                 if oob_for_sample:
                     agg_pred = np.mean(oob_for_sample)
-                    resids.append(abs(float(y_g[i]) - agg_pred))
+                    resids.append(float(abs(float(y_g[i]) - agg_pred)))
             offset += len(y_g)
             self.residuals_[gid] = resids
 
