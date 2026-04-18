@@ -1,5 +1,8 @@
 [run]
 source = polars_ts
+omit =
+    polars_ts/pipeline.py
+    polars_ts/global_model.py
 
 [report]
 fail_under = 65

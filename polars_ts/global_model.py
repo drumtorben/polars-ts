@@ -267,8 +267,12 @@ class GlobalForecaster:
 
     def _encode_ids(self, df: pl.DataFrame) -> pl.DataFrame:
         if self.encode_id == "ordinal":
-            mapping = self.id_encoder_
-            encoded = df[self.id_col].map_elements(lambda x: mapping.get(x, -1), return_dtype=pl.Int64)
+            id_map: dict[Any, int] = self.id_encoder_
+
+            def _encode_id(x: Any, _m: dict[Any, int] = id_map) -> int:
+                return _m.get(x, -1)
+
+            encoded = df[self.id_col].map_elements(_encode_id, return_dtype=pl.Int64)
             return df.with_columns(encoded.alias("__id_encoded"))
         if self.encode_id == "onehot":
             for cat in self.id_categories_:
@@ -283,7 +287,11 @@ class GlobalForecaster:
         for col in self.static_features:
             if col in self.static_encoders_:
                 enc_map: dict[Any, int] = self.static_encoders_[col]
-                encoded = df[col].map_elements(lambda x, m=enc_map: m.get(x, -1), return_dtype=pl.Int64)
+
+                def _encode_val(x: Any, _m: dict[Any, int] = enc_map) -> int:
+                    return _m.get(x, -1)
+
+                encoded = df[col].map_elements(_encode_val, return_dtype=pl.Int64)
                 df = df.with_columns(encoded.alias(f"__static_{col}").cast(pl.Float64))
             else:
                 df = df.with_columns(pl.col(col).cast(pl.Float64).alias(f"__static_{col}"))
