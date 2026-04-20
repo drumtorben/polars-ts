@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../evaluation/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../kshape/">
+        <link rel="next" href="../quantile_regression/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Kmedoids - Polars Time Series Extension</title>
+        <title>Conformal - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.clustering.kmedoids" class="md-skip">
+        <a href="#polars_ts.probabilistic.conformal" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kmedoids
+              Conformal
             
           </span>
         </div>
@@ -854,8 +854,6 @@
                 
   
   
-    
-  
   
   
     
@@ -866,15 +864,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_5" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_5" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -893,7 +893,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_5">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -907,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../evaluation/" class="md-nav__link">
+      <a href="../../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -927,30 +927,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Kmedoids
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -961,129 +941,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kmedoids
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kmedoids">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeSeriesKMedoids
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" TimeSeriesKMedoids">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" fit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmedoids
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kmedoids">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1096,7 +953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kshape/" class="md-nav__link">
+      <a href="../../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -1632,8 +1489,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1642,17 +1501,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_10" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../probabilistic/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1671,7 +1528,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_10_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_10_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_10">
             <span class="md-nav__icon md-icon"></span>
             Probabilistic
@@ -1682,10 +1539,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../probabilistic/conformal/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Conformal
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1696,6 +1573,240 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;conformal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" conformal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;EnbPI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" EnbPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" predict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;conformal_interval
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" conformal_interval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile_lower" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile_lower
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile_upper" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile_upper
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._symmetric_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_symmetric_interval
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._asymmetric_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_asymmetric_interval
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1708,7 +1819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../probabilistic/quantile_regression/" class="md-nav__link">
+      <a href="../quantile_regression/" class="md-nav__link">
         
   
   
@@ -2406,27 +2517,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kmedoids
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;conformal
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kmedoids">
+    <nav class="md-nav" aria-label=" conformal">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeSeriesKMedoids
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;EnbPI
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" TimeSeriesKMedoids">
+    <nav class="md-nav" aria-label=" EnbPI">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids--parameters" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
     </span>
@@ -2435,7 +2546,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
     </span>
@@ -2445,7 +2556,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--parameters" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
     </span>
@@ -2454,7 +2565,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--returns" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.fit--returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
@@ -2467,23 +2578,18 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmedoids
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kmedoids">
+    <nav class="md-nav" aria-label=" predict">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids--parameters" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
     </span>
@@ -2492,7 +2598,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kmedoids.kmedoids--returns" class="md-nav__link">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.predict--returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
@@ -2502,6 +2608,122 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.EnbPI.update--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;conformal_interval
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" conformal_interval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal.conformal_interval--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile_lower" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile_lower
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._conformal_quantile_upper" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_conformal_quantile_upper
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._symmetric_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_symmetric_interval
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.probabilistic.conformal._asymmetric_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_asymmetric_interval
+    </span>
+  </a>
   
 </li>
         
@@ -2529,21 +2751,25 @@
   
 
 
-  <h1>Kmedoids</h1>
+  <h1>Conformal</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.clustering.kmedoids" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.kmedoids</code>
+<h2 id="polars_ts.probabilistic.conformal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.probabilistic.conformal</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>K-Medoids (PAM) clustering for time series using precomputed distances.</p>
+        <p>Conformal prediction intervals for time series forecasts.</p>
+<p>Provides distribution-free prediction intervals with finite-sample
+coverage guarantees. Implements split conformal and EnbPI (Ensemble
+Batch Prediction Intervals) from Ch 16 of
+"Modern Time Series Forecasting with Python" (2nd Ed.).</p>
 
 
 
@@ -2568,8 +2794,8 @@
 
 
 
-<h3 id="polars_ts.clustering.kmedoids.TimeSeriesKMedoids" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>TimeSeriesKMedoids</code>
+<h3 id="polars_ts.probabilistic.conformal.EnbPI" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>EnbPI</code>
 
 
 </h3>
@@ -2578,18 +2804,29 @@
     <div class="doc doc-contents ">
 
 
-        <p>K-Medoids (PAM) time series clustering.</p>
-<h5 id="polars_ts.clustering.kmedoids.TimeSeriesKMedoids--parameters">Parameters</h5>
-<p>n_clusters
-    Number of clusters. Default 2.
-metric
-    Distance metric name (e.g. <code>"dtw"</code>, <code>"erp"</code>, <code>"lcss"</code>). Default <code>"dtw"</code>.
-max_iter
-    Maximum swap iterations. Default 100.
-seed
-    Random seed for initial medoid selection. Default 42.
-**distance_kwargs
-    Extra keyword arguments forwarded to the distance function.</p>
+        <p>Ensemble Batch Prediction Intervals for time series.</p>
+<p>A conformal method that produces adaptive prediction intervals
+using bootstrap aggregation of out-of-bag residuals. Intervals
+adapt over time via the <code>update</code> method.</p>
+<p>.. note::</p>
+<p>Interval width is currently constant across all forecast steps.
+   In practice, prediction uncertainty grows with the horizon due to
+   error accumulation in recursive prediction.</p>
+<h5 id="polars_ts.probabilistic.conformal.EnbPI--parameters">Parameters</h5>
+<p>estimator_factory
+    Callable returning a fresh scikit-learn-compatible estimator.
+n_bootstraps
+    Number of bootstrap models to train.
+lags
+    Lag offsets used as features.
+coverage
+    Desired coverage level (e.g. 0.9 for 90%).
+target_col
+    Column with the target values.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.</p>
 
 
 
@@ -2615,7 +2852,7 @@ seed
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit" class="doc doc-heading">
+<h4 id="polars_ts.probabilistic.conformal.EnbPI.fit" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
 </h4>
@@ -2623,12 +2860,66 @@ seed
 
     <div class="doc doc-contents ">
 
-        <p>Fit k-medoids clustering.</p>
-<h6 id="polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--parameters">Parameters</h6>
+        <p>Fit bootstrap ensemble and compute out-of-bag residuals.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.fit--parameters">Parameters</h6>
 <p>df
-    DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
-<h6 id="polars_ts.clustering.kmedoids.TimeSeriesKMedoids.fit--returns">Returns</h6>
-<p>self</p>
+    Training DataFrame.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.fit--returns">Returns</h6>
+<p>EnbPI
+    Fitted instance (<code>self</code>).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.probabilistic.conformal.EnbPI.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate <em>h</em>-step-ahead forecasts with prediction intervals.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.predict--parameters">Parameters</h6>
+<p>df
+    DataFrame containing the history to predict from.
+h
+    Forecast horizon.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.predict--returns">Returns</h6>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, time_col, "y_hat",
+    "y_hat_lower", "y_hat_upper"]</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.probabilistic.conformal.EnbPI.update" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="n">new_obs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Update residuals with newly observed data for adaptive intervals.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.update--parameters">Parameters</h6>
+<p>new_obs
+    DataFrame with actual observations to incorporate. Must
+    contain <code>id_col</code>, <code>time_col</code>, and <code>target_col</code>, plus
+    a <code>y_hat</code> column with the corresponding predictions.</p>
+<h6 id="polars_ts.probabilistic.conformal.EnbPI.update--returns">Returns</h6>
+<p>EnbPI
+    Updated instance (<code>self</code>).</p>
 
 
     </div>
@@ -2647,35 +2938,132 @@ seed
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.clustering.kmedoids.kmedoids" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">kmedoids</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
+<h3 id="polars_ts.probabilistic.conformal.conformal_interval" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">conformal_interval</span><span class="p">(</span><span class="n">cal_residuals</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">residual_col</span><span class="o">=</span><span class="s1">&#39;residual&#39;</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">&#39;y_hat&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">symmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>K-Medoids (PAM) clustering over time series.</p>
-<h5 id="polars_ts.clustering.kmedoids.kmedoids--parameters">Parameters</h5>
-<p>df
-    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
-k
-    Number of clusters.
-method
-    Distance metric name (e.g. <code>"dtw"</code>, <code>"erp"</code>, <code>"lcss"</code>).
-max_iter
-    Maximum swap iterations.
-seed
-    Random seed for initial medoid selection.
+        <p>Add conformal prediction intervals to point forecasts.</p>
+<p>Uses calibration residuals to compute a coverage-adjusted quantile,
+then adds lower/upper bounds to the prediction DataFrame.</p>
+<h5 id="polars_ts.probabilistic.conformal.conformal_interval--parameters">Parameters</h5>
+<p>cal_residuals
+    DataFrame containing calibration residuals. For symmetric mode,
+    this should contain absolute residuals <code>|y - y_hat|</code>.
+    For asymmetric mode, this should contain signed residuals
+    <code>y - y_hat</code> (positive means model under-predicted).
+predictions
+    DataFrame with point forecasts in <code>predicted_col</code>.
+coverage
+    Desired coverage level (e.g. 0.9 for 90% intervals).
+residual_col
+    Column name for residuals in <code>cal_residuals</code>.
+predicted_col
+    Column name for point forecasts in <code>predictions</code>.
 id_col
-    Column identifying each time series.
-target_col
-    Column with the time series values.
-**distance_kwargs
-    Extra keyword arguments forwarded to the distance function.</p>
-<h5 id="polars_ts.clustering.kmedoids.kmedoids--returns">Returns</h5>
+    If provided, compute per-group quantiles for adaptive intervals.
+symmetric
+    If <code>True</code>, use <code>|residual|</code> for symmetric intervals.
+    If <code>False</code>, compute separate upper/lower bounds from signed
+    residuals <code>y - y_hat</code>.</p>
+<h5 id="polars_ts.probabilistic.conformal.conformal_interval--returns">Returns</h5>
 <p>pl.DataFrame
-    DataFrame with columns <code>[id_col, "cluster"]</code>.</p>
+    Copy of <code>predictions</code> with <code>y_hat_lower</code> and <code>y_hat_upper</code>
+    columns appended.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.probabilistic.conformal._conformal_quantile" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_conformal_quantile</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">coverage</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute the conformal quantile with finite-sample correction.</p>
+<p>q_hat = ceil((n+1) * coverage) / n -th empirical quantile.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.probabilistic.conformal._conformal_quantile_lower" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_conformal_quantile_lower</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">alpha_half</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute finite-sample-corrected lower conformal quantile.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.probabilistic.conformal._conformal_quantile_upper" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_conformal_quantile_upper</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">alpha_half</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute finite-sample-corrected upper conformal quantile.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.probabilistic.conformal._symmetric_interval" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_symmetric_interval</span><span class="p">(</span><span class="n">cal_residuals</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">coverage</span><span class="p">,</span> <span class="n">residual_col</span><span class="p">,</span> <span class="n">predicted_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute symmetric conformal intervals using |residual| quantiles.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.probabilistic.conformal._asymmetric_interval" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_asymmetric_interval</span><span class="p">(</span><span class="n">cal_residuals</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">coverage</span><span class="p">,</span> <span class="n">residual_col</span><span class="p">,</span> <span class="n">predicted_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute asymmetric conformal intervals using signed residual quantiles.</p>
 
 
     </div>

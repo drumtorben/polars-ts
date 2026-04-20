@@ -1509,12 +1509,12 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../transforms/__init__/" class="md-nav__link ">
+            <a href="../../probabilistic/__init__/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
-    Transforms
+    Probabilistic
     
   </span>
   
@@ -1530,6 +1530,110 @@
         
         <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_10_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            Probabilistic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilistic/conformal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conformal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probabilistic/quantile_regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quantile regression
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../transforms/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Transforms
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_11" id="__nav_3_1_1_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_11">
             <span class="md-nav__icon md-icon"></span>
             Transforms
           </label>
@@ -1632,7 +1736,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_11" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_12" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -1649,14 +1753,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_1_1_11" id="__nav_3_1_1_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_1_12" id="__nav_3_1_1_12_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_1_1_11">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_12">
             <span class="md-nav__icon md-icon"></span>
             Validation
           </label>
@@ -2349,6 +2453,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#polars_ts.metrics.Metrics.conformal_interval" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;conformal_interval
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2786,6 +2899,24 @@
     <div class="doc doc-contents ">
 
         <p>Roll-origin CV. See :func:<code>polars_ts.validation.splits.rolling_origin_cv</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.metrics.Metrics.conformal_interval" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">conformal_interval</span><span class="p">(</span><span class="n">cal_residuals</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">residual_col</span><span class="o">=</span><span class="s1">&#39;residual&#39;</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">&#39;y_hat&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">symmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add conformal prediction intervals. See :func:<code>polars_ts.probabilistic.conformal.conformal_interval</code>.</p>
 
 
     </div>
