@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../changepoint/cusum/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../knn/">
+        <link rel="next" href="../weighted/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Classification - Polars Time Series Extension</title>
+        <title>Stacking - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.classification" class="md-skip">
+        <a href="#polars_ts.ensemble.stacking" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Classification
+              Stacking
             
           </span>
         </div>
@@ -750,8 +750,6 @@
                 
   
   
-    
-  
   
   
     
@@ -762,15 +760,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_4" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_4" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../classification/__init__/" class="md-nav__link ">
               
   
   
@@ -783,13 +783,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_1_1_4" id="__nav_3_1_1_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_1_4" id="__nav_3_1_1_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_4">
             <span class="md-nav__icon md-icon"></span>
             Classification
@@ -803,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../knn/" class="md-nav__link">
+      <a href="../../classification/knn/" class="md-nav__link">
         
   
   
@@ -826,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kshape_classifier/" class="md-nav__link">
+      <a href="../../classification/kshape_classifier/" class="md-nav__link">
         
   
   
@@ -1108,8 +1108,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1118,17 +1120,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_7" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ensemble/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1147,7 +1147,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_7">
             <span class="md-nav__icon md-icon"></span>
             Ensemble
@@ -1158,10 +1158,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../ensemble/stacking/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Stacking
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1172,6 +1192,129 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;stacking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" stacking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;StackingForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" StackingForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" predict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1184,7 +1327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ensemble/weighted/" class="md-nav__link">
+      <a href="../weighted/" class="md-nav__link">
         
   
   
@@ -2367,11 +2510,107 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.classification" class="md-nav__link">
+  <a href="#polars_ts.ensemble.stacking" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;classification
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;stacking
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" stacking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;StackingForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" StackingForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" predict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.ensemble.stacking.StackingForecaster.predict--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2394,19 +2633,23 @@
   
 
 
-  <h1>Classification</h1>
+  <h1>Stacking</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.classification" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.classification</code>
+<h2 id="polars_ts.ensemble.stacking" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.ensemble.stacking</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>Stacking forecaster using a meta-learner.</p>
+<p>Trains a meta-learner on out-of-fold predictions from multiple base
+models, then combines new forecasts through the fitted meta-learner.</p>
 
 
 
@@ -2426,6 +2669,113 @@
 
 
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.ensemble.stacking.StackingForecaster" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>StackingForecaster</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Stacking ensemble that trains a meta-learner on base model predictions.</p>
+<h5 id="polars_ts.ensemble.stacking.StackingForecaster--parameters">Parameters</h5>
+<p>meta_learner
+    A scikit-learn-compatible estimator with <code>fit</code> and <code>predict</code>.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps.
+target_col
+    Column with actual target values.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.ensemble.stacking.StackingForecaster.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">cv_predictions</span><span class="p">,</span> <span class="n">actuals</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Train the meta-learner on out-of-fold base model predictions.</p>
+<h6 id="polars_ts.ensemble.stacking.StackingForecaster.fit--parameters">Parameters</h6>
+<p>cv_predictions
+    List of DataFrames, one per base model, each containing
+    out-of-fold predictions with columns <code>[id_col, time_col, "y_hat"]</code>.
+actuals
+    DataFrame with actual values in <code>target_col</code>, keyed by
+    <code>id_col</code> and <code>time_col</code>.</p>
+<h6 id="polars_ts.ensemble.stacking.StackingForecaster.fit--returns">Returns</h6>
+<p>StackingForecaster
+    Fitted forecaster (<code>self</code>).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.ensemble.stacking.StackingForecaster.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">forecasts</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Combine base model forecasts through the fitted meta-learner.</p>
+<h6 id="polars_ts.ensemble.stacking.StackingForecaster.predict--parameters">Parameters</h6>
+<p>forecasts
+    List of forecast DataFrames, one per base model, each with
+    <code>[id_col, time_col, "y_hat"]</code>.</p>
+<h6 id="polars_ts.ensemble.stacking.StackingForecaster.predict--returns">Returns</h6>
+<p>pl.DataFrame
+    Combined forecast with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 
 
