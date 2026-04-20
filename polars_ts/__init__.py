@@ -144,6 +144,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name == "ForecastPipeline":
+        from polars_ts.pipeline import ForecastPipeline
+
+        return ForecastPipeline
+    if name == "GlobalForecaster":
+        from polars_ts.global_model import GlobalForecaster
+
+        return GlobalForecaster
     if name in {"WeightedEnsemble", "StackingForecaster"}:
         from polars_ts import ensemble as _ens
 
@@ -212,6 +220,8 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "ForecastPipeline",
+    "GlobalForecaster",
     "WeightedEnsemble",
     "StackingForecaster",
     "QuantileRegressor",
