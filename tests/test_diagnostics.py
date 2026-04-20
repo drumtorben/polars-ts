@@ -113,6 +113,53 @@ class TestLjungBox:
         assert p < 0.05  # AR(1) should be significant
 
 
+def test_constant_series_acf():
+    """Constant series should have ACF=1 at lag 0, ACF=0 for all other lags."""
+    df = pl.DataFrame(
+        {"unique_id": ["A"] * 50, "ds": [date(2024, 1, 1)] * 50, "y": [5.0] * 50}
+    )
+    result = acf(df, max_lags=5)
+    lag0 = result.filter(pl.col("lag") == 0)["acf"][0]
+    assert lag0 == pytest.approx(1.0)
+    for lag in range(1, 6):
+        val = result.filter(pl.col("lag") == lag)["acf"][0]
+        assert val == pytest.approx(0.0, abs=1e-10)
+
+
+def test_max_lags_exceeds_data():
+    """When max_lags > n, should compute up to n-1 lags without error."""
+    df = pl.DataFrame(
+        {"unique_id": ["A"] * 10, "ds": [date(2024, 1, 1)] * 10, "y": list(range(10))}
+    )
+    result = acf(df, max_lags=100)
+    # Should have at most 10 lags (0 through 9)
+    assert result["lag"].max() <= 9
+
+
+def test_ar3_pacf_significant_at_lag3():
+    """AR(3) process should show significant PACF at lag 3."""
+    rng = np.random.default_rng(123)
+    n = 500
+    y = [0.0, 0.0, 0.0]
+    for _ in range(n - 3):
+        y.append(0.3 * y[-1] + 0.2 * y[-2] + 0.2 * y[-3] + rng.normal(0, 0.5))
+    df = pl.DataFrame({"unique_id": ["A"] * n, "ds": [date(2024, 1, 1)] * n, "y": y})
+    result = pacf(df, max_lags=5)
+    lag3 = result.filter(pl.col("lag") == 3)["pacf"][0]
+    # PACF at lag 3 should be non-negligible for AR(3)
+    assert abs(lag3) > 0.05
+
+
+def test_custom_column_names_acf():
+    """ACF should work with non-default column names."""
+    df = pl.DataFrame(
+        {"series": ["X"] * 50, "value": np.random.default_rng(42).normal(0, 1, 50).tolist()}
+    )
+    result = acf(df, target_col="value", id_col="series", max_lags=5)
+    assert "series" in result.columns
+    assert result["lag"].max() == 5
+
+
 def test_top_level_imports():
     import polars_ts
 
