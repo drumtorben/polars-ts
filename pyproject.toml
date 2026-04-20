@@ -88,3 +88,6 @@ max-positional-args = 1
 ignore_missing_imports = true
 disallow_untyped_calls = true
 disallow_incomplete_defs = true
+
+[tool.ty]
+python-version = "3.12"
