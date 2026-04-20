@@ -144,6 +144,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"WeightedEnsemble", "StackingForecaster"}:
+        from polars_ts import ensemble as _ens
+
+        return getattr(_ens, name)
     if name in {"QuantileRegressor", "conformal_interval", "EnbPI"}:
         from polars_ts import probabilistic as _prob
 
@@ -208,6 +212,8 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "WeightedEnsemble",
+    "StackingForecaster",
     "QuantileRegressor",
     "conformal_interval",
     "EnbPI",
