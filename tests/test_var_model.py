@@ -93,6 +93,60 @@ class TestGrangerCausality:
         assert result["p_value"][0] < 0.1
 
 
+def test_var_three_variables():
+    """VAR should work with 3+ variables."""
+    rng = np.random.default_rng(42)
+    n = 100
+    base = date(2024, 1, 1)
+    df = pl.DataFrame(
+        {
+            "ds": [base + timedelta(days=i) for i in range(n)],
+            "x": rng.normal(0, 1, n).tolist(),
+            "y": rng.normal(0, 1, n).tolist(),
+            "z": rng.normal(0, 1, n).tolist(),
+        }
+    )
+    model = var_fit(df, target_cols=["x", "y", "z"], p=1)
+    assert model.coefficients.shape[0] == 3
+    fc = var_forecast(model, horizon=3)
+    assert set(fc.columns) >= {"x", "y", "z"}
+
+
+def test_var_custom_time_col():
+    """VAR should accept custom time column name."""
+    rng = np.random.default_rng(42)
+    n = 50
+    base = date(2024, 1, 1)
+    df = pl.DataFrame(
+        {
+            "timestamp": [base + timedelta(days=i) for i in range(n)],
+            "x": rng.normal(0, 1, n).tolist(),
+            "y": rng.normal(0, 1, n).tolist(),
+        }
+    )
+    model = var_fit(df, target_cols=["x", "y"], p=1, time_col="timestamp")
+    fc = var_forecast(model, horizon=3)
+    assert len(fc) == 3
+
+
+def test_granger_no_causality():
+    """Independent series should show no Granger causality."""
+    pytest.importorskip("scipy")
+    rng = np.random.default_rng(42)
+    n = 200
+    base = date(2024, 1, 1)
+    df = pl.DataFrame(
+        {
+            "ds": [base + timedelta(days=i) for i in range(n)],
+            "x": rng.normal(0, 1, n).tolist(),
+            "y": rng.normal(0, 1, n).tolist(),
+        }
+    )
+    result = granger_causality(df, cause_col="x", effect_col="y", max_lag=3)
+    # Independent series should have high p-values
+    assert result["p_value"].min() > 0.01
+
+
 def test_top_level_imports():
     import polars_ts
 
