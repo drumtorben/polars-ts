@@ -29,6 +29,7 @@ mod frechet;
 mod edr;
 mod mann_kendall;
 mod sens_slope;
+mod pelt;
 
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();
@@ -49,5 +50,6 @@ fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compute_pairwise_sbd, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_frechet, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_edr, m)?)?;
+    m.add_function(wrap_pyfunction!(pelt::pelt, m)?)?;
     Ok(())
 }
