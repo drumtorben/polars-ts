@@ -115,9 +115,7 @@ class TestLjungBox:
 
 def test_constant_series_acf():
     """Constant series should have ACF=1 at lag 0, ACF=0 for all other lags."""
-    df = pl.DataFrame(
-        {"unique_id": ["A"] * 50, "ds": [date(2024, 1, 1)] * 50, "y": [5.0] * 50}
-    )
+    df = pl.DataFrame({"unique_id": ["A"] * 50, "ds": [date(2024, 1, 1)] * 50, "y": [5.0] * 50})
     result = acf(df, max_lags=5)
     lag0 = result.filter(pl.col("lag") == 0)["acf"][0]
     assert lag0 == pytest.approx(1.0)
@@ -128,9 +126,7 @@ def test_constant_series_acf():
 
 def test_max_lags_exceeds_data():
     """When max_lags > n, should compute up to n-1 lags without error."""
-    df = pl.DataFrame(
-        {"unique_id": ["A"] * 10, "ds": [date(2024, 1, 1)] * 10, "y": list(range(10))}
-    )
+    df = pl.DataFrame({"unique_id": ["A"] * 10, "ds": [date(2024, 1, 1)] * 10, "y": list(range(10))})
     result = acf(df, max_lags=100)
     # Should have at most 10 lags (0 through 9)
     assert result["lag"].max() <= 9
@@ -152,9 +148,7 @@ def test_ar3_pacf_significant_at_lag3():
 
 def test_custom_column_names_acf():
     """ACF should work with non-default column names."""
-    df = pl.DataFrame(
-        {"series": ["X"] * 50, "value": np.random.default_rng(42).normal(0, 1, 50).tolist()}
-    )
+    df = pl.DataFrame({"series": ["X"] * 50, "value": np.random.default_rng(42).normal(0, 1, 50).tolist()})
     result = acf(df, target_col="value", id_col="series", max_lags=5)
     assert "series" in result.columns
     assert result["lag"].max() == 5

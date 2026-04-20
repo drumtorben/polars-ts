@@ -81,18 +81,16 @@ class TestTreatOutliers:
 
 def test_constant_series_no_outliers():
     """Constant series should have zero variance and no outliers."""
-    df = pl.DataFrame(
-        {"unique_id": ["A"] * 10, "ds": [date(2024, 1, i + 1) for i in range(10)], "y": [5.0] * 10}
-    )
+    df = pl.DataFrame({"unique_id": ["A"] * 10, "ds": [date(2024, 1, i + 1) for i in range(10)], "y": [5.0] * 10})
     result = detect_outliers(df, method="zscore")
     assert result.filter(pl.col("is_outlier")).height == 0
 
 
 def test_all_null_series():
     """Series with all nulls should not crash."""
-    df = pl.DataFrame(
-        {"unique_id": ["A"] * 5, "ds": [date(2024, 1, i + 1) for i in range(5)], "y": [None] * 5}
-    ).cast({"y": pl.Float64})
+    df = pl.DataFrame({"unique_id": ["A"] * 5, "ds": [date(2024, 1, i + 1) for i in range(5)], "y": [None] * 5}).cast(
+        {"y": pl.Float64}
+    )
     # Should not raise — nulls produce NaN z-scores which become False
     result = detect_outliers(df, method="zscore")
     assert "is_outlier" in result.columns
@@ -154,9 +152,7 @@ def test_boundary_value_zscore():
     # Construct data where we know the z-score of a value
     # mean=0, std=1 → value at exactly threshold=3.0 should NOT be outlier (> not >=)
     values = [0.0] * 99 + [3.0]
-    df = pl.DataFrame(
-        {"unique_id": ["A"] * 100, "ds": [date(2024, 1, 1)] * 100, "y": values}
-    )
+    df = pl.DataFrame({"unique_id": ["A"] * 100, "ds": [date(2024, 1, 1)] * 100, "y": values})
     result = detect_outliers(df, method="zscore", threshold=50.0)
     # With threshold=50, nothing should be an outlier
     assert result.filter(pl.col("is_outlier")).height == 0
