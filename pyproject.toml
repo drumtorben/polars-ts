@@ -89,5 +89,5 @@ ignore_missing_imports = true
 disallow_untyped_calls = true
 disallow_incomplete_defs = true
 
-[tool.ty]
+[tool.ty.environment]
 python-version = "3.12"
