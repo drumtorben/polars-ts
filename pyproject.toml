@@ -90,5 +90,15 @@ ignore_missing_imports = true
 disallow_untyped_calls = true
 disallow_incomplete_defs = true
 
+[tool.ty.rules]
+# Downgrade to warnings: ty cannot resolve optional/Rust-compiled modules
+# (scipy, polars_ts_rs, sklearn, etc.) and produces false positives on
+# Polars union return types. ty is informational (continue-on-error: true).
+unresolved-import = "warn"
+unresolved-attribute = "warn"
+invalid-argument-type = "warn"
+invalid-assignment = "warn"
+invalid-return-type = "warn"
+
 [tool.ty.environment]
 python-version = "3.12"
