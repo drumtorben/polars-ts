@@ -113,6 +113,10 @@ import polars as pl
 import polars_ts as pts
 
 df = pl.DataFrame({
+    "group": ["A"] * 10 + ["B"] * 10,
+    "y": list(range(10)) + [10 - x for x in range(10)],
+})
+
     "unique_id": ["A"] * 5 + ["B"] * 5 + ["C"] * 5,
     "y": [1.0, 1.0, 1.0, 1.0, 1.0,   # flat low
           5.0, 5.0, 5.0, 5.0, 5.0,   # flat high
@@ -159,6 +163,19 @@ result = df.group_by("group").agg(
     pts.sens_slope(pl.col("y")).alias("slope"),
 )
 ```
+
+### Seasonal decomposition
+
+```python
+import polars as pl
+import polars_ts as pts
+
+df = pl.DataFrame({
+    "unique_id": ["A"] * 48,
+    "ds": list(range(48)),
+    "y": [10 + 5 * (i % 12 > 5) + 0.5 * i for i in range(48)],
+})
+
 
 ### Seasonal decomposition
 

@@ -148,6 +148,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import ensemble as _ens
 
         return getattr(_ens, name)
+    if name in {"QuantileRegressor", "conformal_interval", "EnbPI"}:
+        from polars_ts import probabilistic as _prob
+
+        return getattr(_prob, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -210,4 +214,7 @@ __all__ = [
     "DirectForecaster",
     "WeightedEnsemble",
     "StackingForecaster",
+    "QuantileRegressor",
+    "conformal_interval",
+    "EnbPI",
 ]
