@@ -267,3 +267,17 @@ class Metrics:
         return rolling_origin_cv(
             self._df, n_splits, initial_train_size, horizon, step, gap, fixed_train_size, id_col, time_col
         )
+
+    def conformal_interval(
+        self,
+        cal_residuals: pl.DataFrame,
+        coverage: float = 0.9,
+        residual_col: str = "residual",
+        predicted_col: str = "y_hat",
+        id_col: str | None = None,
+        symmetric: bool = True,
+    ) -> pl.DataFrame:
+        """Add conformal prediction intervals. See :func:`polars_ts.probabilistic.conformal.conformal_interval`."""
+        from polars_ts.probabilistic.conformal import conformal_interval
+
+        return conformal_interval(cal_residuals, self._df, coverage, residual_col, predicted_col, id_col, symmetric)
