@@ -88,3 +88,34 @@ class TestKShape:
         ks.fit(df)
         labels = dict(zip(ks.labels_["unique_id"].to_list(), ks.labels_["cluster"].to_list(), strict=False))
         assert labels["A"] == labels["B"]
+
+
+def test_kshape_fit_predict_consistent(shape_data):
+    """Fitting twice on the same data should give consistent cluster count."""
+    ks1 = KShape(n_clusters=2, max_iter=50)
+    ks1.fit(shape_data)
+    ks2 = KShape(n_clusters=2, max_iter=50)
+    ks2.fit(shape_data)
+    assert ks1.labels_["cluster"].n_unique() == ks2.labels_["cluster"].n_unique()
+
+
+def test_kshape_centroids_shape(shape_data):
+    """Centroids should have the right length."""
+    ks = KShape(n_clusters=2)
+    ks.fit(shape_data)
+    # Each series has 8 points, so centroids should also have length 8
+    for centroid in ks.centroids_:
+        assert len(centroid) == 8
+
+
+def test_kshape_constant_series():
+    """Constant series should not crash."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4,
+            "y": [1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0],
+        }
+    )
+    ks = KShape(n_clusters=2)
+    ks.fit(df)
+    assert ks.labels_ is not None
