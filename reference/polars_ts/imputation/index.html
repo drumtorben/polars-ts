@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../__init__/">
+        <link rel="prev" href="../global_model/">
       
       
-        <link rel="next" href="../diagnostics/">
+        <link rel="next" href="../outliers/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>distance dispatch - Polars Time Series Extension</title>
+        <title>Imputation - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts._distance_dispatch" class="md-skip">
+        <a href="#polars_ts.imputation" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-               distance dispatch
+              Imputation
             
           </span>
         </div>
@@ -623,30 +623,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-     distance dispatch
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../_distance_dispatch/" class="md-nav__link">
         
   
   
@@ -657,57 +637,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_distance_dispatch
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" _distance_dispatch">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch.compute_distances" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_distances
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch.pairwise_to_dict" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;pairwise_to_dict
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -786,10 +715,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../imputation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Imputation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -800,6 +749,72 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.imputation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;imputation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" imputation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.imputation.impute" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;impute
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" impute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.imputation.impute--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.imputation.impute--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2599,30 +2614,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch" class="md-nav__link">
+  <a href="#polars_ts.imputation" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_distance_dispatch
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;imputation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" _distance_dispatch">
+    <nav class="md-nav" aria-label=" imputation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch.compute_distances" class="md-nav__link">
+  <a href="#polars_ts.imputation.impute" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_distances
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;impute
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" impute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.imputation.impute--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts._distance_dispatch.pairwise_to_dict" class="md-nav__link">
+  <a href="#polars_ts.imputation.impute--returns" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;pairwise_to_dict
+      Returns
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2650,21 +2680,21 @@
   
 
 
-  <h1> distance dispatch</h1>
+  <h1>Imputation</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts._distance_dispatch" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts._distance_dispatch</code>
+<h2 id="polars_ts.imputation" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.imputation</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Shared distance dispatch utilities for clustering and classification.</p>
+        <p>Group-aware missing value imputation for time series. Closes #60.</p>
 
 
 
@@ -2689,34 +2719,34 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts._distance_dispatch.compute_distances" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">compute_distances</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="polars_ts.imputation.impute" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">impute</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;forward_fill&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">season_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Compute pairwise distances using the specified method.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts._distance_dispatch.pairwise_to_dict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">pairwise_to_dict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Convert pairwise result DataFrame to {(id1, id2): distance} dict.</p>
-<p>The dict is symmetric: both (a, b) and (b, a) are stored.</p>
+        <p>Impute missing values in a time series DataFrame.</p>
+<h5 id="polars_ts.imputation.impute--parameters">Parameters</h5>
+<p>df
+    Input DataFrame.
+target_col
+    Column to impute.
+method
+    Imputation method: <code>"forward_fill"</code>, <code>"backward_fill"</code>,
+    <code>"linear"</code>, <code>"mean"</code>, <code>"median"</code>, or <code>"seasonal"</code>.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.
+season_length
+    Required when <code>method="seasonal"</code>.
+add_indicator
+    If <code>True</code>, add a boolean <code>{target_col}_imputed</code> column.</p>
+<h5 id="polars_ts.imputation.impute--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with missing values imputed.</p>
 
 
     </div>
