@@ -4,7 +4,6 @@ _BASELINE_NAMES = {"naive_forecast", "seasonal_naive_forecast", "moving_average_
 _MULTISTEP_NAMES = {"RecursiveForecaster", "DirectForecaster"}
 _ES_NAMES = {"ses_forecast", "holt_forecast", "holt_winters_forecast"}
 
-
 def __getattr__(name: str) -> Any:
     if name == "SCUM":
         try:

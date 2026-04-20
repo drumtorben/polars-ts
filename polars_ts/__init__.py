@@ -163,6 +163,22 @@ def __getattr__(name: str) -> Any:
         from polars_ts import diagnostics as _diag
 
         return getattr(_diag, name)
+    if name == "ForecastPipeline":
+        from polars_ts.pipeline import ForecastPipeline
+
+        return ForecastPipeline
+    if name == "GlobalForecaster":
+        from polars_ts.global_model import GlobalForecaster
+
+        return GlobalForecaster
+    if name in {"WeightedEnsemble", "StackingForecaster"}:
+        from polars_ts import ensemble as _ens
+
+        return getattr(_ens, name)
+    if name in {"QuantileRegressor", "conformal_interval", "EnbPI"}:
+        from polars_ts import probabilistic as _prob
+
+        return getattr(_prob, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -233,4 +249,11 @@ __all__ = [
     "acf",
     "pacf",
     "ljung_box",
+    "ForecastPipeline",
+    "GlobalForecaster",
+    "WeightedEnsemble",
+    "StackingForecaster",
+    "QuantileRegressor",
+    "conformal_interval",
+    "EnbPI",
 ]
