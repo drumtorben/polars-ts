@@ -174,6 +174,26 @@ def __getattr__(name: str) -> Any:
         from polars_ts import adapters as _adapt
 
         return getattr(_adapt, name)
+    if name in {"target_encode", "holiday_features", "interaction_features", "time_embeddings"}:
+        from polars_ts.features import advanced as _adv
+
+        return getattr(_adv, name)
+    if name in {"bias_detect", "bias_correct"}:
+        from polars_ts import bias as _bias
+
+        return getattr(_bias, name)
+    if name in {"calibration_table", "pit_histogram", "reliability_diagram"}:
+        from polars_ts import calibration as _cal
+
+        return getattr(_cal, name)
+    if name == "permutation_importance":
+        from polars_ts.importance import permutation_importance
+
+        return permutation_importance
+    if name == "isolation_forest_detect":
+        from polars_ts.anomaly_forest import isolation_forest_detect
+
+        return isolation_forest_detect
     if name == "impute":
         from polars_ts.imputation import impute
 
@@ -283,6 +303,17 @@ __all__ = [
     "from_pytorch_forecasting",
     "to_hf_dataset",
     "ForecastEnv",
+    "target_encode",
+    "holiday_features",
+    "interaction_features",
+    "time_embeddings",
+    "bias_detect",
+    "bias_correct",
+    "calibration_table",
+    "pit_histogram",
+    "reliability_diagram",
+    "permutation_importance",
+    "isolation_forest_detect",
     "ses_forecast",
     "holt_forecast",
     "holt_winters_forecast",
