@@ -140,6 +140,9 @@ def __getattr__(name: str) -> Any:
         "fft_forecast",
         "RecursiveForecaster",
         "DirectForecaster",
+        "ses_forecast",
+        "holt_forecast",
+        "holt_winters_forecast",
     }:
         from polars_ts import models as _models
 
@@ -164,6 +167,38 @@ def __getattr__(name: str) -> Any:
         from polars_ts.anomaly_forest import isolation_forest_detect
 
         return isolation_forest_detect
+    if name == "impute":
+        from polars_ts.imputation import impute
+
+        return impute
+    if name in {"detect_outliers", "treat_outliers"}:
+        from polars_ts import outliers as _outliers
+
+        return getattr(_outliers, name)
+    if name == "resample":
+        from polars_ts.resampling import resample
+
+        return resample
+    if name in {"acf", "pacf", "ljung_box"}:
+        from polars_ts import diagnostics as _diag
+
+        return getattr(_diag, name)
+    if name == "ForecastPipeline":
+        from polars_ts.pipeline import ForecastPipeline
+
+        return ForecastPipeline
+    if name == "GlobalForecaster":
+        from polars_ts.global_model import GlobalForecaster
+
+        return GlobalForecaster
+    if name in {"WeightedEnsemble", "StackingForecaster"}:
+        from polars_ts import ensemble as _ens
+
+        return getattr(_ens, name)
+    if name in {"QuantileRegressor", "conformal_interval", "EnbPI"}:
+        from polars_ts import probabilistic as _prob
+
+        return getattr(_prob, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -235,4 +270,21 @@ __all__ = [
     "reliability_diagram",
     "permutation_importance",
     "isolation_forest_detect",
+    "ses_forecast",
+    "holt_forecast",
+    "holt_winters_forecast",
+    "impute",
+    "detect_outliers",
+    "treat_outliers",
+    "resample",
+    "acf",
+    "pacf",
+    "ljung_box",
+    "ForecastPipeline",
+    "GlobalForecaster",
+    "WeightedEnsemble",
+    "StackingForecaster",
+    "QuantileRegressor",
+    "conformal_interval",
+    "EnbPI",
 ]
