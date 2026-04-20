@@ -136,7 +136,7 @@ def test_neuralforecast_multi_series_preserved():
 
 
 def test_neuralforecast_multiple_model_columns():
-    """from_neuralforecast should handle multiple model columns (average them)."""
+    """from_neuralforecast should pick the first model column."""
     nf_out = pl.DataFrame(
         {
             "unique_id": ["A", "A"],
@@ -147,8 +147,8 @@ def test_neuralforecast_multiple_model_columns():
     )
     result = from_neuralforecast(nf_out)
     assert "y_hat" in result.columns
-    # Should average the two model columns
-    assert result["y_hat"][0] == pytest.approx(10.5)
+    # Uses first forecast column (NBEATS)
+    assert result["y_hat"][0] == pytest.approx(10.0)
 
 
 # --- Additional PyTorch Forecasting tests ---
@@ -159,10 +159,10 @@ def test_pytorch_forecasting_time_idx_monotonic():
     from polars_ts.adapters.pytorch_forecasting import to_pytorch_forecasting
 
     result = to_pytorch_forecasting(_make_df())
-    data = result["data"]
-    for uid in data["unique_id"].unique().to_list():
-        group = data.filter(pl.col("unique_id") == uid)
-        time_idx = group["time_idx"].to_list()
+    data = result["data"]  # pandas DataFrame
+    for uid in data["unique_id"].unique():
+        group = data[data["unique_id"] == uid]
+        time_idx = group["time_idx"].tolist()
         assert time_idx == sorted(time_idx)
 
 
