@@ -39,7 +39,7 @@ def target_encode(
         DataFrame with ``{cat_col}_encoded`` column appended.
 
     """
-    global_mean = df[target_col].mean()
+    global_mean = float(df[target_col].mean())  # type: ignore[arg-type]
 
     cat_stats = df.group_by(cat_col).agg(
         pl.col(target_col).mean().alias("__cat_mean"),

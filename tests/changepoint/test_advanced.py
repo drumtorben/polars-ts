@@ -165,18 +165,17 @@ def test_pelt_min_size():
     assert len(result_large) <= len(result_small)
 
 
-def test_pelt_rust_python_equivalence():
-    """Rust and Python PELT should return same changepoints."""
-    from polars_ts.changepoint.pelt import _pelt_python
-
-    df = _make_shift_df(50, 50, shift=10.0)
-    py_result = _pelt_python(df, "y", "unique_id", "ds", "mean", 10.0, 2)
-    rs_result = pelt(df, penalty=10.0)
-    # Both should detect at least one changepoint near 50
-    if len(py_result) > 0 and len(rs_result) > 0:
-        py_cp = py_result["changepoint_idx"][0]
-        rs_cp = rs_result["changepoint_idx"][0]
-        assert abs(py_cp - rs_cp) <= 5
+def test_pelt_multiple_shifts():
+    """PELT should detect multiple changepoints in data with two shifts."""
+    rng = np.random.default_rng(42)
+    base = date(2024, 1, 1)
+    values = np.concatenate([rng.normal(0, 0.5, 40), rng.normal(10, 0.5, 40), rng.normal(-5, 0.5, 40)])
+    n = len(values)
+    df = pl.DataFrame(
+        {"unique_id": ["A"] * n, "ds": [base + timedelta(days=i) for i in range(n)], "y": values.tolist()}
+    )
+    result = pelt(df, penalty=10.0)
+    assert len(result) >= 2  # Should detect at least 2 changepoints
 
 
 def test_pelt_constant_series():
