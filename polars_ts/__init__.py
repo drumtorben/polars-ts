@@ -147,6 +147,33 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"pelt", "bocpd", "regime_detect"}:
+        from polars_ts import changepoint as _cp
+
+        return getattr(_cp, name)
+    if name in {"garch_fit", "garch_forecast", "GARCHResult"}:
+        from polars_ts import volatility as _vol
+
+        return getattr(_vol, name)
+    if name in {"var_fit", "var_forecast", "granger_causality", "VARResult"}:
+        from polars_ts import var_model as _var
+
+        return getattr(_var, name)
+    if name == "reconcile":
+        from polars_ts.reconciliation import reconcile
+
+        return reconcile
+    if name in {
+        "to_neuralforecast",
+        "from_neuralforecast",
+        "to_pytorch_forecasting",
+        "from_pytorch_forecasting",
+        "to_hf_dataset",
+        "ForecastEnv",
+    }:
+        from polars_ts import adapters as _adapt
+
+        return getattr(_adapt, name)
     if name in {"target_encode", "holiday_features", "interaction_features", "time_embeddings"}:
         from polars_ts.features import advanced as _adv
 
@@ -259,6 +286,23 @@ __all__ = [
     "fft_forecast",
     "RecursiveForecaster",
     "DirectForecaster",
+    "pelt",
+    "bocpd",
+    "regime_detect",
+    "garch_fit",
+    "garch_forecast",
+    "GARCHResult",
+    "var_fit",
+    "var_forecast",
+    "granger_causality",
+    "VARResult",
+    "reconcile",
+    "to_neuralforecast",
+    "from_neuralforecast",
+    "to_pytorch_forecasting",
+    "from_pytorch_forecasting",
+    "to_hf_dataset",
+    "ForecastEnv",
     "target_encode",
     "holiday_features",
     "interaction_features",
