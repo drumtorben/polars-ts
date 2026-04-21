@@ -2771,6 +2771,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../rust/ets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../rust/frechet/" class="md-nav__link">
         
   
@@ -3222,8 +3245,9 @@
     <div class="doc doc-contents first">
 
         <p>Pure-Polars exponential smoothing forecasters.</p>
-<p>Implements SES, Holt's linear, and Holt-Winters methods without
-external dependencies. Closes #49.</p>
+<p>Implements SES, Holt's linear, and Holt-Winters methods.
+Delegates to Rust when available (2-5x faster per group),
+falling back to pure Python otherwise. Closes #49.</p>
 
 
 
