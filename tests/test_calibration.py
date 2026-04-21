@@ -85,3 +85,49 @@ def test_top_level_imports():
 
     assert polars_ts.calibration_table is calibration_table
     assert polars_ts.pit_histogram is pit_histogram
+
+
+def test_quantile_auto_detection_explicit_cols():
+    """Explicit quantile_cols should override auto-detection."""
+    df = pl.DataFrame(
+        {
+            "y": [1.0, 2.0, 3.0],
+            "q_0.1": [0.5, 1.5, 2.5],
+            "q_0.9": [1.5, 2.5, 3.5],
+            "other_0.5": [1.0, 2.0, 3.0],  # should be ignored
+        }
+    )
+    result = calibration_table(df, quantile_cols=["q_0.1", "q_0.9"])
+    assert len(result) == 2
+    quantiles = result["quantile"].to_list()
+    assert 0.1 in quantiles
+    assert 0.9 in quantiles
+
+
+def test_quantile_auto_detection_many_levels():
+    """Auto-detect works with many quantile columns."""
+    df = pl.DataFrame(
+        {
+            "y": [5.0] * 10,
+            "q_0.1": [4.0] * 10,
+            "q_0.25": [4.5] * 10,
+            "q_0.5": [5.0] * 10,
+            "q_0.75": [5.5] * 10,
+            "q_0.9": [6.0] * 10,
+        }
+    )
+    result = calibration_table(df)
+    assert len(result) == 5
+
+
+def test_quantile_explicit_levels_override():
+    """Passing explicit quantiles overrides column-name parsing."""
+    df = pl.DataFrame(
+        {
+            "y": [1.0, 2.0, 3.0],
+            "q_0.1": [0.5, 1.5, 2.5],
+            "q_0.9": [1.5, 2.5, 3.5],
+        }
+    )
+    result = calibration_table(df, quantiles=[0.2, 0.8])
+    assert result["quantile"].to_list() == [0.2, 0.8]

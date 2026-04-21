@@ -119,3 +119,50 @@ def test_kshape_constant_series():
     ks = KShape(n_clusters=2)
     ks.fit(df)
     assert ks.labels_ is not None
+
+
+def test_kshape_k3_clusters():
+    """k=3 clusters with three very distinct shape patterns."""
+    df = pl.DataFrame(
+        {
+            "unique_id": (["A"] * 8 + ["B"] * 8 + ["C"] * 8 + ["D"] * 8 + ["E"] * 8 + ["F"] * 8),
+            "y": (
+                [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]  # ascending A
+                + [1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1]  # ascending B
+                + [8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]  # descending C
+                + [8.1, 7.1, 6.1, 5.1, 4.1, 3.1, 2.1, 1.1]  # descending D
+                + [1.0, 8.0, 1.0, 8.0, 1.0, 8.0, 1.0, 8.0]  # zigzag E
+                + [1.1, 7.9, 1.1, 7.9, 1.1, 7.9, 1.1, 7.9]  # zigzag F
+            ),
+        }
+    )
+    ks = KShape(n_clusters=3, max_iter=50)
+    ks.fit(df)
+    assert ks.labels_ is not None
+    # At least 2 distinct clusters should form; 3 is ideal but not guaranteed
+    assert ks.labels_["cluster"].n_unique() >= 2
+    labels = dict(
+        zip(
+            ks.labels_["unique_id"].to_list(),
+            ks.labels_["cluster"].to_list(),
+            strict=False,
+        )
+    )
+    # Similar shapes should cluster together
+    assert labels["A"] == labels["B"]
+    assert labels["C"] == labels["D"]
+    assert labels["E"] == labels["F"]
+
+
+def test_kshape_constant_value_convergence():
+    """All-constant series should converge without error."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 6 + ["B"] * 6 + ["C"] * 6,
+            "y": [5.0] * 6 + [5.0] * 6 + [5.0] * 6,
+        }
+    )
+    ks = KShape(n_clusters=2, max_iter=10)
+    ks.fit(df)
+    assert ks.labels_ is not None
+    assert ks.labels_.shape[0] == 3

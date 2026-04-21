@@ -206,3 +206,22 @@ def test_top_level_imports():
 
     assert polars_ts.to_neuralforecast is to_neuralforecast
     assert polars_ts.ForecastEnv is ForecastEnv
+
+
+def test_from_pytorch_forecasting_pandas_input():
+    """from_pytorch_forecasting with a pandas DataFrame input."""
+    import pandas as pd
+
+    from polars_ts.adapters.pytorch_forecasting import from_pytorch_forecasting
+
+    pdf = pd.DataFrame(
+        {
+            "unique_id": ["A", "A", "B", "B"],
+            "ds": [date(2024, 1, 1), date(2024, 1, 2), date(2024, 1, 1), date(2024, 1, 2)],
+            "prediction": [10.0, 11.0, 20.0, 21.0],
+        }
+    )
+    result = from_pytorch_forecasting(pdf)
+    assert "y_hat" in result.columns
+    assert len(result) == 4
+    assert result["y_hat"].to_list() == [10.0, 11.0, 20.0, 21.0]
