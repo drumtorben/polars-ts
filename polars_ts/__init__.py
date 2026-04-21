@@ -226,6 +226,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import probabilistic as _prob
 
         return getattr(_prob, name)
+    if name in {"arima_fit", "arima_forecast", "auto_arima"}:
+        from polars_ts import models as _models
+
+        return getattr(_models, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -331,4 +335,7 @@ __all__ = [
     "QuantileRegressor",
     "conformal_interval",
     "EnbPI",
+    "arima_fit",
+    "arima_forecast",
+    "auto_arima",
 ]
