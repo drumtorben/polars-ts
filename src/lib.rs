@@ -29,6 +29,7 @@ mod frechet;
 mod edr;
 mod mann_kendall;
 mod sens_slope;
+mod kmedoids;
 mod pelt;
 
 #[global_allocator]
@@ -50,6 +51,7 @@ fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compute_pairwise_sbd, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_frechet, m)?)?;
     m.add_function(wrap_pyfunction!(compute_pairwise_edr, m)?)?;
+    m.add_function(wrap_pyfunction!(kmedoids::kmedoids_pam, m)?)?;
     m.add_function(wrap_pyfunction!(pelt::pelt, m)?)?;
     Ok(())
 }
