@@ -59,6 +59,34 @@ class TestPermutationImportance:
         assert result["feature"][0] == "x1"
 
 
+def test_importance_n_repeats():
+    """More repeats should reduce std."""
+    df, model = _make_feature_df()
+    result_few = permutation_importance(df, model, feature_cols=["x1", "x2"], n_repeats=2)
+    result_many = permutation_importance(df, model, feature_cols=["x1", "x2"], n_repeats=20)
+    # More repeats should generally give lower std for the important feature
+    assert result_many.filter(pl.col("feature") == "x1")["importance_std"][0] <= (
+        result_few.filter(pl.col("feature") == "x1")["importance_std"][0] + 0.5
+    )
+
+
+def test_importance_all_noise():
+    """All-noise features should have low importance."""
+    import numpy as np
+
+    rng = np.random.default_rng(42)
+    n = 100
+    df = pl.DataFrame(
+        {"x1": rng.normal(0, 1, n).tolist(), "x2": rng.normal(0, 1, n).tolist(), "y": rng.normal(0, 1, n).tolist()}
+    )
+    model = LinearRegression()
+    model.fit(df.select("x1", "x2").to_numpy(), df["y"].to_numpy())
+    result = permutation_importance(df, model, feature_cols=["x1", "x2"])
+    # Both features should have low importance (close to 0)
+    for val in result["importance_mean"].to_list():
+        assert abs(val) < 1.0
+
+
 def test_top_level_import():
     import polars_ts
 
