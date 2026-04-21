@@ -1561,6 +1561,33 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._build_dist_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_dist_matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._kmedoids_rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_kmedoids_rust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._kmedoids_python" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_kmedoids_python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.clustering.kmedoids.kmedoids" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmedoids
@@ -2812,6 +2839,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../rust/kmedoids/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kmedoids
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../rust/lcss/" class="md-nav__link">
         
   
@@ -3164,6 +3214,33 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._build_dist_matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_dist_matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._kmedoids_rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_kmedoids_rust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmedoids._kmedoids_python" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_kmedoids_python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.clustering.kmedoids.kmedoids" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmedoids
@@ -3235,6 +3312,8 @@
     <div class="doc doc-contents first">
 
         <p>K-Medoids (PAM) clustering for time series using precomputed distances.</p>
+<p>Delegates the PAM swap loop to Rust when available (10-30x faster),
+falling back to pure Python otherwise.</p>
 
 
 
@@ -3334,6 +3413,60 @@ seed
 
 </div>
 
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kmedoids._build_dist_matrix" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_dist_matrix</span><span class="p">(</span><span class="n">dist_dict</span><span class="p">,</span> <span class="n">str_ids</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Convert distance dict to flat n×n row-major matrix.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kmedoids._kmedoids_rust" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_kmedoids_rust</span><span class="p">(</span><span class="n">dist_dict</span><span class="p">,</span> <span class="n">str_ids</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run PAM via Rust extension.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kmedoids._kmedoids_python" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_kmedoids_python</span><span class="p">(</span><span class="n">dist_dict</span><span class="p">,</span> <span class="n">str_ids</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Pure-Python PAM swap fallback.</p>
+
+
+    </div>
+
+</div>
 
 <div class="doc doc-object doc-function">
 
