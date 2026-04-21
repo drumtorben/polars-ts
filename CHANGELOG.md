@@ -1,4 +1,15 @@
-## Unreleased
+## v0.6.0 (2026-04-21)
+
+### Features
+
+- Add ARIMA/SARIMA forecasting with explicit `(p,d,q)` order control via `statsmodels.SARIMAX` (`arima_fit`, `arima_forecast`).
+- Add automatic ARIMA order selection via `statsforecast.AutoARIMA` (`auto_arima`).
+- Both ARIMA backends raise helpful `ImportError` when optional dependencies are missing.
+
+### Performance
+
+- Accelerate exponential smoothing (SES, Holt, Holt-Winters) with Rust implementation (#86).
+- Accelerate k-medoids PAM clustering with Rust implementation (#84).
 
 ### Improvements
 
@@ -6,6 +17,12 @@
 - CI: add [ty](https://github.com/astral-sh/ty) type checker as non-blocking informational job alongside mypy.
 - Add `[tool.ty]` configuration section in `pyproject.toml`.
 - Document `prek` and `ty` local developer workflows in README.
+
+### Tests
+
+- Expand coverage for HF adapter, clustering, calibration, and adapters (#85).
+- Expand coverage for changepoint, clustering, adapters, and standalone modules (#83).
+- Add 8 ARIMA tests (5 statsmodels, 3 statsforecast-gated).
 
 ## v0.5.0 (2026-04-16)
 

@@ -1,14 +1,12 @@
-# Polars Time Series Extension
+<p align="center">
+  <img src="images/polars_ts_complete.png" alt="Polars TS" width="600">
+</p>
 
-A high-performance time series analysis toolkit for [Polars](https://pola.rs), with Rust-powered distance metrics and Python analytics.
-
----
-
-**Documentation**: [https://drumtorben.github.io/polars-ts](https://drumtorben.github.io/polars-ts)
-
-**Source Code**: [https://github.com/drumtorben/polars-ts](https://github.com/drumtorben/polars-ts)
-
-**PyPI**: [https://pypi.org/project/polars-timeseries](https://pypi.org/project/polars-timeseries)
+<p align="center">
+  <a href="https://drumtorben.github.io/polars-ts">Documentation</a> &bull;
+  <a href="https://github.com/drumtorben/polars-ts">Source Code</a> &bull;
+  <a href="https://pypi.org/project/polars-timeseries">PyPI</a>
+</p>
 
 ---
 
@@ -79,6 +77,7 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 ### Forecasting
 
 - **SCUM** &mdash; ensemble model combining AutoARIMA, AutoETS, AutoCES, and DynamicOptimizedTheta
+- **ARIMA/SARIMA** &mdash; explicit `(p,d,q)` order via `statsmodels` (`arima_fit`/`arima_forecast`) or automatic selection via `statsforecast` (`auto_arima`)
 - **Baseline models** &mdash; naive, seasonal naive, moving average, and FFT-based forecasts
 - **Exponential smoothing** &mdash; SES, Holt's linear, Holt-Winters (additive/multiplicative)
 - **Multi-step strategies** &mdash; `RecursiveForecaster` and `DirectForecaster`
@@ -179,6 +178,19 @@ pipe = pts.ForecastPipeline(
 )
 pipe.fit(train_df)
 forecasts = pipe.predict(train_df, h=7)
+```
+
+### ARIMA forecasting
+
+```python
+import polars_ts as pts
+
+# Fit ARIMA(1,1,1) and forecast 12 steps ahead
+fitted = pts.arima_fit(df, order=(1, 1, 1))
+forecast = pts.arima_forecast(fitted, h=12)
+
+# Or use automatic order selection
+forecast = pts.auto_arima(df, h=12, season_length=12)
 ```
 
 ### Exponential smoothing
