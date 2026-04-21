@@ -72,6 +72,26 @@ class TestBiasCorrect:
             bias_correct(_make_biased_df(), method="invalid")
 
 
+def test_bias_negative():
+    """Negative bias (under-predictions) should show negative mean_error."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 5,
+            "y": [10.0, 20.0, 30.0, 40.0, 50.0],
+            "y_hat": [8.0, 18.0, 28.0, 38.0, 48.0],
+        }
+    )
+    result = bias_detect(df)
+    assert result["mean_error"][0] == pytest.approx(-2.0)
+
+
+def test_bias_correct_preserves_length():
+    """Correction should not change DataFrame length."""
+    df = _make_biased_df(3.0)
+    result = bias_correct(df, method="mean")
+    assert len(result) == len(df)
+
+
 def test_top_level_imports():
     import polars_ts
 

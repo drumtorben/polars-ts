@@ -1,5 +1,10 @@
 # polars-ts v0.7.0 (2026-04-18)
 
+## CI & Tooling
+
+- **prek** — replaced `pre-commit` with [prek](https://github.com/j178/prek) in CI. 3-5x faster code-quality checks, same `.pre-commit-config.yaml`. Contributors can use either tool locally.
+- **ty** — added [ty](https://github.com/astral-sh/ty) (Astral's Rust-based type checker) as a non-blocking CI job (`continue-on-error: true`). Runs alongside mypy as informational. Will be promoted to blocking when ty reaches stable.
+
 ## Features
 
 ### Probabilistic Forecasting

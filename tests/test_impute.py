@@ -85,6 +85,32 @@ class TestImpute:
         assert a_mean != b_mean  # Different groups have different means
 
 
+def test_impute_all_null_group():
+    """Group with all nulls should remain null (no crash)."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 3,
+            "ds": [date(2024, 1, i + 1) for i in range(3)],
+            "y": [None, None, None],
+        }
+    ).cast({"y": pl.Float64})
+    result = impute(df, method="linear")
+    assert result["y"].null_count() == 3  # can't interpolate all-null
+
+
+def test_impute_single_null():
+    """Single interior null should be interpolated exactly."""
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 5,
+            "ds": [date(2024, 1, i + 1) for i in range(5)],
+            "y": [1.0, 2.0, None, 4.0, 5.0],
+        }
+    )
+    result = impute(df, method="linear")
+    assert result["y"][2] == pytest.approx(3.0)
+
+
 def test_top_level_import():
     import polars_ts
 

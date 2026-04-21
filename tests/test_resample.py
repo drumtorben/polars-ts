@@ -58,6 +58,33 @@ class TestResample:
         assert b == pytest.approx(a * 2, abs=0.5)
 
 
+def test_resample_min_max():
+    """Min and max aggregations should work."""
+    for agg in ["min", "max", "median"]:
+        result = resample(_make_hourly_df(), rule="1d", agg=agg)
+        assert result["y"].null_count() == 0
+
+
+def test_resample_preserves_groups():
+    """All groups should be present after resampling."""
+    result = resample(_make_hourly_df(), rule="1d", agg="mean")
+    assert result["unique_id"].n_unique() == 2
+
+
+def test_resample_custom_columns():
+    """Resample should work with non-default column names."""
+    n = 48
+    df = pl.DataFrame(
+        {
+            "series": ["A"] * n,
+            "time": [datetime(2024, 1, 1) + timedelta(hours=i) for i in range(n)],
+            "value": [float(i) for i in range(n)],
+        }
+    )
+    result = resample(df, rule="1d", agg="mean", id_col="series", time_col="time", target_col="value")
+    assert "series" in result.columns
+
+
 def test_top_level_import():
     import polars_ts
 

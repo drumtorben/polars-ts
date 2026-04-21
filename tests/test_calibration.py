@@ -58,6 +58,28 @@ class TestReliabilityDiagram:
         assert len(result) == 3
 
 
+def test_calibration_well_calibrated():
+    """Well-calibrated forecasts should have observed ≈ expected coverage."""
+    df = _make_quantile_df()
+    result = calibration_table(df)
+    for row in result.iter_rows(named=True):
+        assert abs(row["observed_coverage"] - row["expected_coverage"]) < 0.6
+
+
+def test_pit_custom_bins():
+    """PIT histogram should respect custom bin count."""
+    for n_bins in [3, 5, 10]:
+        result = pit_histogram(_make_quantile_df(), n_bins=n_bins)
+        assert len(result) == n_bins
+
+
+def test_reliability_diagram_sorted():
+    """Reliability diagram should be sorted by expected."""
+    result = reliability_diagram(_make_quantile_df())
+    expected = result["expected"].to_list()
+    assert expected == sorted(expected)
+
+
 def test_top_level_imports():
     import polars_ts
 

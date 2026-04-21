@@ -82,3 +82,37 @@ class TestTimeSeriesKMedoids:
         km.fit(df)
         labels = dict(zip(km.labels_["unique_id"].to_list(), km.labels_["cluster"].to_list(), strict=False))
         assert labels["A"] == labels["B"]
+
+
+def test_kmedoids_function():
+    """Test the kmedoids() convenience function."""
+    from polars_ts.clustering.kmedoids import kmedoids
+
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
+            "y": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.5, 4.0, 3.0, 2.0, 1.0],
+        }
+    )
+    labels = kmedoids(df, k=2, method="dtw")
+    assert "unique_id" in labels.columns
+    assert "cluster" in labels.columns
+    assert len(labels) == 3
+
+
+def test_kmedoids_seed_reproducibility(cluster_data):
+    """Same seed should produce same results."""
+    km1 = TimeSeriesKMedoids(n_clusters=2, metric="dtw", seed=42)
+    km1.fit(cluster_data)
+    km2 = TimeSeriesKMedoids(n_clusters=2, metric="dtw", seed=42)
+    km2.fit(cluster_data)
+    assert km1.labels_["cluster"].to_list() == km2.labels_["cluster"].to_list()
+
+
+def test_kmedoids_medoids_are_data_points(cluster_data):
+    """Medoids should be actual series from the data."""
+    km = TimeSeriesKMedoids(n_clusters=2, metric="dtw")
+    km.fit(cluster_data)
+    all_ids = cluster_data["unique_id"].unique().to_list()
+    for m in km.medoids_:
+        assert m in all_ids
