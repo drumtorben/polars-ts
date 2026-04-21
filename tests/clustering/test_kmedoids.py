@@ -116,3 +116,19 @@ def test_kmedoids_medoids_are_data_points(cluster_data):
     all_ids = cluster_data["unique_id"].unique().to_list()
     for m in km.medoids_:
         assert m in all_ids
+
+
+def test_kmedoids_custom_columns():
+    """Kmedoids convenience function with non-default column names."""
+    from polars_ts.clustering.kmedoids import kmedoids
+
+    df = pl.DataFrame(
+        {
+            "ts_id": ["A"] * 4 + ["B"] * 4 + ["C"] * 4,
+            "value": [1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.5, 4.0, 3.0, 2.0, 1.0],
+        }
+    )
+    labels = kmedoids(df, k=2, method="dtw", id_col="ts_id", target_col="value")
+    assert "ts_id" in labels.columns
+    assert "cluster" in labels.columns
+    assert len(labels) == 3

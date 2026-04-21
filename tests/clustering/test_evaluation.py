@@ -288,3 +288,49 @@ def test_cross_metric_consistency(two_cluster_data, two_cluster_labels, bad_labe
     assert good_sil > bad_sil
     assert good_db < bad_db
     assert good_ch > bad_ch
+
+
+class TestThreeClusterMetrics:
+    """Metrics with 3+ clusters."""
+
+    @pytest.fixture
+    def three_cluster_data(self):
+        return pl.DataFrame(
+            {
+                "unique_id": (["A"] * 4 + ["B"] * 4 + ["C"] * 4 + ["D"] * 4 + ["E"] * 4 + ["F"] * 4),
+                "y": (
+                    [1.0, 2.0, 3.0, 4.0]  # ascending A
+                    + [1.0, 2.0, 3.0, 4.5]  # ascending B
+                    + [4.0, 3.0, 2.0, 1.0]  # descending C
+                    + [4.5, 3.0, 2.0, 1.0]  # descending D
+                    + [2.0, 2.0, 2.0, 2.0]  # flat E
+                    + [2.1, 2.0, 2.1, 2.0]  # flat F
+                ),
+            }
+        )
+
+    @pytest.fixture
+    def three_cluster_labels(self):
+        return pl.DataFrame(
+            {
+                "unique_id": ["A", "B", "C", "D", "E", "F"],
+                "cluster": [0, 0, 1, 1, 2, 2],
+            }
+        )
+
+    def test_silhouette_three_clusters(self, three_cluster_data, three_cluster_labels):
+        score = silhouette_score(three_cluster_data, three_cluster_labels, method="dtw")
+        assert -1.0 <= score <= 1.0
+
+    def test_davies_bouldin_three_clusters(self, three_cluster_data, three_cluster_labels):
+        score = davies_bouldin_score(three_cluster_data, three_cluster_labels, method="dtw")
+        assert score >= 0.0
+
+    def test_calinski_harabasz_three_clusters(self, three_cluster_data, three_cluster_labels):
+        score = calinski_harabasz_score(three_cluster_data, three_cluster_labels, method="dtw")
+        assert score > 0.0
+
+    def test_silhouette_samples_three_clusters(self, three_cluster_data, three_cluster_labels):
+        result = silhouette_samples(three_cluster_data, three_cluster_labels, method="dtw")
+        assert result.shape[0] == 6
+        assert result["cluster"].n_unique() == 3
