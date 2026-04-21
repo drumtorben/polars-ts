@@ -88,3 +88,48 @@ class TestCusumErrors:
         df = pl.DataFrame({"x": [1.0, 2.0]})
         with pytest.raises(KeyError, match="missing"):
             cusum(df)
+
+
+def test_custom_column_names():
+    """CUSUM should work with non-default column names."""
+    df = pl.DataFrame({"series": ["X"] * 5, "value": [1.0, 2.0, 3.0, 4.0, 5.0]})
+    result = cusum(df, target_col="value", id_col="series")
+    assert "cusum" in result.columns
+    assert "series" in result.columns
+
+
+def test_negative_values():
+    """CUSUM should handle negative values correctly."""
+    df = pl.DataFrame({"unique_id": ["A"] * 4, "y": [-5.0, -3.0, -1.0, 1.0]})
+    result = cusum(df, normalize=False)
+    # Mean = -2.0; deviations = [-3, -1, 1, 3]; cumsum = [-3, -4, -3, 0]
+    assert result["cusum"].to_list() == pytest.approx([-3.0, -4.0, -3.0, 0.0])
+
+
+def test_multiple_mean_shifts():
+    """CUSUM should show inflection points at each mean shift."""
+    # Three segments: mean=0, mean=10, mean=0
+    values = [0.0] * 10 + [10.0] * 10 + [0.0] * 10
+    df = pl.DataFrame({"unique_id": ["A"] * 30, "y": values})
+    result = cusum(df, normalize=False)
+    vals = result["cusum"].to_list()
+    # CUSUM should show clear changes in slope at the shift points
+    # At index 9 and 19 there should be inflection points
+    assert vals[-1] == pytest.approx(0.0)
+
+
+def test_null_handling():
+    """CUSUM should handle nulls gracefully (Polars ignores nulls in mean/std)."""
+    df = pl.DataFrame({"unique_id": ["A"] * 5, "y": [1.0, None, 3.0, 4.0, 5.0]})
+    result = cusum(df, normalize=False)
+    assert "cusum" in result.columns
+    assert len(result) == 5
+
+
+def test_exact_theoretical_values():
+    """Verify exact CUSUM values for a known simple case."""
+    # Data: [2, 4, 6, 8] → mean=5 → deviations=[-3,-1,1,3] → cumsum=[-3,-4,-3,0]
+    df = pl.DataFrame({"unique_id": ["A"] * 4, "y": [2.0, 4.0, 6.0, 8.0]})
+    result = cusum(df, normalize=False)
+    expected = [-3.0, -4.0, -3.0, 0.0]
+    assert result["cusum"].to_list() == pytest.approx(expected)

@@ -274,3 +274,17 @@ class TestEdgeCases:
         df = pl.DataFrame({"y": [10.0], "q_low": [8.0]})
         with pytest.raises(ValueError, match="Cannot parse quantile levels"):
             crps(df)
+
+
+def test_cross_metric_consistency(two_cluster_data, two_cluster_labels, bad_labels):
+    """Good clustering should be better by all metrics simultaneously."""
+    good_sil = silhouette_score(two_cluster_data, two_cluster_labels, method="dtw")
+    bad_sil = silhouette_score(two_cluster_data, bad_labels, method="dtw")
+    good_db = davies_bouldin_score(two_cluster_data, two_cluster_labels, method="dtw")
+    bad_db = davies_bouldin_score(two_cluster_data, bad_labels, method="dtw")
+    good_ch = calinski_harabasz_score(two_cluster_data, two_cluster_labels, method="dtw")
+    bad_ch = calinski_harabasz_score(two_cluster_data, bad_labels, method="dtw")
+    # Good clustering: higher silhouette, lower DB, higher CH
+    assert good_sil > bad_sil
+    assert good_db < bad_db
+    assert good_ch > bad_ch

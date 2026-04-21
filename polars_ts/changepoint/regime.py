@@ -81,7 +81,9 @@ def regime_detect(
             log_alpha[0] = np.log(pi + 1e-300) + log_emit[0]
             for t in range(1, n):
                 for j in range(k):
-                    log_alpha[t, j] = _logsumexp(log_alpha[t - 1] + np.log(trans[:, j] + 1e-300)) + log_emit[t, j]
+                    log_alpha[t, j] = _logsumexp(log_alpha[t - 1] + np.log(trans[:, j] + 1e-300)) + float(
+                        log_emit[t, j]
+                    )
 
             # Backward pass
             log_beta = np.zeros((n, k))
@@ -149,4 +151,8 @@ def _logsumexp(
     out = a_max + np.log(np.sum(np.exp(a - a_max), axis=axis, keepdims=keepdims))
     if not keepdims and axis is not None:
         out = np.squeeze(out, axis=axis)
+    # Return a Python float for scalar results to avoid NumPy deprecation
+    # warnings when assigning 0-d/1-d arrays to array elements.
+    if isinstance(out, np.ndarray) and out.ndim <= 1 and out.size == 1:
+        return float(out.item())
     return out  # type: ignore[return-value]
