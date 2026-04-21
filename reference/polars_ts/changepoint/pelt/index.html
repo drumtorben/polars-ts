@@ -1300,6 +1300,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.changepoint.pelt._pelt_python" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pelt_python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.changepoint.pelt._pelt_rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pelt_rust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.changepoint.pelt.pelt" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;pelt
@@ -2874,6 +2892,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../rust/pelt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pelt
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../rust/sbd/" class="md-nav__link">
         
   
@@ -3081,6 +3122,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.changepoint.pelt._pelt_python" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pelt_python
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.changepoint.pelt._pelt_rust" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pelt_rust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.changepoint.pelt.pelt" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;pelt
@@ -3152,6 +3211,8 @@
     <div class="doc doc-contents first">
 
         <p>PELT (Pruned Exact Linear Time) changepoint detection.</p>
+<p>Delegates to the Rust implementation when available (10-50x faster),
+falling back to pure Python otherwise.</p>
 
 
 
@@ -3221,6 +3282,42 @@
     <div class="doc doc-contents ">
 
         <p>Cost of segment under a change-in-mean-and-variance model.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.changepoint.pelt._pelt_python" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_pelt_python</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">penalty</span><span class="p">,</span> <span class="n">min_size</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Pure-Python PELT implementation (fallback).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.changepoint.pelt._pelt_rust" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_pelt_rust</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">penalty</span><span class="p">,</span> <span class="n">min_size</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Rust-accelerated PELT implementation.</p>
 
 
     </div>
