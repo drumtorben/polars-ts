@@ -136,6 +136,71 @@ class TestForecastPipeline:
         assert len(result) == 2
 
 
+def test_zero_horizon_raises():
+    """Horizon of 0 should raise ValueError."""
+    df = _make_ts()
+    pipe = ForecastPipeline(LinearRegression(), lags=[1, 2])
+    pipe.fit(df)
+    with pytest.raises(ValueError, match="positive"):
+        pipe.predict(df, h=0)
+
+
+def test_negative_horizon_raises():
+    """Negative horizon should raise ValueError."""
+    df = _make_ts()
+    pipe = ForecastPipeline(LinearRegression(), lags=[1, 2])
+    pipe.fit(df)
+    with pytest.raises(ValueError, match="positive"):
+        pipe.predict(df, h=-1)
+
+
+def test_single_series():
+    """Pipeline should work with a single series."""
+    df = _make_ts(n=30, n_series=1)
+    pipe = ForecastPipeline(LinearRegression(), lags=[1, 2])
+    pipe.fit(df)
+    result = pipe.predict(df, h=3)
+    assert len(result) == 3
+    assert result["unique_id"].unique().to_list() == ["A"]
+
+
+def test_predict_before_fit_message():
+    """Error message should mention fit()."""
+    pipe = ForecastPipeline(LinearRegression(), lags=[1])
+    with pytest.raises(RuntimeError, match="fit"):
+        pipe.predict(_make_ts(), h=1)
+
+
+def test_feature_count_lags():
+    """Number of feature columns should match number of lags."""
+    df = _make_ts()
+    pipe = ForecastPipeline(LinearRegression(), lags=[1, 2, 3])
+    pipe.fit(df)
+    assert len(pipe.feature_columns_) == 3
+
+
+def test_feature_count_rolling():
+    """Rolling features should produce window × aggs columns."""
+    df = _make_ts()
+    pipe = ForecastPipeline(LinearRegression(), lags=[1], rolling_windows=[3, 5])
+    pipe.fit(df)
+    # Default aggs: mean, std, min, max → 4 per window → 8 rolling + 1 lag = 9
+    assert len(pipe.feature_columns_) == 9
+
+
+def test_log_transform_roundtrip():
+    """Log-transformed predictions should be on original scale and positive."""
+    df = _make_ts(n=50, n_series=1)
+    pipe = ForecastPipeline(Ridge(), lags=[1, 2], target_transform="log")
+    pipe.fit(df)
+    result = pipe.predict(df, h=3)
+    for v in result["y_hat"].to_list():
+        assert v > 0
+    # Values should be in a reasonable range (original data is 10-60 ish)
+    for v in result["y_hat"].to_list():
+        assert 0 < v < 200
+
+
 def test_top_level_import():
     import polars_ts
 

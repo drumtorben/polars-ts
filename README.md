@@ -250,6 +250,29 @@ uv pip install -e .
 uv run pytest
 ```
 
+### Code quality
+
+Pre-commit hooks run via [prek](https://github.com/j178/prek) (Rust reimplementation of pre-commit) or standard `pre-commit` — both read `.pre-commit-config.yaml`:
+
+```bash
+# Option A: prek (faster)
+uv tool install prek
+prek run --all-files
+
+# Option B: standard pre-commit
+pre-commit run --all-files
+```
+
+### Type checking
+
+```bash
+# mypy (authoritative)
+uv run mypy polars_ts/
+
+# ty (fast, informational — beta)
+uvx ty check polars_ts/
+```
+
 ## License
 
 MIT

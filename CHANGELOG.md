@@ -1,3 +1,12 @@
+## Unreleased
+
+### Improvements
+
+- CI: replace `pre-commit` with [prek](https://github.com/j178/prek) (Rust reimplementation) for faster code-quality checks.
+- CI: add [ty](https://github.com/astral-sh/ty) type checker as non-blocking informational job alongside mypy.
+- Add `[tool.ty]` configuration section in `pyproject.toml`.
+- Document `prek` and `ty` local developer workflows in README.
+
 ## v0.5.0 (2026-04-16)
 
 ### Features

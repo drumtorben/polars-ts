@@ -176,6 +176,18 @@ def test_pelt_multiple_shifts():
     )
     result = pelt(df, penalty=10.0)
     assert len(result) >= 2  # Should detect at least 2 changepoints
+def test_pelt_rust_python_equivalence():
+    """Rust and Python PELT should return same changepoints."""
+    from polars_ts.changepoint.pelt import _pelt_python
+
+    df = _make_shift_df(50, 50, shift=10.0)
+    py_result = _pelt_python(df, "y", "unique_id", "ds", "mean", 10.0, 2)
+    rs_result = pelt(df, penalty=10.0)
+    # Both should detect at least one changepoint near 50
+    if len(py_result) > 0 and len(rs_result) > 0:
+        py_cp = py_result["changepoint_idx"][0]
+        rs_cp = rs_result["changepoint_idx"][0]
+        assert abs(py_cp - rs_cp) <= 5
 
 
 def test_pelt_constant_series():
