@@ -112,3 +112,70 @@ def test_top_level_imports():
     assert polars_ts.ses_forecast is ses_forecast
     assert polars_ts.holt_forecast is holt_forecast
     assert polars_ts.holt_winters_forecast is holt_winters_forecast
+
+
+class TestRustPythonEquivalence:
+    """Verify Rust and Python ETS implementations produce identical results."""
+
+    @pytest.fixture(autouse=True)
+    def _require_rust(self):
+        pytest.importorskip("polars_ts_rs")
+
+    def _make_values(self, n: int = 50) -> list[float]:
+        import numpy as np
+
+        rng = np.random.default_rng(42)
+        return (rng.normal(0, 1, n).cumsum() + 100).tolist()
+
+    def _make_seasonal(self, n: int = 48, m: int = 12) -> list[float]:
+        import numpy as np
+
+        trend = np.linspace(10, 30, n)
+        seasonal = 5.0 * np.sin(2 * np.pi * np.arange(n) / m)
+        noise = np.random.default_rng(42).normal(0, 0.5, n)
+        return (trend + seasonal + noise).tolist()
+
+    def test_ses_equivalence(self):
+        from polars_ts_rs import ets_ses
+
+        from polars_ts.models.exponential_smoothing import _ses_python
+
+        values = self._make_values()
+        for alpha in [0.1, 0.3, 0.5, 0.9]:
+            py = _ses_python(values, alpha, 5)
+            rs = ets_ses(values, alpha, 5)
+            assert py == pytest.approx(rs), f"SES mismatch at alpha={alpha}"
+
+    def test_holt_equivalence(self):
+        from polars_ts_rs import ets_holt
+
+        from polars_ts.models.exponential_smoothing import _holt_python
+
+        values = self._make_values()
+        for alpha, beta in [(0.3, 0.1), (0.5, 0.3), (0.9, 0.5)]:
+            py = _holt_python(values, alpha, beta, 5)
+            rs = ets_holt(values, alpha, beta, 5)
+            assert py == pytest.approx(rs), f"Holt mismatch at alpha={alpha}, beta={beta}"
+
+    def test_hw_additive_equivalence(self):
+        from polars_ts_rs import ets_holt_winters
+
+        from polars_ts.models.exponential_smoothing import _hw_python
+
+        values = self._make_seasonal(n=48, m=12)
+        for alpha, beta, gamma in [(0.3, 0.1, 0.1), (0.5, 0.2, 0.3)]:
+            py = _hw_python(values, alpha, beta, gamma, 12, True, 12)
+            rs = ets_holt_winters(values, alpha, beta, gamma, 12, True, 12)
+            assert py == pytest.approx(rs), f"HW additive mismatch at alpha={alpha}, beta={beta}, gamma={gamma}"
+
+    def test_hw_multiplicative_equivalence(self):
+        from polars_ts_rs import ets_holt_winters
+
+        from polars_ts.models.exponential_smoothing import _hw_python
+
+        # Shift positive for multiplicative
+        values = [v + 50 for v in self._make_seasonal(n=48, m=12)]
+        for alpha, beta, gamma in [(0.3, 0.1, 0.1), (0.5, 0.2, 0.3)]:
+            py = _hw_python(values, alpha, beta, gamma, 12, False, 12)
+            rs = ets_holt_winters(values, alpha, beta, gamma, 12, False, 12)
+            assert py == pytest.approx(rs), f"HW multiplicative mismatch at alpha={alpha}, beta={beta}, gamma={gamma}"
