@@ -14,9 +14,7 @@ except ImportError:
     forecast_available = False
     SCUM = None  # type: ignore[assignment,misc]
 
-pytestmark = pytest.mark.skipif(
-    not forecast_available, reason="statsforecast/utilsforecast not installed"
-)
+pytestmark = pytest.mark.skipif(not forecast_available, reason="statsforecast/utilsforecast not installed")
 
 
 @pytest.fixture
