@@ -7,7 +7,7 @@ engine, converts to a condensed distance matrix, and delegates to
 
 from __future__ import annotations
 
-from typing import Any, overload
+from typing import Any, Literal, overload
 
 import numpy as np
 import polars as pl
@@ -28,7 +28,7 @@ def agglomerative_cluster(
     id_col: str = ...,
     target_col: str = ...,
     *,
-    return_linkage: bool = False,
+    return_linkage: Literal[False] = ...,
     **distance_kwargs: Any,
 ) -> pl.DataFrame: ...
 
@@ -42,7 +42,7 @@ def agglomerative_cluster(
     id_col: str = ...,
     target_col: str = ...,
     *,
-    return_linkage: bool = True,
+    return_linkage: Literal[True] = ...,
     **distance_kwargs: Any,
 ) -> tuple[pl.DataFrame, np.ndarray]: ...
 
