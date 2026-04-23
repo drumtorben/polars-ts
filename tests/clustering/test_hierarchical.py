@@ -2,7 +2,9 @@ import numpy as np
 import polars as pl
 import pytest
 
-from polars_ts.clustering.hierarchical import agglomerative_cluster
+pytest.importorskip("scipy")
+
+from polars_ts.clustering.hierarchical import agglomerative_cluster  # noqa: E402
 
 
 @pytest.fixture
