@@ -11,10 +11,7 @@ def well_separated_data():
     descending = [4.0, 3.0, 2.0, 1.0]
     return pl.DataFrame(
         {
-            "unique_id": (
-                ["A1"] * 4 + ["A2"] * 4 + ["A3"] * 4
-                + ["B1"] * 4 + ["B2"] * 4 + ["B3"] * 4
-            ),
+            "unique_id": (["A1"] * 4 + ["A2"] * 4 + ["A3"] * 4 + ["B1"] * 4 + ["B2"] * 4 + ["B3"] * 4),
             "y": (
                 ascending
                 + [1.0, 2.1, 3.0, 4.1]
@@ -39,12 +36,8 @@ class TestHDBSCAN:
         assert result["cluster"].dtype == pl.Int64
 
     def test_finds_clusters(self, well_separated_data):
-        result = hdbscan_cluster(
-            well_separated_data, method="dtw", min_cluster_size=2, min_samples=1
-        )
-        labels = dict(
-            zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False)
-        )
+        result = hdbscan_cluster(well_separated_data, method="dtw", min_cluster_size=2, min_samples=1)
+        labels = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False))
         # At least some points should be clustered (not all noise)
         non_noise = {k: v for k, v in labels.items() if v != -1}
         assert len(non_noise) >= 4, f"Expected clustered points, got {labels}"
@@ -58,10 +51,7 @@ class TestHDBSCAN:
         """With dissimilar series and high min_cluster_size, everything is noise."""
         df = pl.DataFrame(
             {
-                "unique_id": (
-                    ["X"] * 4 + ["Y"] * 4 + ["Z"] * 4
-                    + ["W"] * 4 + ["V"] * 4 + ["U"] * 4
-                ),
+                "unique_id": (["X"] * 4 + ["Y"] * 4 + ["Z"] * 4 + ["W"] * 4 + ["V"] * 4 + ["U"] * 4),
                 "y": (
                     [1.0, 2.0, 3.0, 4.0]
                     + [10.0, 20.0, 30.0, 40.0]
@@ -81,9 +71,7 @@ class TestHDBSCAN:
             assert result.shape[0] == 6
 
     def test_min_samples_parameter(self, well_separated_data):
-        result = hdbscan_cluster(
-            well_separated_data, method="dtw", min_cluster_size=2, min_samples=1
-        )
+        result = hdbscan_cluster(well_separated_data, method="dtw", min_cluster_size=2, min_samples=1)
         assert result.shape[0] == 6
 
     def test_custom_columns(self):
@@ -93,9 +81,7 @@ class TestHDBSCAN:
                 "value": [1.0, 2.0, 3.0, 4.0, 1.0, 2.1, 3.0, 4.1, 4.0, 3.0, 2.0, 1.0],
             }
         )
-        result = hdbscan_cluster(
-            df, method="dtw", min_cluster_size=2, id_col="ts_id", target_col="value"
-        )
+        result = hdbscan_cluster(df, method="dtw", min_cluster_size=2, id_col="ts_id", target_col="value")
         assert "ts_id" in result.columns
         assert "cluster" in result.columns
 
@@ -118,9 +104,7 @@ class TestDBSCAN:
 
     def test_finds_clusters(self, well_separated_data):
         result = dbscan_cluster(well_separated_data, method="dtw", eps=2.0, min_samples=2)
-        labels = dict(
-            zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False)
-        )
+        labels = dict(zip(result["unique_id"].to_list(), result["cluster"].to_list(), strict=False))
         non_noise = {k: v for k, v in labels.items() if v != -1}
         assert len(non_noise) >= 4, f"Expected clustered points, got {labels}"
         a_labels = {labels[k] for k in ["A1", "A2", "A3"] if labels[k] != -1}
@@ -141,12 +125,8 @@ class TestDBSCAN:
 
     def test_eps_controls_granularity(self, well_separated_data):
         """Larger eps should produce fewer or equal clusters (more merging)."""
-        result_small = dbscan_cluster(
-            well_separated_data, method="dtw", eps=0.5, min_samples=2
-        )
-        result_large = dbscan_cluster(
-            well_separated_data, method="dtw", eps=100.0, min_samples=2
-        )
+        result_small = dbscan_cluster(well_separated_data, method="dtw", eps=0.5, min_samples=2)
+        result_large = dbscan_cluster(well_separated_data, method="dtw", eps=100.0, min_samples=2)
         n_small = result_small["cluster"].filter(result_small["cluster"] >= 0).n_unique()
         n_large = result_large["cluster"].filter(result_large["cluster"] >= 0).n_unique()
         assert n_large <= n_small or n_large <= 1
@@ -163,9 +143,7 @@ class TestDBSCAN:
                 "value": [1.0, 2.0, 3.0, 4.0, 1.0, 2.1, 3.0, 4.1, 4.0, 3.0, 2.0, 1.0],
             }
         )
-        result = dbscan_cluster(
-            df, method="dtw", eps=2.0, min_samples=2, id_col="ts_id", target_col="value"
-        )
+        result = dbscan_cluster(df, method="dtw", eps=2.0, min_samples=2, id_col="ts_id", target_col="value")
         assert "ts_id" in result.columns
         assert "cluster" in result.columns
 
