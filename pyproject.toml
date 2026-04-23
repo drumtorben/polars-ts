@@ -15,7 +15,8 @@ dependencies = [
 [project.optional-dependencies]
 forecast = ["statsforecast>=2.0.0", "utilsforecast>=0.2.0"]
 decomposition = ["polars-ds>=0.10.0"]
-all = ["polars-timeseries[forecast,decomposition]"]
+clustering = ["scikit-learn>=1.3.0"]
+all = ["polars-timeseries[forecast,decomposition,clustering]"]
 
 [project.urls]
 Source = "https://github.com/drumtorben/polars-ts.git"
