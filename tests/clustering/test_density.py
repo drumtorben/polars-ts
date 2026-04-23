@@ -1,7 +1,9 @@
 import polars as pl
 import pytest
 
-from polars_ts.clustering.density import dbscan_cluster, hdbscan_cluster
+sklearn = pytest.importorskip("sklearn")
+
+from polars_ts.clustering.density import dbscan_cluster, hdbscan_cluster  # noqa: E402
 
 
 @pytest.fixture
