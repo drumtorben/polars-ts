@@ -114,6 +114,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering import density as _density
 
         return getattr(_density, name)
+    if name == "kmeans_dba":
+        from polars_ts.clustering.kmeans import kmeans_dba
+
+        return kmeans_dba
+    if name == "TimeSeriesKMeans":
+        from polars_ts.clustering.kmeans import TimeSeriesKMeans
+
+        return TimeSeriesKMeans
     if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
         from polars_ts import features as _feat
 
@@ -344,4 +352,6 @@ __all__ = [
     "auto_arima",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "kmeans_dba",
+    "TimeSeriesKMeans",
 ]
