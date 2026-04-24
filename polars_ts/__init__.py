@@ -114,7 +114,7 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering import density as _density
 
         return getattr(_density, name)
-    if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
+    if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features", "rocket_features", "minirocket_features"}:
         from polars_ts import features as _feat
 
         return getattr(_feat, name)
@@ -344,4 +344,6 @@ __all__ = [
     "auto_arima",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "rocket_features",
+    "minirocket_features",
 ]
