@@ -158,6 +158,44 @@ class TestMiniRocket:
         assert result.shape[0] == 2
 
 
+# ── Edge cases ────────────────────────────────────────────────────────
+
+
+class TestEdgeCases:
+    def test_single_series(self):
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 20,
+                "ds": [date(2024, 1, i + 1) for i in range(20)],
+                "y": [float(i) for i in range(20)],
+            }
+        )
+        r = rocket_features(df, n_kernels=5)
+        assert r.shape == (1, 11)
+        m = minirocket_features(df, n_kernels=10)
+        assert m.shape[0] == 1
+
+    def test_custom_column_names(self):
+        df = pl.DataFrame(
+            {
+                "series": ["X"] * 15 + ["Y"] * 15,
+                "timestamp": [date(2024, 1, i + 1) for i in range(15)] * 2,
+                "value": [float(i) for i in range(30)],
+            }
+        )
+        r = rocket_features(
+            df, n_kernels=5, target_col="value", id_col="series", time_col="timestamp"
+        )
+        assert r.columns[0] == "series"
+        assert r.shape == (2, 11)
+
+        m = minirocket_features(
+            df, n_kernels=10, target_col="value", id_col="series", time_col="timestamp"
+        )
+        assert m.columns[0] == "series"
+        assert m.shape[0] == 2
+
+
 # ── Integration: top-level import ──────────────────────────────────────
 
 

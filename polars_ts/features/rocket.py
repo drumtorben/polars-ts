@@ -67,16 +67,10 @@ def _apply_kernel(
     x: np.ndarray, weights: np.ndarray, bias: float, dilation: int
 ) -> tuple[float, float]:
     """Apply a single kernel to a 1-D series, return (ppv, max_val)."""
-    k_len = len(weights)
-    output_len = len(x) - (k_len - 1) * dilation
-    if output_len <= 0:
+    conv = _convolve_1d(x, weights, dilation)
+    if len(conv) == 0:
         return 0.0, 0.0
-    conv = np.empty(output_len, dtype=np.float64)
-    for i in range(output_len):
-        s = bias
-        for j in range(k_len):
-            s += weights[j] * x[i + j * dilation]
-        conv[i] = s
+    conv += bias
     ppv = float(np.mean(conv > 0))
     max_val = float(np.max(conv))
     return ppv, max_val
@@ -145,21 +139,6 @@ def rocket_features(
 
 
 _MINIROCKET_KERNEL_LENGTH = 9
-
-# The 84 fixed binary patterns from the MiniRocket paper (length-9).
-# Each is a tuple of indices where the weight is 2; others are -1.
-_MINIROCKET_INDICES: list[tuple[int, ...]] = [
-    (idx_tuple)
-    for r in range(1, 9)
-    for idx_tuple in _generate_combinations(9, r)
-] if False else []  # placeholder, generated below
-
-
-def _generate_combinations(n: int, r: int) -> list[tuple[int, ...]]:
-    """Generate C(n, r) index combinations."""
-    from itertools import combinations
-
-    return list(combinations(range(n), r))
 
 
 def _get_minirocket_patterns() -> list[np.ndarray]:
@@ -279,10 +258,8 @@ def _convolve_1d(x: np.ndarray, weights: np.ndarray, dilation: int) -> np.ndarra
     output_len = len(x) - (k_len - 1) * dilation
     if output_len <= 0:
         return np.empty(0)
-    out = np.empty(output_len, dtype=np.float64)
-    for i in range(output_len):
-        s = 0.0
-        for j in range(k_len):
-            s += weights[j] * x[i + j * dilation]
-        out[i] = s
-    return out
+    # Gather dilated indices: shape (output_len, k_len)
+    offsets = np.arange(k_len) * dilation  # (k_len,)
+    starts = np.arange(output_len)[:, None]  # (output_len, 1)
+    indices = starts + offsets  # (output_len, k_len)
+    return x[indices] @ weights  # (output_len,)
