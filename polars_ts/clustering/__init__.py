@@ -38,6 +38,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.density import dbscan_cluster
 
         return dbscan_cluster
+    if name in {"shapelet_cluster", "UShapeletClusterer"}:
+        from polars_ts.clustering import shapelets as _shapelets
+
+        return getattr(_shapelets, name)
     raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
 
 
@@ -51,4 +55,6 @@ __all__ = [
     "calinski_harabasz_score",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "shapelet_cluster",
+    "UShapeletClusterer",
 ]
