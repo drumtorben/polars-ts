@@ -10,6 +10,7 @@ References
   classification using random convolutional kernels. DMKD.
 - Dempster et al. (2021) MiniRocket: A very fast (almost) deterministic
   transform for time series classification. KDD.
+
 """
 
 from __future__ import annotations
@@ -63,9 +64,7 @@ def _generate_rocket_kernels(
     return kernels
 
 
-def _apply_kernel(
-    x: np.ndarray, weights: np.ndarray, bias: float, dilation: int
-) -> tuple[float, float]:
+def _apply_kernel(x: np.ndarray, weights: np.ndarray, bias: float, dilation: int) -> tuple[float, float]:
     """Apply a single kernel to a 1-D series, return (ppv, max_val)."""
     conv = _convolve_1d(x, weights, dilation)
     if len(conv) == 0:
@@ -129,9 +128,7 @@ def rocket_features(
 
     col_names = [f"rocket_{i}" for i in range(2 * n_kernels)]
     result = pl.DataFrame({id_col: ids})
-    feat_df = pl.DataFrame(
-        {name: features[:, i] for i, name in enumerate(col_names)}
-    )
+    feat_df = pl.DataFrame({name: features[:, i] for i, name in enumerate(col_names)})
     return pl.concat([result, feat_df], how="horizontal")
 
 
@@ -163,9 +160,7 @@ def _get_minirocket_patterns() -> list[np.ndarray]:
 def _compute_dilations(input_length: int, n_dilations: int) -> np.ndarray:
     """Compute dilations ensuring the kernel spans the full input length."""
     max_dilation = max(1, (input_length - 1) // (_MINIROCKET_KERNEL_LENGTH - 1))
-    dilations = np.unique(
-        np.logspace(0, np.log2(max_dilation), n_dilations, base=2).astype(int)
-    )
+    dilations = np.unique(np.logspace(0, np.log2(max_dilation), n_dilations, base=2).astype(int))
     return dilations
 
 
@@ -246,9 +241,7 @@ def minirocket_features(
 
     col_names = [f"minirocket_{i}" for i in range(n_features)]
     result = pl.DataFrame({id_col: ids})
-    feat_df = pl.DataFrame(
-        {name: features[:, i] for i, name in enumerate(col_names)}
-    )
+    feat_df = pl.DataFrame({name: features[:, i] for i, name in enumerate(col_names)})
     return pl.concat([result, feat_df], how="horizontal")
 
 

@@ -19,9 +19,7 @@ def _make_df() -> pl.DataFrame:
             "unique_id": ["A"] * 20 + ["B"] * 20 + ["C"] * 20,
             "ds": [date(2024, 1, i + 1) for i in range(20)] * 3,
             "y": (
-                [float(i) for i in range(20)]
-                + [float(20 - i) for i in range(20)]
-                + [float(i % 5) for i in range(20)]
+                [float(i) for i in range(20)] + [float(20 - i) for i in range(20)] + [float(i % 5) for i in range(20)]
             ),
         }
     )
@@ -74,10 +72,7 @@ class TestRocket:
         df = pl.DataFrame(
             {
                 "unique_id": ["A"] * 30 + ["B"] * 15,
-                "ds": (
-                    [date(2024, 1, i + 1) for i in range(30)]
-                    + [date(2024, 1, i + 1) for i in range(15)]
-                ),
+                "ds": ([date(2024, 1, i + 1) for i in range(30)] + [date(2024, 1, i + 1) for i in range(15)]),
                 "y": [1.0] * 30 + [2.0] * 15,
             }
         )
@@ -147,10 +142,7 @@ class TestMiniRocket:
         df = pl.DataFrame(
             {
                 "unique_id": ["A"] * 30 + ["B"] * 15,
-                "ds": (
-                    [date(2024, 1, i + 1) for i in range(30)]
-                    + [date(2024, 1, i + 1) for i in range(15)]
-                ),
+                "ds": ([date(2024, 1, i + 1) for i in range(30)] + [date(2024, 1, i + 1) for i in range(15)]),
                 "y": [1.0] * 30 + [2.0] * 15,
             }
         )
@@ -183,15 +175,11 @@ class TestEdgeCases:
                 "value": [float(i) for i in range(30)],
             }
         )
-        r = rocket_features(
-            df, n_kernels=5, target_col="value", id_col="series", time_col="timestamp"
-        )
+        r = rocket_features(df, n_kernels=5, target_col="value", id_col="series", time_col="timestamp")
         assert r.columns[0] == "series"
         assert r.shape == (2, 11)
 
-        m = minirocket_features(
-            df, n_kernels=10, target_col="value", id_col="series", time_col="timestamp"
-        )
+        m = minirocket_features(df, n_kernels=10, target_col="value", id_col="series", time_col="timestamp")
         assert m.columns[0] == "series"
         assert m.shape[0] == 2
 
