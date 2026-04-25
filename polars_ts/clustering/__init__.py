@@ -42,6 +42,26 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering import shapelets as _shapelets
 
         return getattr(_shapelets, name)
+    if name == "clara":
+        from polars_ts.clustering.scalable import clara
+
+        return clara
+    if name == "clarans":
+        from polars_ts.clustering.scalable import clarans
+
+        return clarans
+    if name == "kmeans_dba":
+        from polars_ts.clustering.kmeans import kmeans_dba
+
+        return kmeans_dba
+    if name == "TimeSeriesKMeans":
+        from polars_ts.clustering.kmeans import TimeSeriesKMeans
+
+        return TimeSeriesKMeans
+    if name == "agglomerative_cluster":
+        from polars_ts.clustering.hierarchical import agglomerative_cluster
+
+        return agglomerative_cluster
     raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
 
 
@@ -57,4 +77,9 @@ __all__ = [
     "dbscan_cluster",
     "shapelet_cluster",
     "UShapeletClusterer",
+    "clara",
+    "clarans",
+    "kmeans_dba",
+    "TimeSeriesKMeans",
+    "agglomerative_cluster",
 ]
