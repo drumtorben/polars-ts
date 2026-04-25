@@ -11,10 +11,7 @@ def well_separated_data():
     descending = [4.0, 3.0, 2.0, 1.0]
     return pl.DataFrame(
         {
-            "unique_id": (
-                ["A1"] * 4 + ["A2"] * 4 + ["A3"] * 4
-                + ["B1"] * 4 + ["B2"] * 4 + ["B3"] * 4
-            ),
+            "unique_id": (["A1"] * 4 + ["A2"] * 4 + ["A3"] * 4 + ["B1"] * 4 + ["B2"] * 4 + ["B3"] * 4),
             "y": (
                 ascending
                 + [1.0, 2.1, 3.0, 4.1]
@@ -135,30 +132,42 @@ class TestAutoClusterMultipleCombinations:
 class TestAutoClusterMetrics:
     def test_silhouette_metric(self, well_separated_data):
         result = auto_cluster(
-            well_separated_data, methods=["kmedoids"], distances=["sbd"],
-            k_range=range(2, 3), metric="silhouette",
+            well_separated_data,
+            methods=["kmedoids"],
+            distances=["sbd"],
+            k_range=range(2, 3),
+            metric="silhouette",
         )
         assert result.best_score > 0  # well-separated data should have positive silhouette
 
     def test_davies_bouldin_metric(self, well_separated_data):
         result = auto_cluster(
-            well_separated_data, methods=["kmedoids"], distances=["sbd"],
-            k_range=range(2, 3), metric="davies_bouldin",
+            well_separated_data,
+            methods=["kmedoids"],
+            distances=["sbd"],
+            k_range=range(2, 3),
+            metric="davies_bouldin",
         )
         assert result.best_score >= 0
 
     def test_calinski_harabasz_metric(self, well_separated_data):
         result = auto_cluster(
-            well_separated_data, methods=["kmedoids"], distances=["sbd"],
-            k_range=range(2, 3), metric="calinski_harabasz",
+            well_separated_data,
+            methods=["kmedoids"],
+            distances=["sbd"],
+            k_range=range(2, 3),
+            metric="calinski_harabasz",
         )
         assert result.best_score > 0
 
     def test_invalid_metric_raises(self, well_separated_data):
         with pytest.raises(ValueError, match="Unknown metric"):
             auto_cluster(
-                well_separated_data, methods=["kmedoids"], distances=["sbd"],
-                k_range=range(2, 3), metric="unknown",
+                well_separated_data,
+                methods=["kmedoids"],
+                distances=["sbd"],
+                k_range=range(2, 3),
+                metric="unknown",
             )
 
 
@@ -171,14 +180,21 @@ class TestAutoClusterEdgeCases:
             }
         )
         result = auto_cluster(
-            df, methods=["kmedoids"], distances=["sbd"], k_range=range(2, 3),
-            id_col="ts_id", target_col="value",
+            df,
+            methods=["kmedoids"],
+            distances=["sbd"],
+            k_range=range(2, 3),
+            id_col="ts_id",
+            target_col="value",
         )
         assert "ts_id" in result.best_labels.columns
 
     def test_single_method_single_k(self, well_separated_data):
         result = auto_cluster(
-            well_separated_data, methods=["kmedoids"], distances=["sbd"], k_range=range(2, 3),
+            well_separated_data,
+            methods=["kmedoids"],
+            distances=["sbd"],
+            k_range=range(2, 3),
         )
         assert result.results_table.shape[0] == 1
 

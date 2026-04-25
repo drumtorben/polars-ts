@@ -80,14 +80,14 @@ def _run_clustering(
             ks = KShape(n_clusters=k).fit(ks_df)
             labels = ks.labels_
             if id_col != "unique_id":
-                id_map = dict(zip(
-                    df.select(pl.col(id_col).cast(pl.String)).to_series().unique().sort().to_list(),
-                    df[id_col].unique().sort().to_list(),
-                    strict=False,
-                ))
-                labels = labels.with_columns(
-                    pl.col("unique_id").replace_strict(id_map).alias(id_col)
-                ).drop("unique_id")
+                id_map = dict(
+                    zip(
+                        df.select(pl.col(id_col).cast(pl.String)).to_series().unique().sort().to_list(),
+                        df[id_col].unique().sort().to_list(),
+                        strict=False,
+                    )
+                )
+                labels = labels.with_columns(pl.col("unique_id").replace_strict(id_map).alias(id_col)).drop("unique_id")
             return labels
 
         if method == "hdbscan":
@@ -161,7 +161,8 @@ def auto_cluster(
     df
         DataFrame with columns ``id_col`` and ``target_col``.
 
-    methods
+    Methods
+    -------
         Clustering methods to try. Default ``["kmedoids", "spectral"]``.
     distances
         Distance metrics to try. Default ``["sbd", "dtw"]``.
@@ -223,9 +224,15 @@ def auto_cluster(
             if method in _NO_K_METHODS:
                 # Density-based: run once per distance (no k)
                 labels = _run_clustering(
-                    df, method, distance, k=None,
-                    id_col=id_col, target_col=target_col, seed=seed,
-                    hdbscan_kwargs=hdbscan_kwargs, dbscan_kwargs=dbscan_kwargs,
+                    df,
+                    method,
+                    distance,
+                    k=None,
+                    id_col=id_col,
+                    target_col=target_col,
+                    seed=seed,
+                    hdbscan_kwargs=hdbscan_kwargs,
+                    dbscan_kwargs=dbscan_kwargs,
                 )
                 if labels is None:
                     continue
@@ -237,8 +244,7 @@ def auto_cluster(
                 results.append({"method": method, "distance": distance, "k": None, "score": score})
 
                 if best_score is None or (
-                    (higher_is_better and score > best_score)
-                    or (not higher_is_better and score < best_score)
+                    (higher_is_better and score > best_score) or (not higher_is_better and score < best_score)
                 ):
                     best_score = score
                     best_labels = labels
@@ -246,9 +252,15 @@ def auto_cluster(
                 # k-based methods
                 for k in k_range:
                     labels = _run_clustering(
-                        df, method, distance, k=k,
-                        id_col=id_col, target_col=target_col, seed=seed,
-                        hdbscan_kwargs=hdbscan_kwargs, dbscan_kwargs=dbscan_kwargs,
+                        df,
+                        method,
+                        distance,
+                        k=k,
+                        id_col=id_col,
+                        target_col=target_col,
+                        seed=seed,
+                        hdbscan_kwargs=hdbscan_kwargs,
+                        dbscan_kwargs=dbscan_kwargs,
                     )
                     if labels is None:
                         continue
@@ -260,8 +272,7 @@ def auto_cluster(
                     results.append({"method": method, "distance": distance, "k": k, "score": score})
 
                     if best_score is None or (
-                        (higher_is_better and score > best_score)
-                        or (not higher_is_better and score < best_score)
+                        (higher_is_better and score > best_score) or (not higher_is_better and score < best_score)
                     ):
                         best_score = score
                         best_labels = labels
