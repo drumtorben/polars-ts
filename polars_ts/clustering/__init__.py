@@ -38,6 +38,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.density import dbscan_cluster
 
         return dbscan_cluster
+    if name == "agglomerative_cluster":
+        from polars_ts.clustering.hierarchical import agglomerative_cluster
+
+        return agglomerative_cluster
     raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
 
 
@@ -51,4 +55,5 @@ __all__ = [
     "calinski_harabasz_score",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "agglomerative_cluster",
 ]
