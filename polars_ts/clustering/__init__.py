@@ -38,6 +38,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.density import dbscan_cluster
 
         return dbscan_cluster
+    if name == "clara":
+        from polars_ts.clustering.scalable import clara
+
+        return clara
+    if name == "clarans":
+        from polars_ts.clustering.scalable import clarans
+
+        return clarans
     if name == "kmeans_dba":
         from polars_ts.clustering.kmeans import kmeans_dba
 
@@ -63,6 +71,8 @@ __all__ = [
     "calinski_harabasz_score",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "clara",
+    "clarans",
     "kmeans_dba",
     "TimeSeriesKMeans",
     "agglomerative_cluster",
