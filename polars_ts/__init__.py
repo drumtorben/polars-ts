@@ -118,6 +118,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.spectral import spectral_cluster
 
         return spectral_cluster
+    if name == "auto_cluster":
+        from polars_ts.clustering.auto import auto_cluster
+
+        return auto_cluster
     if name in {"shapelet_cluster", "UShapeletClusterer"}:
         from polars_ts.clustering import shapelets as _shapelets
 
@@ -380,6 +384,7 @@ __all__ = [
     "hdbscan_cluster",
     "dbscan_cluster",
     "spectral_cluster",
+    "auto_cluster",
     "shapelet_cluster",
     "UShapeletClusterer",
     "rocket_features",
