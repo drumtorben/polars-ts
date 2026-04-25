@@ -26,6 +26,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.features.fourier import fourier_features
 
         return fourier_features
+    if name == "rocket_features":
+        from polars_ts.features.rocket import rocket_features
+
+        return rocket_features
+    if name == "minirocket_features":
+        from polars_ts.features.rocket import minirocket_features
+
+        return minirocket_features
     raise AttributeError(f"module 'polars_ts.features' has no attribute {name!r}")
 
 
@@ -34,4 +42,6 @@ __all__ = [
     "rolling_features",
     "calendar_features",
     "fourier_features",
+    "rocket_features",
+    "minirocket_features",
 ]
