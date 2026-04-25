@@ -81,7 +81,8 @@ def _run_clustering(
             assert k is not None
             ks_df = df.select(pl.col(id_col).alias("unique_id"), pl.col(target_col).alias("y"))
             ks = KShape(n_clusters=k).fit(ks_df)
-            labels: pl.DataFrame = ks.labels_
+            assert ks.labels_ is not None
+            labels = ks.labels_
             if id_col != "unique_id":
                 id_map = dict(
                     zip(
