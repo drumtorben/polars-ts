@@ -192,7 +192,6 @@ class TestMomentEmbeddings:
         mock_pipeline_cls.from_pretrained.return_value = mock_model
 
         with patch.dict("sys.modules", {"momentfm": MagicMock(MOMENTPipeline=mock_pipeline_cls)}):
-
             import importlib
 
             from polars_ts.adapters import embeddings
@@ -218,3 +217,53 @@ def test_moment_importable_from_polars_ts():
     from polars_ts import to_moment_embeddings
 
     assert callable(to_moment_embeddings)
+
+
+# ── Additional coverage tests ────────────────────────────────────────────
+
+
+class TestExtractSeriesNoDsColumn:
+    """_extract_series falls back to sorting by id_col only when time_col is absent."""
+
+    def test_no_time_column(self):
+        df = pl.DataFrame({"unique_id": ["A", "A", "B"], "y": [1.0, 2.0, 3.0]})
+        ids, arrays = _extract_series(df, "y", "unique_id", "ds")
+        assert sorted(ids) == ["A", "B"]
+        assert len(arrays[0]) == 2
+        assert len(arrays[1]) == 1
+
+
+class TestChronosImportErrorTransformers:
+    def test_import_error_transformers(self):
+        torch = pytest.importorskip("torch")
+        with patch.dict("sys.modules", {"transformers": None}):
+            with pytest.raises(ImportError, match="transformers"):
+                import importlib
+
+                from polars_ts.adapters import embeddings
+
+                importlib.reload(embeddings)
+                embeddings.to_chronos_embeddings(_make_df())
+
+
+class TestMomentImportErrors:
+    def test_import_error_torch(self):
+        with patch.dict("sys.modules", {"torch": None}):
+            with pytest.raises(ImportError, match="torch"):
+                import importlib
+
+                from polars_ts.adapters import embeddings
+
+                importlib.reload(embeddings)
+                embeddings.to_moment_embeddings(_make_df())
+
+    def test_import_error_momentfm(self):
+        torch = pytest.importorskip("torch")
+        with patch.dict("sys.modules", {"momentfm": None}):
+            with pytest.raises(ImportError, match="momentfm"):
+                import importlib
+
+                from polars_ts.adapters import embeddings
+
+                importlib.reload(embeddings)
+                embeddings.to_moment_embeddings(_make_df())
