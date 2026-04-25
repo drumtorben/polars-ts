@@ -114,6 +114,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering import density as _density
 
         return getattr(_density, name)
+    if name == "spectral_cluster":
+        from polars_ts.clustering.spectral import spectral_cluster
+
+        return spectral_cluster
     if name in {"shapelet_cluster", "UShapeletClusterer"}:
         from polars_ts.clustering import shapelets as _shapelets
 
@@ -375,6 +379,7 @@ __all__ = [
     "auto_arima",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "spectral_cluster",
     "shapelet_cluster",
     "UShapeletClusterer",
     "rocket_features",

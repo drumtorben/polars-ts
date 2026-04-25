@@ -38,6 +38,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.density import dbscan_cluster
 
         return dbscan_cluster
+    if name == "spectral_cluster":
+        from polars_ts.clustering.spectral import spectral_cluster
+
+        return spectral_cluster
     if name in {"shapelet_cluster", "UShapeletClusterer"}:
         from polars_ts.clustering import shapelets as _shapelets
 
@@ -75,6 +79,7 @@ __all__ = [
     "calinski_harabasz_score",
     "hdbscan_cluster",
     "dbscan_cluster",
+    "spectral_cluster",
     "shapelet_cluster",
     "UShapeletClusterer",
     "clara",
