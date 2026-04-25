@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../knn/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../../clustering/__init__/">
+        <link rel="next" href="../huggingface/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Kshape classifier - Polars Time Series Extension</title>
+        <title>Embeddings - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.classification.kshape_classifier" class="md-skip">
+        <a href="#polars_ts.adapters.embeddings" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kshape classifier
+              Embeddings
             
           </span>
         </div>
@@ -968,8 +968,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -978,17 +980,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_16" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_16" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../adapters/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1007,7 +1007,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_16_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_16_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_16">
             <span class="md-nav__icon md-icon"></span>
             Adapters
@@ -1018,10 +1018,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../adapters/embeddings/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Embeddings
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1032,6 +1052,123 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings._extract_series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_extract_series
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings._arrays_to_result" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_arrays_to_result
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;to_chronos_embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" to_chronos_embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;to_moment_embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" to_moment_embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1044,7 +1181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/huggingface/" class="md-nav__link">
+      <a href="../huggingface/" class="md-nav__link">
         
   
   
@@ -1067,7 +1204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/neuralforecast/" class="md-nav__link">
+      <a href="../neuralforecast/" class="md-nav__link">
         
   
   
@@ -1090,7 +1227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/pytorch_forecasting/" class="md-nav__link">
+      <a href="../pytorch_forecasting/" class="md-nav__link">
         
   
   
@@ -1113,7 +1250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/rl_env/" class="md-nav__link">
+      <a href="../rl_env/" class="md-nav__link">
         
   
   
@@ -1291,8 +1428,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1303,15 +1438,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../classification/__init__/" class="md-nav__link ">
               
   
   
@@ -1330,7 +1467,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Classification
@@ -1344,7 +1481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../knn/" class="md-nav__link">
+      <a href="../../classification/knn/" class="md-nav__link">
         
   
   
@@ -1364,30 +1501,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Kshape classifier
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../classification/kshape_classifier/" class="md-nav__link">
         
   
   
@@ -1398,72 +1515,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape_classifier
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kshape_classifier">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShapeClassifier
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" KShapeClassifier">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3293,38 +3344,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier" class="md-nav__link">
+  <a href="#polars_ts.adapters.embeddings" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape_classifier
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;embeddings
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kshape_classifier">
+    <nav class="md-nav" aria-label=" embeddings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier" class="md-nav__link">
+  <a href="#polars_ts.adapters.embeddings._extract_series" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShapeClassifier
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" KShapeClassifier">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_extract_series
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="md-nav__link">
+  <a href="#polars_ts.adapters.embeddings._arrays_to_result" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_arrays_to_result
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;to_chronos_embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" to_chronos_embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_chronos_embeddings--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;to_moment_embeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" to_moment_embeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.embeddings.to_moment_embeddings--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
     </span>
   </a>
   
@@ -3359,21 +3461,24 @@
   
 
 
-  <h1>Kshape classifier</h1>
+  <h1>Embeddings</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.classification.kshape_classifier" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.classification.kshape_classifier</code>
+<h2 id="polars_ts.adapters.embeddings" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.adapters.embeddings</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>k-Shape nearest-centroid classifier for time series.</p>
+        <p>Foundation model embedding adapters (Chronos, MOMENT).</p>
+<p>Extract fixed-length embedding vectors from pre-trained time series
+foundation models, returning a polars DataFrame suitable for downstream
+clustering or classification.</p>
 
 
 
@@ -3394,182 +3499,19 @@
 
 
 
-<div class="doc doc-object doc-class">
+
+<div class="doc doc-object doc-function">
 
 
-
-<h3 id="polars_ts.classification.kshape_classifier.KShapeClassifier" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>KShapeClassifier</code>
-
+<h3 id="polars_ts.adapters.embeddings._extract_series" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_extract_series</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-
-        <p>Nearest-centroid classifier using SBD and k-Shape centroids.</p>
-<p>Fits k-Shape clustering per class on training data to extract
-representative centroids, then classifies test series by nearest
-centroid distance (SBD).</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_centroids_per_class</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of k-Shape centroids per class. Default 1.</p>
-              </div>
-            </td>
-            <td>
-                  <code>1</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>max_iter</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Maximum k-Shape iterations per class. Default 100.</p>
-              </div>
-            </td>
-            <td>
-                  <code>100</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Examples:</span></p>
-    <div class="language-pycon highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">KShapeClassifier</span><span class="p">(</span><span class="n">n_centroids_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_df</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">predictions</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_df</span><span class="p">)</span>
-</span></code></pre></div>
-
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="polars_ts.classification.kshape_classifier.KShapeClassifier.fit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">label_col</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Fit the classifier by computing k-Shape centroids for each class.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>DataFrame with columns <code>unique_id</code>, <code>y</code>, and a label column.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>label_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Name of the column containing class labels.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;label&#39;</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="            KShapeClassifier (polars_ts.classification.kshape_classifier.KShapeClassifier)" href="#polars_ts.classification.kshape_classifier.KShapeClassifier">KShapeClassifier</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>self</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>Extract per-series arrays, preserving variable lengths.</p>
 
 
     </div>
@@ -3579,83 +3521,96 @@ centroid distance (SBD).</p>
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.classification.kshape_classifier.KShapeClassifier.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+<h3 id="polars_ts.adapters.embeddings._arrays_to_result" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_arrays_to_result</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span></code>
 
-</h4>
+</h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Predict class labels for test time series.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>DataFrame with columns <code>unique_id</code> and <code>predicted_label</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>Convert id list + embedding matrix to a polars DataFrame.</p>
 
 
     </div>
 
 </div>
 
+<div class="doc doc-object doc-function">
 
 
-  </div>
+<h3 id="polars_ts.adapters.embeddings.to_chronos_embeddings" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">to_chronos_embeddings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;amazon/chronos-t5-small&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract embeddings from a Chronos foundation model.</p>
+<p>Loads the specified Chronos model and extracts encoder embeddings
+for each time series, mean-pooled over the time dimension.</p>
+<p>Requires <code>torch</code> and <code>transformers</code>.</p>
+<h5 id="polars_ts.adapters.embeddings.to_chronos_embeddings--parameters">Parameters</h5>
+<p>df
+    Input DataFrame with time series data.
+model_name
+    HuggingFace model identifier for a Chronos model.
+target_col
+    Column with the values to embed.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.
+device
+    Torch device (<code>"cpu"</code>, <code>"cuda"</code>, etc.).
+batch_size
+    Number of series to process at once.</p>
+<h5 id="polars_ts.adapters.embeddings.to_chronos_embeddings--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, emb_0, emb_1, ..., emb_d]</code>.</p>
+
 
     </div>
 
 </div>
 
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.adapters.embeddings.to_moment_embeddings" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">to_moment_embeddings</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;AutonLab/MOMENT-1-large&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract embeddings from a MOMENT foundation model.</p>
+<p>Loads the specified MOMENT model and extracts representation
+embeddings for each time series.</p>
+<p>Requires <code>torch</code> and <code>momentfm</code>.</p>
+<h5 id="polars_ts.adapters.embeddings.to_moment_embeddings--parameters">Parameters</h5>
+<p>df
+    Input DataFrame with time series data.
+model_name
+    HuggingFace model identifier for a MOMENT model.
+target_col
+    Column with the values to embed.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.
+device
+    Torch device (<code>"cpu"</code>, <code>"cuda"</code>, etc.).</p>
+<h5 id="polars_ts.adapters.embeddings.to_moment_embeddings--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, emb_0, emb_1, ..., emb_d]</code>.</p>
+
+
+    </div>
+
+</div>
 
 
 
