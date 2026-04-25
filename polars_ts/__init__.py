@@ -122,6 +122,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.kmeans import TimeSeriesKMeans
 
         return TimeSeriesKMeans
+    if name == "agglomerative_cluster":
+        from polars_ts.clustering.hierarchical import agglomerative_cluster
+
+        return agglomerative_cluster
     if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
         from polars_ts import features as _feat
 
@@ -354,4 +358,5 @@ __all__ = [
     "dbscan_cluster",
     "kmeans_dba",
     "TimeSeriesKMeans",
+    "agglomerative_cluster",
 ]

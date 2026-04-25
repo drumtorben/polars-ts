@@ -46,6 +46,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.kmeans import TimeSeriesKMeans
 
         return TimeSeriesKMeans
+    if name == "agglomerative_cluster":
+        from polars_ts.clustering.hierarchical import agglomerative_cluster
+
+        return agglomerative_cluster
     raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
 
 
@@ -61,4 +65,5 @@ __all__ = [
     "dbscan_cluster",
     "kmeans_dba",
     "TimeSeriesKMeans",
+    "agglomerative_cluster",
 ]
