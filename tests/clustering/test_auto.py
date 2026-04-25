@@ -1,7 +1,12 @@
+import importlib
+
 import polars as pl
 import pytest
 
 from polars_ts.clustering.auto import AutoClusterResult, auto_cluster
+
+_has_scipy = importlib.util.find_spec("scipy") is not None
+_has_sklearn = importlib.util.find_spec("sklearn") is not None
 
 
 @pytest.fixture
@@ -60,6 +65,7 @@ class TestAutoClusterMethods:
         assert result.best_method == "kmedoids"
         assert result.best_k == 2
 
+    @pytest.mark.skipif(not _has_scipy or not _has_sklearn, reason="scipy/sklearn required")
     def test_spectral_method(self, well_separated_data):
         result = auto_cluster(well_separated_data, methods=["spectral"], distances=["sbd"], k_range=range(2, 3))
         assert result.best_method == "spectral"
@@ -79,6 +85,7 @@ class TestAutoClusterMethods:
         # Only SBD rows should appear in results
         assert all(row["distance"] == "sbd" for row in result.results_table.to_dicts())
 
+    @pytest.mark.skipif(not _has_sklearn, reason="sklearn required")
     def test_hdbscan_no_k(self, well_separated_data):
         """HDBSCAN doesn't use k; should produce one row per distance."""
         result = auto_cluster(
@@ -92,6 +99,7 @@ class TestAutoClusterMethods:
         assert result.results_table.shape[0] == 1
         assert result.results_table["k"][0] is None
 
+    @pytest.mark.skipif(not _has_sklearn, reason="sklearn required")
     def test_dbscan_no_k(self, well_separated_data):
         """DBSCAN doesn't use k; should produce one row per distance."""
         result = auto_cluster(
@@ -106,6 +114,7 @@ class TestAutoClusterMethods:
 
 
 class TestAutoClusterMultipleCombinations:
+    @pytest.mark.skipif(not _has_scipy or not _has_sklearn, reason="scipy/sklearn required")
     def test_multiple_methods_and_distances(self, well_separated_data):
         result = auto_cluster(
             well_separated_data,
@@ -116,6 +125,7 @@ class TestAutoClusterMultipleCombinations:
         # 2 methods x 2 distances x 2 k values = 8 rows
         assert result.results_table.shape[0] == 8
 
+    @pytest.mark.skipif(not _has_scipy or not _has_sklearn, reason="scipy/sklearn required")
     def test_best_is_optimal(self, well_separated_data):
         """Best score should be the max silhouette in the results table."""
         result = auto_cluster(
