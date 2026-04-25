@@ -1,9 +1,57 @@
-# polars-ts v0.7.0 (2026-04-18)
+# polars-ts v0.8.0 (2026-04-25)
+
+The clustering expansion release: polars-ts goes from 2 clustering algorithms to **11**, plus an automated pipeline selector.
+
+## Highlights
+
+- **9 new clustering methods** — HDBSCAN, DBSCAN, spectral (KSC), agglomerative, K-Means DBA, CLARA, CLARANS, U-Shapelets, and `auto_cluster` for automated method/distance/k selection
+- **Feature extraction** — ROCKET/MiniRocket random convolutional kernels, Chronos/MOMENT foundation model embeddings
+- **2 security patches** — rand 0.8.6 (GHSA-cq8v-f236-94qc), rustls-webpki 0.103.13 (GHSA-82j2-j2ch-gfr8)
+
+## New clustering methods
+
+| Method | Function | Key capability |
+|---|---|---|
+| **HDBSCAN** | `hdbscan_cluster` | Automatic k, varying density, noise detection |
+| **DBSCAN** | `dbscan_cluster` | Fixed-radius eps neighbourhood, noise detection |
+| **Spectral (KSC)** | `spectral_cluster` | Graph Laplacian + Gaussian kernel affinity |
+| **Hierarchical** | `agglomerative_cluster` | Dendrograms, flexible linkage criteria |
+| **K-Means DBA** | `kmeans_dba` | DTW Barycentric Averaging centroids |
+| **CLARA** | `clara` | Scalable k-medoids via sampling |
+| **CLARANS** | `clarans` | Randomized k-medoids neighbourhood search |
+| **U-Shapelets** | `shapelet_cluster` | Interpretable sub-sequence patterns |
+| **Auto-cluster** | `auto_cluster` | Sweep methods × distances × k, pick the best |
+
+## Feature extraction for clustering
+
+- **ROCKET / MiniRocket** — random convolutional kernel features (`rocket_features`, `minirocket_features`)
+- **Chronos embeddings** — `to_chronos_embeddings` for Amazon Chronos foundation model
+- **MOMENT embeddings** — `to_moment_embeddings` for CMU MOMENT foundation model
+
+## Fixes
+
+- Add `scipy>=1.11.0` to `clustering` optional dependency (required by spectral clustering)
+- Bump `rand` 0.8.5 → 0.8.6 to resolve GHSA-cq8v-f236-94qc
+- Upgrade `rustls-webpki` 0.103.12 → 0.103.13 for GHSA-82j2-j2ch-gfr8
+
+## Documentation
+
+- Replace 7 API-demo notebooks with 10 theme-based tutorials
+- Add polars-ts logo for README banner
+
+---
+
+# polars-ts v0.7.0 (2026-04-21)
 
 ## CI & Tooling
 
 - **prek** — replaced `pre-commit` with [prek](https://github.com/j178/prek) in CI. 3-5x faster code-quality checks, same `.pre-commit-config.yaml`. Contributors can use either tool locally.
 - **ty** — added [ty](https://github.com/astral-sh/ty) (Astral's Rust-based type checker) as a non-blocking CI job (`continue-on-error: true`). Runs alongside mypy as informational. Will be promoted to blocking when ty reaches stable.
+
+## Performance
+
+- Accelerate exponential smoothing (SES, Holt, Holt-Winters) with Rust implementation
+- Accelerate k-medoids PAM clustering with Rust implementation
 
 ## Features
 
