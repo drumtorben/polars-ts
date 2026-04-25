@@ -84,10 +84,7 @@ def to_recurrence_plot(
 
     """
     series = _extract_series(df, id_col, target_col)
-    return {
-        sid: _recurrence_matrix(vals, threshold, metric, normalize)
-        for sid, vals in series.items()
-    }
+    return {sid: _recurrence_matrix(vals, threshold, metric, normalize) for sid, vals in series.items()}
 
 
 def _diagonal_lines(R: np.ndarray) -> list[int]:

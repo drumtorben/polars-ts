@@ -83,7 +83,4 @@ def to_mtf(
 
     """
     series = _extract_series(df, id_col, target_col)
-    return {
-        sid: _mtf_matrix(vals, n_bins, image_size)
-        for sid, vals in series.items()
-    }
+    return {sid: _mtf_matrix(vals, n_bins, image_size) for sid, vals in series.items()}
