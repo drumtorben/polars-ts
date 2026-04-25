@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../fourier_decomposition/">
+        <link rel="prev" href="../hierarchical/">
       
       
-        <link rel="next" href="../seasonal_decomposition/">
+        <link rel="next" href="../kmedoids/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Seasonal decompose features - Polars Time Series Extension</title>
+        <title>Kmeans - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-skip">
+        <a href="#polars_ts.clustering.kmeans" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Seasonal decompose features
+              Kmeans
             
           </span>
         </div>
@@ -1372,8 +1372,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1382,17 +1384,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_19" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_19" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1411,7 +1411,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_19_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_19_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_19">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -1425,7 +1425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/dba/" class="md-nav__link">
+      <a href="../dba/" class="md-nav__link">
         
   
   
@@ -1448,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/density/" class="md-nav__link">
+      <a href="../density/" class="md-nav__link">
         
   
   
@@ -1471,7 +1471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/evaluation/" class="md-nav__link">
+      <a href="../evaluation/" class="md-nav__link">
         
   
   
@@ -1494,208 +1494,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/hierarchical/" class="md-nav__link">
+      <a href="../hierarchical/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Hierarchical
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/kmeans/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Kmeans
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Kmedoids
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/kshape/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Kshape
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/scalable/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Scalable
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../clustering/shapelets/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Shapelets
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_20" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    Decomposition
-    
-  </span>
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_3_1_1_20" id="__nav_3_1_1_20_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_20_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_1_1_20">
-            <span class="md-nav__icon md-icon"></span>
-            Decomposition
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fourier_decomposition/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fourier decomposition
     
   </span>
   
@@ -1725,7 +1529,7 @@
   
   
   <span class="md-ellipsis">
-    Seasonal decompose features
+    Kmeans
     
   </span>
   
@@ -1738,7 +1542,7 @@
   
   
   <span class="md-ellipsis">
-    Seasonal decompose features
+    Kmeans
     
   </span>
   
@@ -1759,21 +1563,129 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.clustering.kmeans" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decompose_features
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kmeans
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decompose_features">
+    <nav class="md-nav" aria-label=" kmeans">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decompose_features
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeSeriesKMeans
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" TimeSeriesKMeans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._assign" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_assign
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._dtw_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_dtw_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._update_centroids" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_update_centroids
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmeans_dba
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" kmeans_dba">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1798,7 +1710,203 @@
   
   
     <li class="md-nav__item">
-      <a href="../seasonal_decomposition/" class="md-nav__link">
+      <a href="../kmedoids/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kmedoids
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kshape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kshape
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scalable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scalable
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shapelets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shapelets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_20" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Decomposition
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_20" id="__nav_3_1_1_20_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_20">
+            <span class="md-nav__icon md-icon"></span>
+            Decomposition
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fourier decomposition
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Seasonal decompose features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -3246,21 +3354,129 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.clustering.kmeans" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decompose_features
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kmeans
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decompose_features">
+    <nav class="md-nav" aria-label=" kmeans">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decompose_features
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeSeriesKMeans
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" TimeSeriesKMeans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._assign" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_assign
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._dtw_distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_dtw_distance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.TimeSeriesKMeans._update_centroids" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_update_centroids
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;kmeans_dba
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" kmeans_dba">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.clustering.kmeans.kmeans_dba--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3288,19 +3504,74 @@
   
 
 
-  <h1>Seasonal decompose features</h1>
+  <h1>Kmeans</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.decomposition.seasonal_decompose_features" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.decomposition.seasonal_decompose_features</code>
+<h2 id="polars_ts.clustering.kmeans" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.kmeans</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>K-Means clustering for time series with DTW Barycentric Averaging (DBA).</p>
+<p>Uses DTW-based distances for the assignment step and DBA for the centroid
+update step, producing synthetic centroids that better represent cluster
+averages than medoid-based approaches.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.clustering.kmeans.TimeSeriesKMeans" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>TimeSeriesKMeans</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>K-Means clustering for time series using DBA centroids.</p>
+<h5 id="polars_ts.clustering.kmeans.TimeSeriesKMeans--parameters">Parameters</h5>
+<p>n_clusters
+    Number of clusters. Default 2.
+metric
+    Distance metric name. Currently only <code>"dtw"</code> is supported
+    (DBA requires DTW alignment paths). Default <code>"dtw"</code>.
+max_iter
+    Maximum number of k-means iterations. Default 50.
+dba_max_iter
+    Maximum DBA refinement iterations per centroid update. Default 30.
+seed
+    Random seed for initial centroid selection. Default 42.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+
 
 
 
@@ -3325,187 +3596,129 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_decompose_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ts_freq</span><span class="p">,</span> <span class="n">seasonal_freqs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;simple&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.clustering.kmeans.TimeSeriesKMeans.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit k-means clustering with DBA centroids.</p>
+<h6 id="polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--parameters">Parameters</h6>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.</p>
+<h6 id="polars_ts.clustering.kmeans.TimeSeriesKMeans.fit--returns">Returns</h6>
+<p>self</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.clustering.kmeans.TimeSeriesKMeans._assign" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_assign</span><span class="p">(</span><span class="n">series_list</span><span class="p">,</span> <span class="n">centroids</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Assign each series to the nearest centroid using DTW distance.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.clustering.kmeans.TimeSeriesKMeans._dtw_distance" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_dtw_distance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute DTW distance between two series.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.clustering.kmeans.TimeSeriesKMeans._update_centroids" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_update_centroids</span><span class="p">(</span><span class="n">series_list</span><span class="p">,</span> <span class="n">assignments</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Recompute centroids via DBA.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.clustering.kmeans.kmeans_dba" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">kmeans_dba</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;dtw&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">distance_kwargs</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Perform seasonal decomposition on a time series and compute additional features.</p>
-<ul>
-<li>Trend strength</li>
-<li>Seasonal strength</li>
-<li>Residual variance</li>
-</ul>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame containing the time series data with the following columns:</p>
-<ul>
-<li><code>id_col</code>: Identifier for each time series (e.g., product, region, etc.)</li>
-<li><code>time_col</code>: Timestamp column indicating the time of each observation.</li>
-<li><code>target_col</code>: The column containing the values to be decomposed.</li>
-</ul>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>ts_freq</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The frequency of the time series. For example, <code>24</code> could
-represent daily seasonality in an hourly time series.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>seasonal_freqs</code>
-            </td>
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="int">int</span>]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A list of seasonal frequencies to use for the MSTL mode. This is required only if <code>mode='mstl'</code>.
-Defaults to None.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>mode</code>
-            </td>
-            <td>
-                  <code><span title="typing.Literal">Literal</span>[&#39;simple&#39;, &#39;mstl&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The decomposition mode, one of {'simple', 'mstl'}. Defaults to 'simple'.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;simple&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>id_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column that identifies each individual time series within the DataFrame.
-Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;unique_id&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>time_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column that contains the time or datetime information for each observation.
-Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;ds&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>target_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column containing the time series data to be decomposed. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;y&#39;</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A DataFrame containing the following features for each unique <code>id_col</code>:</p>
-<ul>
-<li><code>trend_strength</code>: A measure of how strong the trend component
-    is in the time series (value between 0 and 1).</li>
-<li><code>seasonal_strength</code>: A measure of how strong the seasonal component
-    is in the time series (value between 0 and 1).</li>
-<li><code>resid_var</code>: The ratio of the standard deviation of the residuals
-    to the mean of the target variable (a measure of residual variance).</li>
-</ul>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>K-Means clustering with DBA centroids (convenience function).</p>
+<h5 id="polars_ts.clustering.kmeans.kmeans_dba--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+k
+    Number of clusters.
+method
+    Distance metric name (e.g. <code>"dtw"</code>). Default <code>"dtw"</code>.
+max_iter
+    Maximum k-means iterations.
+seed
+    Random seed for reproducibility.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the time series values.
+**distance_kwargs
+    Extra keyword arguments forwarded to the distance function.</p>
+<h5 id="polars_ts.clustering.kmeans.kmeans_dba--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, "cluster"]</code>.</p>
 
 
     </div>

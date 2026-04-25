@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../fourier_decomposition/">
+        <link rel="prev" href="../lags/">
       
       
-        <link rel="next" href="../seasonal_decomposition/">
+        <link rel="next" href="../rolling/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Seasonal decompose features - Polars Time Series Extension</title>
+        <title>Rocket - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-skip">
+        <a href="#polars_ts.features.rocket" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Seasonal decompose features
+              Rocket
             
           </span>
         </div>
@@ -1637,8 +1637,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1649,15 +1647,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_20" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_20" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -1676,7 +1676,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_20_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_20_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_20">
             <span class="md-nav__icon md-icon"></span>
             Decomposition
@@ -1690,7 +1690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fourier_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -1710,30 +1710,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Seasonal decompose features
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -1744,48 +1724,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decompose_features
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" seasonal_decompose_features">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decompose_features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1798,7 +1736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../seasonal_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -1930,8 +1868,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1940,17 +1880,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_22" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_22" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../features/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1969,7 +1907,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_22_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_22_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_22">
             <span class="md-nav__icon md-icon"></span>
             Features
@@ -1983,7 +1921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/advanced/" class="md-nav__link">
+      <a href="../advanced/" class="md-nav__link">
         
   
   
@@ -2006,7 +1944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/calendar/" class="md-nav__link">
+      <a href="../calendar/" class="md-nav__link">
         
   
   
@@ -2029,7 +1967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/fourier/" class="md-nav__link">
+      <a href="../fourier/" class="md-nav__link">
         
   
   
@@ -2052,7 +1990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/lags/" class="md-nav__link">
+      <a href="../lags/" class="md-nav__link">
         
   
   
@@ -2072,10 +2010,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../features/rocket/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Rocket
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2086,6 +2044,168 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;rocket
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" rocket">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket--references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._extract_series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_extract_series
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._generate_rocket_kernels" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_generate_rocket_kernels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._apply_kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_apply_kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rocket_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" rocket_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._get_minirocket_patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_get_minirocket_patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._compute_dilations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_dilations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;minirocket_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" minirocket_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._convolve_1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_convolve_1d
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2098,7 +2218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/rolling/" class="md-nav__link">
+      <a href="../rolling/" class="md-nav__link">
         
   
   
@@ -3246,19 +3366,139 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.features.rocket" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;seasonal_decompose_features
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;rocket
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" seasonal_decompose_features">
+    <nav class="md-nav" aria-label=" rocket">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="md-nav__link">
+  <a href="#polars_ts.features.rocket--references" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_decompose_features
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._extract_series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_extract_series
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._generate_rocket_kernels" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_generate_rocket_kernels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._apply_kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_apply_kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;rocket_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" rocket_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.rocket_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._get_minirocket_patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_get_minirocket_patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._compute_dilations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_dilations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;minirocket_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" minirocket_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket.minirocket_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.rocket._convolve_1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_convolve_1d
     </span>
   </a>
   
@@ -3288,19 +3528,31 @@
   
 
 
-  <h1>Seasonal decompose features</h1>
+  <h1>Rocket</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.decomposition.seasonal_decompose_features" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.decomposition.seasonal_decompose_features</code>
+<h2 id="polars_ts.features.rocket" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.features.rocket</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>ROCKET and MiniRocket feature extraction for time series.</p>
+<p>Transforms each time series into a fixed-length feature vector using random
+convolutional kernels, enabling fast and accurate clustering/classification
+in the resulting feature space.</p>
+<h4 id="polars_ts.features.rocket--references">References</h4>
+<ul>
+<li>Dempster et al. (2020) ROCKET: Exceptionally fast and accurate time series
+  classification using random convolutional kernels. DMKD.</li>
+<li>Dempster et al. (2021) MiniRocket: A very fast (almost) deterministic
+  transform for time series classification. KDD.</li>
+</ul>
 
 
 
@@ -3325,187 +3577,185 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.decomposition.seasonal_decompose_features.seasonal_decompose_features" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_decompose_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ts_freq</span><span class="p">,</span> <span class="n">seasonal_freqs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;simple&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+<h3 id="polars_ts.features.rocket._extract_series" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_extract_series</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Perform seasonal decomposition on a time series and compute additional features.</p>
-<ul>
-<li>Trend strength</li>
-<li>Seasonal strength</li>
-<li>Residual variance</li>
-</ul>
+        <p>Extract series as a 2-D array (n_series, max_len), zero-padded.</p>
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A Polars DataFrame containing the time series data with the following columns:</p>
-<ul>
-<li><code>id_col</code>: Identifier for each time series (e.g., product, region, etc.)</li>
-<li><code>time_col</code>: Timestamp column indicating the time of each observation.</li>
-<li><code>target_col</code>: The column containing the values to be decomposed.</li>
-</ul>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>ts_freq</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The frequency of the time series. For example, <code>24</code> could
-represent daily seasonality in an hourly time series.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>seasonal_freqs</code>
-            </td>
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.List">List</span>[<span title="int">int</span>]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A list of seasonal frequencies to use for the MSTL mode. This is required only if <code>mode='mstl'</code>.
-Defaults to None.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>mode</code>
-            </td>
-            <td>
-                  <code><span title="typing.Literal">Literal</span>[&#39;simple&#39;, &#39;mstl&#39;]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The decomposition mode, one of {'simple', 'mstl'}. Defaults to 'simple'.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;simple&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>id_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column that identifies each individual time series within the DataFrame.
-Defaults to <code>unique_id</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;unique_id&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>time_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column that contains the time or datetime information for each observation.
-Defaults to <code>ds</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;ds&#39;</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>target_col</code>
-            </td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name of the column containing the time series data to be decomposed. Defaults to <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                  <code>&#39;y&#39;</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
 
 
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A DataFrame containing the following features for each unique <code>id_col</code>:</p>
-<ul>
-<li><code>trend_strength</code>: A measure of how strong the trend component
-    is in the time series (value between 0 and 1).</li>
-<li><code>seasonal_strength</code>: A measure of how strong the seasonal component
-    is in the time series (value between 0 and 1).</li>
-<li><code>resid_var</code>: The ratio of the standard deviation of the residuals
-    to the mean of the target variable (a measure of residual variance).</li>
-</ul>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+<h3 id="polars_ts.features.rocket._generate_rocket_kernels" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_generate_rocket_kernels</span><span class="p">(</span><span class="n">n_kernels</span><span class="p">,</span> <span class="n">input_length</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate random convolutional kernels for ROCKET.</p>
+<p>Returns list of (weights, bias, dilation) tuples.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket._apply_kernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_apply_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">bias</span><span class="p">,</span> <span class="n">dilation</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Apply a single kernel to a 1-D series, return (ppv, max_val).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket.rocket_features" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">rocket_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n_kernels</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract ROCKET features from time series.</p>
+<p>Generates <em>n_kernels</em> random convolutional kernels with varying length,
+dilation, and bias, then computes PPV (proportion of positive values) and
+global max for each kernel on every series.</p>
+<h5 id="polars_ts.features.rocket.rocket_features--parameters">Parameters</h5>
+<p>df
+    Input DataFrame with time series data.
+n_kernels
+    Number of random convolutional kernels.
+target_col
+    Column with the values to transform.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.
+seed
+    Random seed for reproducibility.</p>
+<h5 id="polars_ts.features.rocket.rocket_features--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, rocket_0, rocket_1, ...,
+    rocket_{2*n_kernels - 1}]</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket._get_minirocket_patterns" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_get_minirocket_patterns</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the 84 fixed MiniRocket weight patterns.</p>
+<p>Uses the 84 unique patterns from C(9,3) = 84 combinations. Each
+pattern has weights of 2 at selected positions and -1 elsewhere,
+then mean-centered.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket._compute_dilations" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_compute_dilations</span><span class="p">(</span><span class="n">input_length</span><span class="p">,</span> <span class="n">n_dilations</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute dilations ensuring the kernel spans the full input length.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket.minirocket_features" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">minirocket_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n_kernels</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract MiniRocket features from time series.</p>
+<p>Uses fixed-length (9) kernels with deterministic weight patterns and
+learned biases.  Significantly faster than ROCKET while achieving
+comparable accuracy.</p>
+<h5 id="polars_ts.features.rocket.minirocket_features--parameters">Parameters</h5>
+<p>df
+    Input DataFrame with time series data.
+n_kernels
+    Approximate number of kernels (rounded to nearest multiple of 84).
+target_col
+    Column with the values to transform.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.
+seed
+    Random seed for bias sampling.</p>
+<h5 id="polars_ts.features.rocket.minirocket_features--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with columns <code>[id_col, minirocket_0, ...,
+    minirocket_{n_features - 1}]</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.rocket._convolve_1d" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_convolve_1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dilation</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>1-D dilated convolution (no bias) returning the raw output.</p>
 
 
     </div>
