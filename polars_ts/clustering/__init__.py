@@ -42,6 +42,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.spectral import spectral_cluster
 
         return spectral_cluster
+    if name == "auto_cluster":
+        from polars_ts.clustering.auto import auto_cluster
+
+        return auto_cluster
+    if name == "AutoClusterResult":
+        from polars_ts.clustering.auto import AutoClusterResult
+
+        return AutoClusterResult
     raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
 
 
@@ -56,4 +64,6 @@ __all__ = [
     "hdbscan_cluster",
     "dbscan_cluster",
     "spectral_cluster",
+    "auto_cluster",
+    "AutoClusterResult",
 ]

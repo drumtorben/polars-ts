@@ -118,6 +118,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.clustering.spectral import spectral_cluster
 
         return spectral_cluster
+    if name == "auto_cluster":
+        from polars_ts.clustering.auto import auto_cluster
+
+        return auto_cluster
     if name in {"lag_features", "rolling_features", "calendar_features", "fourier_features"}:
         from polars_ts import features as _feat
 
@@ -353,4 +357,5 @@ __all__ = [
     "hdbscan_cluster",
     "dbscan_cluster",
     "spectral_cluster",
+    "auto_cluster",
 ]
