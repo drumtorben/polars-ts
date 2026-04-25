@@ -235,7 +235,7 @@ class TestExtractSeriesNoDsColumn:
 
 class TestChronosImportErrorTransformers:
     def test_import_error_transformers(self):
-        torch = pytest.importorskip("torch")
+        pytest.importorskip("torch")
         with patch.dict("sys.modules", {"transformers": None}):
             with pytest.raises(ImportError, match="transformers"):
                 import importlib
@@ -258,7 +258,7 @@ class TestMomentImportErrors:
                 embeddings.to_moment_embeddings(_make_df())
 
     def test_import_error_momentfm(self):
-        torch = pytest.importorskip("torch")
+        pytest.importorskip("torch")
         with patch.dict("sys.modules", {"momentfm": None}):
             with pytest.raises(ImportError, match="momentfm"):
                 import importlib
