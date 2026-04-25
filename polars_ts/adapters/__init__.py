@@ -22,6 +22,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.adapters.rl_env import ForecastEnv
 
         return ForecastEnv
+    if name in {"to_chronos_embeddings", "to_moment_embeddings"}:
+        from polars_ts.adapters import embeddings as _emb
+
+        return getattr(_emb, name)
     raise AttributeError(f"module 'polars_ts.adapters' has no attribute {name!r}")
 
 
@@ -32,4 +36,6 @@ __all__ = [
     "from_pytorch_forecasting",
     "to_hf_dataset",
     "ForecastEnv",
+    "to_chronos_embeddings",
+    "to_moment_embeddings",
 ]

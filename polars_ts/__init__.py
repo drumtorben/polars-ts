@@ -201,6 +201,8 @@ def __getattr__(name: str) -> Any:
         "from_pytorch_forecasting",
         "to_hf_dataset",
         "ForecastEnv",
+        "to_chronos_embeddings",
+        "to_moment_embeddings",
     }:
         from polars_ts import adapters as _adapt
 
@@ -338,6 +340,8 @@ __all__ = [
     "from_pytorch_forecasting",
     "to_hf_dataset",
     "ForecastEnv",
+    "to_chronos_embeddings",
+    "to_moment_embeddings",
     "target_encode",
     "holiday_features",
     "interaction_features",
