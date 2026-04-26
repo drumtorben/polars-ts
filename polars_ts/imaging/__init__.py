@@ -30,6 +30,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.imaging.spectral import to_scalogram
 
         return to_scalogram
+    if name == "signature_features":
+        from polars_ts.imaging.signature import signature_features
+
+        return signature_features
+    if name == "to_signature_image":
+        from polars_ts.imaging.signature import to_signature_image
+
+        return to_signature_image
     raise AttributeError(f"module 'polars_ts.imaging' has no attribute {name!r}")
 
 
@@ -41,4 +49,6 @@ __all__ = [
     "to_mtf",
     "to_spectrogram",
     "to_scalogram",
+    "signature_features",
+    "to_signature_image",
 ]
