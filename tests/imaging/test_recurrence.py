@@ -4,7 +4,7 @@ import pytest
 
 scipy = pytest.importorskip("scipy")
 
-from polars_ts.imaging.recurrence import rqa_features, to_recurrence_plot
+from polars_ts.imaging.recurrence import rqa_features, to_recurrence_plot  # noqa: E402
 
 
 @pytest.fixture
