@@ -1,3 +1,34 @@
+## v0.7.0 (2026-04-25)
+
+### Features
+
+- Add HDBSCAN/DBSCAN density-based clustering with precomputed distance matrices (#106).
+- Add agglomerative/hierarchical clustering with dendrograms (#107).
+- Add k-means with DBA (DTW Barycentric Averaging) clustering (#108).
+- Add CLARA/CLARANS scalable k-medoids variants (#109).
+- Add ROCKET/MiniRocket feature extraction for clustering (#111).
+- Add U-Shapelet clustering for time series (#112).
+- Add Chronos/MOMENT embedding adapters for clustering (#113).
+- Add spectral clustering with SBD kernel (K-Spectral Centroid) (#125).
+- Add `auto_cluster` automated clustering pipeline selection (#126).
+
+### Fixes
+
+- Bump `rand` 0.8.5 → 0.8.6 to resolve GHSA-cq8v-f236-94qc (#124).
+- Upgrade `rustls-webpki` 0.103.12 → 0.103.13 for GHSA-82j2-j2ch-gfr8 (#110).
+- Add `scipy` to `clustering` optional dependency (required by spectral clustering).
+- Add `pytest.importorskip` guards for tests requiring `scipy`/`sklearn`.
+- Fix mypy type errors in `auto_cluster` module.
+
+### Documentation
+
+- Replace 7 API-demo notebooks with 10 theme-based tutorials (#89).
+- Add polars-ts logo image for README banner (#88).
+
+### Tests
+
+- Add SCUM ensemble model tests (#90).
+
 ## v0.6.0 (2026-04-21)
 
 ### Features
