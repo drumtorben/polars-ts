@@ -271,6 +271,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"bayesian_ets", "BayesianETS", "ETSPriors"}:
+        from polars_ts.models import bayesian_ets as _bets
+
+        return getattr(_bets, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -394,4 +398,7 @@ __all__ = [
     "kmeans_dba",
     "TimeSeriesKMeans",
     "agglomerative_cluster",
+    "bayesian_ets",
+    "BayesianETS",
+    "ETSPriors",
 ]

@@ -4,9 +4,14 @@ _BASELINE_NAMES = {"naive_forecast", "seasonal_naive_forecast", "moving_average_
 _MULTISTEP_NAMES = {"RecursiveForecaster", "DirectForecaster"}
 _ES_NAMES = {"ses_forecast", "holt_forecast", "holt_winters_forecast"}
 _ARIMA_NAMES = {"arima_fit", "arima_forecast", "auto_arima"}
+_BAYESIAN_ETS_NAMES = {"bayesian_ets", "BayesianETS", "ETSPriors"}
 
 
 def __getattr__(name: str) -> Any:
+    if name in _BAYESIAN_ETS_NAMES:
+        from polars_ts.models import bayesian_ets as _bets
+
+        return getattr(_bets, name)
     if name == "SCUM":
         try:
             from polars_ts.models.scum import SCUM
@@ -48,4 +53,7 @@ __all__ = [
     "arima_fit",
     "arima_forecast",
     "auto_arima",
+    "bayesian_ets",
+    "BayesianETS",
+    "ETSPriors",
 ]
