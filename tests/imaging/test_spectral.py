@@ -10,7 +10,6 @@ from polars_ts.imaging.spectral import to_scalogram, to_spectrogram  # noqa: E40
 @pytest.fixture
 def sample_data():
     """Two series with 200 points each."""
-    rng = np.random.default_rng(42)
     t = np.linspace(0, 1, 200)
     # Series A: pure sine wave
     a = np.sin(2 * np.pi * 10 * t)
