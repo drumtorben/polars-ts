@@ -271,7 +271,7 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
-    if name in {"to_recurrence_plot", "rqa_features", "to_gasf", "to_gadf", "to_mtf"}:
+    if name in {"to_recurrence_plot", "rqa_features", "to_gasf", "to_gadf", "to_mtf", "to_spectrogram", "to_scalogram"}:
         from polars_ts import imaging as _img
 
         return getattr(_img, name)
