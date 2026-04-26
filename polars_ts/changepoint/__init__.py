@@ -1,3 +1,5 @@
+from typing import Any
+
 from polars_ts._lazy import make_getattr
 from polars_ts.changepoint.cusum import cusum  # eager — Rust plugin
 
@@ -11,5 +13,5 @@ _getattr, _all = make_getattr(_IMPORTS, __name__)
 __all__ = ["cusum", *_all]
 
 
-def __getattr__(name: str):  # noqa: ANN001, ANN202
+def __getattr__(name: str) -> Any:
     return _getattr(name)
