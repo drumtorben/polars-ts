@@ -90,7 +90,7 @@ def _extract_resnet(model: Any, batch: Any) -> np.ndarray:
     torch = _ensure_torch()
     activations: list[Any] = []
 
-    def hook(module: Any, input: Any, output: Any) -> None:
+    def hook(_module: Any, _input: Any, output: Any) -> None:
         activations.append(output)
 
     handle = model.avgpool.register_forward_hook(hook)

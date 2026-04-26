@@ -10,7 +10,7 @@ from polars_ts.imaging.embeddings import extract_vision_embeddings  # noqa: E402
 
 @pytest.fixture
 def sample_images():
-    """Dict of 3 grayscale 32x32 images."""
+    """Return 3 grayscale 32x32 sample images."""
     rng = np.random.default_rng(42)
     return {
         "A": rng.random((32, 32)).astype(np.float64),
