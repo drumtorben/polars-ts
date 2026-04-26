@@ -45,232 +45,150 @@ def sens_slope(expr: IntoExpr) -> pl.Expr:
     )
 
 
+# ---------------------------------------------------------------------------
+# Lazy-import registry: name -> (module_path, attribute_name)
+#
+# Adding a new public name only requires one line here — no if-chains,
+# no merge conflicts.
+# ---------------------------------------------------------------------------
+_LAZY_IMPORTS: dict[str, tuple[str, str]] = {
+    # --- Metrics ---
+    "Metrics": ("polars_ts.metrics", "Metrics"),
+    "mae": ("polars_ts.metrics.forecast", "mae"),
+    "rmse": ("polars_ts.metrics.forecast", "rmse"),
+    "mape": ("polars_ts.metrics.forecast", "mape"),
+    "smape": ("polars_ts.metrics.forecast", "smape"),
+    "mase": ("polars_ts.metrics.forecast", "mase"),
+    "crps": ("polars_ts.metrics.forecast", "crps"),
+    # --- Decomposition ---
+    "fourier_decomposition": ("polars_ts.decomposition.fourier_decomposition", "fourier_decomposition"),
+    "seasonal_decomposition": ("polars_ts.decomposition.seasonal_decomposition", "seasonal_decomposition"),
+    "seasonal_decompose_features": (
+        "polars_ts.decomposition.seasonal_decompose_features",
+        "seasonal_decompose_features",
+    ),
+    # --- Changepoint ---
+    "cusum": ("polars_ts.changepoint.cusum", "cusum"),
+    "pelt": ("polars_ts.changepoint", "pelt"),
+    "bocpd": ("polars_ts.changepoint", "bocpd"),
+    "regime_detect": ("polars_ts.changepoint", "regime_detect"),
+    # --- Clustering ---
+    "kmedoids": ("polars_ts.clustering.kmedoids", "kmedoids"),
+    "TimeSeriesKMedoids": ("polars_ts.clustering.kmedoids", "TimeSeriesKMedoids"),
+    "KShape": ("polars_ts.clustering.kshape", "KShape"),
+    "silhouette_score": ("polars_ts.clustering.evaluation", "silhouette_score"),
+    "silhouette_samples": ("polars_ts.clustering.evaluation", "silhouette_samples"),
+    "davies_bouldin_score": ("polars_ts.clustering.evaluation", "davies_bouldin_score"),
+    "calinski_harabasz_score": ("polars_ts.clustering.evaluation", "calinski_harabasz_score"),
+    "hdbscan_cluster": ("polars_ts.clustering.density", "hdbscan_cluster"),
+    "dbscan_cluster": ("polars_ts.clustering.density", "dbscan_cluster"),
+    "spectral_cluster": ("polars_ts.clustering.spectral", "spectral_cluster"),
+    "auto_cluster": ("polars_ts.clustering.auto", "auto_cluster"),
+    "shapelet_cluster": ("polars_ts.clustering.shapelets", "shapelet_cluster"),
+    "UShapeletClusterer": ("polars_ts.clustering.shapelets", "UShapeletClusterer"),
+    "clara": ("polars_ts.clustering.scalable", "clara"),
+    "clarans": ("polars_ts.clustering.scalable", "clarans"),
+    "kmeans_dba": ("polars_ts.clustering.kmeans", "kmeans_dba"),
+    "TimeSeriesKMeans": ("polars_ts.clustering.kmeans", "TimeSeriesKMeans"),
+    "agglomerative_cluster": ("polars_ts.clustering.hierarchical", "agglomerative_cluster"),
+    # --- Classification ---
+    "knn_classify": ("polars_ts.classification.knn", "knn_classify"),
+    "TimeSeriesKNNClassifier": ("polars_ts.classification.knn", "TimeSeriesKNNClassifier"),
+    "KShapeClassifier": ("polars_ts.classification.kshape_classifier", "KShapeClassifier"),
+    # --- Feature engineering ---
+    "lag_features": ("polars_ts.features", "lag_features"),
+    "rolling_features": ("polars_ts.features", "rolling_features"),
+    "calendar_features": ("polars_ts.features", "calendar_features"),
+    "fourier_features": ("polars_ts.features", "fourier_features"),
+    "rocket_features": ("polars_ts.features", "rocket_features"),
+    "minirocket_features": ("polars_ts.features", "minirocket_features"),
+    "target_encode": ("polars_ts.features.advanced", "target_encode"),
+    "holiday_features": ("polars_ts.features.advanced", "holiday_features"),
+    "interaction_features": ("polars_ts.features.advanced", "interaction_features"),
+    "time_embeddings": ("polars_ts.features.advanced", "time_embeddings"),
+    # --- Target transforms ---
+    "log_transform": ("polars_ts.transforms", "log_transform"),
+    "inverse_log_transform": ("polars_ts.transforms", "inverse_log_transform"),
+    "boxcox_transform": ("polars_ts.transforms", "boxcox_transform"),
+    "inverse_boxcox_transform": ("polars_ts.transforms", "inverse_boxcox_transform"),
+    "difference": ("polars_ts.transforms", "difference"),
+    "undifference": ("polars_ts.transforms", "undifference"),
+    # --- Validation ---
+    "expanding_window_cv": ("polars_ts.validation", "expanding_window_cv"),
+    "sliding_window_cv": ("polars_ts.validation", "sliding_window_cv"),
+    "rolling_origin_cv": ("polars_ts.validation", "rolling_origin_cv"),
+    # --- Models & forecasting ---
+    "SCUM": ("polars_ts.models", "SCUM"),
+    "naive_forecast": ("polars_ts.models", "naive_forecast"),
+    "seasonal_naive_forecast": ("polars_ts.models", "seasonal_naive_forecast"),
+    "moving_average_forecast": ("polars_ts.models", "moving_average_forecast"),
+    "fft_forecast": ("polars_ts.models", "fft_forecast"),
+    "RecursiveForecaster": ("polars_ts.models", "RecursiveForecaster"),
+    "DirectForecaster": ("polars_ts.models", "DirectForecaster"),
+    "ses_forecast": ("polars_ts.models", "ses_forecast"),
+    "holt_forecast": ("polars_ts.models", "holt_forecast"),
+    "holt_winters_forecast": ("polars_ts.models", "holt_winters_forecast"),
+    "arima_fit": ("polars_ts.models", "arima_fit"),
+    "arima_forecast": ("polars_ts.models", "arima_forecast"),
+    "auto_arima": ("polars_ts.models", "auto_arima"),
+    "ForecastPipeline": ("polars_ts.pipeline", "ForecastPipeline"),
+    "GlobalForecaster": ("polars_ts.global_model", "GlobalForecaster"),
+    # --- Ensembles ---
+    "WeightedEnsemble": ("polars_ts.ensemble", "WeightedEnsemble"),
+    "StackingForecaster": ("polars_ts.ensemble", "StackingForecaster"),
+    # --- Probabilistic ---
+    "QuantileRegressor": ("polars_ts.probabilistic", "QuantileRegressor"),
+    "conformal_interval": ("polars_ts.probabilistic", "conformal_interval"),
+    "EnbPI": ("polars_ts.probabilistic", "EnbPI"),
+    # --- Volatility ---
+    "garch_fit": ("polars_ts.volatility", "garch_fit"),
+    "garch_forecast": ("polars_ts.volatility", "garch_forecast"),
+    "GARCHResult": ("polars_ts.volatility", "GARCHResult"),
+    # --- VAR ---
+    "var_fit": ("polars_ts.var_model", "var_fit"),
+    "var_forecast": ("polars_ts.var_model", "var_forecast"),
+    "granger_causality": ("polars_ts.var_model", "granger_causality"),
+    "VARResult": ("polars_ts.var_model", "VARResult"),
+    # --- Reconciliation ---
+    "reconcile": ("polars_ts.reconciliation", "reconcile"),
+    # --- Adapters ---
+    "to_neuralforecast": ("polars_ts.adapters", "to_neuralforecast"),
+    "from_neuralforecast": ("polars_ts.adapters", "from_neuralforecast"),
+    "to_pytorch_forecasting": ("polars_ts.adapters", "to_pytorch_forecasting"),
+    "from_pytorch_forecasting": ("polars_ts.adapters", "from_pytorch_forecasting"),
+    "to_hf_dataset": ("polars_ts.adapters", "to_hf_dataset"),
+    "ForecastEnv": ("polars_ts.adapters", "ForecastEnv"),
+    "to_chronos_embeddings": ("polars_ts.adapters", "to_chronos_embeddings"),
+    "to_moment_embeddings": ("polars_ts.adapters", "to_moment_embeddings"),
+    # --- Bias & calibration ---
+    "bias_detect": ("polars_ts.bias", "bias_detect"),
+    "bias_correct": ("polars_ts.bias", "bias_correct"),
+    "calibration_table": ("polars_ts.calibration", "calibration_table"),
+    "pit_histogram": ("polars_ts.calibration", "pit_histogram"),
+    "reliability_diagram": ("polars_ts.calibration", "reliability_diagram"),
+    # --- Feature importance ---
+    "permutation_importance": ("polars_ts.importance", "permutation_importance"),
+    # --- Anomaly detection ---
+    "isolation_forest_detect": ("polars_ts.anomaly_forest", "isolation_forest_detect"),
+    # --- Preprocessing ---
+    "impute": ("polars_ts.imputation", "impute"),
+    "detect_outliers": ("polars_ts.outliers", "detect_outliers"),
+    "treat_outliers": ("polars_ts.outliers", "treat_outliers"),
+    "resample": ("polars_ts.resampling", "resample"),
+    # --- Diagnostics ---
+    "acf": ("polars_ts.diagnostics", "acf"),
+    "pacf": ("polars_ts.diagnostics", "pacf"),
+    "ljung_box": ("polars_ts.diagnostics", "ljung_box"),
+}
+
+
 def __getattr__(name: str) -> Any:
-    if name == "Metrics":
-        from polars_ts.metrics import Metrics
+    if name in _LAZY_IMPORTS:
+        import importlib
 
-        return Metrics
-    if name == "SCUM":
-        from polars_ts.models import SCUM
-
-        return SCUM
-    if name == "fourier_decomposition":
-        from polars_ts.decomposition.fourier_decomposition import fourier_decomposition
-
-        return fourier_decomposition
-    if name == "seasonal_decomposition":
-        from polars_ts.decomposition.seasonal_decomposition import seasonal_decomposition
-
-        return seasonal_decomposition
-    if name == "seasonal_decompose_features":
-        from polars_ts.decomposition.seasonal_decompose_features import seasonal_decompose_features
-
-        return seasonal_decompose_features
-    if name == "cusum":
-        from polars_ts.changepoint.cusum import cusum
-
-        return cusum
-    if name == "kmedoids":
-        from polars_ts.clustering.kmedoids import kmedoids
-
-        return kmedoids
-    if name == "knn_classify":
-        from polars_ts.classification.knn import knn_classify
-
-        return knn_classify
-    if name == "TimeSeriesKNNClassifier":
-        from polars_ts.classification.knn import TimeSeriesKNNClassifier
-
-        return TimeSeriesKNNClassifier
-    if name == "KShapeClassifier":
-        from polars_ts.classification.kshape_classifier import KShapeClassifier
-
-        return KShapeClassifier
-    if name == "TimeSeriesKMedoids":
-        from polars_ts.clustering.kmedoids import TimeSeriesKMedoids
-
-        return TimeSeriesKMedoids
-    if name == "KShape":
-        from polars_ts.clustering.kshape import KShape
-
-        return KShape
-    if name == "silhouette_score":
-        from polars_ts.clustering.evaluation import silhouette_score
-
-        return silhouette_score
-    if name == "silhouette_samples":
-        from polars_ts.clustering.evaluation import silhouette_samples
-
-        return silhouette_samples
-    if name == "davies_bouldin_score":
-        from polars_ts.clustering.evaluation import davies_bouldin_score
-
-        return davies_bouldin_score
-    if name == "calinski_harabasz_score":
-        from polars_ts.clustering.evaluation import calinski_harabasz_score
-
-        return calinski_harabasz_score
-    if name in {"hdbscan_cluster", "dbscan_cluster"}:
-        from polars_ts.clustering import density as _density
-
-        return getattr(_density, name)
-    if name == "spectral_cluster":
-        from polars_ts.clustering.spectral import spectral_cluster
-
-        return spectral_cluster
-    if name == "auto_cluster":
-        from polars_ts.clustering.auto import auto_cluster
-
-        return auto_cluster
-    if name in {"shapelet_cluster", "UShapeletClusterer"}:
-        from polars_ts.clustering import shapelets as _shapelets
-
-        return getattr(_shapelets, name)
-    if name in {"clara", "clarans"}:
-        from polars_ts.clustering import scalable as _scalable
-
-        return getattr(_scalable, name)
-    if name == "kmeans_dba":
-        from polars_ts.clustering.kmeans import kmeans_dba
-
-        return kmeans_dba
-    if name == "TimeSeriesKMeans":
-        from polars_ts.clustering.kmeans import TimeSeriesKMeans
-
-        return TimeSeriesKMeans
-    if name == "agglomerative_cluster":
-        from polars_ts.clustering.hierarchical import agglomerative_cluster
-
-        return agglomerative_cluster
-    if name in {
-        "lag_features",
-        "rolling_features",
-        "calendar_features",
-        "fourier_features",
-        "rocket_features",
-        "minirocket_features",
-    }:
-        from polars_ts import features as _feat
-
-        return getattr(_feat, name)
-    if name in {
-        "log_transform",
-        "inverse_log_transform",
-        "boxcox_transform",
-        "inverse_boxcox_transform",
-        "difference",
-        "undifference",
-    }:
-        from polars_ts import transforms as _tr
-
-        return getattr(_tr, name)
-    if name in {"expanding_window_cv", "sliding_window_cv", "rolling_origin_cv"}:
-        from polars_ts import validation as _val
-
-        return getattr(_val, name)
-    if name in {"mae", "rmse", "mape", "smape", "mase", "crps"}:
-        from polars_ts.metrics import forecast as _fm
-
-        return getattr(_fm, name)
-    if name in {
-        "naive_forecast",
-        "seasonal_naive_forecast",
-        "moving_average_forecast",
-        "fft_forecast",
-        "RecursiveForecaster",
-        "DirectForecaster",
-        "ses_forecast",
-        "holt_forecast",
-        "holt_winters_forecast",
-    }:
-        from polars_ts import models as _models
-
-        return getattr(_models, name)
-    if name in {"pelt", "bocpd", "regime_detect"}:
-        from polars_ts import changepoint as _cp
-
-        return getattr(_cp, name)
-    if name in {"garch_fit", "garch_forecast", "GARCHResult"}:
-        from polars_ts import volatility as _vol
-
-        return getattr(_vol, name)
-    if name in {"var_fit", "var_forecast", "granger_causality", "VARResult"}:
-        from polars_ts import var_model as _var
-
-        return getattr(_var, name)
-    if name == "reconcile":
-        from polars_ts.reconciliation import reconcile
-
-        return reconcile
-    if name in {
-        "to_neuralforecast",
-        "from_neuralforecast",
-        "to_pytorch_forecasting",
-        "from_pytorch_forecasting",
-        "to_hf_dataset",
-        "ForecastEnv",
-        "to_chronos_embeddings",
-        "to_moment_embeddings",
-    }:
-        from polars_ts import adapters as _adapt
-
-        return getattr(_adapt, name)
-    if name in {"target_encode", "holiday_features", "interaction_features", "time_embeddings"}:
-        from polars_ts.features import advanced as _adv
-
-        return getattr(_adv, name)
-    if name in {"bias_detect", "bias_correct"}:
-        from polars_ts import bias as _bias
-
-        return getattr(_bias, name)
-    if name in {"calibration_table", "pit_histogram", "reliability_diagram"}:
-        from polars_ts import calibration as _cal
-
-        return getattr(_cal, name)
-    if name == "permutation_importance":
-        from polars_ts.importance import permutation_importance
-
-        return permutation_importance
-    if name == "isolation_forest_detect":
-        from polars_ts.anomaly_forest import isolation_forest_detect
-
-        return isolation_forest_detect
-    if name == "impute":
-        from polars_ts.imputation import impute
-
-        return impute
-    if name in {"detect_outliers", "treat_outliers"}:
-        from polars_ts import outliers as _outliers
-
-        return getattr(_outliers, name)
-    if name == "resample":
-        from polars_ts.resampling import resample
-
-        return resample
-    if name in {"acf", "pacf", "ljung_box"}:
-        from polars_ts import diagnostics as _diag
-
-        return getattr(_diag, name)
-    if name == "ForecastPipeline":
-        from polars_ts.pipeline import ForecastPipeline
-
-        return ForecastPipeline
-    if name == "GlobalForecaster":
-        from polars_ts.global_model import GlobalForecaster
-
-        return GlobalForecaster
-    if name in {"WeightedEnsemble", "StackingForecaster"}:
-        from polars_ts import ensemble as _ens
-
-        return getattr(_ens, name)
-    if name in {"QuantileRegressor", "conformal_interval", "EnbPI"}:
-        from polars_ts import probabilistic as _prob
-
-        return getattr(_prob, name)
-    if name in {"arima_fit", "arima_forecast", "auto_arima"}:
-        from polars_ts import models as _models
-
-        return getattr(_models, name)
+        mod_path, attr = _LAZY_IMPORTS[name]
+        mod = importlib.import_module(mod_path)
+        return getattr(mod, attr)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
@@ -290,108 +208,5 @@ __all__ = [
     "compute_pairwise_edr",
     "mann_kendall",
     "sens_slope",
-    "cusum",
-    "fourier_decomposition",
-    "seasonal_decomposition",
-    "seasonal_decompose_features",
-    "Metrics",
-    "SCUM",
-    "kmedoids",
-    "knn_classify",
-    "TimeSeriesKNNClassifier",
-    "KShapeClassifier",
-    "TimeSeriesKMedoids",
-    "KShape",
-    "silhouette_score",
-    "silhouette_samples",
-    "davies_bouldin_score",
-    "calinski_harabasz_score",
-    "lag_features",
-    "rolling_features",
-    "calendar_features",
-    "fourier_features",
-    "log_transform",
-    "inverse_log_transform",
-    "boxcox_transform",
-    "inverse_boxcox_transform",
-    "difference",
-    "undifference",
-    "expanding_window_cv",
-    "sliding_window_cv",
-    "rolling_origin_cv",
-    "mae",
-    "rmse",
-    "mape",
-    "smape",
-    "mase",
-    "crps",
-    "naive_forecast",
-    "seasonal_naive_forecast",
-    "moving_average_forecast",
-    "fft_forecast",
-    "RecursiveForecaster",
-    "DirectForecaster",
-    "pelt",
-    "bocpd",
-    "regime_detect",
-    "garch_fit",
-    "garch_forecast",
-    "GARCHResult",
-    "var_fit",
-    "var_forecast",
-    "granger_causality",
-    "VARResult",
-    "reconcile",
-    "to_neuralforecast",
-    "from_neuralforecast",
-    "to_pytorch_forecasting",
-    "from_pytorch_forecasting",
-    "to_hf_dataset",
-    "ForecastEnv",
-    "to_chronos_embeddings",
-    "to_moment_embeddings",
-    "target_encode",
-    "holiday_features",
-    "interaction_features",
-    "time_embeddings",
-    "bias_detect",
-    "bias_correct",
-    "calibration_table",
-    "pit_histogram",
-    "reliability_diagram",
-    "permutation_importance",
-    "isolation_forest_detect",
-    "ses_forecast",
-    "holt_forecast",
-    "holt_winters_forecast",
-    "impute",
-    "detect_outliers",
-    "treat_outliers",
-    "resample",
-    "acf",
-    "pacf",
-    "ljung_box",
-    "ForecastPipeline",
-    "GlobalForecaster",
-    "WeightedEnsemble",
-    "StackingForecaster",
-    "QuantileRegressor",
-    "conformal_interval",
-    "EnbPI",
-    "arima_fit",
-    "arima_forecast",
-    "auto_arima",
-    "hdbscan_cluster",
-    "dbscan_cluster",
-    "spectral_cluster",
-    "auto_cluster",
-    "shapelet_cluster",
-    "UShapeletClusterer",
-    "rocket_features",
-    "minirocket_features",
-    "clara",
-    "clarans",
-    "kmeans_dba",
-    "TimeSeriesKMeans",
-    "agglomerative_cluster",
+    *_LAZY_IMPORTS.keys(),
 ]

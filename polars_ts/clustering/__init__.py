@@ -1,100 +1,25 @@
-from typing import Any
+from polars_ts._lazy import make_getattr
 
+_IMPORTS: dict[str, tuple[str, str]] = {
+    "kmedoids": ("polars_ts.clustering.kmedoids", "kmedoids"),
+    "TimeSeriesKMedoids": ("polars_ts.clustering.kmedoids", "TimeSeriesKMedoids"),
+    "KShape": ("polars_ts.clustering.kshape", "KShape"),
+    "silhouette_score": ("polars_ts.clustering.evaluation", "silhouette_score"),
+    "silhouette_samples": ("polars_ts.clustering.evaluation", "silhouette_samples"),
+    "davies_bouldin_score": ("polars_ts.clustering.evaluation", "davies_bouldin_score"),
+    "calinski_harabasz_score": ("polars_ts.clustering.evaluation", "calinski_harabasz_score"),
+    "hdbscan_cluster": ("polars_ts.clustering.density", "hdbscan_cluster"),
+    "dbscan_cluster": ("polars_ts.clustering.density", "dbscan_cluster"),
+    "spectral_cluster": ("polars_ts.clustering.spectral", "spectral_cluster"),
+    "auto_cluster": ("polars_ts.clustering.auto", "auto_cluster"),
+    "AutoClusterResult": ("polars_ts.clustering.auto", "AutoClusterResult"),
+    "shapelet_cluster": ("polars_ts.clustering.shapelets", "shapelet_cluster"),
+    "UShapeletClusterer": ("polars_ts.clustering.shapelets", "UShapeletClusterer"),
+    "clara": ("polars_ts.clustering.scalable", "clara"),
+    "clarans": ("polars_ts.clustering.scalable", "clarans"),
+    "kmeans_dba": ("polars_ts.clustering.kmeans", "kmeans_dba"),
+    "TimeSeriesKMeans": ("polars_ts.clustering.kmeans", "TimeSeriesKMeans"),
+    "agglomerative_cluster": ("polars_ts.clustering.hierarchical", "agglomerative_cluster"),
+}
 
-def __getattr__(name: str) -> Any:
-    if name == "kmedoids":
-        from polars_ts.clustering.kmedoids import kmedoids
-
-        return kmedoids
-    if name == "TimeSeriesKMedoids":
-        from polars_ts.clustering.kmedoids import TimeSeriesKMedoids
-
-        return TimeSeriesKMedoids
-    if name == "KShape":
-        from polars_ts.clustering.kshape import KShape
-
-        return KShape
-    if name == "silhouette_score":
-        from polars_ts.clustering.evaluation import silhouette_score
-
-        return silhouette_score
-    if name == "silhouette_samples":
-        from polars_ts.clustering.evaluation import silhouette_samples
-
-        return silhouette_samples
-    if name == "davies_bouldin_score":
-        from polars_ts.clustering.evaluation import davies_bouldin_score
-
-        return davies_bouldin_score
-    if name == "calinski_harabasz_score":
-        from polars_ts.clustering.evaluation import calinski_harabasz_score
-
-        return calinski_harabasz_score
-    if name == "hdbscan_cluster":
-        from polars_ts.clustering.density import hdbscan_cluster
-
-        return hdbscan_cluster
-    if name == "dbscan_cluster":
-        from polars_ts.clustering.density import dbscan_cluster
-
-        return dbscan_cluster
-    if name == "spectral_cluster":
-        from polars_ts.clustering.spectral import spectral_cluster
-
-        return spectral_cluster
-    if name == "auto_cluster":
-        from polars_ts.clustering.auto import auto_cluster
-
-        return auto_cluster
-    if name == "AutoClusterResult":
-        from polars_ts.clustering.auto import AutoClusterResult
-
-        return AutoClusterResult
-    if name in {"shapelet_cluster", "UShapeletClusterer"}:
-        from polars_ts.clustering import shapelets as _shapelets
-
-        return getattr(_shapelets, name)
-    if name == "clara":
-        from polars_ts.clustering.scalable import clara
-
-        return clara
-    if name == "clarans":
-        from polars_ts.clustering.scalable import clarans
-
-        return clarans
-    if name == "kmeans_dba":
-        from polars_ts.clustering.kmeans import kmeans_dba
-
-        return kmeans_dba
-    if name == "TimeSeriesKMeans":
-        from polars_ts.clustering.kmeans import TimeSeriesKMeans
-
-        return TimeSeriesKMeans
-    if name == "agglomerative_cluster":
-        from polars_ts.clustering.hierarchical import agglomerative_cluster
-
-        return agglomerative_cluster
-    raise AttributeError(f"module 'polars_ts.clustering' has no attribute {name!r}")
-
-
-__all__ = [
-    "kmedoids",
-    "TimeSeriesKMedoids",
-    "KShape",
-    "silhouette_score",
-    "silhouette_samples",
-    "davies_bouldin_score",
-    "calinski_harabasz_score",
-    "hdbscan_cluster",
-    "dbscan_cluster",
-    "spectral_cluster",
-    "auto_cluster",
-    "AutoClusterResult",
-    "shapelet_cluster",
-    "UShapeletClusterer",
-    "clara",
-    "clarans",
-    "kmeans_dba",
-    "TimeSeriesKMeans",
-    "agglomerative_cluster",
-]
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__)
