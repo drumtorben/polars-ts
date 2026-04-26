@@ -22,6 +22,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.imaging.transition import to_mtf
 
         return to_mtf
+    if name == "extract_vision_embeddings":
+        from polars_ts.imaging.embeddings import extract_vision_embeddings
+
+        return extract_vision_embeddings
     raise AttributeError(f"module 'polars_ts.imaging' has no attribute {name!r}")
 
 
@@ -31,4 +35,5 @@ __all__ = [
     "to_gasf",
     "to_gadf",
     "to_mtf",
+    "extract_vision_embeddings",
 ]
