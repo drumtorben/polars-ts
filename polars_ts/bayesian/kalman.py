@@ -197,8 +197,8 @@ class KalmanFilter:
             # Smoother gain
             L = P_filt @ self.F.T @ np.linalg.inv(P_pred)
 
-            smoothed_states[t] = (
-                result.filtered_states[t] + L @ (smoothed_states[t + 1] - result.predicted_states[t + 1])
+            smoothed_states[t] = result.filtered_states[t] + L @ (
+                smoothed_states[t + 1] - result.predicted_states[t + 1]
             )
             smoothed_covs[t] = P_filt + L @ (smoothed_covs[t + 1] - P_pred) @ L.T
 

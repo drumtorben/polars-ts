@@ -9,6 +9,7 @@ from polars_ts.bayesian.kalman import KalmanFilter, KalmanResult, kalman_filter
 # Observation: y_t = x_t + v_t
 # Transition: x_t = x_{t-1} + w_t
 
+
 def _local_level_matrices(q: float = 1.0, r: float = 1.0):
     """Return system matrices for a local-level (random walk + noise) model."""
     F = np.array([[1.0]])
@@ -175,8 +176,7 @@ class TestKalmanFilterFunction:
         df = pl.DataFrame(
             {
                 "unique_id": ["A"] * 50 + ["B"] * 50,
-                "y": (5.0 + rng.normal(0, 0.5, 50)).tolist()
-                + (10.0 + rng.normal(0, 0.5, 50)).tolist(),
+                "y": (5.0 + rng.normal(0, 0.5, 50)).tolist() + (10.0 + rng.normal(0, 0.5, 50)).tolist(),
             }
         )
         F, H, Q, R = _local_level_matrices(q=0.01, r=1.0)
