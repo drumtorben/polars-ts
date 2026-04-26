@@ -38,7 +38,11 @@ nav:
   - Home: index.md
   - Guides:
       - Distance Metrics: distance-metrics.md
-      - Clustering Guide: clustering-guide.md
+      - Clustering & Classification: clustering-guide.md
+      - Forecasting: forecasting-guide.md
+      - Time Series Imaging: imaging-guide.md
+      - Changepoint & Anomaly Detection: changepoint-guide.md
+      - Preprocessing & Features: preprocessing-guide.md
   - Reference:
       - Python API: reference/
       - Rust API: reference/rust/
