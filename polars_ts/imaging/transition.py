@@ -9,7 +9,7 @@ from __future__ import annotations
 import numpy as np
 import polars as pl
 
-from polars_ts.imaging.recurrence import _extract_series
+from polars_ts.imaging._utils import extract_series
 
 
 def _quantile_bins(x: np.ndarray, n_bins: int) -> np.ndarray:
@@ -82,5 +82,5 @@ def to_mtf(
         Mapping from series ID to a square 2D array with values in [0, 1].
 
     """
-    series = _extract_series(df, id_col, target_col)
+    series = extract_series(df, id_col, target_col)
     return {sid: _mtf_matrix(vals, n_bins, image_size) for sid, vals in series.items()}

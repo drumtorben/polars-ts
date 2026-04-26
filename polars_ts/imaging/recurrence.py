@@ -9,20 +9,8 @@ from __future__ import annotations
 
 import numpy as np
 import polars as pl
-from scipy.spatial.distance import cdist
 
-
-def _extract_series(
-    df: pl.DataFrame,
-    id_col: str,
-    target_col: str,
-) -> dict[str, np.ndarray]:
-    """Group DataFrame by id_col and return dict of numpy arrays."""
-    result: dict[str, np.ndarray] = {}
-    for sid in df[id_col].unique(maintain_order=True).to_list():
-        vals = df.filter(pl.col(id_col) == sid)[target_col].to_numpy()
-        result[str(sid)] = vals
-    return result
+from polars_ts.imaging._utils import extract_series
 
 
 def _recurrence_matrix(
@@ -38,6 +26,8 @@ def _recurrence_matrix(
             x = (x - x.mean()) / std
         else:
             x = x - x.mean()
+
+    from scipy.spatial.distance import cdist
 
     X = x.reshape(-1, 1)
     D = cdist(X, X, metric=metric)
@@ -83,7 +73,7 @@ def to_recurrence_plot(
         Mapping from series ID to a square 2D numpy array (n x n).
 
     """
-    series = _extract_series(df, id_col, target_col)
+    series = extract_series(df, id_col, target_col)
     return {sid: _recurrence_matrix(vals, threshold, metric, normalize) for sid, vals in series.items()}
 
 
