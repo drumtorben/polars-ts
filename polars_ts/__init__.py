@@ -197,6 +197,8 @@ def __getattr__(name: str) -> Any:
         "BSTS",
         "bsts_fit",
         "bsts_forecast",
+        "MCMCForecaster",
+        "mcmc_forecast",
     }:
         from polars_ts import bayesian as _bayes
 
