@@ -635,7 +635,7 @@ class BayesianVAR:
         k = len(self.target_cols)
         p = self.p
 
-        if self.inference == "gibbs" and result.B_samples is not None:
+        if self.inference == "gibbs" and result.B_samples is not None and result.Sigma_samples is not None:
             n_samp = len(result.B_samples)
             rng = np.random.default_rng(self.seed)
             all_fc = np.empty((n_samp, horizon, k))
@@ -651,12 +651,12 @@ class BayesianVAR:
                     L = np.diag(np.sqrt(np.maximum(np.diag(Sigma), 1e-10)))
 
                 for step in range(horizon):
-                    row = []
+                    x_parts: list[float] = []
                     for lag in range(1, p + 1):
                         idx = len(history) - lag
-                        row.extend(history[idx])
-                    row.append(1.0)
-                    x = np.array(row)
+                        x_parts.extend(history[idx])
+                    x_parts.append(1.0)
+                    x = np.array(x_parts)
                     pred = B @ x + L @ rng.standard_normal(k)
                     all_fc[i, step] = pred
                     history.append(pred)
@@ -671,12 +671,12 @@ class BayesianVAR:
             mean_fc = np.empty((horizon, k))
 
             for step in range(horizon):
-                row = []
+                x_parts = []
                 for lag in range(1, p + 1):
                     idx = len(history) - lag
-                    row.extend(history[idx])
-                row.append(1.0)
-                x = np.array(row)
+                    x_parts.extend(history[idx])
+                x_parts.append(1.0)
+                x = np.array(x_parts)
                 pred = B @ x
                 mean_fc[step] = pred
                 history.append(pred)

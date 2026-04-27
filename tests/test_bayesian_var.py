@@ -6,7 +6,9 @@ import numpy as np
 import polars as pl
 import pytest
 
-from polars_ts.bayesian_var import (
+pytest.importorskip("scipy")
+
+from polars_ts.bayesian_var import (  # noqa: E402
     BayesianVAR,
     BayesianVARResult,
     MinnesotaPrior,
