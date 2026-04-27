@@ -15,6 +15,9 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "arima_fit": ("polars_ts.models.arima", "arima_fit"),
     "arima_forecast": ("polars_ts.models.arima", "arima_forecast"),
     "auto_arima": ("polars_ts.models.arima", "auto_arima"),
+    "bayesian_ets": ("polars_ts.models.bayesian_ets", "bayesian_ets"),
+    "BayesianETS": ("polars_ts.models.bayesian_ets", "BayesianETS"),
+    "ETSPriors": ("polars_ts.models.bayesian_ets", "ETSPriors"),
 }
 
 _getattr, _all = make_getattr(_IMPORTS, __name__)

@@ -179,6 +179,10 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "acf": ("polars_ts.diagnostics", "acf"),
     "pacf": ("polars_ts.diagnostics", "pacf"),
     "ljung_box": ("polars_ts.diagnostics", "ljung_box"),
+    # --- Bayesian ETS ---
+    "bayesian_ets": ("polars_ts.models.bayesian_ets", "bayesian_ets"),
+    "BayesianETS": ("polars_ts.models.bayesian_ets", "BayesianETS"),
+    "ETSPriors": ("polars_ts.models.bayesian_ets", "ETSPriors"),
 }
 
 
