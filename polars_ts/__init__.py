@@ -189,6 +189,12 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "bayesian_ets": ("polars_ts.models.bayesian_ets", "bayesian_ets"),
     "BayesianETS": ("polars_ts.models.bayesian_ets", "BayesianETS"),
     "ETSPriors": ("polars_ts.models.bayesian_ets", "ETSPriors"),
+    # --- Bayesian VAR ---
+    "bayesian_var": ("polars_ts.bayesian_var", "bayesian_var"),
+    "BayesianVAR": ("polars_ts.bayesian_var", "BayesianVAR"),
+    "MinnesotaPrior": ("polars_ts.bayesian_var", "MinnesotaPrior"),
+    "NormalWishartPrior": ("polars_ts.bayesian_var", "NormalWishartPrior"),
+    "BayesianVARResult": ("polars_ts.bayesian_var", "BayesianVARResult"),
 }
 
 
