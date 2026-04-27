@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../bayesian/ukf/">
+        <link rel="prev" href="../bsts/">
       
       
-        <link rel="next" href="../bocpd/">
+        <link rel="next" href="../kalman/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Changepoint - Polars Time Series Extension</title>
+        <title>Enkf - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.changepoint" class="md-skip">
+        <a href="#polars_ts.bayesian.enkf" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Changepoint
+              Enkf
             
           </span>
         </div>
@@ -1233,8 +1233,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1243,17 +1245,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_17" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_17" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1272,7 +1272,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_17">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1286,7 +1286,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../bsts/" class="md-nav__link">
         
   
   
@@ -1306,10 +1306,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Enkf
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1320,6 +1340,96 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;enkf
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" enkf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;EnsembleKalmanFilter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" EnsembleKalmanFilter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1332,7 +1442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1355,7 +1465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../ukf/" class="md-nav__link">
         
   
   
@@ -1383,8 +1493,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1395,15 +1503,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -1416,13 +1526,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_1_1_18" id="__nav_3_1_1_18_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_1_18" id="__nav_3_1_1_18_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Changepoint
@@ -1436,7 +1546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bocpd/" class="md-nav__link">
+      <a href="../../changepoint/bocpd/" class="md-nav__link">
         
   
   
@@ -1459,7 +1569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cusum/" class="md-nav__link">
+      <a href="../../changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -1482,7 +1592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pelt/" class="md-nav__link">
+      <a href="../../changepoint/pelt/" class="md-nav__link">
         
   
   
@@ -1505,7 +1615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../regime/" class="md-nav__link">
+      <a href="../../changepoint/regime/" class="md-nav__link">
         
   
   
@@ -3714,11 +3824,74 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.changepoint" class="md-nav__link">
+  <a href="#polars_ts.bayesian.enkf" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;changepoint
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;enkf
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" enkf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;EnsembleKalmanFilter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" EnsembleKalmanFilter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3741,19 +3914,83 @@
   
 
 
-  <h1>Changepoint</h1>
+  <h1>Enkf</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.changepoint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.changepoint</code>
+<h2 id="polars_ts.bayesian.enkf" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian.enkf</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>Ensemble Kalman Filter (EnKF).</p>
+<p>Monte Carlo ensemble propagation through nonlinear transition and
+observation functions. Scalable to high-dimensional states where
+maintaining a full covariance matrix is infeasible.</p>
+
+
+<details class="reference" open>
+  <summary>Reference</summary>
+  <p>Evensen (2003). <em>The Ensemble Kalman Filter: theoretical formulation
+and practical implementation</em>.</p>
+</details>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.enkf.EnsembleKalmanFilter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>EnsembleKalmanFilter</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Ensemble Kalman Filter for nonlinear state-space models.</p>
+<h5 id="polars_ts.bayesian.enkf.EnsembleKalmanFilter--parameters">Parameters</h5>
+<p>f
+    State transition function <code>f(x) -&gt; x_next</code>.
+h
+    Observation function <code>h(x) -&gt; y</code>.
+Q
+    Process noise covariance <code>(n, n)</code>.
+R
+    Observation noise covariance <code>(m, m)</code>.
+x0
+    Initial state mean <code>(n,)</code>.
+P0
+    Initial state covariance <code>(n, n)</code>.
+n_ensemble
+    Number of ensemble members. Default <code>50</code>.
+seed
+    Random seed for reproducibility.</p>
+
 
 
 
@@ -3773,6 +4010,38 @@
 
 
 
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="nb">filter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run the EnKF forward pass.</p>
+<h6 id="polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--parameters">Parameters</h6>
+<p>y
+    Observations <code>(T,)</code> or <code>(T, m)</code>. Use <code>np.nan</code> for missing.</p>
+<h6 id="polars_ts.bayesian.enkf.EnsembleKalmanFilter.filter--returns">Returns</h6>
+<p>KalmanResult</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 
 

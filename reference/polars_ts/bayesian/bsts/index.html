@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../bayesian/ukf/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../bocpd/">
+        <link rel="next" href="../enkf/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Changepoint - Polars Time Series Extension</title>
+        <title>Bsts - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.changepoint" class="md-skip">
+        <a href="#polars_ts.bayesian.bsts" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Changepoint
+              Bsts
             
           </span>
         </div>
@@ -1233,8 +1233,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1243,17 +1245,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_17" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_17" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1272,7 +1272,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_17">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1283,10 +1283,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Bsts
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1297,6 +1317,264 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;bsts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bsts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTSResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BSTSResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BSTSResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTSResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BSTS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BSTS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS._build_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_build_system
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_local_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_local_level
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_local_linear_trend" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_local_linear_trend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_seasonal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_seasonal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._block_diag" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_block_diag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bsts_fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bsts_fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bsts_forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bsts_forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1309,7 +1587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../enkf/" class="md-nav__link">
         
   
   
@@ -1332,7 +1610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1355,7 +1633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../ukf/" class="md-nav__link">
         
   
   
@@ -1383,8 +1661,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1395,15 +1671,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -1416,13 +1694,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_1_1_18" id="__nav_3_1_1_18_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_1_1_18" id="__nav_3_1_1_18_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Changepoint
@@ -1436,7 +1714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bocpd/" class="md-nav__link">
+      <a href="../../changepoint/bocpd/" class="md-nav__link">
         
   
   
@@ -1459,7 +1737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cusum/" class="md-nav__link">
+      <a href="../../changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -1482,7 +1760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pelt/" class="md-nav__link">
+      <a href="../../changepoint/pelt/" class="md-nav__link">
         
   
   
@@ -1505,7 +1783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../regime/" class="md-nav__link">
+      <a href="../../changepoint/regime/" class="md-nav__link">
         
   
   
@@ -3714,11 +3992,242 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.changepoint" class="md-nav__link">
+  <a href="#polars_ts.bayesian.bsts" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;changepoint
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;bsts
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label=" bsts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTSResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BSTSResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BSTSResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTSResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BSTS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BSTS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS._build_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_build_system
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.BSTS.forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_local_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_local_level
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_local_linear_trend" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_local_linear_trend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._build_seasonal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_build_seasonal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts._block_diag" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_block_diag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bsts_fit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bsts_fit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_fit--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bsts_forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bsts_forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.bsts.bsts_forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3741,19 +4250,88 @@
   
 
 
-  <h1>Changepoint</h1>
+  <h1>Bsts</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.changepoint" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.changepoint</code>
+<h2 id="polars_ts.bayesian.bsts" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian.bsts</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
+
+        <p>Bayesian Structural Time Series (BSTS).</p>
+<p>A flexible state-space framework that decomposes a time series into
+structural components (level, trend, seasonality, regression) and
+estimates them via the Kalman filter/smoother.</p>
+<p>The state vector is assembled by stacking component sub-states:</p>
+<div class="language-text highlight"><pre><span></span><code>x_t = [level_t, trend_t, season_t(1), ..., season_t(s-1), beta ...]
+</code></pre></div>
+
+
+<details class="references" open>
+  <summary>References</summary>
+  <p>Scott &amp; Varian (2014). <em>Predicting the Present with Bayesian
+Structural Time Series</em>.</p>
+</details>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.bsts.BSTSResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BSTSResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Container for BSTS fit / forecast output.</p>
+<h5 id="polars_ts.bayesian.bsts.BSTSResult--attributes">Attributes</h5>
+<p>kalman_result
+    Full Kalman filter/smoother result.
+level
+    Smoothed level component of shape <code>(T,)</code>.
+trend
+    Smoothed trend component of shape <code>(T,)</code> or <code>None</code>.
+seasonal
+    Smoothed seasonal component of shape <code>(T,)</code> or <code>None</code>.
+regression
+    Smoothed regression component of shape <code>(T,)</code> or <code>None</code>.
+forecast
+    Point forecast of shape <code>(h,)</code> or <code>None</code>.
+forecast_var
+    Forecast variance of shape <code>(h,)</code> or <code>None</code>.</p>
+
 
 
 
@@ -3774,6 +4352,286 @@
 
 
 
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.bsts.BSTS" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BSTS</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Bayesian Structural Time Series model.</p>
+<p>Assembles a state-space model from structural components and
+estimates states via the Kalman filter/smoother.</p>
+<h5 id="polars_ts.bayesian.bsts.BSTS--parameters">Parameters</h5>
+<p>trend
+    Trend type: <code>"level"</code> (random walk) or <code>"local_linear"</code>
+    (random walk + drift).
+seasonal
+    Number of seasons. <code>None</code> to disable seasonality.
+sigma_obs
+    Observation noise standard deviation.
+sigma_level
+    Level component noise standard deviation.
+sigma_trend
+    Trend component noise standard deviation (only for
+    <code>trend="local_linear"</code>).
+sigma_seasonal
+    Seasonal component noise standard deviation.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.bsts.BSTS._build_system" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_build_system</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Assemble full system matrices from components.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.bsts.BSTS.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit the BSTS model to observed data.</p>
+<h6 id="polars_ts.bayesian.bsts.BSTS.fit--parameters">Parameters</h6>
+<p>y
+    Observations of shape <code>(T,)</code>. Use <code>np.nan</code> for missing.</p>
+<h6 id="polars_ts.bayesian.bsts.BSTS.fit--returns">Returns</h6>
+<p>BSTSResult
+    Decomposed components and Kalman filter/smoother result.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.bsts.BSTS.forecast" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">forecast</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit the model and produce h-step-ahead forecasts.</p>
+<h6 id="polars_ts.bayesian.bsts.BSTS.forecast--parameters">Parameters</h6>
+<p>y
+    Observations of shape <code>(T,)</code>.
+h
+    Number of steps to forecast.</p>
+<h6 id="polars_ts.bayesian.bsts.BSTS.forecast--returns">Returns</h6>
+<p>BSTSResult
+    Components plus <code>forecast</code> and <code>forecast_var</code> arrays.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts._build_local_level" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_local_level</span><span class="p">(</span><span class="n">sigma_level</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return (F, H, Q) blocks for a local-level component.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts._build_local_linear_trend" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_local_linear_trend</span><span class="p">(</span><span class="n">sigma_level</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return (F, H, Q) blocks for a local linear trend.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts._build_seasonal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_seasonal</span><span class="p">(</span><span class="n">n_seasons</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return (F, H, Q) blocks for a dummy seasonal component.</p>
+<p>State dimension is <code>n_seasons - 1</code>. The constraint is that
+seasonal effects sum to zero over a full cycle.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts._block_diag" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_block_diag</span><span class="p">(</span><span class="o">*</span><span class="n">blocks</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Build a block-diagonal matrix from sub-blocks.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts.bsts_fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;local_linear&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit a BSTS model to each time series in a panel.</p>
+<h5 id="polars_ts.bayesian.bsts.bsts_fit--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+trend
+    <code>"level"</code> or <code>"local_linear"</code>.
+seasonal
+    Number of seasons (e.g. 12 for monthly, 24 for hourly).
+    <code>None</code> to disable.
+sigma_obs, sigma_level, sigma_trend, sigma_seasonal
+    Noise standard deviations for each component.
+id_col
+    Column identifying each time series.
+target_col
+    Column with the observed values.</p>
+<h5 id="polars_ts.bayesian.bsts.bsts_fit--returns">Returns</h5>
+<p>dict[str, BSTSResult]
+    Mapping from series ID to the fit result.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.bsts.bsts_forecast" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;local_linear&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit a BSTS model and produce h-step-ahead forecasts.</p>
+<h5 id="polars_ts.bayesian.bsts.bsts_forecast--parameters">Parameters</h5>
+<p>df
+    DataFrame with columns <code>id_col</code> and <code>target_col</code>.
+h
+    Forecast horizon.
+trend, seasonal, sigma_obs, sigma_level, sigma_trend, sigma_seasonal
+    Model configuration (see :class:<code>BSTS</code>).
+id_col
+    Column identifying each time series.
+target_col
+    Column with the observed values.</p>
+<h5 id="polars_ts.bayesian.bsts.bsts_forecast--returns">Returns</h5>
+<p>dict[str, BSTSResult]
+    Mapping from series ID to the fit+forecast result.</p>
+
+
+    </div>
+
+</div>
 
 
 
