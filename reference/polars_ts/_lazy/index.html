@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../arima/">
+        <link rel="prev" href="../_distance_dispatch/">
       
       
-        <link rel="next" href="../exponential_smoothing/">
+        <link rel="next" href="../anomaly_forest/">
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
-        <title>Baselines - Polars Time Series Extension</title>
+        <title>lazy - Polars Time Series Extension</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.models.baselines" class="md-skip">
+        <a href="#polars_ts._lazy" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Baselines
+               lazy
             
           </span>
         </div>
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -246,7 +246,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../distance-metrics/" class="md-tabs__link">
+        <a href="../../../distance-metrics/" class="md-tabs__link">
           
   
   
@@ -277,7 +277,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../__init__/" class="md-tabs__link">
+        <a href="../__init__/" class="md-tabs__link">
           
   
   
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../contributing/" class="md-tabs__link">
+      <a href="../../../contributing/" class="md-tabs__link">
         
   
   
@@ -339,7 +339,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -369,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -434,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../distance-metrics/" class="md-nav__link">
+      <a href="../../../distance-metrics/" class="md-nav__link">
         
   
   
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../clustering-guide/" class="md-nav__link">
+      <a href="../../../clustering-guide/" class="md-nav__link">
         
   
   
@@ -480,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../forecasting-guide/" class="md-nav__link">
+      <a href="../../../forecasting-guide/" class="md-nav__link">
         
   
   
@@ -503,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../imaging-guide/" class="md-nav__link">
+      <a href="../../../imaging-guide/" class="md-nav__link">
         
   
   
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../changepoint-guide/" class="md-nav__link">
+      <a href="../../../changepoint-guide/" class="md-nav__link">
         
   
   
@@ -549,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../preprocessing-guide/" class="md-nav__link">
+      <a href="../../../preprocessing-guide/" class="md-nav__link">
         
   
   
@@ -685,7 +685,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -718,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../_distance_dispatch/" class="md-nav__link">
+      <a href="../_distance_dispatch/" class="md-nav__link">
         
   
   
@@ -738,10 +738,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../_lazy/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+     lazy
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -752,6 +772,72 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts._lazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_lazy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _lazy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts._lazy.make_getattr" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;make_getattr
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" make_getattr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts._lazy.make_getattr--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts._lazy.make_getattr--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -764,7 +850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../anomaly_forest/" class="md-nav__link">
+      <a href="../anomaly_forest/" class="md-nav__link">
         
   
   
@@ -787,7 +873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bias/" class="md-nav__link">
+      <a href="../bias/" class="md-nav__link">
         
   
   
@@ -810,7 +896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../calibration/" class="md-nav__link">
+      <a href="../calibration/" class="md-nav__link">
         
   
   
@@ -833,7 +919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagnostics/" class="md-nav__link">
+      <a href="../diagnostics/" class="md-nav__link">
         
   
   
@@ -856,7 +942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distance/" class="md-nav__link">
+      <a href="../distance/" class="md-nav__link">
         
   
   
@@ -879,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../global_model/" class="md-nav__link">
+      <a href="../global_model/" class="md-nav__link">
         
   
   
@@ -902,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../importance/" class="md-nav__link">
+      <a href="../importance/" class="md-nav__link">
         
   
   
@@ -925,7 +1011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imputation/" class="md-nav__link">
+      <a href="../imputation/" class="md-nav__link">
         
   
   
@@ -948,7 +1034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../outliers/" class="md-nav__link">
+      <a href="../outliers/" class="md-nav__link">
         
   
   
@@ -971,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline/" class="md-nav__link">
+      <a href="../pipeline/" class="md-nav__link">
         
   
   
@@ -994,7 +1080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reconciliation/" class="md-nav__link">
+      <a href="../reconciliation/" class="md-nav__link">
         
   
   
@@ -1017,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resampling/" class="md-nav__link">
+      <a href="../resampling/" class="md-nav__link">
         
   
   
@@ -1040,7 +1126,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../var_model/" class="md-nav__link">
+      <a href="../var_model/" class="md-nav__link">
         
   
   
@@ -1063,7 +1149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../volatility/" class="md-nav__link">
+      <a href="../volatility/" class="md-nav__link">
         
   
   
@@ -1103,7 +1189,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../adapters/__init__/" class="md-nav__link ">
+            <a href="../adapters/__init__/" class="md-nav__link ">
               
   
   
@@ -1136,7 +1222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/embeddings/" class="md-nav__link">
+      <a href="../adapters/embeddings/" class="md-nav__link">
         
   
   
@@ -1159,7 +1245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/huggingface/" class="md-nav__link">
+      <a href="../adapters/huggingface/" class="md-nav__link">
         
   
   
@@ -1182,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/neuralforecast/" class="md-nav__link">
+      <a href="../adapters/neuralforecast/" class="md-nav__link">
         
   
   
@@ -1205,7 +1291,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/pytorch_forecasting/" class="md-nav__link">
+      <a href="../adapters/pytorch_forecasting/" class="md-nav__link">
         
   
   
@@ -1228,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/rl_env/" class="md-nav__link">
+      <a href="../adapters/rl_env/" class="md-nav__link">
         
   
   
@@ -1276,7 +1362,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../bayesian/__init__/" class="md-nav__link ">
               
   
   
@@ -1309,7 +1395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../bayesian/bsts/" class="md-nav__link">
         
   
   
@@ -1332,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../bayesian/enkf/" class="md-nav__link">
         
   
   
@@ -1355,7 +1441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../bayesian/kalman/" class="md-nav__link">
         
   
   
@@ -1378,7 +1464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../bayesian/ukf/" class="md-nav__link">
         
   
   
@@ -1426,7 +1512,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../changepoint/__init__/" class="md-nav__link ">
+            <a href="../changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -1459,7 +1545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/bocpd/" class="md-nav__link">
+      <a href="../changepoint/bocpd/" class="md-nav__link">
         
   
   
@@ -1482,7 +1568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/cusum/" class="md-nav__link">
+      <a href="../changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -1505,7 +1591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/pelt/" class="md-nav__link">
+      <a href="../changepoint/pelt/" class="md-nav__link">
         
   
   
@@ -1528,7 +1614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/regime/" class="md-nav__link">
+      <a href="../changepoint/regime/" class="md-nav__link">
         
   
   
@@ -1576,7 +1662,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../classification/__init__/" class="md-nav__link ">
+            <a href="../classification/__init__/" class="md-nav__link ">
               
   
   
@@ -1609,7 +1695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/knn/" class="md-nav__link">
+      <a href="../classification/knn/" class="md-nav__link">
         
   
   
@@ -1632,7 +1718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/kshape_classifier/" class="md-nav__link">
+      <a href="../classification/kshape_classifier/" class="md-nav__link">
         
   
   
@@ -1680,7 +1766,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -1713,7 +1799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/auto/" class="md-nav__link">
+      <a href="../clustering/auto/" class="md-nav__link">
         
   
   
@@ -1736,7 +1822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/dba/" class="md-nav__link">
+      <a href="../clustering/dba/" class="md-nav__link">
         
   
   
@@ -1759,7 +1845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/density/" class="md-nav__link">
+      <a href="../clustering/density/" class="md-nav__link">
         
   
   
@@ -1782,7 +1868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/evaluation/" class="md-nav__link">
+      <a href="../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -1805,7 +1891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/hierarchical/" class="md-nav__link">
+      <a href="../clustering/hierarchical/" class="md-nav__link">
         
   
   
@@ -1828,7 +1914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmeans/" class="md-nav__link">
+      <a href="../clustering/kmeans/" class="md-nav__link">
         
   
   
@@ -1851,7 +1937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
+      <a href="../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -1874,7 +1960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kshape/" class="md-nav__link">
+      <a href="../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -1897,7 +1983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/scalable/" class="md-nav__link">
+      <a href="../clustering/scalable/" class="md-nav__link">
         
   
   
@@ -1920,7 +2006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/shapelets/" class="md-nav__link">
+      <a href="../clustering/shapelets/" class="md-nav__link">
         
   
   
@@ -1943,7 +2029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/spectral/" class="md-nav__link">
+      <a href="../clustering/spectral/" class="md-nav__link">
         
   
   
@@ -1991,7 +2077,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../decomposition/__init__/" class="md-nav__link ">
+            <a href="../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -2024,7 +2110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
+      <a href="../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -2047,7 +2133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
+      <a href="../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -2070,7 +2156,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
+      <a href="../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -2118,7 +2204,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ensemble/__init__/" class="md-nav__link ">
+            <a href="../ensemble/__init__/" class="md-nav__link ">
               
   
   
@@ -2151,7 +2237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ensemble/stacking/" class="md-nav__link">
+      <a href="../ensemble/stacking/" class="md-nav__link">
         
   
   
@@ -2174,7 +2260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ensemble/weighted/" class="md-nav__link">
+      <a href="../ensemble/weighted/" class="md-nav__link">
         
   
   
@@ -2222,7 +2308,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../features/__init__/" class="md-nav__link ">
+            <a href="../features/__init__/" class="md-nav__link ">
               
   
   
@@ -2255,7 +2341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/advanced/" class="md-nav__link">
+      <a href="../features/advanced/" class="md-nav__link">
         
   
   
@@ -2278,7 +2364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/calendar/" class="md-nav__link">
+      <a href="../features/calendar/" class="md-nav__link">
         
   
   
@@ -2301,7 +2387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/fourier/" class="md-nav__link">
+      <a href="../features/fourier/" class="md-nav__link">
         
   
   
@@ -2324,7 +2410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/lags/" class="md-nav__link">
+      <a href="../features/lags/" class="md-nav__link">
         
   
   
@@ -2347,7 +2433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/rocket/" class="md-nav__link">
+      <a href="../features/rocket/" class="md-nav__link">
         
   
   
@@ -2370,7 +2456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/rolling/" class="md-nav__link">
+      <a href="../features/rolling/" class="md-nav__link">
         
   
   
@@ -2418,7 +2504,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../imaging/__init__/" class="md-nav__link ">
+            <a href="../imaging/__init__/" class="md-nav__link ">
               
   
   
@@ -2451,7 +2537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/_utils/" class="md-nav__link">
+      <a href="../imaging/_utils/" class="md-nav__link">
         
   
   
@@ -2474,7 +2560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/angular/" class="md-nav__link">
+      <a href="../imaging/angular/" class="md-nav__link">
         
   
   
@@ -2497,7 +2583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/embeddings/" class="md-nav__link">
+      <a href="../imaging/embeddings/" class="md-nav__link">
         
   
   
@@ -2520,7 +2606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/recurrence/" class="md-nav__link">
+      <a href="../imaging/recurrence/" class="md-nav__link">
         
   
   
@@ -2543,7 +2629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/signature/" class="md-nav__link">
+      <a href="../imaging/signature/" class="md-nav__link">
         
   
   
@@ -2566,7 +2652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/spectral/" class="md-nav__link">
+      <a href="../imaging/spectral/" class="md-nav__link">
         
   
   
@@ -2589,7 +2675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/transition/" class="md-nav__link">
+      <a href="../imaging/transition/" class="md-nav__link">
         
   
   
@@ -2637,7 +2723,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../metrics/__init__/" class="md-nav__link ">
+            <a href="../metrics/__init__/" class="md-nav__link ">
               
   
   
@@ -2670,7 +2756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../metrics/forecast/" class="md-nav__link">
+      <a href="../metrics/forecast/" class="md-nav__link">
         
   
   
@@ -2693,7 +2779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../metrics/kaboudan/" class="md-nav__link">
+      <a href="../metrics/kaboudan/" class="md-nav__link">
         
   
   
@@ -2721,8 +2807,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2733,15 +2817,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_27" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_27" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../models/__init__/" class="md-nav__link ">
               
   
   
@@ -2760,7 +2846,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_27">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -2774,7 +2860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arima/" class="md-nav__link">
+      <a href="../models/arima/" class="md-nav__link">
         
   
   
@@ -2794,30 +2880,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Baselines
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../models/baselines/" class="md-nav__link">
         
   
   
@@ -2828,189 +2894,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;baselines
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" baselines">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines._infer_freq" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_infer_freq
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines._make_future_dates" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_make_future_dates
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;naive_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" naive_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_naive_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" seasonal_naive_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;moving_average_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" moving_average_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;fft_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" fft_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3023,7 +2906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../exponential_smoothing/" class="md-nav__link">
+      <a href="../models/exponential_smoothing/" class="md-nav__link">
         
   
   
@@ -3046,7 +2929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multistep/" class="md-nav__link">
+      <a href="../models/multistep/" class="md-nav__link">
         
   
   
@@ -3069,7 +2952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scum/" class="md-nav__link">
+      <a href="../models/scum/" class="md-nav__link">
         
   
   
@@ -3117,7 +3000,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../probabilistic/__init__/" class="md-nav__link ">
+            <a href="../probabilistic/__init__/" class="md-nav__link ">
               
   
   
@@ -3150,7 +3033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../probabilistic/conformal/" class="md-nav__link">
+      <a href="../probabilistic/conformal/" class="md-nav__link">
         
   
   
@@ -3173,7 +3056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../probabilistic/quantile_regression/" class="md-nav__link">
+      <a href="../probabilistic/quantile_regression/" class="md-nav__link">
         
   
   
@@ -3221,7 +3104,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../transforms/__init__/" class="md-nav__link ">
+            <a href="../transforms/__init__/" class="md-nav__link ">
               
   
   
@@ -3254,7 +3137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/boxcox/" class="md-nav__link">
+      <a href="../transforms/boxcox/" class="md-nav__link">
         
   
   
@@ -3277,7 +3160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/differencing/" class="md-nav__link">
+      <a href="../transforms/differencing/" class="md-nav__link">
         
   
   
@@ -3300,7 +3183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/log/" class="md-nav__link">
+      <a href="../transforms/log/" class="md-nav__link">
         
   
   
@@ -3348,7 +3231,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../validation/__init__/" class="md-nav__link ">
+            <a href="../validation/__init__/" class="md-nav__link ">
               
   
   
@@ -3381,7 +3264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validation/splits/" class="md-nav__link">
+      <a href="../validation/splits/" class="md-nav__link">
         
   
   
@@ -3471,7 +3354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/ddtw/" class="md-nav__link">
+      <a href="../../rust/ddtw/" class="md-nav__link">
         
   
   
@@ -3494,7 +3377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw/" class="md-nav__link">
+      <a href="../../rust/dtw/" class="md-nav__link">
         
   
   
@@ -3517,7 +3400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw_multi/" class="md-nav__link">
+      <a href="../../rust/dtw_multi/" class="md-nav__link">
         
   
   
@@ -3540,7 +3423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/edr/" class="md-nav__link">
+      <a href="../../rust/edr/" class="md-nav__link">
         
   
   
@@ -3563,7 +3446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/erp/" class="md-nav__link">
+      <a href="../../rust/erp/" class="md-nav__link">
         
   
   
@@ -3586,7 +3469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/ets/" class="md-nav__link">
+      <a href="../../rust/ets/" class="md-nav__link">
         
   
   
@@ -3609,7 +3492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/frechet/" class="md-nav__link">
+      <a href="../../rust/frechet/" class="md-nav__link">
         
   
   
@@ -3632,7 +3515,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/kmedoids/" class="md-nav__link">
+      <a href="../../rust/kmedoids/" class="md-nav__link">
         
   
   
@@ -3655,7 +3538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/lcss/" class="md-nav__link">
+      <a href="../../rust/lcss/" class="md-nav__link">
         
   
   
@@ -3678,7 +3561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/mann_kendall/" class="md-nav__link">
+      <a href="../../rust/mann_kendall/" class="md-nav__link">
         
   
   
@@ -3701,7 +3584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm/" class="md-nav__link">
+      <a href="../../rust/msm/" class="md-nav__link">
         
   
   
@@ -3724,7 +3607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm_multi/" class="md-nav__link">
+      <a href="../../rust/msm_multi/" class="md-nav__link">
         
   
   
@@ -3747,7 +3630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/pelt/" class="md-nav__link">
+      <a href="../../rust/pelt/" class="md-nav__link">
         
   
   
@@ -3770,7 +3653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/sbd/" class="md-nav__link">
+      <a href="../../rust/sbd/" class="md-nav__link">
         
   
   
@@ -3793,7 +3676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/sens_slope/" class="md-nav__link">
+      <a href="../../rust/sens_slope/" class="md-nav__link">
         
   
   
@@ -3816,7 +3699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/twe/" class="md-nav__link">
+      <a href="../../rust/twe/" class="md-nav__link">
         
   
   
@@ -3839,7 +3722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/utils/" class="md-nav__link">
+      <a href="../../rust/utils/" class="md-nav__link">
         
   
   
@@ -3862,7 +3745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/wdtw/" class="md-nav__link">
+      <a href="../../rust/wdtw/" class="md-nav__link">
         
   
   
@@ -3900,7 +3783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/" class="md-nav__link">
+      <a href="../../../contributing/" class="md-nav__link">
         
   
   
@@ -3940,45 +3823,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines" class="md-nav__link">
+  <a href="#polars_ts._lazy" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;baselines
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_lazy
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" baselines">
+    <nav class="md-nav" aria-label=" _lazy">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines._infer_freq" class="md-nav__link">
+  <a href="#polars_ts._lazy.make_getattr" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_infer_freq
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;make_getattr
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines._make_future_dates" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_make_future_dates
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;naive_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" naive_forecast">
+    <nav class="md-nav" aria-label=" make_getattr">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts._lazy.make_getattr--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
     </span>
@@ -3987,106 +3852,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.naive_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;seasonal_naive_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" seasonal_naive_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.seasonal_naive_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;moving_average_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" moving_average_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.moving_average_forecast--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;fft_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" fft_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.baselines.fft_forecast--returns" class="md-nav__link">
+  <a href="#polars_ts._lazy.make_getattr--returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
@@ -4123,24 +3889,35 @@
   
 
 
-  <h1>Baselines</h1>
+  <h1> lazy</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.models.baselines" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.baselines</code>
+<h2 id="polars_ts._lazy" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts._lazy</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Baseline forecast models for time series benchmarking.</p>
-<p>Implements naive, seasonal naive, moving average, and FFT-based forecasts
-from Ch 4 of "Modern Time Series Forecasting with Python" (2nd Ed.).
-These serve as simple benchmarks against which more complex models are compared.</p>
+        <p>Shared lazy-import helper for polars-ts modules.</p>
+<p>Provides a generic <code>make_getattr</code> factory that turns a flat registry
+dict into a module-level <code>__getattr__</code> function.  This eliminates
+the duplicated if-chain boilerplate across submodule <code>__init__.py</code>
+files.</p>
+<p>Usage in a submodule <code>__init__.py</code>::</p>
+<div class="language-text highlight"><pre><span></span><code>from polars_ts._lazy import make_getattr
+
+_IMPORTS: dict[str, tuple[str, str]] = {
+    &quot;KShape&quot;: (&quot;polars_ts.clustering.kshape&quot;, &quot;KShape&quot;),
+    &quot;kmedoids&quot;: (&quot;polars_ts.clustering.kmedoids&quot;, &quot;kmedoids&quot;),
+}
+
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__)
+</code></pre></div>
 
 
 
@@ -4165,176 +3942,23 @@ These serve as simple benchmarks against which more complex models are compared.
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.baselines._infer_freq" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_infer_freq</span><span class="p">(</span><span class="n">times</span><span class="p">)</span></code>
+<h3 id="polars_ts._lazy.make_getattr" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">make_getattr</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Infer the time frequency from a sorted datetime/date series.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.baselines._make_future_dates" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_make_future_dates</span><span class="p">(</span><span class="n">last_time</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Generate h future timestamps starting from last_time + freq.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.baselines.naive_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">naive_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Naive forecast: repeat the last observed value for h steps.</p>
-<h5 id="polars_ts.models.baselines.naive_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame with time series data.
-h
-    Forecast horizon (number of steps ahead).
-target_col
-    Column with the target values.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps for ordering.</p>
-<h5 id="polars_ts.models.baselines.naive_forecast--returns">Returns</h5>
-<p>pl.DataFrame
-    DataFrame with columns <code>[id_col, time_col, "y_hat"]</code> containing
-    <em>h</em> forecast rows per series.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.baselines.seasonal_naive_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">seasonal_naive_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">season_length</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Seasonal naive forecast: repeat the last season's values cyclically.</p>
-<p>For each forecast step <em>i</em>, the prediction is the observed value from
-<em>season_length</em> steps before the end of the series, cycling through the
-last full season.</p>
-<h5 id="polars_ts.models.baselines.seasonal_naive_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame with time series data.
-h
-    Forecast horizon.
-season_length
-    Number of observations per season (e.g. 7 for daily data with
-    weekly seasonality, 12 for monthly with yearly seasonality).
-target_col
-    Column with the target values.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps for ordering.</p>
-<h5 id="polars_ts.models.baselines.seasonal_naive_forecast--returns">Returns</h5>
-<p>pl.DataFrame
-    DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.baselines.moving_average_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">moving_average_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Forecast the mean of the last <em>window_size</em> observed values.</p>
-<p>The same average is repeated for all <em>h</em> forecast steps (flat forecast).</p>
-<h5 id="polars_ts.models.baselines.moving_average_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame with time series data.
-h
-    Forecast horizon.
-window_size
-    Number of most recent observations to average.
-target_col
-    Column with the target values.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps for ordering.</p>
-<h5 id="polars_ts.models.baselines.moving_average_forecast--returns">Returns</h5>
-<p>pl.DataFrame
-    DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.baselines.fft_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">fft_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">n_harmonics</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>FFT-based forecast using dominant frequency components.</p>
-<p>Decomposes the series via FFT, keeps the top <em>n_harmonics</em> frequency
-components, and extrapolates them forward.</p>
-<h5 id="polars_ts.models.baselines.fft_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame with time series data.
-h
-    Forecast horizon.
-n_harmonics
-    Number of dominant harmonics to retain. More harmonics capture
-    finer detail but risk overfitting noise.
-target_col
-    Column with the target values.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps for ordering.</p>
-<h5 id="polars_ts.models.baselines.fft_forecast--returns">Returns</h5>
-<p>pl.DataFrame
-    DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
+        <p>Create <code>__getattr__</code> and <code>__all__</code> from a lazy-import registry.</p>
+<h5 id="polars_ts._lazy.make_getattr--parameters">Parameters</h5>
+<p>registry
+    Mapping from public name to <code>(module_path, attribute_name)</code>.
+module_name
+    The <code>__name__</code> of the calling module (for error messages).</p>
+<h5 id="polars_ts._lazy.make_getattr--returns">Returns</h5>
+<p>tuple
+    <code>(__getattr__, __all__)</code> ready to be assigned at module level.</p>
 
 
     </div>
@@ -4404,10 +4028,10 @@ time_col
     
     
       
-      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>
