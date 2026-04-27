@@ -271,6 +271,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
+    if name in {"KalmanFilter", "KalmanResult", "kalman_filter"}:
+        from polars_ts.bayesian import kalman as _kalman
+
+        return getattr(_kalman, name)
     if name in {
         "to_recurrence_plot",
         "rqa_features",
