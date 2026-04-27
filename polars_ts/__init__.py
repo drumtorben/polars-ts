@@ -271,25 +271,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts import models as _models
 
         return getattr(_models, name)
-    if name in {"KalmanFilter", "KalmanResult", "kalman_filter"}:
-        from polars_ts.bayesian import kalman as _kalman
+    if name in {"KalmanFilter", "kalman_filter", "BSTS", "bsts_fit", "bsts_forecast"}:
+        from polars_ts import bayesian as _bayes
 
-        return getattr(_kalman, name)
-    if name in {
-        "to_recurrence_plot",
-        "rqa_features",
-        "to_gasf",
-        "to_gadf",
-        "to_mtf",
-        "to_spectrogram",
-        "to_scalogram",
-        "signature_features",
-        "to_signature_image",
-        "extract_vision_embeddings",
-    }:
-        from polars_ts import imaging as _img
-
-        return getattr(_img, name)
+        return getattr(_bayes, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
