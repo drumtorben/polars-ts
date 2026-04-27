@@ -12,8 +12,5 @@ def extract_series(
     target_col: str,
 ) -> dict[str, np.ndarray]:
     """Group DataFrame by id_col and return dict of numpy arrays."""
-    result: dict[str, np.ndarray] = {}
-    for sid in df[id_col].unique(maintain_order=True).to_list():
-        vals = df.filter(pl.col(id_col) == sid)[target_col].to_numpy()
-        result[str(sid)] = vals
-    return result
+    groups = df.group_by(id_col, maintain_order=True).agg(pl.col(target_col))
+    return {str(row[id_col]): np.array(row[target_col]) for row in groups.iter_rows(named=True)}

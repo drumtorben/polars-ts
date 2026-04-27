@@ -38,6 +38,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.imaging.signature import to_signature_image
 
         return to_signature_image
+    if name == "extract_vision_embeddings":
+        from polars_ts.imaging.embeddings import extract_vision_embeddings
+
+        return extract_vision_embeddings
     raise AttributeError(f"module 'polars_ts.imaging' has no attribute {name!r}")
 
 
@@ -51,4 +55,5 @@ __all__ = [
     "to_scalogram",
     "signature_features",
     "to_signature_image",
+    "extract_vision_embeddings",
 ]

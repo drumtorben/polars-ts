@@ -281,6 +281,7 @@ def __getattr__(name: str) -> Any:
         "to_scalogram",
         "signature_features",
         "to_signature_image",
+        "extract_vision_embeddings",
     }:
         from polars_ts import imaging as _img
 
