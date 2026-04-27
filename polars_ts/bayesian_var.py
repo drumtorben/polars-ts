@@ -20,7 +20,6 @@ from typing import Any, Literal
 
 import numpy as np
 import polars as pl
-from scipy import stats
 
 PriorType = Literal["minnesota", "normal_wishart"]
 InferenceMethod = Literal["analytical", "gibbs"]
@@ -339,7 +338,9 @@ def _gibbs_sample(
             eigvals = np.linalg.eigvalsh(S_post_inv)
             if eigvals.min() <= 0:
                 S_post_inv += np.eye(k) * (abs(eigvals.min()) + 1e-8)
-            Sigma_inv_draw = stats.wishart.rvs(
+            from scipy.stats import wishart
+
+            Sigma_inv_draw = wishart.rvs(
                 df=nu_post,
                 scale=S_post_inv / nu_post,
                 random_state=rng,
@@ -681,7 +682,9 @@ class BayesianVAR:
                 history.append(pred)
 
             # Intervals widen with horizon
-            z = stats.norm.ppf(1 - alpha_half)
+            from scipy.stats import norm
+
+            z = norm.ppf(1 - alpha_half)
             sigma_diag = np.sqrt(np.maximum(np.diag(result.Sigma_post), 1e-10))
             horizon_scale = np.sqrt(np.arange(1, horizon + 1))[:, None]
             lower_fc = mean_fc - z * sigma_diag * horizon_scale
@@ -749,7 +752,9 @@ class BayesianVAR:
         else:
             mean_irf = self._compute_irf(result.B_post, k, p, steps, shock_size)
             # Approximate bands: widen with horizon
-            z = stats.norm.ppf(1 - alpha_half)
+            from scipy.stats import norm
+
+            z = norm.ppf(1 - alpha_half)
             sigma_scale = np.sqrt(np.maximum(np.diag(result.Sigma_post), 1e-10))
             lower_irf = np.empty_like(mean_irf)
             upper_irf = np.empty_like(mean_irf)
