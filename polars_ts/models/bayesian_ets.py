@@ -17,12 +17,11 @@ References
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Literal
 
 import numpy as np
 import polars as pl
-from scipy import optimize, stats
 
 from polars_ts.models.baselines import _infer_freq, _make_future_dates
 
@@ -84,12 +83,16 @@ def _ses_loglik(
     sigma: float,
 ) -> float:
     """Gaussian log-likelihood for SES state-space model."""
+    if sigma <= 0:
+        return -np.inf
     n = len(values)
     level = level0
     ll = 0.0
+    log_norm = -0.5 * math.log(2 * math.pi * sigma**2)
+    inv_sigma = 1.0 / sigma
     for t in range(n):
         residual = values[t] - level
-        ll += -0.5 * math.log(2 * math.pi * sigma**2) - 0.5 * (residual / sigma) ** 2
+        ll += log_norm - 0.5 * (residual * inv_sigma) ** 2
         level = alpha * values[t] + (1 - alpha) * level
     return ll
 
@@ -103,14 +106,18 @@ def _holt_loglik(
     sigma: float,
 ) -> float:
     """Gaussian log-likelihood for Holt's linear trend model."""
+    if sigma <= 0:
+        return -np.inf
     n = len(values)
     level = level0
     trend = trend0
     ll = 0.0
+    log_norm = -0.5 * math.log(2 * math.pi * sigma**2)
+    inv_sigma = 1.0 / sigma
     for t in range(n):
         predicted = level + trend
         residual = values[t] - predicted
-        ll += -0.5 * math.log(2 * math.pi * sigma**2) - 0.5 * (residual / sigma) ** 2
+        ll += log_norm - 0.5 * (residual * inv_sigma) ** 2
         prev_level = level
         level = alpha * values[t] + (1 - alpha) * (level + trend)
         trend = beta * (level - prev_level) + (1 - beta) * trend
@@ -130,11 +137,15 @@ def _hw_loglik(
     sigma: float,
 ) -> float:
     """Gaussian log-likelihood for Holt-Winters model."""
+    if sigma <= 0:
+        return -np.inf
     n = len(values)
     level = level0
     trend = trend0
     seasons = list(seasons0)
     ll = 0.0
+    log_norm = -0.5 * math.log(2 * math.pi * sigma**2)
+    inv_sigma = 1.0 / sigma
 
     for t in range(n):
         s_idx = t % m
@@ -144,7 +155,7 @@ def _hw_loglik(
             predicted = (level + trend) * seasons[s_idx]
 
         residual = values[t] - predicted
-        ll += -0.5 * math.log(2 * math.pi * sigma**2) - 0.5 * (residual / sigma) ** 2
+        ll += log_norm - 0.5 * (residual * inv_sigma) ** 2
 
         prev_level = level
         if additive:
@@ -170,17 +181,23 @@ def _log_prior_smoothing(value: float, a: float, b: float) -> float:
     """Log-density of Beta(a, b) prior, clamped to valid domain."""
     if value <= 0 or value >= 1:
         return -np.inf
-    return stats.beta.logpdf(value, a, b)
+    from scipy.stats import beta
+
+    return beta.logpdf(value, a, b)
 
 
 def _log_prior_normal(value: float, mu: float, sigma: float) -> float:
-    return stats.norm.logpdf(value, mu, sigma)
+    from scipy.stats import norm
+
+    return norm.logpdf(value, mu, sigma)
 
 
 def _log_prior_invgamma(value: float, shape: float, scale: float) -> float:
     if value <= 0:
         return -np.inf
-    return stats.invgamma.logpdf(value, shape, scale=scale)
+    from scipy.stats import invgamma
+
+    return invgamma.logpdf(value, shape, scale=scale)
 
 
 # ---------------------------------------------------------------------------
@@ -339,7 +356,8 @@ def _map_estimate(
     gamma0 = 0.1
     level0_init = mean_val
     trend0_init = (values[-1] - values[0]) / max(len(values) - 1, 1) if len(values) > 1 else 0.0
-    sigma0 = float(np.std(values)) if np.std(values) > 0 else 1.0
+    std_val = float(np.std(values))
+    sigma0 = std_val if std_val > 0 else 1.0
 
     seasons0_init = None
     if model == "holt_winters" and len(values) >= m:
@@ -371,7 +389,9 @@ def _map_estimate(
         val = _log_posterior(theta, values, model, m, additive, priors)
         return -val if np.isfinite(val) else 1e20
 
-    result = optimize.minimize(neg_log_post, x0, method="L-BFGS-B", bounds=bounds)
+    from scipy.optimize import minimize
+
+    result = minimize(neg_log_post, x0, method="L-BFGS-B", bounds=bounds)
     return result.x
 
 
@@ -631,20 +651,7 @@ class BayesianETS:
                 )
 
             # Center level prior on data mean
-            priors = ETSPriors(
-                alpha_a=self.priors.alpha_a,
-                alpha_b=self.priors.alpha_b,
-                beta_a=self.priors.beta_a,
-                beta_b=self.priors.beta_b,
-                gamma_a=self.priors.gamma_a,
-                gamma_b=self.priors.gamma_b,
-                level_mu=float(np.mean(values)),
-                level_sigma=self.priors.level_sigma,
-                trend_mu=self.priors.trend_mu,
-                trend_sigma=self.priors.trend_sigma,
-                sigma_shape=self.priors.sigma_shape,
-                sigma_scale=self.priors.sigma_scale,
-            )
+            priors = replace(self.priors, level_mu=float(np.mean(values)))
 
             # MAP estimate
             map_theta = _map_estimate(values, self.model, m, self.additive, priors)
@@ -741,8 +748,10 @@ class BayesianETS:
                     self.additive,
                     h,
                 )
+                from scipy.stats import norm
+
                 sigma = result.map_params["sigma"]
-                z = stats.norm.ppf(1 - alpha_half)
+                z = norm.ppf(1 - alpha_half)
                 # Uncertainty grows with horizon
                 y_hat = np.array(y_hat_list)
                 y_lower = y_hat - z * sigma * np.sqrt(np.arange(1, h + 1))
