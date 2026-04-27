@@ -14,6 +14,14 @@ repos:
   #       pass_filenames: true
   #       additional_dependencies: [toml]
 
+  - repo: local
+    hooks:
+      - id: normalize-notebooks
+        name: normalize-notebooks
+        entry: python scripts/normalize_notebooks.py
+        language: python
+        types: [jupyter]
+
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.8.4
     hooks:
