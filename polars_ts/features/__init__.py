@@ -14,6 +14,10 @@ def __getattr__(name: str) -> Any:
         from polars_ts.features.lags import lag_features
 
         return lag_features
+    if name == "covariate_lag_features":
+        from polars_ts.features.lags import covariate_lag_features
+
+        return covariate_lag_features
     if name == "rolling_features":
         from polars_ts.features.rolling import rolling_features
 
@@ -39,6 +43,7 @@ def __getattr__(name: str) -> Any:
 
 __all__ = [
     "lag_features",
+    "covariate_lag_features",
     "rolling_features",
     "calendar_features",
     "fourier_features",
