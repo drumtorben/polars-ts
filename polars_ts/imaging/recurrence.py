@@ -30,7 +30,7 @@ def _recurrence_matrix(
     from scipy.spatial.distance import cdist
 
     X = x.reshape(-1, 1)
-    D = cdist(X, X, metric=metric)
+    D = cdist(X, X, metric)  # type: ignore[call-overload]
 
     if threshold is not None:
         return (D <= threshold).astype(np.float64)
