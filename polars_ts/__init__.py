@@ -272,6 +272,7 @@ def __getattr__(name: str) -> Any:
 
         return getattr(_models, name)
     if name in {"KalmanFilter", "kalman_filter", "UnscentedKalmanFilter", "EnsembleKalmanFilter"}:
+    if name in {"KalmanFilter", "kalman_filter", "BSTS", "bsts_fit", "bsts_forecast"}:
         from polars_ts import bayesian as _bayes
 
         return getattr(_bayes, name)

@@ -16,6 +16,14 @@ def __getattr__(name: str) -> Any:
         from polars_ts.bayesian.enkf import EnsembleKalmanFilter
 
         return EnsembleKalmanFilter
+    if name in {"BSTS", "bsts_fit", "bsts_forecast"}:
+        from polars_ts.bayesian.bsts import BSTS, bsts_fit, bsts_forecast
+
+        if name == "BSTS":
+            return BSTS
+        if name == "bsts_fit":
+            return bsts_fit
+        return bsts_forecast
     raise AttributeError(f"module 'polars_ts.bayesian' has no attribute {name!r}")
 
 
@@ -24,4 +32,7 @@ __all__ = [
     "kalman_filter",
     "UnscentedKalmanFilter",
     "EnsembleKalmanFilter",
+    "BSTS",
+    "bsts_fit",
+    "bsts_forecast",
 ]
