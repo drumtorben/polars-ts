@@ -1,5 +1,3 @@
-from typing import Any
-
 from polars_ts._lazy import make_getattr
 
 _IMPORTS: dict[str, tuple[str, str]] = {
@@ -20,20 +18,15 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "ETSPriors": ("polars_ts.models.bayesian_ets", "ETSPriors"),
 }
 
-_getattr, _all = make_getattr(_IMPORTS, __name__)
+
+def _load_scum():
+    try:
+        from polars_ts.models.scum import SCUM
+    except ImportError:
+        raise ImportError(
+            "statsforecast is required for SCUM. Install it with: pip install polars-timeseries[forecast]"
+        ) from None
+    return SCUM
 
 
-def __getattr__(name: str) -> Any:
-    # SCUM requires statsforecast — provide a helpful ImportError
-    if name == "SCUM":
-        try:
-            from polars_ts.models.scum import SCUM
-        except ImportError:
-            raise ImportError(
-                "statsforecast is required for SCUM. " "Install it with: pip install polars-timeseries[forecast]"
-            ) from None
-        return SCUM
-    return _getattr(name)
-
-
-__all__ = ["SCUM", *_all]
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={"SCUM": _load_scum})

@@ -1,18 +1,7 @@
 import numpy as np
 import polars as pl
-import pytest
 
 from polars_ts.imaging.angular import to_gadf, to_gasf
-
-
-@pytest.fixture
-def sample_data():
-    return pl.DataFrame(
-        {
-            "unique_id": ["A"] * 10 + ["B"] * 10,
-            "y": [float(i) for i in range(10)] + [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0],
-        }
-    )
 
 
 class TestGASF:

@@ -6,26 +6,6 @@ sklearn = pytest.importorskip("sklearn")
 from polars_ts.clustering.density import dbscan_cluster, hdbscan_cluster  # noqa: E402
 
 
-@pytest.fixture
-def well_separated_data():
-    """Six series in two well-separated groups (ascending vs descending)."""
-    ascending = [1.0, 2.0, 3.0, 4.0]
-    descending = [4.0, 3.0, 2.0, 1.0]
-    return pl.DataFrame(
-        {
-            "unique_id": (["A1"] * 4 + ["A2"] * 4 + ["A3"] * 4 + ["B1"] * 4 + ["B2"] * 4 + ["B3"] * 4),
-            "y": (
-                ascending
-                + [1.0, 2.1, 3.0, 4.1]
-                + [1.0, 1.9, 3.1, 4.0]
-                + descending
-                + [4.1, 3.0, 2.0, 0.9]
-                + [3.9, 3.1, 1.9, 1.0]
-            ),
-        }
-    )
-
-
 class TestHDBSCAN:
     def test_schema(self, well_separated_data):
         result = hdbscan_cluster(well_separated_data, method="dtw", min_cluster_size=2)
