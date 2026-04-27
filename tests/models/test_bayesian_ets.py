@@ -6,7 +6,9 @@ import numpy as np
 import polars as pl
 import pytest
 
-from polars_ts.models.bayesian_ets import (
+pytest.importorskip("scipy")
+
+from polars_ts.models.bayesian_ets import (  # noqa: E402
     BayesianETS,
     BayesianETSResult,
     ETSPriors,

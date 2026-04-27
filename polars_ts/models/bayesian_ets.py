@@ -350,18 +350,17 @@ def _map_estimate(
 ) -> np.ndarray:
     """Find MAP estimate via L-BFGS-B."""
     # Sensible initial values
-    mean_val = np.mean(values)
     alpha0 = 0.3
     beta0 = 0.1
     gamma0 = 0.1
-    level0_init = mean_val
-    trend0_init = (values[-1] - values[0]) / max(len(values) - 1, 1) if len(values) > 1 else 0.0
+    level0_init = float(np.mean(values))
+    trend0_init = float((values[-1] - values[0]) / max(len(values) - 1, 1)) if len(values) > 1 else 0.0
     std_val = float(np.std(values))
     sigma0 = std_val if std_val > 0 else 1.0
 
-    seasons0_init = None
+    seasons0_init: list[float] | None = None
     if model == "holt_winters" and len(values) >= m:
-        first_season_avg = np.mean(values[:m])
+        first_season_avg = float(np.mean(values[:m]))
         if additive:
             seasons0_init = [values[i] - first_season_avg for i in range(m)]
         else:
@@ -373,7 +372,7 @@ def _map_estimate(
 
     # Bounds
     eps = 1e-6
-    bounds: list[tuple[float, float]] = [(eps, 1 - eps)]  # alpha
+    bounds: list[tuple[float | None, float | None]] = [(eps, 1 - eps)]  # alpha
     if model in ("holt", "holt_winters"):
         bounds.append((eps, 1 - eps))  # beta
     if model == "holt_winters":
