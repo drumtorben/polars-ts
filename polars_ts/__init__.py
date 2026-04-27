@@ -275,6 +275,18 @@ def __getattr__(name: str) -> Any:
         from polars_ts.models import bayesian_ets as _bets
 
         return getattr(_bets, name)
+    if name in {
+        "KalmanFilter",
+        "kalman_filter",
+        "UnscentedKalmanFilter",
+        "EnsembleKalmanFilter",
+        "BSTS",
+        "bsts_fit",
+        "bsts_forecast",
+    }:
+        from polars_ts import bayesian as _bayes
+
+        return getattr(_bayes, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
