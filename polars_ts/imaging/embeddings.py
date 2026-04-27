@@ -39,6 +39,8 @@ def _images_to_tensor(
 
     ids = list(images.keys())
     tensors = []
+    mean = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)
+    std = torch.tensor([0.229, 0.224, 0.225]).view(3, 1, 1)
     for sid in ids:
         img = images[sid].astype(np.float32)
         # Normalise image values to [0, 1]
@@ -52,8 +54,6 @@ def _images_to_tensor(
         # Duplicate to 3 channels
         t = t.expand(3, -1, -1)
         # ImageNet normalisation
-        mean = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)
-        std = torch.tensor([0.229, 0.224, 0.225]).view(3, 1, 1)
         t = (t - mean) / std
         tensors.append(t)
 
@@ -103,24 +103,29 @@ def _extract_resnet(model: Any, batch: Any) -> np.ndarray:
 
 
 def _extract_vit(model: Any, batch: Any) -> np.ndarray:
-    """Extract CLS token features from a ViT model."""
+    """Extract CLS token features from a ViT model.
+
+    Replaces ``model.heads`` with an identity to get pre-head features,
+    then restores it. This avoids relying on private ViT internals.
+    """
     torch = _ensure_torch()
 
-    with torch.no_grad():
-        # ViT forward: image → patch embedding → encoder → heads
-        x = model._process_input(batch)
-        n = x.shape[0]
-        # Prepend CLS token
-        cls_token = model.class_token.expand(n, -1, -1)
-        x = torch.cat([cls_token, x], dim=1)
-        x = model.encoder(x + model.encoder.pos_embedding)
-        # CLS token is the first token
-        features = x[:, 0]
+    original_heads = model.heads
+    model.heads = torch.nn.Identity()
+    try:
+        with torch.no_grad():
+            features = model(batch)
+    finally:
+        model.heads = original_heads
 
     return features.cpu().numpy()
 
 
-def _extract_clip(images: dict[str, np.ndarray], model_name: str) -> tuple[list[str], np.ndarray]:
+def _extract_clip(
+    images: dict[str, np.ndarray],
+    model_name: str,
+    batch_size: int = 32,
+) -> tuple[list[str], np.ndarray]:
     """Extract CLIP vision embeddings."""
     _ensure_torch()
     try:
@@ -131,7 +136,11 @@ def _extract_clip(images: dict[str, np.ndarray], model_name: str) -> tuple[list[
         ) from None
 
     import torch
-    from PIL import Image
+
+    try:
+        from PIL import Image
+    except ImportError:
+        raise ImportError("Pillow is required for CLIP embeddings. Install with: pip install Pillow") from None
 
     processor = CLIPProcessor.from_pretrained(model_name)
     model = CLIPModel.from_pretrained(model_name)
@@ -140,23 +149,24 @@ def _extract_clip(images: dict[str, np.ndarray], model_name: str) -> tuple[list[
     ids = list(images.keys())
     all_embeddings = []
 
-    for sid in ids:
-        img = images[sid].astype(np.float32)
-        # Normalise to [0, 255] for PIL
-        vmin, vmax = img.min(), img.max()
-        if vmax - vmin > 0:
-            img = ((img - vmin) / (vmax - vmin) * 255).astype(np.uint8)
-        else:
-            img = np.zeros_like(img, dtype=np.uint8)
-        # Convert grayscale to RGB PIL image
-        pil_img = Image.fromarray(img, mode="L").convert("RGB")
-        inputs = processor(images=pil_img, return_tensors="pt")
+    for i in range(0, len(ids), batch_size):
+        batch_ids = ids[i : i + batch_size]
+        pil_images = []
+        for sid in batch_ids:
+            img = images[sid].astype(np.float32)
+            vmin, vmax = img.min(), img.max()
+            if vmax - vmin > 0:
+                img = ((img - vmin) / (vmax - vmin) * 255).astype(np.uint8)
+            else:
+                img = np.zeros_like(img, dtype=np.uint8)
+            pil_images.append(Image.fromarray(img, mode="L").convert("RGB"))
 
+        inputs = processor(images=pil_images, return_tensors="pt")
         with torch.no_grad():
             outputs = model.get_image_features(**inputs)
-        all_embeddings.append(outputs.squeeze(0).cpu().numpy())
+        all_embeddings.append(outputs.cpu().numpy())
 
-    return ids, np.stack(all_embeddings)
+    return ids, np.concatenate(all_embeddings, axis=0)
 
 
 def extract_vision_embeddings(
@@ -188,7 +198,7 @@ def extract_vision_embeddings(
 
     """
     if model == "clip":
-        ids, embeddings = _extract_clip(images, "openai/clip-vit-base-patch32")
+        ids, embeddings = _extract_clip(images, "openai/clip-vit-base-patch32", batch_size)
     else:
         _ensure_torch()
         net, _ = _get_torchvision_model(model)
