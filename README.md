@@ -8,6 +8,15 @@
   <a href="https://pypi.org/project/polars-timeseries">PyPI</a>
 </p>
 
+<p align="center">
+  <a href="https://drumtorben.github.io/polars-ts/distance-metrics/">Distance Metrics</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/clustering-guide/">Clustering</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/forecasting-guide/">Forecasting</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/imaging-guide/">Imaging</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/changepoint-guide/">Changepoints</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/preprocessing-guide/">Preprocessing</a>
+</p>
+
 ---
 
 **polars-ts** is a batteries-included time series toolkit built on [Polars](https://pola.rs/). It gives you Rust-accelerated distance metrics, 10+ clustering algorithms, a full forecasting stack, and diagnostics — all from a single `pip install`, no heavyweight frameworks required.
@@ -326,18 +335,18 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 
 The `notebooks/` directory contains 10 end-to-end tutorials:
 
-| # | Topic |
-|---|---|
-| 01 | Data wrangling & exploration |
-| 02 | Feature engineering & transforms |
-| 03 | Forecasting fundamentals |
-| 04 | ML forecasting pipelines |
-| 05 | Uncertainty & calibration |
-| 06 | Changepoint & anomaly detection |
-| 07 | Time series similarity & clustering |
-| 08 | Multivariate & volatility |
-| 09 | Ensembles & reconciliation |
-| 10 | Ecosystem adapters |
+| # | Topic | Notebook |
+|---|---|---|
+| 01 | Data wrangling & exploration | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/01_data_wrangling_and_exploration.ipynb) |
+| 02 | Feature engineering & transforms | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/02_feature_engineering_transforms.ipynb) |
+| 03 | Forecasting fundamentals | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/03_forecasting_fundamentals.ipynb) |
+| 04 | ML forecasting pipelines | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/04_ml_forecasting_pipelines.ipynb) |
+| 05 | Uncertainty & calibration | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/05_uncertainty_and_calibration.ipynb) |
+| 06 | Changepoint & anomaly detection | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/06_changepoint_anomaly_detection.ipynb) |
+| 07 | Time series similarity & clustering | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/07_time_series_similarity_clustering.ipynb) |
+| 08 | Multivariate & volatility | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/08_multivariate_volatility.ipynb) |
+| 09 | Ensembles & reconciliation | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/09_ensembles_reconciliation.ipynb) |
+| 10 | Ecosystem adapters | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/10_ecosystem_adapters.ipynb) |
 
 ---
 
