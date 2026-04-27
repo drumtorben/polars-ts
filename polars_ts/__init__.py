@@ -189,7 +189,6 @@ def __getattr__(name: str) -> Any:
         mod_path, attr = _LAZY_IMPORTS[name]
         mod = importlib.import_module(mod_path)
         return getattr(mod, attr)
-        return getattr(_models, name)
     if name in {
         "KalmanFilter",
         "kalman_filter",
