@@ -66,19 +66,27 @@ def _run_clustering(
         if method == "kmedoids":
             from polars_ts.clustering.kmedoids import kmedoids
 
+            if k is None:
+                return None
             return kmedoids(df, k=k, method=distance, id_col=id_col, target_col=target_col, seed=seed)
 
         if method == "spectral":
             from polars_ts.clustering.spectral import spectral_cluster
 
+            if k is None:
+                return None
             return spectral_cluster(df, k=k, method=distance, id_col=id_col, target_col=target_col, seed=seed)
 
         if method == "kshape":
             from polars_ts.clustering.kshape import KShape
 
+            if k is None:
+                return None
             ks_df = df.select(pl.col(id_col).alias("unique_id"), pl.col(target_col).alias("y"))
             ks = KShape(n_clusters=k).fit(ks_df)
             labels = ks.labels_
+            if labels is None:
+                return None
             if id_col != "unique_id":
                 id_map = dict(
                     zip(
