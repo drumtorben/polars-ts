@@ -8,6 +8,14 @@ def __getattr__(name: str) -> Any:
         if name == "KalmanFilter":
             return KalmanFilter
         return kalman_filter
+    if name == "UnscentedKalmanFilter":
+        from polars_ts.bayesian.ukf import UnscentedKalmanFilter
+
+        return UnscentedKalmanFilter
+    if name == "EnsembleKalmanFilter":
+        from polars_ts.bayesian.enkf import EnsembleKalmanFilter
+
+        return EnsembleKalmanFilter
     if name in {"BSTS", "bsts_fit", "bsts_forecast"}:
         from polars_ts.bayesian.bsts import BSTS, bsts_fit, bsts_forecast
 
@@ -22,6 +30,8 @@ def __getattr__(name: str) -> Any:
 __all__ = [
     "KalmanFilter",
     "kalman_filter",
+    "UnscentedKalmanFilter",
+    "EnsembleKalmanFilter",
     "BSTS",
     "bsts_fit",
     "bsts_forecast",
