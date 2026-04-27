@@ -24,6 +24,10 @@ def __getattr__(name: str) -> Any:
         if name == "bsts_fit":
             return bsts_fit
         return bsts_forecast
+    if name in {"GaussianProcessTS", "gp_forecast"}:
+        from polars_ts.bayesian import gp as _gp
+
+        return getattr(_gp, name)
     raise AttributeError(f"module 'polars_ts.bayesian' has no attribute {name!r}")
 
 
@@ -35,4 +39,6 @@ __all__ = [
     "BSTS",
     "bsts_fit",
     "bsts_forecast",
+    "GaussianProcessTS",
+    "gp_forecast",
 ]
