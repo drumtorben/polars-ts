@@ -199,6 +199,8 @@ def __getattr__(name: str) -> Any:
         "bsts_forecast",
         "GaussianProcessTS",
         "gp_forecast",
+        "BayesianAnomalyDetector",
+        "bayesian_anomaly_score",
     }:
         from polars_ts import bayesian as _bayes
 
