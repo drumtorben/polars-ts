@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../importance/">
+        <link rel="prev" href="../../adapters/rl_env/">
       
       
-        <link rel="next" href="../outliers/">
+        <link rel="next" href="../kalman/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
-        <title>Imputation - Polars Time Series Extension</title>
+        <title>Bayesian - Polars Time Series Extension</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.imputation" class="md-skip">
+        <a href="#polars_ts.bayesian" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Imputation
+              Bayesian
             
           </span>
         </div>
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -246,7 +246,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../distance-metrics/" class="md-tabs__link">
+        <a href="../../../../distance-metrics/" class="md-tabs__link">
           
   
   
@@ -277,7 +277,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../__init__/" class="md-tabs__link">
+        <a href="../../__init__/" class="md-tabs__link">
           
   
   
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../contributing/" class="md-tabs__link">
+      <a href="../../../../contributing/" class="md-tabs__link">
         
   
   
@@ -339,7 +339,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -369,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -434,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../distance-metrics/" class="md-nav__link">
+      <a href="../../../../distance-metrics/" class="md-nav__link">
         
   
   
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../clustering-guide/" class="md-nav__link">
+      <a href="../../../../clustering-guide/" class="md-nav__link">
         
   
   
@@ -480,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../forecasting-guide/" class="md-nav__link">
+      <a href="../../../../forecasting-guide/" class="md-nav__link">
         
   
   
@@ -503,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../imaging-guide/" class="md-nav__link">
+      <a href="../../../../imaging-guide/" class="md-nav__link">
         
   
   
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../changepoint-guide/" class="md-nav__link">
+      <a href="../../../../changepoint-guide/" class="md-nav__link">
         
   
   
@@ -549,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../preprocessing-guide/" class="md-nav__link">
+      <a href="../../../../preprocessing-guide/" class="md-nav__link">
         
   
   
@@ -685,7 +685,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../__init__/" class="md-nav__link ">
               
   
   
@@ -718,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_distance_dispatch/" class="md-nav__link">
+      <a href="../../_distance_dispatch/" class="md-nav__link">
         
   
   
@@ -741,7 +741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../anomaly_forest/" class="md-nav__link">
+      <a href="../../anomaly_forest/" class="md-nav__link">
         
   
   
@@ -764,7 +764,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bias/" class="md-nav__link">
+      <a href="../../bias/" class="md-nav__link">
         
   
   
@@ -787,7 +787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../calibration/" class="md-nav__link">
+      <a href="../../calibration/" class="md-nav__link">
         
   
   
@@ -810,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagnostics/" class="md-nav__link">
+      <a href="../../diagnostics/" class="md-nav__link">
         
   
   
@@ -833,7 +833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../distance/" class="md-nav__link">
+      <a href="../../distance/" class="md-nav__link">
         
   
   
@@ -856,7 +856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../global_model/" class="md-nav__link">
+      <a href="../../global_model/" class="md-nav__link">
         
   
   
@@ -879,7 +879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../importance/" class="md-nav__link">
+      <a href="../../importance/" class="md-nav__link">
         
   
   
@@ -899,30 +899,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Imputation
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../imputation/" class="md-nav__link">
         
   
   
@@ -933,72 +913,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.imputation" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;imputation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" imputation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;impute
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" impute">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1011,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../outliers/" class="md-nav__link">
+      <a href="../../outliers/" class="md-nav__link">
         
   
   
@@ -1034,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pipeline/" class="md-nav__link">
+      <a href="../../pipeline/" class="md-nav__link">
         
   
   
@@ -1057,7 +971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reconciliation/" class="md-nav__link">
+      <a href="../../reconciliation/" class="md-nav__link">
         
   
   
@@ -1080,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resampling/" class="md-nav__link">
+      <a href="../../resampling/" class="md-nav__link">
         
   
   
@@ -1103,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../var_model/" class="md-nav__link">
+      <a href="../../var_model/" class="md-nav__link">
         
   
   
@@ -1126,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../volatility/" class="md-nav__link">
+      <a href="../../volatility/" class="md-nav__link">
         
   
   
@@ -1166,7 +1080,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../adapters/__init__/" class="md-nav__link ">
+            <a href="../../adapters/__init__/" class="md-nav__link ">
               
   
   
@@ -1199,7 +1113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/embeddings/" class="md-nav__link">
+      <a href="../../adapters/embeddings/" class="md-nav__link">
         
   
   
@@ -1222,7 +1136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/huggingface/" class="md-nav__link">
+      <a href="../../adapters/huggingface/" class="md-nav__link">
         
   
   
@@ -1245,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/neuralforecast/" class="md-nav__link">
+      <a href="../../adapters/neuralforecast/" class="md-nav__link">
         
   
   
@@ -1268,7 +1182,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/pytorch_forecasting/" class="md-nav__link">
+      <a href="../../adapters/pytorch_forecasting/" class="md-nav__link">
         
   
   
@@ -1291,7 +1205,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adapters/rl_env/" class="md-nav__link">
+      <a href="../../adapters/rl_env/" class="md-nav__link">
         
   
   
@@ -1319,8 +1233,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1329,17 +1245,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_17" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_17" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../bayesian/__init__/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -1352,13 +1266,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_1_1_17" id="__nav_3_1_1_17_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_3_1_1_17" id="__nav_3_1_1_17_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_17_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_17">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1372,7 +1286,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1420,7 +1334,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../changepoint/__init__/" class="md-nav__link ">
+            <a href="../../changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -1453,7 +1367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changepoint/bocpd/" class="md-nav__link">
+      <a href="../../changepoint/bocpd/" class="md-nav__link">
         
   
   
@@ -1476,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changepoint/cusum/" class="md-nav__link">
+      <a href="../../changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -1499,7 +1413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changepoint/pelt/" class="md-nav__link">
+      <a href="../../changepoint/pelt/" class="md-nav__link">
         
   
   
@@ -1522,7 +1436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../changepoint/regime/" class="md-nav__link">
+      <a href="../../changepoint/regime/" class="md-nav__link">
         
   
   
@@ -1570,7 +1484,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../classification/__init__/" class="md-nav__link ">
+            <a href="../../classification/__init__/" class="md-nav__link ">
               
   
   
@@ -1603,7 +1517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../classification/knn/" class="md-nav__link">
+      <a href="../../classification/knn/" class="md-nav__link">
         
   
   
@@ -1626,7 +1540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../classification/kshape_classifier/" class="md-nav__link">
+      <a href="../../classification/kshape_classifier/" class="md-nav__link">
         
   
   
@@ -1674,7 +1588,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../clustering/__init__/" class="md-nav__link ">
+            <a href="../../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -1707,7 +1621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/auto/" class="md-nav__link">
+      <a href="../../clustering/auto/" class="md-nav__link">
         
   
   
@@ -1730,7 +1644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/dba/" class="md-nav__link">
+      <a href="../../clustering/dba/" class="md-nav__link">
         
   
   
@@ -1753,7 +1667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/density/" class="md-nav__link">
+      <a href="../../clustering/density/" class="md-nav__link">
         
   
   
@@ -1776,7 +1690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/evaluation/" class="md-nav__link">
+      <a href="../../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -1799,7 +1713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/hierarchical/" class="md-nav__link">
+      <a href="../../clustering/hierarchical/" class="md-nav__link">
         
   
   
@@ -1822,7 +1736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/kmeans/" class="md-nav__link">
+      <a href="../../clustering/kmeans/" class="md-nav__link">
         
   
   
@@ -1845,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/kmedoids/" class="md-nav__link">
+      <a href="../../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -1868,7 +1782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/kshape/" class="md-nav__link">
+      <a href="../../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -1891,7 +1805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/scalable/" class="md-nav__link">
+      <a href="../../clustering/scalable/" class="md-nav__link">
         
   
   
@@ -1914,7 +1828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/shapelets/" class="md-nav__link">
+      <a href="../../clustering/shapelets/" class="md-nav__link">
         
   
   
@@ -1937,7 +1851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clustering/spectral/" class="md-nav__link">
+      <a href="../../clustering/spectral/" class="md-nav__link">
         
   
   
@@ -1985,7 +1899,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../decomposition/__init__/" class="md-nav__link ">
+            <a href="../../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -2018,7 +1932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decomposition/fourier_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -2041,7 +1955,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decomposition/seasonal_decompose_features/" class="md-nav__link">
+      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -2064,7 +1978,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../decomposition/seasonal_decomposition/" class="md-nav__link">
+      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -2112,7 +2026,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ensemble/__init__/" class="md-nav__link ">
+            <a href="../../ensemble/__init__/" class="md-nav__link ">
               
   
   
@@ -2145,7 +2059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ensemble/stacking/" class="md-nav__link">
+      <a href="../../ensemble/stacking/" class="md-nav__link">
         
   
   
@@ -2168,7 +2082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ensemble/weighted/" class="md-nav__link">
+      <a href="../../ensemble/weighted/" class="md-nav__link">
         
   
   
@@ -2216,7 +2130,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../features/__init__/" class="md-nav__link ">
+            <a href="../../features/__init__/" class="md-nav__link ">
               
   
   
@@ -2249,7 +2163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/advanced/" class="md-nav__link">
+      <a href="../../features/advanced/" class="md-nav__link">
         
   
   
@@ -2272,7 +2186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/calendar/" class="md-nav__link">
+      <a href="../../features/calendar/" class="md-nav__link">
         
   
   
@@ -2295,7 +2209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/fourier/" class="md-nav__link">
+      <a href="../../features/fourier/" class="md-nav__link">
         
   
   
@@ -2318,7 +2232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/lags/" class="md-nav__link">
+      <a href="../../features/lags/" class="md-nav__link">
         
   
   
@@ -2341,7 +2255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/rocket/" class="md-nav__link">
+      <a href="../../features/rocket/" class="md-nav__link">
         
   
   
@@ -2364,7 +2278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/rolling/" class="md-nav__link">
+      <a href="../../features/rolling/" class="md-nav__link">
         
   
   
@@ -2412,7 +2326,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../imaging/__init__/" class="md-nav__link ">
+            <a href="../../imaging/__init__/" class="md-nav__link ">
               
   
   
@@ -2445,7 +2359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/_utils/" class="md-nav__link">
+      <a href="../../imaging/_utils/" class="md-nav__link">
         
   
   
@@ -2468,7 +2382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/angular/" class="md-nav__link">
+      <a href="../../imaging/angular/" class="md-nav__link">
         
   
   
@@ -2491,7 +2405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/embeddings/" class="md-nav__link">
+      <a href="../../imaging/embeddings/" class="md-nav__link">
         
   
   
@@ -2514,7 +2428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/recurrence/" class="md-nav__link">
+      <a href="../../imaging/recurrence/" class="md-nav__link">
         
   
   
@@ -2537,7 +2451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/signature/" class="md-nav__link">
+      <a href="../../imaging/signature/" class="md-nav__link">
         
   
   
@@ -2560,7 +2474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/spectral/" class="md-nav__link">
+      <a href="../../imaging/spectral/" class="md-nav__link">
         
   
   
@@ -2583,7 +2497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../imaging/transition/" class="md-nav__link">
+      <a href="../../imaging/transition/" class="md-nav__link">
         
   
   
@@ -2631,7 +2545,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../metrics/__init__/" class="md-nav__link ">
+            <a href="../../metrics/__init__/" class="md-nav__link ">
               
   
   
@@ -2664,7 +2578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../metrics/forecast/" class="md-nav__link">
+      <a href="../../metrics/forecast/" class="md-nav__link">
         
   
   
@@ -2687,7 +2601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../metrics/kaboudan/" class="md-nav__link">
+      <a href="../../metrics/kaboudan/" class="md-nav__link">
         
   
   
@@ -2735,7 +2649,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../models/__init__/" class="md-nav__link ">
+            <a href="../../models/__init__/" class="md-nav__link ">
               
   
   
@@ -2768,7 +2682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/arima/" class="md-nav__link">
+      <a href="../../models/arima/" class="md-nav__link">
         
   
   
@@ -2791,7 +2705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/baselines/" class="md-nav__link">
+      <a href="../../models/baselines/" class="md-nav__link">
         
   
   
@@ -2814,7 +2728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/exponential_smoothing/" class="md-nav__link">
+      <a href="../../models/exponential_smoothing/" class="md-nav__link">
         
   
   
@@ -2837,7 +2751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/multistep/" class="md-nav__link">
+      <a href="../../models/multistep/" class="md-nav__link">
         
   
   
@@ -2860,7 +2774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/scum/" class="md-nav__link">
+      <a href="../../models/scum/" class="md-nav__link">
         
   
   
@@ -2908,7 +2822,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../probabilistic/__init__/" class="md-nav__link ">
+            <a href="../../probabilistic/__init__/" class="md-nav__link ">
               
   
   
@@ -2941,7 +2855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../probabilistic/conformal/" class="md-nav__link">
+      <a href="../../probabilistic/conformal/" class="md-nav__link">
         
   
   
@@ -2964,7 +2878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../probabilistic/quantile_regression/" class="md-nav__link">
+      <a href="../../probabilistic/quantile_regression/" class="md-nav__link">
         
   
   
@@ -3012,7 +2926,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../transforms/__init__/" class="md-nav__link ">
+            <a href="../../transforms/__init__/" class="md-nav__link ">
               
   
   
@@ -3045,7 +2959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../transforms/boxcox/" class="md-nav__link">
+      <a href="../../transforms/boxcox/" class="md-nav__link">
         
   
   
@@ -3068,7 +2982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../transforms/differencing/" class="md-nav__link">
+      <a href="../../transforms/differencing/" class="md-nav__link">
         
   
   
@@ -3091,7 +3005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../transforms/log/" class="md-nav__link">
+      <a href="../../transforms/log/" class="md-nav__link">
         
   
   
@@ -3139,7 +3053,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../validation/__init__/" class="md-nav__link ">
+            <a href="../../validation/__init__/" class="md-nav__link ">
               
   
   
@@ -3172,7 +3086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../validation/splits/" class="md-nav__link">
+      <a href="../../validation/splits/" class="md-nav__link">
         
   
   
@@ -3262,7 +3176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/ddtw/" class="md-nav__link">
+      <a href="../../../rust/ddtw/" class="md-nav__link">
         
   
   
@@ -3285,7 +3199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/dtw/" class="md-nav__link">
+      <a href="../../../rust/dtw/" class="md-nav__link">
         
   
   
@@ -3308,7 +3222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/dtw_multi/" class="md-nav__link">
+      <a href="../../../rust/dtw_multi/" class="md-nav__link">
         
   
   
@@ -3331,7 +3245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/edr/" class="md-nav__link">
+      <a href="../../../rust/edr/" class="md-nav__link">
         
   
   
@@ -3354,7 +3268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/erp/" class="md-nav__link">
+      <a href="../../../rust/erp/" class="md-nav__link">
         
   
   
@@ -3377,7 +3291,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/ets/" class="md-nav__link">
+      <a href="../../../rust/ets/" class="md-nav__link">
         
   
   
@@ -3400,7 +3314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/frechet/" class="md-nav__link">
+      <a href="../../../rust/frechet/" class="md-nav__link">
         
   
   
@@ -3423,7 +3337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/kmedoids/" class="md-nav__link">
+      <a href="../../../rust/kmedoids/" class="md-nav__link">
         
   
   
@@ -3446,7 +3360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/lcss/" class="md-nav__link">
+      <a href="../../../rust/lcss/" class="md-nav__link">
         
   
   
@@ -3469,7 +3383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/mann_kendall/" class="md-nav__link">
+      <a href="../../../rust/mann_kendall/" class="md-nav__link">
         
   
   
@@ -3492,7 +3406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/msm/" class="md-nav__link">
+      <a href="../../../rust/msm/" class="md-nav__link">
         
   
   
@@ -3515,7 +3429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/msm_multi/" class="md-nav__link">
+      <a href="../../../rust/msm_multi/" class="md-nav__link">
         
   
   
@@ -3538,7 +3452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/pelt/" class="md-nav__link">
+      <a href="../../../rust/pelt/" class="md-nav__link">
         
   
   
@@ -3561,7 +3475,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/sbd/" class="md-nav__link">
+      <a href="../../../rust/sbd/" class="md-nav__link">
         
   
   
@@ -3584,7 +3498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/sens_slope/" class="md-nav__link">
+      <a href="../../../rust/sens_slope/" class="md-nav__link">
         
   
   
@@ -3607,7 +3521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/twe/" class="md-nav__link">
+      <a href="../../../rust/twe/" class="md-nav__link">
         
   
   
@@ -3630,7 +3544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/utils/" class="md-nav__link">
+      <a href="../../../rust/utils/" class="md-nav__link">
         
   
   
@@ -3653,7 +3567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rust/wdtw/" class="md-nav__link">
+      <a href="../../../rust/wdtw/" class="md-nav__link">
         
   
   
@@ -3691,7 +3605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/" class="md-nav__link">
+      <a href="../../../../contributing/" class="md-nav__link">
         
   
   
@@ -3731,50 +3645,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.imputation" class="md-nav__link">
+  <a href="#polars_ts.bayesian" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;imputation
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;bayesian
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label=" imputation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;impute
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" impute">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.imputation.impute--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3797,21 +3672,19 @@
   
 
 
-  <h1>Imputation</h1>
+  <h1>Bayesian</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.imputation" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.imputation</code>
+<h2 id="polars_ts.bayesian" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
-
-        <p>Group-aware missing value imputation for time series. Closes #60.</p>
 
 
 
@@ -3832,43 +3705,6 @@
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.imputation.impute" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">impute</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;forward_fill&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">season_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Impute missing values in a time series DataFrame.</p>
-<h5 id="polars_ts.imputation.impute--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-target_col
-    Column to impute.
-method
-    Imputation method: <code>"forward_fill"</code>, <code>"backward_fill"</code>,
-    <code>"linear"</code>, <code>"mean"</code>, <code>"median"</code>, or <code>"seasonal"</code>.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps for ordering.
-season_length
-    Required when <code>method="seasonal"</code>.
-add_indicator
-    If <code>True</code>, add a boolean <code>{target_col}_imputed</code> column.</p>
-<h5 id="polars_ts.imputation.impute--returns">Returns</h5>
-<p>pl.DataFrame
-    DataFrame with missing values imputed.</p>
-
-
-    </div>
-
-</div>
 
 
 
@@ -3933,10 +3769,10 @@ add_indicator
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>
