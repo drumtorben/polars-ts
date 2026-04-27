@@ -265,7 +265,7 @@ class ParticleFilter:
             ess_arr[t] = ess
 
             # Store history
-            if self.store_history:
+            if self.store_history and particles_hist is not None and weights_hist is not None:
                 particles_hist[t] = particles.copy()
                 weights_hist[t] = weights.copy()
 
