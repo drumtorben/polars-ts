@@ -15,17 +15,31 @@ Usage in a submodule ``__init__.py``::
     }
 
     __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
+
+For names that need custom logic (e.g. wrapping ``ImportError``)::
+
+    def _load_scum():
+        try:
+            from polars_ts.models.scum import SCUM
+        except ImportError:
+            raise ImportError("statsforecast is required for SCUM.") from None
+        return SCUM
+
+    __getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={"SCUM": _load_scum})
 """
 
 from __future__ import annotations
 
 import importlib
+from collections.abc import Callable
 from typing import Any
 
 
 def make_getattr(
     registry: dict[str, tuple[str, str]],
     module_name: str,
+    *,
+    overrides: dict[str, Callable[[], Any]] | None = None,
 ) -> tuple[Any, list[str]]:
     """Create ``__getattr__`` and ``__all__`` from a lazy-import registry.
 
@@ -35,6 +49,10 @@ def make_getattr(
         Mapping from public name to ``(module_path, attribute_name)``.
     module_name
         The ``__name__`` of the calling module (for error messages).
+    overrides
+        Per-name callables that replace the default import logic.
+        Each value must be a zero-argument callable returning the object.
+        Use this for names that need custom ``ImportError`` handling.
 
     Returns
     -------
@@ -42,12 +60,16 @@ def make_getattr(
         ``(__getattr__, __all__)`` ready to be assigned at module level.
 
     """
+    _overrides = overrides or {}
 
     def __getattr__(name: str) -> Any:
+        if name in _overrides:
+            return _overrides[name]()
         if name in registry:
             mod_path, attr = registry[name]
             mod = importlib.import_module(mod_path)
             return getattr(mod, attr)
         raise AttributeError(f"module {module_name!r} has no attribute {name!r}")
 
-    return __getattr__, list(registry.keys())
+    all_names = list(_overrides.keys()) + list(registry.keys())
+    return __getattr__, all_names
