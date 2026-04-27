@@ -1,6 +1,6 @@
 [project]
 name = "polars-timeseries"
-version = "0.6.0"
+version = "0.7.0"
 description = "Polars Time Series Extension"
 authors = [
     { name = "Torben Windler" },
@@ -15,7 +15,7 @@ dependencies = [
 [project.optional-dependencies]
 forecast = ["statsforecast>=2.0.0", "utilsforecast>=0.2.0"]
 decomposition = ["polars-ds>=0.10.0"]
-clustering = ["scikit-learn>=1.3.0"]
+clustering = ["scikit-learn>=1.3.0", "scipy>=1.11.0"]
 all = ["polars-timeseries[forecast,decomposition,clustering]"]
 
 [project.urls]

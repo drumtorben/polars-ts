@@ -8,127 +8,46 @@
   <a href="https://pypi.org/project/polars-timeseries">PyPI</a>
 </p>
 
+<p align="center">
+  <a href="https://drumtorben.github.io/polars-ts/distance-metrics/">Distance Metrics</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/clustering-guide/">Clustering</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/forecasting-guide/">Forecasting</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/imaging-guide/">Imaging</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/changepoint-guide/">Changepoints</a> &bull;
+  <a href="https://drumtorben.github.io/polars-ts/preprocessing-guide/">Preprocessing</a>
+</p>
+
 ---
 
-## Features
+**polars-ts** is a batteries-included time series toolkit built on [Polars](https://pola.rs/). It gives you Rust-accelerated distance metrics, 10+ clustering algorithms, a full forecasting stack, and diagnostics — all from a single `pip install`, no heavyweight frameworks required.
 
-### Distance Metrics (Rust, parallelized via Rayon)
+### Why polars-ts?
 
-| Metric | Function | Key Parameters |
-|--------|----------|----------------|
-| Dynamic Time Warping | `compute_pairwise_dtw` | `method`: standard, sakoe_chiba, itakura, fast |
-| Derivative DTW | `compute_pairwise_ddtw` | Shape-sensitive comparison |
-| Weighted DTW | `compute_pairwise_wdtw` | `g`: weight sharpness |
-| Move-Split-Merge | `compute_pairwise_msm` | `c`: move cost |
-| Edit Distance (Real Penalty) | `compute_pairwise_erp` | `g`: gap value |
-| Longest Common Subsequence | `compute_pairwise_lcss` | `epsilon`: matching threshold |
-| Time Warp Edit Distance | `compute_pairwise_twe` | `nu`: stiffness, `lambda_`: deletion cost |
-| Multivariate DTW | `compute_pairwise_dtw_multi` | `metric`: manhattan, euclidean |
-| Multivariate MSM | `compute_pairwise_msm_multi` | `c`: move cost |
+| Pain point | How polars-ts helps |
+|---|---|
+| **"I need DTW but scipy is slow"** | 12 distance metrics compiled to native code via Rust + Rayon, orders of magnitude faster on large panels |
+| **"I want to cluster time series but tslearn/sktime have too many deps"** | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA/CLARANS, U-Shapelets — all built-in, optional `scikit-learn` only for density methods |
+| **"Setting up a forecast pipeline takes too long"** | `ForecastPipeline` wires up lags, rolling stats, calendar features, target transforms, and any sklearn model in 5 lines |
+| **"I don't know which clustering method to pick"** | `auto_cluster` sweeps methods × distances × k values and returns the best result with evaluation scores |
+| **"Polars doesn't have time series functions"** | Mann-Kendall, Sen's slope, CUSUM, PELT, decomposition, ACF/PACF — all group-aware and Polars-native |
 
-### Trend & Changepoint Detection
+### TL;DR — what you can do in 3 lines
 
-- **Mann-Kendall test** &mdash; non-parametric trend detection (Rust)
-- **Sen's slope** &mdash; robust trend magnitude estimation (Rust)
-- **CUSUM** &mdash; cumulative sum changepoint detection (Rust)
-- **PELT** &mdash; multiple changepoints with mean/variance/meanvar cost functions
-- **BOCPD** &mdash; Bayesian Online Changepoint Detection
-- **Regime detection** &mdash; Hidden Markov Model state inference
+```python
+import polars_ts as pts
 
-### Decomposition (Python)
+# Cluster 1 000 series by shape similarity
+labels = pts.auto_cluster(df, methods=["kmedoids", "spectral"], distances=["sbd", "dtw"])
 
-- **Seasonal decomposition** &mdash; additive or multiplicative (classical)
-- **Fourier decomposition** &mdash; harmonic decomposition with configurable frequencies
-- **Decomposition features** &mdash; trend/seasonal strength extraction (simple or MSTL)
-- **Anomaly flagging** &mdash; residual-based anomaly detection from any decomposition
+# Forecast with a full ML pipeline
+pipe = pts.ForecastPipeline(model, lags=[1,7,14], rolling_windows=[7], calendar=["day_of_week"])
+pipe.fit(train); forecasts = pipe.predict(train, h=7)
 
-### Feature Engineering
+# Detect changepoints
+breaks = pts.pelt(df, cost="meanvar", pen=10)
+```
 
-- **Lag features** &mdash; create lagged versions of a target column per group
-- **Rolling features** &mdash; rolling window aggregations (mean, std, min, max, sum, median, var)
-- **Calendar features** &mdash; extract day_of_week, month, quarter, is_weekend, etc.
-- **Fourier features** &mdash; sin/cos pairs for seasonal modelling
-- **Target encoding** &mdash; smoothed categorical encoding by target mean
-- **Holiday features** &mdash; binary holidays + distance-to-holiday (requires `holidays` package)
-- **Interaction features** &mdash; cross-term column generation
-- **Time embeddings** &mdash; cyclical sin/cos encoding for time components
-
-### Target Transforms
-
-- **Log transform** &mdash; log1p / expm1 with automatic validation and lossless inversion
-- **Box-Cox transform** &mdash; parametric power transform with configurable lambda
-- **Differencing** &mdash; configurable order and seasonal period with metadata for lossless inversion
-
-All transforms are group-aware, invertible, and accessible via the `df.pts` namespace.
-
-### Data Preprocessing
-
-- **Missing value imputation** &mdash; forward/backward fill, linear interpolation, mean, median, seasonal
-- **Outlier detection** &mdash; z-score, IQR, Hampel filter, rolling z-score
-- **Outlier treatment** &mdash; clip (winsorize), median replacement, interpolation, null
-- **Temporal resampling** &mdash; downsample/upsample with configurable aggregation
-
-### Validation Strategies
-
-- **Expanding window CV** &mdash; growing training window cross-validation
-- **Sliding window CV** &mdash; fixed-size training window cross-validation
-- **Rolling origin CV** &mdash; general rolling-origin with configurable initial/fixed train size
-
-### Forecasting
-
-- **SCUM** &mdash; ensemble model combining AutoARIMA, AutoETS, AutoCES, and DynamicOptimizedTheta
-- **ARIMA/SARIMA** &mdash; explicit `(p,d,q)` order via `statsmodels` (`arima_fit`/`arima_forecast`) or automatic selection via `statsforecast` (`auto_arima`)
-- **Baseline models** &mdash; naive, seasonal naive, moving average, and FFT-based forecasts
-- **Exponential smoothing** &mdash; SES, Holt's linear, Holt-Winters (additive/multiplicative)
-- **Multi-step strategies** &mdash; `RecursiveForecaster` and `DirectForecaster`
-- **ForecastPipeline** &mdash; end-to-end ML pipeline with feature engineering + transforms
-- **GlobalForecaster** &mdash; cross-series panel model with optional ID encoding
-
-### Probabilistic Forecasting
-
-- **QuantileRegressor** &mdash; one model per quantile level with CRPS-compatible output
-- **Conformal prediction** &mdash; distribution-free intervals with coverage guarantees
-- **EnbPI** &mdash; Ensemble Batch Prediction Intervals with adaptive online updates
-
-### Ensembling
-
-- **WeightedEnsemble** &mdash; equal, manual, or inverse-error-optimized weights
-- **StackingForecaster** &mdash; meta-learner trained on out-of-fold predictions
-
-### Forecast Evaluation & Diagnostics
-
-- **Metrics** &mdash; MAE, RMSE, MAPE, sMAPE, MASE, CRPS
-- **Kaboudan metric** &mdash; model robustness evaluation via block-shuffle backtesting
-- **Bias detection & correction** &mdash; mean, regression, quantile mapping
-- **Calibration diagnostics** &mdash; calibration table, PIT histogram, reliability diagram
-- **Residual diagnostics** &mdash; ACF, PACF, Ljung-Box test
-- **Permutation importance** &mdash; model-agnostic feature importance
-
-### Multivariate & Hierarchical
-
-- **VAR** &mdash; Vector Autoregression with OLS fitting and multi-step forecasts
-- **Granger causality** &mdash; F-test for causal relationships between series
-- **GARCH** &mdash; volatility modelling and conditional variance forecasting
-- **Forecast reconciliation** &mdash; bottom-up, top-down, and MinTrace-OLS
-
-### Clustering & Classification
-
-- **k-Medoids (PAM)** &mdash; supports all 12 distance metrics
-- **KShape** &mdash; shape-based clustering with centroid computation
-- **k-NN classification** &mdash; distance-based time series classification
-- **KShape classifier** &mdash; classification using KShape centroids
-
-### Anomaly Detection
-
-- **Decomposition-based** &mdash; residual threshold anomaly flagging
-- **Isolation Forest** &mdash; unsupervised anomaly detection on engineered features
-
-### Integration Adapters
-
-- **neuralforecast** &mdash; convert to/from N-BEATS, PatchTST, N-HiTS format
-- **pytorch-forecasting** &mdash; convert to/from TFT, DeepAR format
-- **HuggingFace** &mdash; convert to Dataset for Chronos, TimesFM, Lag-Llama
-- **ForecastEnv** &mdash; gymnasium-compatible RL environment for decision making
+---
 
 ## Installation
 
@@ -136,17 +55,20 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 pip install polars-timeseries
 ```
 
-Optional dependencies for specific features:
+Extras for optional features:
 
 ```bash
-pip install "polars-timeseries[forecast]"      # Kaboudan metric, SCUM model
-pip install "polars-timeseries[decomposition]"  # Fourier decomposition
+pip install "polars-timeseries[clustering]"     # HDBSCAN, DBSCAN, spectral (sklearn + scipy)
+pip install "polars-timeseries[forecast]"       # SCUM, auto_arima (statsforecast)
+pip install "polars-timeseries[decomposition]"  # Fourier decomposition (polars-ds)
 pip install "polars-timeseries[all]"            # Everything
 ```
 
-Requires Python 3.12+ and Polars 1.30+.
+Requires **Python 3.12+** and **Polars 1.30+**.
 
-## Quick Start
+---
+
+## Quick start
 
 ### Pairwise DTW distance
 
@@ -161,6 +83,19 @@ df = pl.DataFrame({
 })
 
 result = pts.compute_pairwise_dtw(df, df)
+```
+
+### Auto-cluster time series
+
+```python
+result = pts.auto_cluster(
+    df,
+    methods=["kmedoids", "spectral", "kshape"],
+    distances=["sbd", "dtw"],
+    k_range=range(2, 6),
+)
+print(result.best_method, result.best_k, result.best_score)
+print(result.best_labels)  # DataFrame[unique_id, cluster]
 ```
 
 ### End-to-end forecast pipeline
@@ -251,6 +186,169 @@ df = pl.DataFrame({
 
 result = pts.seasonal_decomposition(df, freq=12, method="additive")
 ```
+
+---
+
+## Features
+
+### Distance metrics <sub>Rust, parallelized via Rayon</sub>
+
+All distance functions return a tidy DataFrame with columns `[id_1, id_2, <metric>]`. A unified `compute_pairwise_distance(method=...)` API lets you swap metrics with a single string.
+
+| Metric | Function | Key Parameters |
+|--------|----------|----------------|
+| Dynamic Time Warping | `compute_pairwise_dtw` | `method`: standard, sakoe_chiba, itakura, fast |
+| Derivative DTW | `compute_pairwise_ddtw` | Shape-sensitive comparison |
+| Weighted DTW | `compute_pairwise_wdtw` | `g`: weight sharpness |
+| Move-Split-Merge | `compute_pairwise_msm` | `c`: move cost |
+| Edit Distance (Real Penalty) | `compute_pairwise_erp` | `g`: gap value |
+| Longest Common Subsequence | `compute_pairwise_lcss` | `epsilon`: matching threshold |
+| Time Warp Edit Distance | `compute_pairwise_twe` | `nu`: stiffness, `lambda_`: deletion cost |
+| Shape-Based Distance | `compute_pairwise_sbd` | Cross-correlation based |
+| Frechet Distance | `compute_pairwise_frechet` | Geometric coupling distance |
+| Edit Distance on Real Sequences | `compute_pairwise_edr` | Edit-operation cost |
+| Multivariate DTW | `compute_pairwise_dtw_multi` | `metric`: manhattan, euclidean |
+| Multivariate MSM | `compute_pairwise_msm_multi` | `c`: move cost |
+
+### Clustering & classification
+
+| Method | Function | When to use |
+|--------|----------|-------------|
+| **K-Medoids (PAM)** | `kmedoids` | Known k, any distance metric, interpretable medoids |
+| **K-Shape** | `KShape` | Shape-based grouping via cross-correlation centroids |
+| **Spectral (KSC)** | `spectral_cluster` | Non-convex clusters, graph Laplacian structure |
+| **HDBSCAN** | `hdbscan_cluster` | Unknown k, varying density, noise detection |
+| **DBSCAN** | `dbscan_cluster` | Fixed-radius neighbourhood, noise detection |
+| **Hierarchical** | `agglomerative_cluster` | Dendrogram visualization, flexible linkage |
+| **K-Means DBA** | `kmeans_dba` | DTW Barycentric Averaging centroids |
+| **CLARA** | `clara` | Scalable k-medoids via sampling |
+| **CLARANS** | `clarans` | Randomized k-medoids neighbourhood search |
+| **U-Shapelets** | `shapelet_cluster` | Interpretable sub-sequence patterns |
+| **ROCKET / MiniRocket** | `rocket_features`, `minirocket_features` | Random convolutional kernel feature extraction |
+| **Auto-cluster** | `auto_cluster` | Sweep methods × distances × k, pick the best |
+
+**Evaluation:** `silhouette_score`, `davies_bouldin_score`, `calinski_harabasz_score`
+
+**Classification:** `knn_classify` (distance-based k-NN), `TimeSeriesKNNClassifier` (OOP), `KShapeClassifier` (centroid-based)
+
+### Trend & changepoint detection
+
+- **Mann-Kendall test** &mdash; non-parametric trend detection (Rust)
+- **Sen's slope** &mdash; robust trend magnitude estimation (Rust)
+- **CUSUM** &mdash; cumulative sum changepoint detection (Rust)
+- **PELT** &mdash; multiple changepoints with mean/variance/meanvar cost functions
+- **BOCPD** &mdash; Bayesian Online Changepoint Detection
+- **Regime detection** &mdash; Hidden Markov Model state inference
+
+### Decomposition
+
+- **Seasonal decomposition** &mdash; additive or multiplicative (classical)
+- **Fourier decomposition** &mdash; harmonic decomposition with configurable frequencies
+- **Decomposition features** &mdash; trend/seasonal strength extraction (simple or MSTL)
+- **Anomaly flagging** &mdash; residual-based anomaly detection from any decomposition
+
+### Feature engineering
+
+- **Lag features** &mdash; create lagged versions of a target column per group
+- **Rolling features** &mdash; rolling window aggregations (mean, std, min, max, sum, median, var)
+- **Calendar features** &mdash; extract day_of_week, month, quarter, is_weekend, etc.
+- **Fourier features** &mdash; sin/cos pairs for seasonal modelling
+- **Target encoding** &mdash; smoothed categorical encoding by target mean
+- **Holiday features** &mdash; binary holidays + distance-to-holiday (requires `holidays` package)
+- **Interaction features** &mdash; cross-term column generation
+- **Time embeddings** &mdash; cyclical sin/cos encoding for time components
+
+### Target transforms
+
+- **Log transform** &mdash; log1p / expm1 with automatic validation and lossless inversion
+- **Box-Cox transform** &mdash; parametric power transform with configurable lambda
+- **Differencing** &mdash; configurable order and seasonal period with metadata for lossless inversion
+
+All transforms are group-aware, invertible, and accessible via the `df.pts` namespace.
+
+### Data preprocessing
+
+- **Missing value imputation** &mdash; forward/backward fill, linear interpolation, mean, median, seasonal
+- **Outlier detection** &mdash; z-score, IQR, Hampel filter, rolling z-score
+- **Outlier treatment** &mdash; clip (winsorize), median replacement, interpolation, null
+- **Temporal resampling** &mdash; downsample/upsample with configurable aggregation
+
+### Validation strategies
+
+- **Expanding window CV** &mdash; growing training window cross-validation
+- **Sliding window CV** &mdash; fixed-size training window cross-validation
+- **Rolling origin CV** &mdash; general rolling-origin with configurable initial/fixed train size
+
+### Forecasting
+
+- **SCUM** &mdash; ensemble model combining AutoARIMA, AutoETS, AutoCES, and DynamicOptimizedTheta
+- **ARIMA/SARIMA** &mdash; explicit `(p,d,q)` order via `statsmodels` (`arima_fit`/`arima_forecast`) or automatic selection via `statsforecast` (`auto_arima`)
+- **Baseline models** &mdash; naive, seasonal naive, moving average, and FFT-based forecasts
+- **Exponential smoothing** &mdash; SES, Holt's linear, Holt-Winters (additive/multiplicative, Rust-accelerated)
+- **Multi-step strategies** &mdash; `RecursiveForecaster` and `DirectForecaster`
+- **ForecastPipeline** &mdash; end-to-end ML pipeline with feature engineering + transforms
+- **GlobalForecaster** &mdash; cross-series panel model with optional ID encoding
+
+### Probabilistic forecasting
+
+- **QuantileRegressor** &mdash; one model per quantile level with CRPS-compatible output
+- **Conformal prediction** &mdash; distribution-free intervals with coverage guarantees
+- **EnbPI** &mdash; Ensemble Batch Prediction Intervals with adaptive online updates
+
+### Ensembling
+
+- **WeightedEnsemble** &mdash; equal, manual, or inverse-error-optimized weights
+- **StackingForecaster** &mdash; meta-learner trained on out-of-fold predictions
+
+### Forecast evaluation & diagnostics
+
+- **Metrics** &mdash; MAE, RMSE, MAPE, sMAPE, MASE, CRPS
+- **Kaboudan metric** &mdash; model robustness evaluation via block-shuffle backtesting
+- **Bias detection & correction** &mdash; mean, regression, quantile mapping
+- **Calibration diagnostics** &mdash; calibration table, PIT histogram, reliability diagram
+- **Residual diagnostics** &mdash; ACF, PACF, Ljung-Box test
+- **Permutation importance** &mdash; model-agnostic feature importance
+
+### Multivariate & hierarchical
+
+- **VAR** &mdash; Vector Autoregression with OLS fitting and multi-step forecasts
+- **Granger causality** &mdash; F-test for causal relationships between series
+- **GARCH** &mdash; volatility modelling and conditional variance forecasting
+- **Forecast reconciliation** &mdash; bottom-up, top-down, and MinTrace-OLS
+
+### Anomaly detection
+
+- **Decomposition-based** &mdash; residual threshold anomaly flagging
+- **Isolation Forest** &mdash; unsupervised anomaly detection on engineered features
+
+### Integration adapters
+
+- **NeuralForecast** &mdash; convert to/from N-BEATS, PatchTST, N-HiTS format
+- **PyTorch Forecasting** &mdash; convert to/from TFT, DeepAR format
+- **HuggingFace** &mdash; convert to Dataset for Chronos, TimesFM, Lag-Llama
+- **Chronos / MOMENT embeddings** &mdash; foundation model feature extraction for clustering
+- **ForecastEnv** &mdash; Gymnasium-compatible RL environment for decision making
+
+---
+
+## Tutorials
+
+The `notebooks/` directory contains 10 end-to-end tutorials:
+
+| # | Topic | Notebook |
+|---|---|---|
+| 01 | Data wrangling & exploration | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/01_data_wrangling_and_exploration.ipynb) |
+| 02 | Feature engineering & transforms | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/02_feature_engineering_transforms.ipynb) |
+| 03 | Forecasting fundamentals | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/03_forecasting_fundamentals.ipynb) |
+| 04 | ML forecasting pipelines | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/04_ml_forecasting_pipelines.ipynb) |
+| 05 | Uncertainty & calibration | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/05_uncertainty_and_calibration.ipynb) |
+| 06 | Changepoint & anomaly detection | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/06_changepoint_anomaly_detection.ipynb) |
+| 07 | Time series similarity & clustering | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/07_time_series_similarity_clustering.ipynb) |
+| 08 | Multivariate & volatility | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/08_multivariate_volatility.ipynb) |
+| 09 | Ensembles & reconciliation | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/09_ensembles_reconciliation.ipynb) |
+| 10 | Ecosystem adapters | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/10_ecosystem_adapters.ipynb) |
+
+---
 
 ## Development
 
