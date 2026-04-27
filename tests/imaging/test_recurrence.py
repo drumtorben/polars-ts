@@ -7,16 +7,6 @@ scipy = pytest.importorskip("scipy")
 from polars_ts.imaging.recurrence import rqa_features, to_recurrence_plot  # noqa: E402
 
 
-@pytest.fixture
-def sample_data():
-    return pl.DataFrame(
-        {
-            "unique_id": ["A"] * 10 + ["B"] * 10,
-            "y": [float(i) for i in range(10)] + [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0],
-        }
-    )
-
-
 class TestToRecurrencePlot:
     def test_output_shape(self, sample_data):
         images = to_recurrence_plot(sample_data, threshold=0.5)

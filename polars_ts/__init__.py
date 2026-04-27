@@ -69,9 +69,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     ),
     # --- Changepoint ---
     "cusum": ("polars_ts.changepoint.cusum", "cusum"),
-    "pelt": ("polars_ts.changepoint", "pelt"),
-    "bocpd": ("polars_ts.changepoint", "bocpd"),
-    "regime_detect": ("polars_ts.changepoint", "regime_detect"),
+    "pelt": ("polars_ts.changepoint.pelt", "pelt"),
+    "bocpd": ("polars_ts.changepoint.bocpd", "bocpd"),
+    "regime_detect": ("polars_ts.changepoint.regime", "regime_detect"),
     # --- Clustering ---
     "kmedoids": ("polars_ts.clustering.kmedoids", "kmedoids"),
     "TimeSeriesKMedoids": ("polars_ts.clustering.kmedoids", "TimeSeriesKMedoids"),
@@ -197,6 +197,10 @@ def __getattr__(name: str) -> Any:
         "BSTS",
         "bsts_fit",
         "bsts_forecast",
+        "GaussianProcessTS",
+        "gp_forecast",
+        "BayesianAnomalyDetector",
+        "bayesian_anomaly_score",
         "ParticleFilter",
         "particle_filter",
     }:
