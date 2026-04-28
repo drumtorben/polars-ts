@@ -1479,6 +1479,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/anomaly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/bsts/" class="md-nav__link">
         
   
@@ -1525,12 +1548,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/gp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/kalman/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kalman
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bayesian/particle_filter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
     
   </span>
   
@@ -4138,6 +4207,15 @@ static_features
     Column names of static (per-series) exogenous features to
     include in the feature matrix (e.g. <code>["store_type"]</code>).
     String columns are ordinal-encoded automatically.
+past_covariates
+    Column names of time-varying covariates known only up to the
+    present.  Lagged features are created automatically.
+future_covariates
+    Column names of time-varying covariates known into the future
+    (e.g. holidays, promotions).  Values for the forecast horizon
+    must be supplied in <em>future_df</em> at predict time.
+past_covariate_lags
+    Lag offsets for past covariate features.  Defaults to <em>lags</em>.
 target_col
     Column with the target values.
 id_col
@@ -4195,7 +4273,7 @@ time_col
 
 
 <h4 id="polars_ts.global_model.GlobalForecaster.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">future_df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -4208,7 +4286,11 @@ time_col
     DataFrame containing history to predict from. Must include
     any <code>static_features</code> columns.
 h
-    Forecast horizon.</p>
+    Forecast horizon.
+future_df
+    DataFrame with future covariate values for the forecast
+    horizon.  Required when <em>future_covariates</em> were specified
+    at construction.</p>
 <h6 id="polars_ts.global_model.GlobalForecaster.predict--returns">Returns</h6>
 <p>pl.DataFrame
     DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>

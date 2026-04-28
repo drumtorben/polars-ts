@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../baselines/">
+        <link rel="prev" href="../kalman/">
       
       
-        <link rel="next" href="../multistep/">
+        <link rel="next" href="../ukf/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Exponential smoothing - Polars Time Series Extension</title>
+        <title>Particle filter - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.models.exponential_smoothing" class="md-skip">
+        <a href="#polars_ts.bayesian.particle_filter" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Exponential smoothing
+              Particle filter
             
           </span>
         </div>
@@ -1256,8 +1256,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1266,17 +1268,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1295,7 +1295,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1309,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/anomaly/" class="md-nav__link">
+      <a href="../anomaly/" class="md-nav__link">
         
   
   
@@ -1332,7 +1332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../bsts/" class="md-nav__link">
         
   
   
@@ -1355,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../enkf/" class="md-nav__link">
         
   
   
@@ -1378,7 +1378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/gp/" class="md-nav__link">
+      <a href="../gp/" class="md-nav__link">
         
   
   
@@ -1401,7 +1401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1421,10 +1421,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1435,6 +1455,225 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;particle_filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" particle_filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter--references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilterResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ParticleFilterResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ParticleFilterResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilterResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ParticleFilter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ParticleFilter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter._systematic_resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_systematic_resample
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter._multinomial_resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_multinomial_resample
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.local_level_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;local_level_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.local_level_loglik" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;local_level_loglik
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ar1_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ar1_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.stochastic_volatility_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;stochastic_volatility_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.stochastic_volatility_loglik" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;stochastic_volatility_loglik
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;particle_filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" particle_filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1447,7 +1686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../ukf/" class="md-nav__link">
         
   
   
@@ -2790,8 +3029,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2802,15 +3039,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_27" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_27" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../models/__init__/" class="md-nav__link ">
               
   
   
@@ -2829,7 +3068,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_27">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -2843,7 +3082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arima/" class="md-nav__link">
+      <a href="../../models/arima/" class="md-nav__link">
         
   
   
@@ -2866,7 +3105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../baselines/" class="md-nav__link">
+      <a href="../../models/baselines/" class="md-nav__link">
         
   
   
@@ -2886,30 +3125,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Exponential smoothing
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../models/exponential_smoothing/" class="md-nav__link">
         
   
   
@@ -2920,111 +3139,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" exponential_smoothing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" ses_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3037,7 +3151,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multistep/" class="md-nav__link">
+      <a href="../../models/multistep/" class="md-nav__link">
         
   
   
@@ -3060,7 +3174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scum/" class="md-nav__link">
+      <a href="../../models/scum/" class="md-nav__link">
         
   
   
@@ -3931,29 +4045,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;particle_filter
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" exponential_smoothing">
+    <nav class="md-nav" aria-label=" particle_filter">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter--references" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" ses_forecast">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilterResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ParticleFilterResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ParticleFilterResult">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilterResult--attributes" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Attributes
     </span>
   </a>
   
@@ -3965,19 +4088,47 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ParticleFilter
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_forecast">
+    <nav class="md-nav" aria-label=" ParticleFilter">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ParticleFilter.filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
     </span>
   </a>
   
@@ -3988,20 +4139,97 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+        
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter._systematic_resample" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_systematic_resample
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter._multinomial_resample" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_multinomial_resample
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.local_level_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;local_level_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.local_level_loglik" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;local_level_loglik
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.ar1_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ar1_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.stochastic_volatility_transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;stochastic_volatility_transition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.stochastic_volatility_loglik" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;stochastic_volatility_loglik
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;particle_filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" particle_filter">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.particle_filter.particle_filter--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
     </span>
   </a>
   
@@ -4036,24 +4264,145 @@
   
 
 
-  <h1>Exponential smoothing</h1>
+  <h1>Particle filter</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.models.exponential_smoothing" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.exponential_smoothing</code>
+<h2 id="polars_ts.bayesian.particle_filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian.particle_filter</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Pure-Polars exponential smoothing forecasters.</p>
-<p>Implements SES, Holt's linear, and Holt-Winters methods.
-Delegates to Rust when available (2-5x faster per group),
-falling back to pure Python otherwise. Closes #49.</p>
+        <p>Particle Filter (Sequential Monte Carlo) for nonlinear state estimation.</p>
+<p>Implements bootstrap and auxiliary particle filters with systematic
+resampling for state estimation in nonlinear, non-Gaussian state-space
+models.</p>
+<h4 id="polars_ts.bayesian.particle_filter--references">References</h4>
+<ul>
+<li>Doucet et al. (2001), <em>Sequential Monte Carlo Methods in Practice</em></li>
+<li>Andrieu et al. (2010), <em>Particle Markov chain Monte Carlo methods</em></li>
+<li>Chopin &amp; Papaspiliopoulos (2020), <em>An Introduction to Sequential Monte Carlo</em></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.particle_filter.ParticleFilterResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>ParticleFilterResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Particle filter output.</p>
+<h5 id="polars_ts.bayesian.particle_filter.ParticleFilterResult--attributes">Attributes</h5>
+<p>filtered_mean
+    Filtered state mean at each time step, shape <code>(T,)</code> or <code>(T, state_dim)</code>.
+filtered_var
+    Filtered state variance at each time step.
+particles_history
+    Full particle trajectories, shape <code>(T, n_particles, state_dim)</code>.
+    <code>None</code> if <code>store_history=False</code>.
+weights_history
+    Normalized weights at each step, shape <code>(T, n_particles)</code>.
+    <code>None</code> if <code>store_history=False</code>.
+ess
+    Effective sample size at each step, shape <code>(T,)</code>.
+log_likelihood
+    Estimate of the log marginal likelihood.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.particle_filter.ParticleFilter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>ParticleFilter</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Bootstrap Particle Filter for nonlinear state-space models.</p>
+<h5 id="polars_ts.bayesian.particle_filter.ParticleFilter--parameters">Parameters</h5>
+<p>n_particles
+    Number of particles.
+transition_fn
+    State transition function: <code>(particles, t, rng) -&gt; new_particles</code>.
+observation_loglik
+    Observation log-likelihood: <code>(particles, y_t) -&gt; log_weights</code>.
+resample_method
+    Resampling strategy: <code>"systematic"</code> or <code>"multinomial"</code>.
+resample_threshold
+    Resample when ESS drops below <code>resample_threshold * n_particles</code>.
+seed
+    Random seed.
+store_history
+    Whether to store full particle/weight histories.</p>
+
 
 
 
@@ -4078,23 +4427,52 @@ falling back to pure Python otherwise. Closes #49.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.ses_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">ses_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.particle_filter.ParticleFilter.filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="nb">filter</span><span class="p">(</span><span class="n">observations</span><span class="p">,</span> <span class="n">initial_particles</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run the particle filter on a sequence of observations.</p>
+<h6 id="polars_ts.bayesian.particle_filter.ParticleFilter.filter--parameters">Parameters</h6>
+<p>observations
+    Array of observations, shape <code>(T,)</code>.
+initial_particles
+    Starting particles, shape <code>(n_particles,)</code>.
+    If <code>None</code>, initialized from N(y[0], 1).</p>
+<h6 id="polars_ts.bayesian.particle_filter.ParticleFilter.filter--returns">Returns</h6>
+<p>ParticleFilterResult
+    Filtering result with means, variances, ESS, and optionally
+    full particle/weight histories.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter._systematic_resample" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_systematic_resample</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Forecast with Simple Exponential Smoothing.</p>
-<p>Smooths with level parameter <em>alpha</em> and projects a flat forecast.</p>
-<h5 id="polars_ts.models.exponential_smoothing.ses_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level (0 &lt; alpha &lt; 1).</p>
+        <p>Systematic resampling. Returns index array.</p>
 
 
     </div>
@@ -4104,25 +4482,15 @@ alpha
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h3 id="polars_ts.bayesian.particle_filter._multinomial_resample" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_multinomial_resample</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt's linear trend forecast.</p>
-<p>Smooths level and trend, then extrapolates linearly.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.</p>
+        <p>Multinomial resampling. Returns index array.</p>
 
 
     </div>
@@ -4132,31 +4500,125 @@ beta
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_winters_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_winters_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">season_length</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h3 id="polars_ts.bayesian.particle_filter.local_level_transition" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">local_level_transition</span><span class="p">(</span><span class="n">sigma_level</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt-Winters seasonal forecast.</p>
-<p>Smooths level, trend, and seasonal components.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters">Parameters</h5>
+        <p>Create transition function for local level model.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter.local_level_loglik" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">local_level_loglik</span><span class="p">(</span><span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create observation log-likelihood for local level model.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter.ar1_transition" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">ar1_transition</span><span class="p">(</span><span class="n">phi</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create transition function for AR(1) model.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter.stochastic_volatility_transition" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">stochastic_volatility_transition</span><span class="p">(</span><span class="n">phi</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">sigma_v</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create transition for stochastic volatility model: h_t = mu + phi<em>(h_{t-1}-mu) + sigma_v</em>e_t.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter.stochastic_volatility_loglik" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">stochastic_volatility_loglik</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Observation log-likelihood for SV model: y_t ~ N(0, exp(h_t)).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.particle_filter.particle_filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">particle_filter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">transition_fn</span><span class="p">,</span> <span class="n">observation_loglik</span><span class="p">,</span> <span class="n">n_particles</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">resample_method</span><span class="o">=</span><span class="s1">&#39;systematic&#39;</span><span class="p">,</span> <span class="n">resample_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Particle filter convenience function for DataFrames.</p>
+<h5 id="polars_ts.bayesian.particle_filter.particle_filter--parameters">Parameters</h5>
 <p>df
     Input DataFrame.
-h
-    Forecast horizon.
-season_length
-    Number of observations per season.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.
-gamma
-    Smoothing parameter for seasonality.
-seasonal
-    <code>"additive"</code> or <code>"multiplicative"</code>.</p>
+transition_fn
+    State transition function.
+observation_loglik
+    Observation log-likelihood function.
+n_particles
+    Number of particles.
+resample_method
+    <code>"systematic"</code> or <code>"multinomial"</code>.
+resample_threshold
+    ESS threshold for resampling.
+seed
+    Random seed.
+id_col, target_col, time_col
+    Column names.</p>
+<h5 id="polars_ts.bayesian.particle_filter.particle_filter--returns">Returns</h5>
+<p>pl.DataFrame
+    DataFrame with <code>filtered_mean</code>, <code>filtered_var</code>, <code>ess</code> columns.</p>
 
 
     </div>

@@ -1488,6 +1488,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/anomaly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/bsts/" class="md-nav__link">
         
   
@@ -1534,12 +1557,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/gp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/kalman/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kalman
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bayesian/particle_filter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
     
   </span>
   
@@ -4148,6 +4217,15 @@ target_transform
     Optional transform: <code>"log"</code>, <code>"boxcox"</code>, or <code>"difference"</code>.
 transform_kwargs
     Arguments passed to the transform function (e.g. <code>{"lam": 0.5}</code>).
+past_covariates
+    Column names of time-varying covariates known only up to the
+    present.  Lagged features are created automatically.
+future_covariates
+    Column names of time-varying covariates known into the future
+    (e.g. holidays, promotions).  Values for the forecast horizon
+    must be supplied in <em>future_df</em> at predict time.
+past_covariate_lags
+    Lag offsets for past covariate features.  Defaults to <em>lags</em>.
 target_col
     Column with the target values.
 id_col
@@ -4190,8 +4268,8 @@ time_col
         <p>Fit the pipeline: transform target, build features, train model.</p>
 <h6 id="polars_ts.pipeline.ForecastPipeline.fit--parameters">Parameters</h6>
 <p>df
-    Training DataFrame with <code>id_col</code>, <code>time_col</code>, and
-    <code>target_col</code>.</p>
+    Training DataFrame with <code>id_col</code>, <code>time_col</code>,
+    <code>target_col</code>, and any covariate columns.</p>
 <h6 id="polars_ts.pipeline.ForecastPipeline.fit--returns">Returns</h6>
 <p>ForecastPipeline
     Fitted pipeline (<code>self</code>).</p>
@@ -4205,7 +4283,7 @@ time_col
 
 
 <h4 id="polars_ts.pipeline.ForecastPipeline.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">future_df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -4217,7 +4295,12 @@ time_col
 <p>df
     DataFrame containing history to predict from.
 h
-    Forecast horizon.</p>
+    Forecast horizon.
+future_df
+    DataFrame with future covariate values for the forecast
+    horizon.  Required when <em>future_covariates</em> were specified
+    at construction.  Must contain <code>id_col</code>, <code>time_col</code>,
+    and all future covariate columns.</p>
 <h6 id="polars_ts.pipeline.ForecastPipeline.predict--returns">Returns</h6>
 <p>pl.DataFrame
     DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
@@ -4258,7 +4341,7 @@ h
 
 
 <h3 id="polars_ts.pipeline._build_feature_df" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_feature_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">lags</span><span class="p">,</span> <span class="n">rolling_windows</span><span class="p">,</span> <span class="n">rolling_aggs</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">fourier</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_feature_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">lags</span><span class="p">,</span> <span class="n">rolling_windows</span><span class="p">,</span> <span class="n">rolling_aggs</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">fourier</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">time_col</span><span class="p">,</span> <span class="n">past_covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">past_covariate_lags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">future_covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -4294,7 +4377,7 @@ h
 
 
 <h3 id="polars_ts.pipeline._build_step_features" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_step_features</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">lags</span><span class="p">,</span> <span class="n">rolling_windows</span><span class="p">,</span> <span class="n">rolling_aggs</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">fourier_specs</span><span class="p">,</span> <span class="n">step_index</span><span class="p">,</span> <span class="n">_time_col</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_build_step_features</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">lags</span><span class="p">,</span> <span class="n">rolling_windows</span><span class="p">,</span> <span class="n">rolling_aggs</span><span class="p">,</span> <span class="n">calendar</span><span class="p">,</span> <span class="n">fourier_specs</span><span class="p">,</span> <span class="n">step_index</span><span class="p">,</span> <span class="n">_time_col</span><span class="p">,</span> <span class="n">past_covariate_buffers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">past_covariate_lags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">future_covariate_values</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 

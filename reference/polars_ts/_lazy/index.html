@@ -1395,6 +1395,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/anomaly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/bsts/" class="md-nav__link">
         
   
@@ -1441,12 +1464,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../bayesian/gp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../bayesian/kalman/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kalman
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bayesian/particle_filter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
     
   </span>
   
@@ -3918,6 +3987,16 @@ _IMPORTS: dict[str, tuple[str, str]] = {
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
 </code></pre></div>
+<p>For names that need custom logic (e.g. wrapping <code>ImportError</code>)::</p>
+<div class="language-text highlight"><pre><span></span><code>def _load_scum():
+    try:
+        from polars_ts.models.scum import SCUM
+    except ImportError:
+        raise ImportError(&quot;statsforecast is required for SCUM.&quot;) from None
+    return SCUM
+
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={&quot;SCUM&quot;: _load_scum})
+</code></pre></div>
 
 
 
@@ -3943,7 +4022,7 @@ __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
 
 
 <h3 id="polars_ts._lazy.make_getattr" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">make_getattr</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">make_getattr</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">overrides</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -3955,7 +4034,11 @@ __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
 <p>registry
     Mapping from public name to <code>(module_path, attribute_name)</code>.
 module_name
-    The <code>__name__</code> of the calling module (for error messages).</p>
+    The <code>__name__</code> of the calling module (for error messages).
+overrides
+    Per-name callables that replace the default import logic.
+    Each value must be a zero-argument callable returning the object.
+    Use this for names that need custom <code>ImportError</code> handling.</p>
 <h5 id="polars_ts._lazy.make_getattr--returns">Returns</h5>
 <p>tuple
     <code>(__getattr__, __all__)</code> ready to be assigned at module level.</p>

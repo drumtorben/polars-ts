@@ -1309,6 +1309,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../bayesian/anomaly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../bayesian/bsts/" class="md-nav__link">
         
   
@@ -1355,12 +1378,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../../bayesian/gp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../bayesian/kalman/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kalman
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
     
   </span>
   
@@ -4373,6 +4442,15 @@ prediction back as input to generate the next step, up to horizon <em>h</em>.</p
     A scikit-learn-compatible estimator with <code>fit</code> and <code>predict</code>.
 lags
     Lag offsets used as features (e.g. <code>[1, 2, 7]</code>).
+past_covariates
+    Column names of time-varying covariates known only up to the
+    present.  Lagged features are created for each covariate.
+future_covariates
+    Column names of time-varying covariates known into the future.
+    Values for the forecast horizon must be supplied in <em>future_df</em>
+    at predict time.
+past_covariate_lags
+    Lag offsets for past covariate features.  Defaults to <em>lags</em>.
 target_col
     Column with the target values.
 id_col
@@ -4416,8 +4494,8 @@ time_col
 <p>All series are pooled together for a single global model.</p>
 <h6 id="polars_ts.models.multistep.RecursiveForecaster.fit--parameters">Parameters</h6>
 <p>df
-    Training DataFrame with at least <code>id_col</code>, <code>time_col</code>, and
-    <code>target_col</code>.</p>
+    Training DataFrame with at least <code>id_col</code>, <code>time_col</code>,
+    <code>target_col</code>, and any covariate columns.</p>
 <h6 id="polars_ts.models.multistep.RecursiveForecaster.fit--returns">Returns</h6>
 <p>RecursiveForecaster
     Fitted forecaster (<code>self</code>).</p>
@@ -4431,7 +4509,7 @@ time_col
 
 
 <h4 id="polars_ts.models.multistep.RecursiveForecaster.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">future_df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -4443,7 +4521,11 @@ time_col
 <p>df
     DataFrame containing the history to predict from.
 h
-    Forecast horizon (number of steps ahead).</p>
+    Forecast horizon (number of steps ahead).
+future_df
+    DataFrame with future covariate values for the forecast
+    horizon.  Required when <em>future_covariates</em> were specified
+    at construction.</p>
 <h6 id="polars_ts.models.multistep.RecursiveForecaster.predict--returns">Returns</h6>
 <p>pl.DataFrame
     DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>
@@ -4485,6 +4567,15 @@ lags
     Lag offsets used as features.
 h
     Forecast horizon. Determines how many models are trained.
+past_covariates
+    Column names of time-varying covariates known only up to the
+    present.  Lagged features are created for each covariate.
+future_covariates
+    Column names of time-varying covariates known into the future.
+    Values for the forecast horizon must be supplied in <em>future_df</em>
+    at predict time.
+past_covariate_lags
+    Lag offsets for past covariate features.  Defaults to <em>lags</em>.
 target_col
     Column with the target values.
 id_col
@@ -4527,7 +4618,8 @@ time_col
         <p>Fit <em>h</em> models, where model <em>k</em> predicts the value <em>k</em> steps ahead.</p>
 <h6 id="polars_ts.models.multistep.DirectForecaster.fit--parameters">Parameters</h6>
 <p>df
-    Training DataFrame.</p>
+    Training DataFrame with at least <code>id_col</code>, <code>time_col</code>,
+    <code>target_col</code>, and any covariate columns.</p>
 <h6 id="polars_ts.models.multistep.DirectForecaster.fit--returns">Returns</h6>
 <p>DirectForecaster
     Fitted forecaster (<code>self</code>).</p>
@@ -4541,7 +4633,7 @@ time_col
 
 
 <h4 id="polars_ts.models.multistep.DirectForecaster.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">future_df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -4553,7 +4645,11 @@ time_col
 observation's lag features. No recursive feeding is needed.</p>
 <h6 id="polars_ts.models.multistep.DirectForecaster.predict--parameters">Parameters</h6>
 <p>df
-    DataFrame containing the history to predict from.</p>
+    DataFrame containing the history to predict from.
+future_df
+    DataFrame with future covariate values for the forecast
+    horizon.  Required when <em>future_covariates</em> were specified
+    at construction.</p>
 <h6 id="polars_ts.models.multistep.DirectForecaster.predict--returns">Returns</h6>
 <p>pl.DataFrame
     DataFrame with columns <code>[id_col, time_col, "y_hat"]</code>.</p>

@@ -1309,6 +1309,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../bayesian/anomaly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../bayesian/bsts/" class="md-nav__link">
         
   
@@ -1355,12 +1378,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../../bayesian/gp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../bayesian/kalman/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Kalman
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Particle filter
     
   </span>
   
@@ -2400,6 +2469,39 @@
         
           <li class="md-nav__item">
   <a href="#polars_ts.features.lags.lag_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;covariate_lag_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" covariate_lag_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features--returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
@@ -3865,6 +3967,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;covariate_lag_features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" covariate_lag_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.features.lags.covariate_lag_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3952,6 +4087,39 @@ time_col
 <h5 id="polars_ts.features.lags.lag_features--returns">Returns</h5>
 <p>pl.DataFrame
     Original DataFrame with lag columns appended.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.features.lags.covariate_lag_features" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">covariate_lag_features</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">covariate_cols</span><span class="p">,</span> <span class="n">lags</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create lagged versions of covariate columns per group.</p>
+<h5 id="polars_ts.features.lags.covariate_lag_features--parameters">Parameters</h5>
+<p>df
+    Input DataFrame with time series data.
+covariate_cols
+    Columns to lag.
+lags
+    List of lag values (positive integers). Each produces a column
+    <code>{col}_lag_{k}</code> per covariate.
+id_col
+    Column identifying each time series.
+time_col
+    Column with timestamps for ordering.</p>
+<h5 id="polars_ts.features.lags.covariate_lag_features--returns">Returns</h5>
+<p>pl.DataFrame
+    Original DataFrame with covariate lag columns appended.</p>
 
 
     </div>

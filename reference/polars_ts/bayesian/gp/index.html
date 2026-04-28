@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../baselines/">
+        <link rel="prev" href="../enkf/">
       
       
-        <link rel="next" href="../multistep/">
+        <link rel="next" href="../kalman/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Exponential smoothing - Polars Time Series Extension</title>
+        <title>Gp - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.models.exponential_smoothing" class="md-skip">
+        <a href="#polars_ts.bayesian.gp" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Exponential smoothing
+              Gp
             
           </span>
         </div>
@@ -1256,8 +1256,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1266,17 +1268,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1295,7 +1295,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1309,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/anomaly/" class="md-nav__link">
+      <a href="../anomaly/" class="md-nav__link">
         
   
   
@@ -1332,7 +1332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../bsts/" class="md-nav__link">
         
   
   
@@ -1355,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../enkf/" class="md-nav__link">
         
   
   
@@ -1375,10 +1375,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bayesian/gp/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Gp
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1389,6 +1409,255 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;gp
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" gp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp--references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.RBFKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RBFKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Matern32Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Matern32Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Matern52Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Matern52Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.PeriodicKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;PeriodicKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.SpectralMixtureKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SpectralMixtureKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.SumKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SumKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.ProductKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ProductKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GPResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;GPResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" GPResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GPResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;GaussianProcessTS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" GaussianProcessTS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.make_kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;make_kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._stable_cholesky" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_stable_cholesky
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._neg_log_marginal_likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_neg_log_marginal_likelihood
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._optimize_hyperparams" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_optimize_hyperparams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.gp_forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;gp_forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" gp_forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.gp_forecast--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.gp_forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1401,7 +1670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1424,7 +1693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+      <a href="../particle_filter/" class="md-nav__link">
         
   
   
@@ -1447,7 +1716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../ukf/" class="md-nav__link">
         
   
   
@@ -2790,8 +3059,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2802,15 +3069,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_27" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_27" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../models/__init__/" class="md-nav__link ">
               
   
   
@@ -2829,7 +3098,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_27">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -2843,7 +3112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arima/" class="md-nav__link">
+      <a href="../../models/arima/" class="md-nav__link">
         
   
   
@@ -2866,7 +3135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../baselines/" class="md-nav__link">
+      <a href="../../models/baselines/" class="md-nav__link">
         
   
   
@@ -2886,30 +3155,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Exponential smoothing
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../models/exponential_smoothing/" class="md-nav__link">
         
   
   
@@ -2920,111 +3169,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" exponential_smoothing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" ses_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3037,7 +3181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multistep/" class="md-nav__link">
+      <a href="../../models/multistep/" class="md-nav__link">
         
   
   
@@ -3060,7 +3204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scum/" class="md-nav__link">
+      <a href="../../models/scum/" class="md-nav__link">
         
   
   
@@ -3931,29 +4075,110 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;gp
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" exponential_smoothing">
+    <nav class="md-nav" aria-label=" gp">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp--references" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" ses_forecast">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.RBFKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;RBFKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Matern32Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Matern32Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.Matern52Kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Matern52Kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.PeriodicKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;PeriodicKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.SpectralMixtureKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SpectralMixtureKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.SumKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SumKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.ProductKernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ProductKernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GPResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;GPResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" GPResult">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp.GPResult--attributes" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Attributes
     </span>
   </a>
   
@@ -3965,19 +4190,37 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;GaussianProcessTS
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_forecast">
+    <nav class="md-nav" aria-label=" GaussianProcessTS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.GaussianProcessTS.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
   
@@ -3989,19 +4232,64 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp.make_kernel" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;make_kernel
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._stable_cholesky" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_stable_cholesky
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._neg_log_marginal_likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_neg_log_marginal_likelihood
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp._optimize_hyperparams" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_optimize_hyperparams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.gp_forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;gp_forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" gp_forecast">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.gp.gp_forecast--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.gp.gp_forecast--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
     </span>
   </a>
   
@@ -4036,24 +4324,516 @@
   
 
 
-  <h1>Exponential smoothing</h1>
+  <h1>Gp</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.models.exponential_smoothing" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.exponential_smoothing</code>
+<h2 id="polars_ts.bayesian.gp" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian.gp</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Pure-Polars exponential smoothing forecasters.</p>
-<p>Implements SES, Holt's linear, and Holt-Winters methods.
-Delegates to Rust when available (2-5x faster per group),
-falling back to pure Python otherwise. Closes #49.</p>
+        <p>Gaussian Process regression for time series forecasting.</p>
+<p>Non-parametric Bayesian forecasting with kernels designed for temporal
+data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
+<h4 id="polars_ts.bayesian.gp--references">References</h4>
+<ul>
+<li>Rasmussen &amp; Williams (2006), <em>Gaussian Processes for Machine Learning</em></li>
+<li>Roberts et al. (2013), <em>Gaussian processes for time-series modelling</em></li>
+<li>Wilson &amp; Adams (2013), <em>GP Kernels for Pattern Discovery and Extrapolation</em></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.Kernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>Kernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Base kernel class.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.RBFKernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>RBFKernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Radial Basis Function (squared exponential) kernel.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.Matern32Kernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>Matern32Kernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Matern 3/2 kernel.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.Matern52Kernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>Matern52Kernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Matern 5/2 kernel.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.PeriodicKernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>PeriodicKernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Periodic kernel for repeating patterns.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.SpectralMixtureKernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>SpectralMixtureKernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Spectral mixture kernel (Wilson &amp; Adams 2013).</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.SumKernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>SumKernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Sum of two kernels.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.ProductKernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>ProductKernel</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
+
+
+        <p>Product of two kernels.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.GPResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>GPResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Gaussian Process regression result.</p>
+<h5 id="polars_ts.bayesian.gp.GPResult--attributes">Attributes</h5>
+<p>kernel
+    Fitted kernel (with optimized hyperparameters).
+noise_var
+    Optimized observation noise variance.
+X_train
+    Training time indices.
+y_train
+    Training observations.
+alpha
+    Cholesky solve vector for predictions.
+L
+    Lower Cholesky factor of training covariance.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.gp.GaussianProcessTS" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>GaussianProcessTS</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Gaussian Process time series forecaster.</p>
+<h5 id="polars_ts.bayesian.gp.GaussianProcessTS--parameters">Parameters</h5>
+<p>kernel
+    Kernel name or <code>Kernel</code> instance. Default <code>"rbf"</code>.
+optimize
+    Whether to optimize hyperparameters via marginal likelihood.
+noise_var
+    Initial observation noise variance.
+coverage
+    Credible interval coverage (default 0.9).
+id_col
+    Column identifying each time series.
+target_col
+    Column with target values.
+time_col
+    Column with timestamps.</p>
+
 
 
 
@@ -4078,23 +4858,15 @@ falling back to pure Python otherwise. Closes #49.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.ses_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">ses_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.gp.GaussianProcessTS.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Forecast with Simple Exponential Smoothing.</p>
-<p>Smooths with level parameter <em>alpha</em> and projects a flat forecast.</p>
-<h5 id="polars_ts.models.exponential_smoothing.ses_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level (0 &lt; alpha &lt; 1).</p>
+        <p>Fit the GP to one or more time series.</p>
 
 
     </div>
@@ -4104,25 +4876,42 @@ alpha
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.gp.GaussianProcessTS.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate h-step forecasts with credible intervals.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.gp.make_kernel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">make_kernel</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt's linear trend forecast.</p>
-<p>Smooths level and trend, then extrapolates linearly.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.</p>
+        <p>Create a kernel by name.</p>
 
 
     </div>
@@ -4132,31 +4921,87 @@ beta
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_winters_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_winters_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">season_length</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h3 id="polars_ts.bayesian.gp._stable_cholesky" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_stable_cholesky</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt-Winters seasonal forecast.</p>
-<p>Smooths level, trend, and seasonal components.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters">Parameters</h5>
+        <p>Cholesky with increasing jitter for numerical stability.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.gp._neg_log_marginal_likelihood" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_neg_log_marginal_likelihood</span><span class="p">(</span><span class="n">log_params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">noise_idx</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Negative log marginal likelihood for hyperparameter optimization.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.gp._optimize_hyperparams" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_optimize_hyperparams</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">noise_var</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Optimize kernel hyperparameters via marginal likelihood.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.gp.gp_forecast" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">gp_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">noise_var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Gaussian Process forecasting convenience function.</p>
+<h5 id="polars_ts.bayesian.gp.gp_forecast--parameters">Parameters</h5>
 <p>df
     Input DataFrame.
 h
     Forecast horizon.
-season_length
-    Number of observations per season.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.
-gamma
-    Smoothing parameter for seasonality.
-seasonal
-    <code>"additive"</code> or <code>"multiplicative"</code>.</p>
+kernel
+    Kernel name or instance. Default <code>"rbf"</code>.
+optimize
+    Optimize hyperparameters via marginal likelihood.
+noise_var
+    Initial noise variance.
+coverage
+    Credible interval coverage (default 0.9).
+id_col, target_col, time_col
+    Column names.</p>
+<h5 id="polars_ts.bayesian.gp.gp_forecast--returns">Returns</h5>
+<p>pl.DataFrame
+    Forecasts with <code>y_hat</code>, <code>y_hat_lower</code>, <code>y_hat_upper</code>.</p>
 
 
     </div>

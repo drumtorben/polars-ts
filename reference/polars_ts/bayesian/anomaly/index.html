@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../baselines/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../multistep/">
+        <link rel="next" href="../bsts/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Exponential smoothing - Polars Time Series Extension</title>
+        <title>Anomaly - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.models.exponential_smoothing" class="md-skip">
+        <a href="#polars_ts.bayesian.anomaly" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Exponential smoothing
+              Anomaly
             
           </span>
         </div>
@@ -1256,8 +1256,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1266,17 +1268,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1295,7 +1295,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Bayesian
@@ -1306,10 +1306,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bayesian/anomaly/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Anomaly
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1320,6 +1340,240 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;anomaly
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" anomaly">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly--references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianAnomalyResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BayesianAnomalyResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyResult--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_NIGState
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _NIGState">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.update" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.predictive_params" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predictive_params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.predictive_df" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predictive_df
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianAnomalyDetector
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BayesianAnomalyDetector">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector._score_single" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_score_single
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._t_cdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_t_cdf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._compute_pvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_pvalue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._compute_bayes_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_bayes_factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bayesian_anomaly_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bayesian_anomaly_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1332,7 +1586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../bsts/" class="md-nav__link">
         
   
   
@@ -1355,7 +1609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../enkf/" class="md-nav__link">
         
   
   
@@ -1378,7 +1632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/gp/" class="md-nav__link">
+      <a href="../gp/" class="md-nav__link">
         
   
   
@@ -1401,7 +1655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../kalman/" class="md-nav__link">
         
   
   
@@ -1424,7 +1678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+      <a href="../particle_filter/" class="md-nav__link">
         
   
   
@@ -1447,7 +1701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../ukf/" class="md-nav__link">
         
   
   
@@ -2790,8 +3044,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2802,15 +3054,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_27" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_27" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../models/__init__/" class="md-nav__link ">
               
   
   
@@ -2829,7 +3083,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_27_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_27">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -2843,7 +3097,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arima/" class="md-nav__link">
+      <a href="../../models/arima/" class="md-nav__link">
         
   
   
@@ -2866,7 +3120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../baselines/" class="md-nav__link">
+      <a href="../../models/baselines/" class="md-nav__link">
         
   
   
@@ -2886,30 +3140,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Exponential smoothing
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../models/exponential_smoothing/" class="md-nav__link">
         
   
   
@@ -2920,111 +3154,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" exponential_smoothing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" ses_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3037,7 +3166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multistep/" class="md-nav__link">
+      <a href="../../models/multistep/" class="md-nav__link">
         
   
   
@@ -3060,7 +3189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scum/" class="md-nav__link">
+      <a href="../../models/scum/" class="md-nav__link">
         
   
   
@@ -3931,29 +4060,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;exponential_smoothing
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;anomaly
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" exponential_smoothing">
+    <nav class="md-nav" aria-label=" anomaly">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly--references" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;ses_forecast
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" ses_forecast">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianAnomalyResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" BayesianAnomalyResult">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.ses_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyResult--attributes" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Attributes
     </span>
   </a>
   
@@ -3965,19 +4103,37 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly._NIGState" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_NIGState
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_forecast">
+    <nav class="md-nav" aria-label=" _NIGState">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.update" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;update
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.predictive_params" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predictive_params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._NIGState.predictive_df" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predictive_df
     </span>
   </a>
   
@@ -3989,19 +4145,121 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;holt_winters_forecast
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianAnomalyDetector
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" holt_winters_forecast">
+    <nav class="md-nav" aria-label=" BayesianAnomalyDetector">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters" class="md-nav__link">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.BayesianAnomalyDetector._score_single" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_score_single
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._t_cdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_t_cdf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._compute_pvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_pvalue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly._compute_bayes_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_compute_bayes_factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bayesian_anomaly_score
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" bayesian_anomaly_score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.bayesian.anomaly.bayesian_anomaly_score--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
     </span>
   </a>
   
@@ -4036,24 +4294,128 @@
   
 
 
-  <h1>Exponential smoothing</h1>
+  <h1>Anomaly</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.models.exponential_smoothing" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.exponential_smoothing</code>
+<h2 id="polars_ts.bayesian.anomaly" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.bayesian.anomaly</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Pure-Polars exponential smoothing forecasters.</p>
-<p>Implements SES, Holt's linear, and Holt-Winters methods.
-Delegates to Rust when available (2-5x faster per group),
-falling back to pure Python otherwise. Closes #49.</p>
+        <p>Bayesian anomaly scoring via posterior predictive p-values.</p>
+<p>Scores each observation using an online conjugate normal model that
+maintains a running posterior over mean and variance, then computes
+tail-area probabilities and Bayes factors.</p>
+<h4 id="polars_ts.bayesian.anomaly--references">References</h4>
+<ul>
+<li>Gelman et al. (2013), <em>Bayesian Data Analysis</em>, Chapter 6</li>
+<li>Adams &amp; MacKay (2007), <em>Bayesian Online Changepoint Detection</em></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.anomaly.BayesianAnomalyResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BayesianAnomalyResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Container for Bayesian anomaly scoring output.</p>
+<h5 id="polars_ts.bayesian.anomaly.BayesianAnomalyResult--attributes">Attributes</h5>
+<p>scores
+    DataFrame with anomaly scores per observation.
+n_anomalies
+    Total number of flagged anomalies.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.anomaly._NIGState" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>_NIGState</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Normal-Inverse-Gamma sufficient statistics for online updating.</p>
+
+
+<details class="prior" open>
+  <summary>mu | sigma^2 ~ N(mu0, sigma^2 / kappa0)</summary>
+  <p>sigma^2 ~ IG(alpha0, beta0)</p>
+</details>
 
 
 
@@ -4078,23 +4440,15 @@ falling back to pure Python otherwise. Closes #49.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.ses_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">ses_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.anomaly._NIGState.update" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">update</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Forecast with Simple Exponential Smoothing.</p>
-<p>Smooths with level parameter <em>alpha</em> and projects a flat forecast.</p>
-<h5 id="polars_ts.models.exponential_smoothing.ses_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level (0 &lt; alpha &lt; 1).</p>
+        <p>Update posterior with a single observation.</p>
 
 
     </div>
@@ -4104,25 +4458,15 @@ alpha
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.anomaly._NIGState.predictive_params" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predictive_params</span><span class="p">()</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt's linear trend forecast.</p>
-<p>Smooths level and trend, then extrapolates linearly.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_forecast--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.</p>
+        <p>Return (mean, scale) of the posterior predictive t-distribution.</p>
 
 
     </div>
@@ -4132,31 +4476,234 @@ beta
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.exponential_smoothing.holt_winters_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">holt_winters_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">season_length</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<h4 id="polars_ts.bayesian.anomaly._NIGState.predictive_df" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predictive_df</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Degrees of freedom for the posterior predictive t-distribution.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BayesianAnomalyDetector</code>
+
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Holt-Winters seasonal forecast.</p>
-<p>Smooths level, trend, and seasonal components.</p>
-<h5 id="polars_ts.models.exponential_smoothing.holt_winters_forecast--parameters">Parameters</h5>
+
+        <p>Bayesian anomaly detector using posterior predictive p-values.</p>
+<p>Maintains an online Normal-Inverse-Gamma conjugate model per series,
+scoring each observation via its posterior predictive tail probability.</p>
+<h5 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector--parameters">Parameters</h5>
+<p>threshold
+    P-value threshold below which an observation is flagged (default 0.01).
+prior_mu
+    Prior mean for the normal model. If <code>None</code>, uses first observation.
+prior_kappa
+    Prior strength on mean (higher = more confident prior).
+prior_alpha
+    Inverse-Gamma shape for variance prior.
+prior_beta
+    Inverse-Gamma scale for variance prior.
+warmup
+    Number of initial observations to use for prior calibration
+    before scoring begins.
+anomaly_scale
+    Scale multiplier for the anomaly hypothesis in Bayes factor.
+id_col
+    Column identifying each time series.
+target_col
+    Column with target values.
+time_col
+    Column with timestamps.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">score</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Score each observation for anomalousness.</p>
+<h6 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--parameters">Parameters</h6>
+<p>df
+    Input DataFrame with time series data.</p>
+<h6 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector.score--returns">Returns</h6>
+<p>BayesianAnomalyResult
+    Result containing scores DataFrame and anomaly count.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.bayesian.anomaly.BayesianAnomalyDetector._score_single" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_score_single</span><span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Score a single time series.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.anomaly._t_cdf" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_t_cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>CDF of Student's t-distribution using scipy (lazy import).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.anomaly._compute_pvalue" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_compute_pvalue</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Compute two-sided posterior predictive p-value.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.anomaly._compute_bayes_factor" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_compute_bayes_factor</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">anomaly_scale</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Bayes factor: evidence for normal model vs anomaly model.</p>
+<p>H0: y ~ predictive(state)
+H1: y ~ predictive(state, scale * anomaly_scale)</p>
+<p>Returns BF01 (&gt;1 favors normal, &lt;1 favors anomaly).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="polars_ts.bayesian.anomaly.bayesian_anomaly_score" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bayesian_anomaly_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">prior_mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prior_kappa</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">prior_alpha</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">prior_beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">anomaly_scale</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Bayesian anomaly scoring convenience function.</p>
+<p>Scores each observation using an online conjugate normal model with
+posterior predictive p-values and Bayes factors.</p>
+<h5 id="polars_ts.bayesian.anomaly.bayesian_anomaly_score--parameters">Parameters</h5>
 <p>df
     Input DataFrame.
-h
-    Forecast horizon.
-season_length
-    Number of observations per season.
-alpha
-    Smoothing parameter for level.
-beta
-    Smoothing parameter for trend.
-gamma
-    Smoothing parameter for seasonality.
-seasonal
-    <code>"additive"</code> or <code>"multiplicative"</code>.</p>
+threshold
+    P-value threshold for flagging anomalies (default 0.01).
+prior_mu
+    Prior mean (default: first observation).
+prior_kappa
+    Prior strength on mean.
+prior_alpha
+    Inverse-Gamma shape for variance prior.
+prior_beta
+    Inverse-Gamma scale for variance prior.
+warmup
+    Warmup observations before scoring.
+anomaly_scale
+    Scale for anomaly hypothesis in Bayes factor.
+id_col, target_col, time_col
+    Column names.</p>
+<h5 id="polars_ts.bayesian.anomaly.bayesian_anomaly_score--returns">Returns</h5>
+<p>pl.DataFrame
+    Scores with <code>p_value</code>, <code>bayes_factor</code>, <code>is_anomaly</code> columns.</p>
 
 
     </div>
