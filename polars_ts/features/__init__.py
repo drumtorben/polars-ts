@@ -1,10 +1,15 @@
-"""Feature engineering subpackage for time series data.
+"""Feature engineering subpackage for time series data."""
 
-Provides lag, rolling, calendar, and Fourier feature generation — all pure
-Polars, group-aware, following existing library patterns.
-"""
+from polars_ts._lazy import make_getattr
 
-from __future__ import annotations
+_IMPORTS: dict[str, tuple[str, str]] = {
+    "lag_features": ("polars_ts.features.lags", "lag_features"),
+    "rolling_features": ("polars_ts.features.rolling", "rolling_features"),
+    "calendar_features": ("polars_ts.features.calendar", "calendar_features"),
+    "fourier_features": ("polars_ts.features.fourier", "fourier_features"),
+    "rocket_features": ("polars_ts.features.rocket", "rocket_features"),
+    "minirocket_features": ("polars_ts.features.rocket", "minirocket_features"),
+}
 
 from typing import Any
 

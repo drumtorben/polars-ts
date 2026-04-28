@@ -1,20 +1,9 @@
-from typing import Any
+from polars_ts._lazy import make_getattr
 
+_IMPORTS: dict[str, tuple[str, str]] = {
+    "knn_classify": ("polars_ts.classification.knn", "knn_classify"),
+    "TimeSeriesKNNClassifier": ("polars_ts.classification.knn", "TimeSeriesKNNClassifier"),
+    "KShapeClassifier": ("polars_ts.classification.kshape_classifier", "KShapeClassifier"),
+}
 
-def __getattr__(name: str) -> Any:
-    if name == "knn_classify":
-        from polars_ts.classification.knn import knn_classify
-
-        return knn_classify
-    if name == "TimeSeriesKNNClassifier":
-        from polars_ts.classification.knn import TimeSeriesKNNClassifier
-
-        return TimeSeriesKNNClassifier
-    if name == "KShapeClassifier":
-        from polars_ts.classification.kshape_classifier import KShapeClassifier
-
-        return KShapeClassifier
-    raise AttributeError(f"module 'polars_ts.classification' has no attribute {name!r}")
-
-
-__all__ = ["knn_classify", "TimeSeriesKNNClassifier", "KShapeClassifier"]
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__)

@@ -1,51 +1,29 @@
-from typing import Any
+from polars_ts._lazy import make_getattr
 
-_BASELINE_NAMES = {"naive_forecast", "seasonal_naive_forecast", "moving_average_forecast", "fft_forecast"}
-_MULTISTEP_NAMES = {"RecursiveForecaster", "DirectForecaster"}
-_ES_NAMES = {"ses_forecast", "holt_forecast", "holt_winters_forecast"}
-_ARIMA_NAMES = {"arima_fit", "arima_forecast", "auto_arima"}
-
-
-def __getattr__(name: str) -> Any:
-    if name == "SCUM":
-        try:
-            from polars_ts.models.scum import SCUM
-        except ImportError:
-            raise ImportError(
-                "statsforecast is required for SCUM. " "Install it with: pip install polars-timeseries[forecast]"
-            ) from None
-        return SCUM
-    if name in _BASELINE_NAMES:
-        from polars_ts.models import baselines
-
-        return getattr(baselines, name)
-    if name in _MULTISTEP_NAMES:
-        from polars_ts.models import multistep
-
-        return getattr(multistep, name)
-    if name in _ES_NAMES:
-        from polars_ts.models import exponential_smoothing
-
-        return getattr(exponential_smoothing, name)
-    if name in _ARIMA_NAMES:
-        from polars_ts.models import arima
-
-        return getattr(arima, name)
-    raise AttributeError(f"module 'polars_ts.models' has no attribute {name!r}")
+_IMPORTS: dict[str, tuple[str, str]] = {
+    "naive_forecast": ("polars_ts.models.baselines", "naive_forecast"),
+    "seasonal_naive_forecast": ("polars_ts.models.baselines", "seasonal_naive_forecast"),
+    "moving_average_forecast": ("polars_ts.models.baselines", "moving_average_forecast"),
+    "fft_forecast": ("polars_ts.models.baselines", "fft_forecast"),
+    "RecursiveForecaster": ("polars_ts.models.multistep", "RecursiveForecaster"),
+    "DirectForecaster": ("polars_ts.models.multistep", "DirectForecaster"),
+    "ses_forecast": ("polars_ts.models.exponential_smoothing", "ses_forecast"),
+    "holt_forecast": ("polars_ts.models.exponential_smoothing", "holt_forecast"),
+    "holt_winters_forecast": ("polars_ts.models.exponential_smoothing", "holt_winters_forecast"),
+    "arima_fit": ("polars_ts.models.arima", "arima_fit"),
+    "arima_forecast": ("polars_ts.models.arima", "arima_forecast"),
+    "auto_arima": ("polars_ts.models.arima", "auto_arima"),
+}
 
 
-__all__ = [
-    "SCUM",
-    "naive_forecast",
-    "seasonal_naive_forecast",
-    "moving_average_forecast",
-    "fft_forecast",
-    "RecursiveForecaster",
-    "DirectForecaster",
-    "ses_forecast",
-    "holt_forecast",
-    "holt_winters_forecast",
-    "arima_fit",
-    "arima_forecast",
-    "auto_arima",
-]
+def _load_scum():
+    try:
+        from polars_ts.models.scum import SCUM
+    except ImportError:
+        raise ImportError(
+            "statsforecast is required for SCUM. Install it with: pip install polars-timeseries[forecast]"
+        ) from None
+    return SCUM
+
+
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={"SCUM": _load_scum})
