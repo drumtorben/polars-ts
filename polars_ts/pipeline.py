@@ -30,6 +30,9 @@ def _build_feature_df(
     target_col: str,
     id_col: str,
     time_col: str,
+    past_covariates: list[str] | None = None,
+    past_covariate_lags: list[int] | None = None,
+    future_covariates: list[str] | None = None,
 ) -> pl.DataFrame:
     """Apply all configured feature engineering steps to *df*."""
     result = df
@@ -37,6 +40,11 @@ def _build_feature_df(
         from polars_ts.features.lags import lag_features
 
         result = lag_features(result, lags, target_col, id_col, time_col)
+    if past_covariates:
+        from polars_ts.features.lags import covariate_lag_features
+
+        cov_lags = past_covariate_lags or lags or [1]
+        result = covariate_lag_features(result, past_covariates, cov_lags, id_col, time_col)
     if rolling_windows:
         from polars_ts.features.rolling import rolling_features
 
@@ -50,6 +58,11 @@ def _build_feature_df(
 
         for period, n_harmonics in fourier:
             result = fourier_features(result, period, n_harmonics, time_col, id_col)
+    # Future covariates are already columns in df — move them to the end
+    # so feature column order matches _build_step_features output order.
+    if future_covariates:
+        other_cols = [c for c in result.columns if c not in future_covariates]
+        result = result.select(other_cols + future_covariates)
     return result
 
 
@@ -109,6 +122,9 @@ def _build_step_features(
     fourier_specs: list[tuple[float, int]] | None,
     step_index: int,
     _time_col: str,
+    past_covariate_buffers: dict[str, list[float]] | None = None,
+    past_covariate_lags: list[int] | None = None,
+    future_covariate_values: dict[str, float] | None = None,
 ) -> list[float]:
     """Build a single feature vector for one recursive prediction step."""
     features: list[float] = []
@@ -117,6 +133,16 @@ def _build_step_features(
     if lags:
         for lag in sorted(lags):
             features.append(buffer[-lag])
+
+    # Past covariate lag features
+    if past_covariate_buffers and past_covariate_lags:
+        for col in sorted(past_covariate_buffers.keys()):
+            buf = past_covariate_buffers[col]
+            for lag in sorted(past_covariate_lags):
+                if lag <= len(buf):
+                    features.append(buf[-lag])
+                else:
+                    features.append(buf[0] if buf else 0.0)
 
     # Rolling features (must match polars_ts.features.rolling._DEFAULT_AGGS)
     if rolling_windows:
@@ -166,6 +192,11 @@ def _build_step_features(
                 features.append(float(np.sin(angle)))
                 features.append(float(np.cos(angle)))
 
+    # Future covariate values (appended last to match column order)
+    if future_covariate_values:
+        for col in sorted(future_covariate_values.keys()):
+            features.append(future_covariate_values[col])
+
     return features
 
 
@@ -199,6 +230,15 @@ class ForecastPipeline:
         Optional transform: ``"log"``, ``"boxcox"``, or ``"difference"``.
     transform_kwargs
         Arguments passed to the transform function (e.g. ``{"lam": 0.5}``).
+    past_covariates
+        Column names of time-varying covariates known only up to the
+        present.  Lagged features are created automatically.
+    future_covariates
+        Column names of time-varying covariates known into the future
+        (e.g. holidays, promotions).  Values for the forecast horizon
+        must be supplied in *future_df* at predict time.
+    past_covariate_lags
+        Lag offsets for past covariate features.  Defaults to *lags*.
     target_col
         Column with the target values.
     id_col
@@ -218,6 +258,9 @@ class ForecastPipeline:
         fourier: list[tuple[float, int]] | None = None,
         target_transform: str | None = None,
         transform_kwargs: dict[str, Any] | None = None,
+        past_covariates: list[str] | None = None,
+        future_covariates: list[str] | None = None,
+        past_covariate_lags: list[int] | None = None,
         target_col: str = "y",
         id_col: str = "unique_id",
         time_col: str = "ds",
@@ -234,6 +277,9 @@ class ForecastPipeline:
         self.fourier = fourier
         self.target_transform = target_transform
         self.transform_kwargs = transform_kwargs or {}
+        self.past_covariates = sorted(past_covariates) if past_covariates else None
+        self.future_covariates = sorted(future_covariates) if future_covariates else None
+        self.past_covariate_lags = sorted(past_covariate_lags) if past_covariate_lags else None
         self.target_col = target_col
         self.id_col = id_col
         self.time_col = time_col
@@ -241,6 +287,7 @@ class ForecastPipeline:
         self.feature_columns_: list[str] = []
         self.transform_state_: dict[str, Any] = {}
         self.train_tail_: dict[Any, list[float]] = {}
+        self.past_cov_tail_: dict[Any, dict[str, list[float]]] = {}
 
     def fit(self, df: pl.DataFrame) -> ForecastPipeline:
         """Fit the pipeline: transform target, build features, train model.
@@ -248,8 +295,8 @@ class ForecastPipeline:
         Parameters
         ----------
         df
-            Training DataFrame with ``id_col``, ``time_col``, and
-            ``target_col``.
+            Training DataFrame with ``id_col``, ``time_col``,
+            ``target_col``, and any covariate columns.
 
         Returns
         -------
@@ -260,18 +307,26 @@ class ForecastPipeline:
         sorted_df = df.sort(self.id_col, self.time_col)
 
         # Store per-series tail for recursive prediction seeding
+        cov_lags = self.past_covariate_lags or self.lags or []
         buf_size = max(
             max(self.lags) if self.lags else 0,
             max(self.rolling_windows) if self.rolling_windows else 0,
+            max(cov_lags) if cov_lags else 0,
         )
         buf_size = max(buf_size, 1)
         for group_id, group_df in sorted_df.group_by(self.id_col, maintain_order=True):
-            self.train_tail_[group_id[0]] = group_df[self.target_col].tail(buf_size).to_list()
+            gid = group_id[0]
+            self.train_tail_[gid] = group_df[self.target_col].tail(buf_size).to_list()
+            if self.past_covariates:
+                self.past_cov_tail_[gid] = {col: group_df[col].tail(buf_size).to_list() for col in self.past_covariates}
 
         # Apply target transform
         transformed, self.transform_state_ = _apply_transform(
             sorted_df, self.target_transform, self.transform_kwargs, self.target_col, self.id_col, self.time_col
         )
+
+        # Track original columns so we can exclude non-feature columns later
+        original_cols = set(transformed.columns)
 
         # Build features
         featured = _build_feature_df(
@@ -284,17 +339,15 @@ class ForecastPipeline:
             self.target_col,
             self.id_col,
             self.time_col,
+            past_covariates=self.past_covariates,
+            past_covariate_lags=self.past_covariate_lags,
+            future_covariates=self.future_covariates,
         )
 
-        # Determine feature columns
-        exclude = {self.id_col, self.time_col, self.target_col}
-        # Also exclude transform metadata columns
-        exclude |= {
-            c
-            for c in featured.columns
-            if c.endswith("_original") or c.endswith("_boxcox_lambda") or c.endswith("_diff_initial")
-        }
-        self.feature_columns_ = [c for c in featured.columns if c not in exclude]
+        # Determine feature columns: generated columns + future covariates only
+        generated = set(featured.columns) - original_cols
+        future_cov_set = set(self.future_covariates) if self.future_covariates else set()
+        self.feature_columns_ = [c for c in featured.columns if c in generated or c in future_cov_set]
 
         # Drop nulls from feature construction
         clean = featured.drop_nulls(subset=self.feature_columns_)
@@ -306,7 +359,12 @@ class ForecastPipeline:
         self.is_fitted_ = True
         return self
 
-    def predict(self, df: pl.DataFrame, h: int) -> pl.DataFrame:
+    def predict(
+        self,
+        df: pl.DataFrame,
+        h: int,
+        future_df: pl.DataFrame | None = None,
+    ) -> pl.DataFrame:
         """Generate *h*-step-ahead forecasts using recursive prediction.
 
         Parameters
@@ -315,6 +373,11 @@ class ForecastPipeline:
             DataFrame containing history to predict from.
         h
             Forecast horizon.
+        future_df
+            DataFrame with future covariate values for the forecast
+            horizon.  Required when *future_covariates* were specified
+            at construction.  Must contain ``id_col``, ``time_col``,
+            and all future covariate columns.
 
         Returns
         -------
@@ -326,9 +389,18 @@ class ForecastPipeline:
             raise RuntimeError("Call fit() before predict()")
         if h <= 0:
             raise ValueError("Horizon h must be a positive integer")
+        if self.future_covariates and future_df is None:
+            raise ValueError("future_df is required when future_covariates are configured")
 
         sorted_df = df.sort(self.id_col, self.time_col)
         freq = _infer_freq(sorted_df[self.time_col])
+
+        # Build future covariate lookup: {(gid, time) -> {col: val}}
+        future_lookup: dict[tuple[Any, Any], dict[str, float]] = {}
+        if self.future_covariates and future_df is not None:
+            for row in future_df.iter_rows(named=True):
+                key = (row[self.id_col], row[self.time_col])
+                future_lookup[key] = {col: float(row[col]) for col in self.future_covariates}
 
         rows: list[dict[str, Any]] = []
         for group_id, group_df in sorted_df.group_by(self.id_col, maintain_order=True):
@@ -363,7 +435,22 @@ class ForecastPipeline:
             # Track original-scale values for undifferencing
             orig_values = list(values)
 
+            # Past covariate buffers for this series
+            pcov_buffers: dict[str, list[float]] | None = None
+            if self.past_covariates:
+                pcov_buffers = {}
+                for col in self.past_covariates:
+                    pcov_buffers[col] = group_df[col].to_list()
+
+            cov_lags = self.past_covariate_lags or self.lags
+
             for step in range(h):
+                # Future covariate values for this step
+                fcov_vals: dict[str, float] | None = None
+                if self.future_covariates:
+                    key = (gid, future_times[step])
+                    fcov_vals = future_lookup.get(key, {col: 0.0 for col in self.future_covariates})
+
                 feat = _build_step_features(
                     buffer,
                     future_times[step],
@@ -374,6 +461,9 @@ class ForecastPipeline:
                     self.fourier,
                     step,
                     self.time_col,
+                    past_covariate_buffers=pcov_buffers,
+                    past_covariate_lags=cov_lags,
+                    future_covariate_values=fcov_vals,
                 )
                 x_row = np.array([feat], dtype=np.float64)
                 pred_transformed = float(self.estimator.predict(x_row)[0])
