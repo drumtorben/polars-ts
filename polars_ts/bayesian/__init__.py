@@ -10,10 +10,9 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "bsts_forecast": ("polars_ts.bayesian.bsts", "bsts_forecast"),
     "GaussianProcessTS": ("polars_ts.bayesian.gp", "GaussianProcessTS"),
     "gp_forecast": ("polars_ts.bayesian.gp", "gp_forecast"),
-    "BayesianAnomalyDetector": ("polars_ts.bayesian.anomaly", "BayesianAnomalyDetector"),
-    "bayesian_anomaly_score": ("polars_ts.bayesian.anomaly", "bayesian_anomaly_score"),
-    "ParticleFilter": ("polars_ts.bayesian.particle_filter", "ParticleFilter"),
-    "particle_filter": ("polars_ts.bayesian.particle_filter", "particle_filter"),
+    "MCMCForecaster": ("polars_ts.bayesian.mcmc", "MCMCForecaster"),
+    "mcmc_forecast": ("polars_ts.bayesian.mcmc", "mcmc_forecast"),
+    "MCMCResult": ("polars_ts.bayesian.mcmc", "MCMCResult"),
 }
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
