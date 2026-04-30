@@ -539,7 +539,7 @@ class MCMCForecaster:
         x0[3] = float(np.mean(y))
         logpost = lambda params: _seasonal_logpost(params, y, m)  # noqa: E731
         raw = _mh_sample(logpost, x0, self.n_samples, self.burn_in, self.seed)
-        result: dict[str, np.ndarray] = {
+        result = {
             "sigma_obs": raw[:, 0],
             "sigma_level": raw[:, 1],
             "sigma_season": raw[:, 2],
