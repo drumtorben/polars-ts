@@ -31,21 +31,41 @@
 | **"I don't know which clustering method to pick"** | `auto_cluster` sweeps methods × distances × k values and returns the best result with evaluation scores |
 | **"Polars doesn't have time series functions"** | Mann-Kendall, Sen's slope, CUSUM, PELT, decomposition, ACF/PACF — all group-aware and Polars-native |
 
-### TL;DR — what you can do in 3 lines
+### At a glance
 
 ```python
+import numpy as np
+import polars as pl
 import polars_ts as pts
+from datetime import datetime, timedelta
 
-# Cluster 1 000 series by shape similarity
-labels = pts.auto_cluster(df, methods=["kmedoids", "spectral"], distances=["sbd", "dtw"])
+# Build a small panel of 20 hourly series
+dates = [datetime(2023, 1, 1) + timedelta(hours=i) for i in range(100)]
+df = pl.concat([
+    pl.DataFrame({
+        "unique_id": [f"s_{i}"] * 100,
+        "ds": dates,
+        "y": (np.sin(np.linspace(0, 4 * np.pi, 100)) + np.random.normal(0, 0.1, 100)).tolist(),
+    })
+    for i in range(20)
+])
+
+# Cluster by shape similarity
+result = pts.auto_cluster(df, methods=["kmedoids", "spectral"], distances=["sbd", "dtw"])
+print(result.best_labels)  # DataFrame[unique_id, cluster]
 
 # Forecast with a full ML pipeline
-pipe = pts.ForecastPipeline(model, lags=[1,7,14], rolling_windows=[7], calendar=["day_of_week"])
-pipe.fit(train); forecasts = pipe.predict(train, h=7)
+from sklearn.linear_model import Ridge
+pipe = pts.ForecastPipeline(Ridge(), lags=[1, 7, 14], rolling_windows=[7], calendar=["day_of_week"])
+pipe.fit(df)
+forecasts = pipe.predict(df, h=7)
 
 # Detect changepoints
-breaks = pts.pelt(df, cost="meanvar", pen=10)
+breaks = pts.pelt(df, cost="meanvar", penalty=10)
 ```
+
+> Column defaults are `unique_id`, `ds`, `y` throughout.
+> Pass `id_col=`, `time_col=`, `target_col=` to override.
 
 ---
 
@@ -113,13 +133,25 @@ pipe = pts.ForecastPipeline(
 )
 pipe.fit(train_df)
 forecasts = pipe.predict(train_df, h=7)
+# forecasts: DataFrame[unique_id, ds, y_hat]
+```
+
+### Forecast with covariates
+
+```python
+pipe = pts.ForecastPipeline(
+    Ridge(),
+    lags=[1, 2, 7],
+    past_covariates=["temperature"],       # lagged automatically
+    future_covariates=["is_holiday"],       # looked up from future_df
+)
+pipe.fit(train_df)  # train_df has temperature + is_holiday columns
+forecasts = pipe.predict(train_df, h=7, future_df=future_df)
 ```
 
 ### ARIMA forecasting
 
 ```python
-import polars_ts as pts
-
 # Fit ARIMA(1,1,1) and forecast 12 steps ahead
 fitted = pts.arima_fit(df, order=(1, 1, 1))
 forecast = pts.arima_forecast(fitted, h=12)
@@ -128,31 +160,22 @@ forecast = pts.arima_forecast(fitted, h=12)
 forecast = pts.auto_arima(df, h=12, season_length=12)
 ```
 
+### Changepoint detection
+
+```python
+# PELT — multiple changepoints with mean/variance cost
+breaks = pts.pelt(df, cost="meanvar", penalty=10)
+# breaks: DataFrame[unique_id, changepoint_idx, ds]
+
+# Bayesian Online Changepoint Detection
+probs = pts.bocpd(df)
+```
+
 ### Exponential smoothing
 
 ```python
-import polars_ts as pts
-
 # Holt-Winters seasonal forecast
 result = pts.holt_winters_forecast(df, h=12, season_length=12, seasonal="additive")
-```
-
-### Conformal prediction intervals
-
-```python
-import polars_ts as pts
-
-# Distribution-free prediction intervals
-result = pts.conformal_interval(cal_residuals, predictions, coverage=0.9)
-```
-
-### Weighted ensemble
-
-```python
-import polars_ts as pts
-
-ens = pts.WeightedEnsemble(weights="inverse_error")
-combined = ens.combine([forecast_a, forecast_b], validation_dfs=[val_a, val_b])
 ```
 
 ### Mann-Kendall trend test
@@ -175,9 +198,6 @@ result = df.group_by("group").agg(
 ### Seasonal decomposition
 
 ```python
-import polars as pl
-import polars_ts as pts
-
 df = pl.DataFrame({
     "unique_id": ["A"] * 48,
     "ds": list(range(48)),
