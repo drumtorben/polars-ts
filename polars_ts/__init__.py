@@ -97,6 +97,7 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "KShapeClassifier": ("polars_ts.classification.kshape_classifier", "KShapeClassifier"),
     # --- Feature engineering ---
     "lag_features": ("polars_ts.features", "lag_features"),
+    "covariate_lag_features": ("polars_ts.features", "covariate_lag_features"),
     "rolling_features": ("polars_ts.features", "rolling_features"),
     "calendar_features": ("polars_ts.features", "calendar_features"),
     "fourier_features": ("polars_ts.features", "fourier_features"),
@@ -149,6 +150,12 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "var_forecast": ("polars_ts.var_model", "var_forecast"),
     "granger_causality": ("polars_ts.var_model", "granger_causality"),
     "VARResult": ("polars_ts.var_model", "VARResult"),
+    # --- Bayesian VAR ---
+    "bayesian_var": ("polars_ts.bayesian_var", "bayesian_var"),
+    "BayesianVAR": ("polars_ts.bayesian_var", "BayesianVAR"),
+    "MinnesotaPrior": ("polars_ts.bayesian_var", "MinnesotaPrior"),
+    "NormalWishartPrior": ("polars_ts.bayesian_var", "NormalWishartPrior"),
+    "BayesianVARResult": ("polars_ts.bayesian_var", "BayesianVARResult"),
     # --- Reconciliation ---
     "reconcile": ("polars_ts.reconciliation", "reconcile"),
     # --- Adapters ---
