@@ -210,6 +210,13 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "SyntheticControl": ("polars_ts.causal.synthetic_control", "SyntheticControl"),
     "synthetic_control": ("polars_ts.causal.synthetic_control", "synthetic_control"),
     "SyntheticControlResult": ("polars_ts.causal.synthetic_control", "SyntheticControlResult"),
+    # --- Agents ---
+    "TimeSeriesScientist": ("polars_ts.agents", "TimeSeriesScientist"),
+    "ScientistResult": ("polars_ts.agents", "ScientistResult"),
+    "CuratorAgent": ("polars_ts.agents", "CuratorAgent"),
+    "PlannerAgent": ("polars_ts.agents", "PlannerAgent"),
+    "ForecasterAgent": ("polars_ts.agents", "ForecasterAgent"),
+    "ReporterAgent": ("polars_ts.agents", "ReporterAgent"),
 }
 
 
