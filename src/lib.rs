@@ -32,6 +32,7 @@ mod sens_slope;
 mod ets;
 mod kmedoids;
 mod pelt;
+mod kasba;
 
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();
