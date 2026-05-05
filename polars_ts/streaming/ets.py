@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import Any
 
 import polars as pl
@@ -65,12 +66,12 @@ class StreamingETS:
         self.target_col = target_col
 
         self.is_fitted_ = False
-        self._state: dict[str, dict[str, Any]] = {}
-        self._freq = None
+        self._state: dict[Any, dict[str, Any]] = {}
+        self._freq: timedelta | None = None
         self._schema: dict[str, Any] = {}
 
     @property
-    def state_(self) -> dict[str, dict[str, Any]]:
+    def state_(self) -> dict[Any, dict[str, Any]]:
         """Per-series state dictionaries."""
         return self._state
 
@@ -116,6 +117,7 @@ class StreamingETS:
         if not self.is_fitted_:
             raise RuntimeError("Call fit() before predict()")
 
+        assert self._freq is not None
         rows: list[dict[str, Any]] = []
         for sid, state in self._state.items():
             forecasts = self._forecast_series(state, h)
@@ -195,7 +197,7 @@ class StreamingETS:
         else:
             raise ValueError(f"Unknown method: {self.method!r}")
 
-    def _update_series(self, sid: str, values: list[float], last_time: Any) -> None:
+    def _update_series(self, sid: Any, values: list[float], last_time: Any) -> None:
         """Incrementally update state for one series."""
         state = self._state[sid]
 

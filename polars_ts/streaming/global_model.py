@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import Any
 
 import numpy as np
@@ -53,7 +54,7 @@ class StreamingGlobalForecaster:
         self.is_fitted_ = False
         self.window_manager_: SlidingWindowManager = SlidingWindowManager(window_size)
         self.estimator_: Any = None
-        self._freq = None
+        self._freq: timedelta | None = None
         self._schema: dict[str, Any] = {}
         self._last_times: dict[str, Any] = {}
 
@@ -116,6 +117,7 @@ class StreamingGlobalForecaster:
         if not self.is_fitted_:
             raise RuntimeError("Call fit() before predict()")
 
+        assert self._freq is not None
         rows: list[dict[str, Any]] = []
         for sid in self.window_manager_.series_ids:
             values = list(self.window_manager_.get(sid))

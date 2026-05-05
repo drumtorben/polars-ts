@@ -359,6 +359,15 @@ class TestSlidingWindowManager:
 # ===========================================================================
 
 
+try:
+    import sklearn  # noqa: F401
+
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
+
+
+@pytest.mark.skipif(not HAS_SKLEARN, reason="scikit-learn not installed")
 class TestStreamingGlobalForecaster:
     """Test incremental global model updates."""
 
