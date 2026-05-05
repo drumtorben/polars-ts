@@ -32,6 +32,8 @@ mod sens_slope;
 mod ets;
 mod kmedoids;
 mod pelt;
+#[allow(dead_code, clippy::too_many_arguments, clippy::ptr_arg)]
+mod kasba;
 
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();
