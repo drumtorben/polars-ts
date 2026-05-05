@@ -219,6 +219,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "PlannerAgent": ("polars_ts.agents", "PlannerAgent"),
     "ForecasterAgent": ("polars_ts.agents", "ForecasterAgent"),
     "ReporterAgent": ("polars_ts.agents", "ReporterAgent"),
+    # --- Multivariate DL ---
+    "MultivariatePatchTST": ("polars_ts.dl", "MultivariatePatchTST"),
+    "iTransformerForecaster": ("polars_ts.dl", "iTransformerForecaster"),
     # --- Anomaly detection agents ---
     "AnomalyEnv": ("polars_ts.anomaly_agents", "AnomalyEnv"),
     "AnomalyOrchestrator": ("polars_ts.anomaly_agents", "AnomalyOrchestrator"),
