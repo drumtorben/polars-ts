@@ -357,7 +357,7 @@ class MultivariatePatchTST:
 
     def predict(self, df: pl.DataFrame) -> pl.DataFrame:
         """Generate multivariate forecasts."""
-        if not self.is_fitted_ or self._model is None:
+        if not self.is_fitted_ or self._model is None or self._mean is None or self._std is None:
             raise RuntimeError("Call fit() before predict()")
 
         ids, arrays = _extract_multivariate(df, self.target_cols, self.id_col, self.time_col)
@@ -365,6 +365,8 @@ class MultivariatePatchTST:
         forecasts = np.zeros((len(ids), self.h, n_vars))
 
         model = self._model
+        mean = self._mean.squeeze(0)
+        std = self._std.squeeze(0)
         model.eval()
         with torch.no_grad():
             for i, arr in enumerate(arrays):
@@ -373,11 +375,11 @@ class MultivariatePatchTST:
                     padded = np.zeros((self.input_size, n_vars), dtype=np.float64)
                     padded[-len(x) :] = x
                     x = padded
-                x_norm = (x - self._mean.squeeze(0)) / self._std.squeeze(0)
+                x_norm = (x - mean) / std
                 x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
                 pred = model(x_t).squeeze(0).detach().cpu().tolist()
                 pred = np.array(pred)
-                forecasts[i] = pred * self._std.squeeze(0) + self._mean.squeeze(0)
+                forecasts[i] = pred * std + mean
 
         return _build_mv_forecast_df(ids, forecasts, self.target_cols, df, self.h, self.id_col, self.time_col)
 
@@ -494,7 +496,7 @@ class iTransformerForecaster:
 
     def predict(self, df: pl.DataFrame) -> pl.DataFrame:
         """Generate multivariate forecasts."""
-        if not self.is_fitted_ or self._model is None:
+        if not self.is_fitted_ or self._model is None or self._mean is None or self._std is None:
             raise RuntimeError("Call fit() before predict()")
 
         ids, arrays = _extract_multivariate(df, self.target_cols, self.id_col, self.time_col)
@@ -502,6 +504,8 @@ class iTransformerForecaster:
         forecasts = np.zeros((len(ids), self.h, n_vars))
 
         model = self._model
+        mean = self._mean.squeeze(0)
+        std = self._std.squeeze(0)
         model.eval()
         with torch.no_grad():
             for i, arr in enumerate(arrays):
@@ -510,10 +514,10 @@ class iTransformerForecaster:
                     padded = np.zeros((self.input_size, n_vars), dtype=np.float64)
                     padded[-len(x) :] = x
                     x = padded
-                x_norm = (x - self._mean.squeeze(0)) / self._std.squeeze(0)
+                x_norm = (x - mean) / std
                 x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
                 pred = model(x_t).squeeze(0).detach().cpu().tolist()
                 pred = np.array(pred)
-                forecasts[i] = pred * self._std.squeeze(0) + self._mean.squeeze(0)
+                forecasts[i] = pred * std + mean
 
         return _build_mv_forecast_df(ids, forecasts, self.target_cols, df, self.h, self.id_col, self.time_col)
