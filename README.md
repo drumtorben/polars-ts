@@ -26,8 +26,10 @@
 | Pain point | How polars-ts helps |
 |---|---|
 | **"I need DTW but scipy is slow"** | 12 distance metrics compiled to native code via Rust + Rayon, orders of magnitude faster on large panels |
-| **"I want to cluster time series but tslearn/sktime have too many deps"** | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA/CLARANS, U-Shapelets — all built-in, optional `scikit-learn` only for density methods |
+| **"I want to cluster time series but tslearn/sktime have too many deps"** | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA/CLARANS, U-Shapelets, Contrastive, DEC/IDEC — all built-in |
 | **"Setting up a forecast pipeline takes too long"** | `ForecastPipeline` wires up lags, rolling stats, calendar features, target transforms, and any sklearn model in 5 lines |
+| **"I want to use foundation models / LLMs for forecasting"** | Chronos, TimesFM, Moirai adapters for zero-shot; Time-LLM, LLM-PS for reprogrammed LLM forecasting; N-BEATS, PatchTST native DL |
+| **"I need Bayesian methods"** | Kalman filters, BSTS, Bayesian ETS, Bayesian VAR, GP regression, MCMC wrapper, particle filters — all built-in |
 | **"I don't know which clustering method to pick"** | `auto_cluster` sweeps methods × distances × k values and returns the best result with evaluation scores |
 | **"Polars doesn't have time series functions"** | Mann-Kendall, Sen's slope, CUSUM, PELT, decomposition, ACF/PACF — all group-aware and Polars-native |
 
@@ -237,6 +239,8 @@ All distance functions return a tidy DataFrame with columns `[id_1, id_2, <metri
 | **K-Medoids (PAM)** | `kmedoids` | Known k, any distance metric, interpretable medoids |
 | **K-Shape** | `KShape` | Shape-based grouping via cross-correlation centroids |
 | **Spectral (KSC)** | `spectral_cluster` | Non-convex clusters, graph Laplacian structure |
+| **Contrastive** | `ContrastiveClusterer` | Self-supervised representation learning + clustering |
+| **DEC / IDEC** | `DECClusterer` | Autoencoder-based deep clustering |
 | **HDBSCAN** | `hdbscan_cluster` | Unknown k, varying density, noise detection |
 | **DBSCAN** | `dbscan_cluster` | Fixed-radius neighbourhood, noise detection |
 | **Hierarchical** | `agglomerative_cluster` | Dendrogram visualization, flexible linkage |
@@ -249,7 +253,7 @@ All distance functions return a tidy DataFrame with columns `[id_1, id_2, <metri
 
 **Evaluation:** `silhouette_score`, `davies_bouldin_score`, `calinski_harabasz_score`
 
-**Classification:** `knn_classify` (distance-based k-NN), `TimeSeriesKNNClassifier` (OOP), `KShapeClassifier` (centroid-based)
+**Classification:** `knn_classify` (distance-based k-NN), `TimeSeriesKNNClassifier` (OOP), `KShapeClassifier` (centroid-based), `RocketClassifier`, `InceptionTimeClassifier`, `ResNetClassifier` (deep)
 
 ### Trend & changepoint detection
 
@@ -308,6 +312,10 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 - **Multi-step strategies** &mdash; `RecursiveForecaster` and `DirectForecaster`
 - **ForecastPipeline** &mdash; end-to-end ML pipeline with feature engineering + transforms
 - **GlobalForecaster** &mdash; cross-series panel model with optional ID encoding
+- **N-BEATS / PatchTST** &mdash; native deep learning forecasters (requires `torch`)
+- **Time-LLM / LLM-PS** &mdash; LLM-reprogrammed forecasting adapters (requires `torch`)
+- **Foundation models** &mdash; Chronos, TimesFM, Moirai zero-shot forecasting
+- **Agentic forecasting** &mdash; `TimeSeriesScientist` multi-agent pipeline (Curator → Planner → Forecaster → Reporter)
 
 ### Probabilistic forecasting
 
@@ -336,6 +344,28 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 - **GARCH** &mdash; volatility modelling and conditional variance forecasting
 - **Forecast reconciliation** &mdash; bottom-up, top-down, and MinTrace-OLS
 
+### Bayesian methods
+
+- **Kalman Filter / RTS Smoother** &mdash; linear state-space models
+- **BSTS** &mdash; Bayesian Structural Time Series (local level/trend + seasonality + regressors)
+- **Bayesian ETS** &mdash; exponential smoothing with posterior predictive
+- **Bayesian VAR** &mdash; vector autoregression with Minnesota/Normal-Wishart priors
+- **Gaussian Process regression** &mdash; non-parametric Bayesian forecasting
+- **MCMC wrapper** &mdash; adapter for NumPyro/PyMC backends
+- **Unscented / Ensemble Kalman Filter** &mdash; nonlinear state-space models
+- **Particle Filter / SMC** &mdash; fully nonlinear/non-Gaussian
+- **Bayesian anomaly scoring** &mdash; posterior predictive p-values, Bayes factors
+
+### Causal inference
+
+- **CausalImpact** &mdash; Bayesian structural time series counterfactual analysis
+- **Synthetic control** &mdash; donor-pool weighted counterfactual estimation
+- **Placebo tests** &mdash; significance testing via counterfactual permutation
+
+### Backtesting
+
+- **Unified backtest framework** &mdash; fit → predict → score across rolling windows with multiple models
+
 ### Anomaly detection
 
 - **Decomposition-based** &mdash; residual threshold anomaly flagging
@@ -347,13 +377,15 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 - **PyTorch Forecasting** &mdash; convert to/from TFT, DeepAR format
 - **HuggingFace** &mdash; convert to Dataset for Chronos, TimesFM, Lag-Llama
 - **Chronos / MOMENT embeddings** &mdash; foundation model feature extraction for clustering
+- **Foundation forecast** &mdash; ChronosForecaster, TimesFMForecaster, MoiraiForecaster (zero-shot)
+- **LLM forecast** &mdash; TimeLLMForecaster, LLMPSForecaster (reprogrammed LLM)
 - **ForecastEnv** &mdash; Gymnasium-compatible RL environment for decision making
 
 ---
 
 ## Tutorials
 
-The `notebooks/` directory contains 10 end-to-end tutorials:
+The `notebooks/` directory contains 13 end-to-end tutorials:
 
 | # | Topic | Notebook |
 |---|---|---|
@@ -367,6 +399,9 @@ The `notebooks/` directory contains 10 end-to-end tutorials:
 | 08 | Multivariate & volatility | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/08_multivariate_volatility.ipynb) |
 | 09 | Ensembles & reconciliation | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/09_ensembles_reconciliation.ipynb) |
 | 10 | Ecosystem adapters | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/10_ecosystem_adapters.ipynb) |
+| 11 | Time series imaging | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/11_time_series_imaging.ipynb) |
+| 12 | Advanced feature extraction | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/12_advanced_feature_extraction.ipynb) |
+| 13 | Agentic forecasting | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/13_agentic_forecasting.ipynb) |
 
 ---
 
