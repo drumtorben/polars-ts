@@ -1228,6 +1228,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../adapters/llm_forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Llm forecast
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../adapters/neuralforecast/" class="md-nav__link">
         
   
@@ -1479,6 +1502,24 @@
   <a href="#polars_ts.agents.forecaster.ForecasterAgent--parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.agents.forecaster.ForecasterAgent._add_id_col" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_add_id_col
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.agents.forecaster.ForecasterAgent._drop_id_col" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_drop_id_col
     </span>
   </a>
   
@@ -4782,6 +4823,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.agents.forecaster.ForecasterAgent._add_id_col" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_add_id_col
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.agents.forecaster.ForecasterAgent._drop_id_col" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;_drop_id_col
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.agents.forecaster.ForecasterAgent.forecast" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forecast
@@ -4988,6 +5047,42 @@ target_col
 <div class="doc doc-object doc-function">
 
 
+<h4 id="polars_ts.agents.forecaster.ForecasterAgent._add_id_col" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_add_id_col</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Add a synthetic id column when the data has none.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.agents.forecaster.ForecasterAgent._drop_id_col" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_drop_id_col</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Remove the synthetic id column.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
 <h4 id="polars_ts.agents.forecaster.ForecasterAgent.forecast" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plan</span><span class="p">)</span></code>
 
@@ -5007,7 +5102,7 @@ target_col
 
 
 <h4 id="polars_ts.agents.forecaster.ForecasterAgent._ensemble_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_ensemble_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plan</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">all_preds</span><span class="p">,</span> <span class="n">valid_models</span><span class="p">,</span> <span class="n">best_name</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">_ensemble_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">plan</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">all_preds</span><span class="p">,</span> <span class="n">valid_models</span><span class="p">,</span> <span class="n">best_name</span><span class="p">,</span> <span class="n">added_id</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h4>
 

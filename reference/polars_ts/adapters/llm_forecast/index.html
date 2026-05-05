@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../kmedoids/">
+        <link rel="prev" href="../huggingface/">
       
       
-        <link rel="next" href="../scalable/">
+        <link rel="next" href="../neuralforecast/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Kshape - Polars Time Series Extension</title>
+        <title>Llm forecast - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.clustering.kshape" class="md-skip">
+        <a href="#polars_ts.adapters.llm_forecast" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kshape
+              Llm forecast
             
           </span>
         </div>
@@ -1106,8 +1106,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -1116,17 +1118,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_18" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_18" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../adapters/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -1145,7 +1145,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_18_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_18">
             <span class="md-nav__icon md-icon"></span>
             Adapters
@@ -1159,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/embeddings/" class="md-nav__link">
+      <a href="../embeddings/" class="md-nav__link">
         
   
   
@@ -1182,7 +1182,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/foundation_forecast/" class="md-nav__link">
+      <a href="../foundation_forecast/" class="md-nav__link">
         
   
   
@@ -1205,7 +1205,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/huggingface/" class="md-nav__link">
+      <a href="../huggingface/" class="md-nav__link">
         
   
   
@@ -1225,10 +1225,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../adapters/llm_forecast/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Llm forecast
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1239,6 +1259,228 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;llm_forecast
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" llm_forecast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast--references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_TimeLLMNet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _TimeLLMNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forward
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_LLMPSNet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _LLMPSNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forward
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeLLMForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" TimeLLMForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;LLMPSForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" LLMPSForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1251,7 +1493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/neuralforecast/" class="md-nav__link">
+      <a href="../neuralforecast/" class="md-nav__link">
         
   
   
@@ -1274,7 +1516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/pytorch_forecasting/" class="md-nav__link">
+      <a href="../pytorch_forecasting/" class="md-nav__link">
         
   
   
@@ -1297,7 +1539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/rl_env/" class="md-nav__link">
+      <a href="../rl_env/" class="md-nav__link">
         
   
   
@@ -2294,8 +2536,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2306,15 +2546,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_25" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_25" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -2333,7 +2575,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_25_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_25_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_25">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -2347,7 +2589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_augmentation/" class="md-nav__link">
+      <a href="../../clustering/_augmentation/" class="md-nav__link">
         
   
   
@@ -2370,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_autoencoder/" class="md-nav__link">
+      <a href="../../clustering/_autoencoder/" class="md-nav__link">
         
   
   
@@ -2393,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_contrastive_loss/" class="md-nav__link">
+      <a href="../../clustering/_contrastive_loss/" class="md-nav__link">
         
   
   
@@ -2416,7 +2658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../auto/" class="md-nav__link">
+      <a href="../../clustering/auto/" class="md-nav__link">
         
   
   
@@ -2439,7 +2681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contrastive/" class="md-nav__link">
+      <a href="../../clustering/contrastive/" class="md-nav__link">
         
   
   
@@ -2462,7 +2704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dba/" class="md-nav__link">
+      <a href="../../clustering/dba/" class="md-nav__link">
         
   
   
@@ -2485,7 +2727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deep_cluster/" class="md-nav__link">
+      <a href="../../clustering/deep_cluster/" class="md-nav__link">
         
   
   
@@ -2508,7 +2750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../density/" class="md-nav__link">
+      <a href="../../clustering/density/" class="md-nav__link">
         
   
   
@@ -2531,7 +2773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../evaluation/" class="md-nav__link">
+      <a href="../../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -2554,7 +2796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hierarchical/" class="md-nav__link">
+      <a href="../../clustering/hierarchical/" class="md-nav__link">
         
   
   
@@ -2577,7 +2819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kmeans/" class="md-nav__link">
+      <a href="../../clustering/kmeans/" class="md-nav__link">
         
   
   
@@ -2600,7 +2842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kmedoids/" class="md-nav__link">
+      <a href="../../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -2620,30 +2862,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Kshape
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -2654,90 +2876,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kshape">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" KShape">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2750,7 +2888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scalable/" class="md-nav__link">
+      <a href="../../clustering/scalable/" class="md-nav__link">
         
   
   
@@ -2773,7 +2911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../shapelets/" class="md-nav__link">
+      <a href="../../clustering/shapelets/" class="md-nav__link">
         
   
   
@@ -2796,7 +2934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../spectral/" class="md-nav__link">
+      <a href="../../clustering/spectral/" class="md-nav__link">
         
   
   
@@ -4740,29 +4878,152 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;llm_forecast
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kshape">
+    <nav class="md-nav" aria-label=" llm_forecast">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast--references" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
+      References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" KShape">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_TimeLLMNet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _TimeLLMNet">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forward
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._TimeLLMNet.forward--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;_LLMPSNet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _LLMPSNet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;forward
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" forward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast._LLMPSNet.forward--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;TimeLLMForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" TimeLLMForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster.fit" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.TimeLLMForecaster.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
   
@@ -4774,29 +5035,44 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;LLMPSForecaster
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" LLMPSForecaster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster.fit" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
+  <a href="#polars_ts.adapters.llm_forecast.LLMPSForecaster.predict" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4824,21 +5100,31 @@
   
 
 
-  <h1>Kshape</h1>
+  <h1>Llm forecast</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.clustering.kshape" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.kshape</code>
+<h2 id="polars_ts.adapters.llm_forecast" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.adapters.llm_forecast</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>k-Shape clustering for time series using Shape-Based Distance (SBD).</p>
+        <p>LLM-based forecasting adapters (Time-LLM, LLM-PS).</p>
+<p>Reprograms LLMs for time series forecasting by converting temporal patterns
+into representations that pre-trained language models can process.</p>
+<p>Time-LLM: Patches input series into tokens, projects via cross-attention
+with text prototypes, then decodes forecasts through a frozen LLM backbone.</p>
+<p>LLM-PS (Pattern &amp; Semantic): Multi-scale CNN extracts local patterns at
+different granularities, then an LLM backbone reasons over the combined
+multi-scale representation.</p>
+<h4 id="polars_ts.adapters.llm_forecast--references">References</h4>
+<p>Time-LLM (Jin et al., ICLR 2024).
+LLM-PS (2025). arXiv:2503.09656.</p>
 
 
 
@@ -4863,73 +5149,21 @@
 
 
 
-<h3 id="polars_ts.clustering.kshape.KShape" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>KShape</code>
+<h3 id="polars_ts.adapters.llm_forecast._TimeLLMNet" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>_TimeLLMNet</code>
 
 
 </h3>
 
 
     <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="torch.nn.Module">Module</span></code></p>
 
 
-        <p>k-Shape clustering for time series.</p>
-<p>Uses Shape-Based Distance (SBD) and shape extraction to iteratively
-refine cluster centroids and assignments.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_clusters</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of clusters. Default 2.</p>
-              </div>
-            </td>
-            <td>
-                  <code>2</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>max_iter</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Maximum number of iterations. Default 100.</p>
-              </div>
-            </td>
-            <td>
-                  <code>100</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Examples:</span></p>
-    <div class="language-pycon highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span> <span class="o">=</span> <span class="n">KShape</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">labels_</span>
-</span></code></pre></div>
+        <p>Simplified Time-LLM: patch embedding → cross-attention → MLP decoder.</p>
+<p>Converts time series patches into a sequence of tokens, applies learned
+cross-attention with text-like prototypes, then decodes forecasts.</p>
 
 
 
@@ -4955,69 +5189,19 @@ refine cluster centroids and assignments.</p>
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.clustering.kshape.KShape.fit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+<h4 id="polars_ts.adapters.llm_forecast._TimeLLMNet.forward" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
 
 </h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Fit k-Shape clustering.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="            KShape (polars_ts.clustering.kshape.KShape)" href="#polars_ts.clustering.kshape.KShape">KShape</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>self, with <code>labels_</code> and <code>centroids_</code> populated.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>Forward pass.</p>
+<h6 id="polars_ts.adapters.llm_forecast._TimeLLMNet.forward--parameters">Parameters</h6>
+<p>x : Tensor of shape (batch, input_size)</p>
+<h6 id="polars_ts.adapters.llm_forecast._TimeLLMNet.forward--returns">Returns</h6>
+<p>Tensor of shape (batch, h)</p>
 
 
     </div>
@@ -5032,19 +5216,145 @@ refine cluster centroids and assignments.</p>
 
 </div>
 
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.adapters.llm_forecast._LLMPSNet" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>_LLMPSNet</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="torch.nn.Module">Module</span></code></p>
+
+
+        <p>LLM-PS: multi-scale CNN pattern extraction + MLP semantic decoder.</p>
+<p>Extracts patterns at multiple temporal scales via parallel convolutions,
+concatenates the multi-scale features, and decodes forecasts.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
 
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.clustering.kshape._zscore" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_zscore</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+<h4 id="polars_ts.adapters.llm_forecast._LLMPSNet.forward" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Forward pass.</p>
+<h6 id="polars_ts.adapters.llm_forecast._LLMPSNet.forward--parameters">Parameters</h6>
+<p>x : Tensor of shape (batch, input_size)</p>
+<h6 id="polars_ts.adapters.llm_forecast._LLMPSNet.forward--returns">Returns</h6>
+<p>Tensor of shape (batch, h)</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.adapters.llm_forecast.TimeLLMForecaster" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>TimeLLMForecaster</code>
+
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Z-normalize a 1-D array. Returns zeros if std is zero.</p>
+
+        <p>Time-LLM forecaster: patch → cross-attention with prototypes → decode.</p>
+<h5 id="polars_ts.adapters.llm_forecast.TimeLLMForecaster--parameters">Parameters</h5>
+<p>h
+    Forecast horizon.
+input_size
+    Lookback window length.
+patch_len
+    Length of each input patch.
+d_model
+    Hidden dimension.
+n_heads
+    Number of attention heads.
+n_prototypes
+    Number of learnable text-like prototypes.
+lr
+    Learning rate.
+max_epochs
+    Maximum training epochs.
+id_col, time_col, target_col
+    Column names.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.adapters.llm_forecast.TimeLLMForecaster.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Train the Time-LLM model.</p>
 
 
     </div>
@@ -5054,16 +5364,93 @@ refine cluster centroids and assignments.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.clustering.kshape._sbd" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_sbd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></code>
+<h4 id="polars_ts.adapters.llm_forecast.TimeLLMForecaster.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate forecasts for each series.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="polars_ts.adapters.llm_forecast.LLMPSForecaster" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>LLMPSForecaster</code>
+
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Shape-Based Distance between two z-normalized series.</p>
-<p>Returns (distance, y_shifted) where y_shifted is y aligned to x.</p>
+
+        <p>LLM-PS forecaster: multi-scale CNN pattern extraction → decode.</p>
+<h5 id="polars_ts.adapters.llm_forecast.LLMPSForecaster--parameters">Parameters</h5>
+<p>h
+    Forecast horizon.
+input_size
+    Lookback window length.
+kernel_sizes
+    CNN kernel sizes for multi-scale pattern extraction.
+d_model
+    Hidden dimension.
+lr
+    Learning rate.
+max_epochs
+    Maximum training epochs.
+id_col, time_col, target_col
+    Column names.</p>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.adapters.llm_forecast.LLMPSForecaster.fit" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Train the LLM-PS model.</p>
 
 
     </div>
@@ -5073,22 +5460,29 @@ refine cluster centroids and assignments.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.clustering.kshape._shape_extraction" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_shape_extraction</span><span class="p">(</span><span class="n">cluster_series</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span></code>
+<h4 id="polars_ts.adapters.llm_forecast.LLMPSForecaster.predict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
-</h3>
+</h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Extract centroid shape via eigenvalue decomposition (Paparrizos &amp; Gravano).</p>
-<p>Computes the first eigenvector of the cross-correlation matrix S^T * S,
-which maximizes the sum of squared normalized cross-correlations.</p>
+        <p>Generate forecasts for each series.</p>
 
 
     </div>
 
 </div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
 
 
 
