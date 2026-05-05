@@ -180,6 +180,8 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "ChronosForecaster": ("polars_ts.adapters", "ChronosForecaster"),
     "TimesFMForecaster": ("polars_ts.adapters", "TimesFMForecaster"),
     "MoiraiForecaster": ("polars_ts.adapters", "MoiraiForecaster"),
+    "TimeLLMForecaster": ("polars_ts.adapters", "TimeLLMForecaster"),
+    "LLMPSForecaster": ("polars_ts.adapters", "LLMPSForecaster"),
     # --- Bias & calibration ---
     "bias_detect": ("polars_ts.bias", "bias_detect"),
     "bias_correct": ("polars_ts.bias", "bias_correct"),

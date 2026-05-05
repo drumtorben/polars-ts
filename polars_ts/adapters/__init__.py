@@ -15,6 +15,8 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "ChronosForecaster": ("polars_ts.adapters.foundation_forecast", "ChronosForecaster"),
     "TimesFMForecaster": ("polars_ts.adapters.foundation_forecast", "TimesFMForecaster"),
     "MoiraiForecaster": ("polars_ts.adapters.foundation_forecast", "MoiraiForecaster"),
+    "TimeLLMForecaster": ("polars_ts.adapters.llm_forecast", "TimeLLMForecaster"),
+    "LLMPSForecaster": ("polars_ts.adapters.llm_forecast", "LLMPSForecaster"),
 }
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
