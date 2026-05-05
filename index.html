@@ -619,6 +619,98 @@
   
   
     <li class="md-nav__item">
+      <a href="deep-learning-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deep Learning & Foundation Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bayesian-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bayesian Methods
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="causal-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Causal Inference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="agents-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agents & Multi-Agent RL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="imaging-guide/" class="md-nav__link">
         
   
@@ -3163,6 +3255,29 @@
   
   
     <li class="md-nav__item">
+      <a href="reference/polars_ts/dl/multivariate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multivariate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/polars_ts/dl/nbeats/" class="md-nav__link">
         
   
@@ -5123,11 +5238,23 @@
 </tr>
 <tr>
 <td>"I want to cluster time series but tslearn has too many deps"</td>
-<td>K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical + 6 more — all built-in</td>
+<td>K-Medoids, K-Shape, HDBSCAN, Spectral, Contrastive, DEC/IDEC + more — all built-in</td>
 </tr>
 <tr>
 <td>"Setting up a forecast pipeline takes too long"</td>
 <td><code>ForecastPipeline</code> wires up lags, rolling stats, transforms, and any sklearn model in 5 lines</td>
+</tr>
+<tr>
+<td>"I want to use foundation models or LLMs"</td>
+<td>Chronos, TimesFM, Moirai zero-shot; Time-LLM, LLM-PS reprogrammed; N-BEATS, PatchTST, iTransformer native</td>
+</tr>
+<tr>
+<td>"I need Bayesian methods"</td>
+<td>Kalman, BSTS, Bayesian ETS/VAR, GP regression, MCMC, particle filters</td>
+</tr>
+<tr>
+<td>"I want automated forecasting"</td>
+<td><code>TimeSeriesScientist</code> multi-agent pipeline: diagnostics → model selection → ensemble → report</td>
 </tr>
 <tr>
 <td>"I don't know which clustering method to pick"</td>
@@ -5211,15 +5338,31 @@
 </tr>
 <tr>
 <td><a href="clustering-guide/"><strong>Clustering</strong></a></td>
-<td>K-Medoids, K-Shape, HDBSCAN, DBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA, CLARANS, U-Shapelets, auto_cluster</td>
+<td>K-Medoids, K-Shape, HDBSCAN, Spectral, Contrastive, DEC/IDEC, auto_cluster</td>
 </tr>
 <tr>
 <td><a href="forecasting-guide/"><strong>Forecasting</strong></a></td>
-<td>Baselines, ARIMA, exponential smoothing, ML pipelines, global models, ensembles</td>
+<td>Baselines, ARIMA, exponential smoothing, ML pipelines, covariates, backtesting</td>
+</tr>
+<tr>
+<td><a href="deep-learning-guide/"><strong>Deep learning</strong></a></td>
+<td>N-BEATS, PatchTST, iTransformer, Time-LLM, LLM-PS, Chronos, TimesFM, Moirai</td>
+</tr>
+<tr>
+<td><a href="bayesian-guide/"><strong>Bayesian</strong></a></td>
+<td>Kalman, BSTS, Bayesian ETS/VAR, GP, MCMC, particle filters, anomaly scoring</td>
+</tr>
+<tr>
+<td><a href="causal-guide/"><strong>Causal inference</strong></a></td>
+<td>CausalImpact, Synthetic Control, placebo tests</td>
+</tr>
+<tr>
+<td><a href="agents-guide/"><strong>Agents</strong></a></td>
+<td>TimeSeriesScientist, MARL portfolio, anomaly detection agents</td>
 </tr>
 <tr>
 <td><a href="imaging-guide/"><strong>Imaging</strong></a></td>
-<td>Recurrence plots, GAF, MTF, spectrograms, scalograms, vision model embeddings</td>
+<td>Recurrence plots, GAF, MTF, spectrograms, scalograms, vision embeddings</td>
 </tr>
 <tr>
 <td><a href="changepoint-guide/"><strong>Changepoint &amp; anomaly</strong></a></td>
@@ -5291,6 +5434,21 @@
 <td>10</td>
 <td>Ecosystem adapters</td>
 <td><a href="https://github.com/drumtorben/polars-ts/blob/main/notebooks/10_ecosystem_adapters.ipynb">10_ecosystem_adapters.ipynb</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Time series imaging</td>
+<td><a href="https://github.com/drumtorben/polars-ts/blob/main/notebooks/11_time_series_imaging.ipynb">11_time_series_imaging.ipynb</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td>Advanced feature extraction</td>
+<td><a href="https://github.com/drumtorben/polars-ts/blob/main/notebooks/12_advanced_feature_extraction.ipynb">12_advanced_feature_extraction.ipynb</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Agentic forecasting</td>
+<td><a href="https://github.com/drumtorben/polars-ts/blob/main/notebooks/13_agentic_forecasting.ipynb">13_agentic_forecasting.ipynb</a></td>
 </tr>
 </tbody>
 </table>
