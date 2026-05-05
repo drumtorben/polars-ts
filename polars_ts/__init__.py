@@ -237,6 +237,11 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "RiskAgent": ("polars_ts.marl", "RiskAgent"),
     "ReturnAgent": ("polars_ts.marl", "ReturnAgent"),
     "AllocationAgent": ("polars_ts.marl", "AllocationAgent"),
+    # --- Streaming / Online Learning ---
+    "StreamingETS": ("polars_ts.streaming", "StreamingETS"),
+    "StreamingKalmanFilter": ("polars_ts.streaming", "StreamingKalmanFilter"),
+    "StreamingGlobalForecaster": ("polars_ts.streaming", "StreamingGlobalForecaster"),
+    "SlidingWindowManager": ("polars_ts.streaming", "SlidingWindowManager"),
 }
 
 
