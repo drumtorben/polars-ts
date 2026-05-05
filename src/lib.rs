@@ -34,6 +34,7 @@ mod kmedoids;
 mod pelt;
 #[allow(dead_code, clippy::too_many_arguments, clippy::ptr_arg)]
 mod kasba;
+mod kasba_py;
 
 #[global_allocator]
 static ALLOC: PolarsAllocator = PolarsAllocator::new();
@@ -59,5 +60,7 @@ fn polars_ts_rs(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(ets::ets_holt_winters, m)?)?;
     m.add_function(wrap_pyfunction!(kmedoids::kmedoids_pam, m)?)?;
     m.add_function(wrap_pyfunction!(pelt::pelt, m)?)?;
+    m.add_function(wrap_pyfunction!(kasba_py::kasba_fit, m)?)?;
+    m.add_function(wrap_pyfunction!(kasba_py::kasba_predict, m)?)?;
     Ok(())
 }
