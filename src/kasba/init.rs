@@ -28,8 +28,8 @@ pub fn elastic_kmeans_plus_plus(
             let threshold = random_val * sum;
             let mut cumsum = 0.0;
             let mut selected = n_cases - 1;
-            for j in 0..n_cases {
-                cumsum += min_distances[j];
+            for (j, &d) in min_distances.iter().enumerate() {
+                cumsum += d;
                 if cumsum > threshold {
                     selected = j;
                     break;

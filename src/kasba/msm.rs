@@ -9,8 +9,8 @@ use std::cell::Cell;
 // ---------------------------------------------------------------------------
 
 thread_local! {
-    static KASBA_DP_PREV: Cell<Vec<f64>> = Cell::new(Vec::new());
-    static KASBA_DP_CURR: Cell<Vec<f64>> = Cell::new(Vec::new());
+    static KASBA_DP_PREV: Cell<Vec<f64>> = const { Cell::new(Vec::new()) };
+    static KASBA_DP_CURR: Cell<Vec<f64>> = const { Cell::new(Vec::new()) };
 }
 
 #[inline]

@@ -1,5 +1,4 @@
 /// Generic minimum-cost path traceback through a cost matrix.
-
 pub fn compute_min_return_path(cost_matrix: &[f64], n: usize, m: usize) -> Vec<(usize, usize)> {
     let mut i = n - 1;
     let mut j = m - 1;
