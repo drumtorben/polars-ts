@@ -227,6 +227,13 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "RollingStdAgent": ("polars_ts.anomaly_agents", "RollingStdAgent"),
     "MADAgent": ("polars_ts.anomaly_agents", "MADAgent"),
     "ConsensusAgent": ("polars_ts.anomaly_agents", "ConsensusAgent"),
+    # --- Multi-agent RL ---
+    "PortfolioEnv": ("polars_ts.marl", "PortfolioEnv"),
+    "MARLOrchestrator": ("polars_ts.marl", "MARLOrchestrator"),
+    "MARLResult": ("polars_ts.marl", "MARLResult"),
+    "RiskAgent": ("polars_ts.marl", "RiskAgent"),
+    "ReturnAgent": ("polars_ts.marl", "ReturnAgent"),
+    "AllocationAgent": ("polars_ts.marl", "AllocationAgent"),
 }
 
 
