@@ -262,13 +262,14 @@ class TimeLLMForecaster:
 
     def predict(self, df: pl.DataFrame) -> pl.DataFrame:
         """Generate forecasts for each series."""
-        if not self.is_fitted_:
+        if not self.is_fitted_ or self._model is None:
             raise RuntimeError("Call fit() before predict()")
 
         ids, arrays = _extract_series(df, self.target_col, self.id_col, self.time_col)
         forecasts = np.zeros((len(ids), self.h))
 
-        self._model.eval()
+        model = self._model
+        model.eval()
         with torch.no_grad():
             for i, arr in enumerate(arrays):
                 x = arr[-self.input_size :].astype(np.float64)
@@ -278,7 +279,7 @@ class TimeLLMForecaster:
                 std = x.std() + 1e-8
                 x_norm = (x - mean) / std
                 x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
-                pred = self._model(x_t).squeeze(0).detach().cpu().tolist()
+                pred = model(x_t).squeeze(0).detach().cpu().tolist()
                 pred = np.array(pred)
                 forecasts[i] = pred * std + mean
 
@@ -382,13 +383,14 @@ class LLMPSForecaster:
 
     def predict(self, df: pl.DataFrame) -> pl.DataFrame:
         """Generate forecasts for each series."""
-        if not self.is_fitted_:
+        if not self.is_fitted_ or self._model is None:
             raise RuntimeError("Call fit() before predict()")
 
         ids, arrays = _extract_series(df, self.target_col, self.id_col, self.time_col)
         forecasts = np.zeros((len(ids), self.h))
 
-        self._model.eval()
+        model = self._model
+        model.eval()
         with torch.no_grad():
             for i, arr in enumerate(arrays):
                 x = arr[-self.input_size :].astype(np.float64)
@@ -398,7 +400,7 @@ class LLMPSForecaster:
                 std = x.std() + 1e-8
                 x_norm = (x - mean) / std
                 x_t = torch.tensor(x_norm, dtype=torch.float32).unsqueeze(0)
-                pred = self._model(x_t).squeeze(0).detach().cpu().tolist()
+                pred = model(x_t).squeeze(0).detach().cpu().tolist()
                 pred = np.array(pred)
                 forecasts[i] = pred * std + mean
 
