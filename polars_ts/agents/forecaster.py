@@ -73,15 +73,30 @@ class ForecasterAgent:
         self.time_col = time_col
         self.target_col = target_col
 
+    def _add_id_col(self, df: pl.DataFrame) -> pl.DataFrame:
+        """Add a synthetic id column when the data has none."""
+        return df.with_columns(pl.lit("__single__").alias(self.id_col))
+
+    def _drop_id_col(self, df: pl.DataFrame) -> pl.DataFrame:
+        """Remove the synthetic id column."""
+        return df.drop(self.id_col) if self.id_col in df.columns else df
+
     def forecast(self, df: pl.DataFrame, plan: ForecastPlan) -> ForecastAgentResult:
         """Fit each candidate model and select the best by validation MAE."""
         h = plan.horizon
+        added_id = self.id_col not in df.columns
+        work_df = self._add_id_col(df) if added_id else df
 
         # Split into train / validation
-        train, val = self._train_val_split(df, h)
+        train, val = self._train_val_split(work_df, h)
 
         scores: dict[str, float] = {}
         all_preds: dict[str, pl.DataFrame] = {}
+        col_kw: dict[str, str] = {
+            "target_col": self.target_col,
+            "id_col": self.id_col,
+            "time_col": self.time_col,
+        }
 
         for name in plan.candidates:
             dotted = _MODEL_REGISTRY.get(name)
@@ -90,7 +105,7 @@ class ForecasterAgent:
             try:
                 fn = _import_model(dotted)
                 extra = plan.config.get(name, {})
-                preds = fn(train, h=h, target_col=self.target_col, id_col=self.id_col, time_col=self.time_col, **extra)
+                preds = fn(train, h=h, **col_kw, **extra)
                 all_preds[name] = preds
                 mae = self._score(val, preds)
                 scores[name] = mae
@@ -101,7 +116,9 @@ class ForecasterAgent:
             # Fallback: just use naive
             from polars_ts.models.baselines import naive_forecast
 
-            preds = naive_forecast(train, h=h, target_col=self.target_col, id_col=self.id_col, time_col=self.time_col)
+            preds = naive_forecast(train, h=h, **col_kw)
+            if added_id:
+                preds = self._drop_id_col(preds)
             return ForecastAgentResult(
                 predictions=preds,
                 best_model="naive",
@@ -114,12 +131,15 @@ class ForecasterAgent:
         # Build ensemble if requested and we have 2+ valid models
         valid_models = {k: v for k, v in scores.items() if np.isfinite(v) and v > 0}
         if plan.ensemble and len(valid_models) >= 2:
-            return self._ensemble_forecast(df, plan, scores, all_preds, valid_models, best_name)
+            return self._ensemble_forecast(work_df, plan, scores, all_preds, valid_models, best_name, added_id)
 
         # Single best model: re-fit on full data
         best_fn = _import_model(_MODEL_REGISTRY[best_name])
         extra = plan.config.get(best_name, {})
-        final_preds = best_fn(df, h=h, target_col=self.target_col, id_col=self.id_col, time_col=self.time_col, **extra)
+        final_preds = best_fn(work_df, h=h, **col_kw, **extra)
+        if added_id:
+            final_preds = self._drop_id_col(final_preds)
+            all_preds = {k: self._drop_id_col(v) for k, v in all_preds.items()}
 
         return ForecastAgentResult(
             predictions=final_preds,
@@ -136,9 +156,15 @@ class ForecasterAgent:
         all_preds: dict[str, pl.DataFrame],
         valid_models: dict[str, float],
         best_name: str,
+        added_id: bool = False,
     ) -> ForecastAgentResult:
         """Build a weighted ensemble of top models using inverse-MAE weights."""
         h = plan.horizon
+        col_kw: dict[str, str] = {
+            "target_col": self.target_col,
+            "id_col": self.id_col,
+            "time_col": self.time_col,
+        }
 
         # Compute inverse-MAE weights
         inv_mae = {k: 1.0 / v for k, v in valid_models.items()}
@@ -154,7 +180,7 @@ class ForecasterAgent:
             try:
                 fn = _import_model(dotted)
                 extra = plan.config.get(name, {})
-                preds = fn(df, h=h, target_col=self.target_col, id_col=self.id_col, time_col=self.time_col, **extra)
+                preds = fn(df, h=h, **col_kw, **extra)
                 ensemble_preds_list.append((name, w, preds))
             except Exception:
                 continue
@@ -163,9 +189,10 @@ class ForecasterAgent:
             # Fallback to best single model
             best_fn = _import_model(_MODEL_REGISTRY[best_name])
             extra = plan.config.get(best_name, {})
-            final_preds = best_fn(
-                df, h=h, target_col=self.target_col, id_col=self.id_col, time_col=self.time_col, **extra
-            )
+            final_preds = best_fn(df, h=h, **col_kw, **extra)
+            if added_id:
+                final_preds = self._drop_id_col(final_preds)
+                all_preds = {k: self._drop_id_col(v) for k, v in all_preds.items()}
             return ForecastAgentResult(
                 predictions=final_preds,
                 best_model=best_name,
@@ -179,6 +206,10 @@ class ForecasterAgent:
         # Normalize weights for the models that actually contributed
         contrib_total = sum(w for _, w, _ in ensemble_preds_list)
         final_weights = {name: w / contrib_total for name, w, _ in ensemble_preds_list}
+
+        if added_id:
+            final_preds = self._drop_id_col(final_preds)
+            all_preds = {k: self._drop_id_col(v) for k, v in all_preds.items()}
 
         return ForecastAgentResult(
             predictions=final_preds,

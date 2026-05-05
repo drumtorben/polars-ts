@@ -681,3 +681,552 @@ class TestLazyImports:
         from polars_ts import TimeSeriesScientist
 
         assert TimeSeriesScientist is not None
+
+
+# ---------------------------------------------------------------------------
+# Additional fixtures for edge-case testing
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def short_series() -> pl.DataFrame:
+    """Series with only 20 observations (short-series planner path)."""
+    import datetime
+
+    n = 20
+    dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+    rng = np.random.default_rng(7)
+    values = 10 + rng.normal(0, 1, n)
+    return pl.DataFrame({"unique_id": ["short"] * n, "ds": dates, "y": values.tolist()})
+
+
+@pytest.fixture
+def constant_series() -> pl.DataFrame:
+    """Series where all values are identical (std=0 edge case)."""
+    import datetime
+
+    n = 60
+    dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+    return pl.DataFrame({"unique_id": ["const"] * n, "ds": dates, "y": [42.0] * n})
+
+
+@pytest.fixture
+def no_id_series() -> pl.DataFrame:
+    """Series without a unique_id column (single-series path)."""
+    import datetime
+
+    n = 100
+    dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+    rng = np.random.default_rng(55)
+    trend = np.linspace(5, 25, n)
+    values = trend + rng.normal(0, 1, n)
+    values[10] = float("nan")
+    return pl.DataFrame({"ds": dates, "y": values.tolist()})
+
+
+@pytest.fixture
+def leading_nan_series() -> pl.DataFrame:
+    """Series with NaN at the very start (backward-fill edge case)."""
+    import datetime
+
+    n = 50
+    dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+    rng = np.random.default_rng(88)
+    values = 20 + rng.normal(0, 1, n)
+    values[0] = float("nan")
+    values[1] = float("nan")
+    return pl.DataFrame({"unique_id": ["lead_nan"] * n, "ds": dates, "y": values.tolist()})
+
+
+# ---------------------------------------------------------------------------
+# CuratorAgent edge-case tests
+# ---------------------------------------------------------------------------
+
+
+class TestCuratorEdgeCases:
+    def test_curate_no_id_column(self, no_id_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(no_id_series)
+        assert report.n_series == 1
+        assert report.n_missing >= 1
+
+    def test_clean_no_id_column(self, no_id_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        cleaned = agent.curate_and_clean(no_id_series)
+        assert cleaned["y"].null_count() == 0
+        assert cleaned["y"].is_nan().sum() == 0
+
+    def test_clean_removes_nan_not_just_null(self, daily_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        cleaned = agent.curate_and_clean(daily_series)
+        assert cleaned["y"].is_nan().sum() == 0
+
+    def test_clean_leading_nan(self, leading_nan_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        cleaned = agent.curate_and_clean(leading_nan_series)
+        assert cleaned["y"].null_count() == 0
+        assert cleaned["y"].is_nan().sum() == 0
+
+    def test_constant_series_no_outliers(self, constant_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(constant_series)
+        assert report.n_outliers == 0
+
+    def test_constant_series_no_trend(self, constant_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(constant_series)
+        assert report.has_trend is False
+
+    def test_constant_series_no_period(self, constant_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(constant_series)
+        assert report.detected_period is None
+
+    def test_custom_outlier_threshold(self, daily_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        # Lower threshold should detect more outliers
+        strict = CuratorAgent(outlier_threshold=2.0)
+        lenient = CuratorAgent(outlier_threshold=5.0)
+        strict_report = strict.curate(daily_series)
+        lenient_report = lenient.curate(daily_series)
+        assert strict_report.n_outliers >= lenient_report.n_outliers
+
+    def test_trim_lookback_no_id_column(self, no_id_series):
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        trimmed = agent.trim_lookback(no_id_series, lookback=30)
+        assert len(trimmed) == 30
+
+    def test_short_series_stationarity_defaults_true(self):
+        """Very short series (<20) should default to stationary."""
+        import datetime
+
+        n = 15
+        dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+        df = pl.DataFrame({"unique_id": ["tiny"] * n, "ds": dates, "y": list(range(n))})
+
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(df)
+        assert report.is_stationary is True
+
+    def test_short_series_no_period(self):
+        """Very short series (<10) should return None for period."""
+        import datetime
+
+        n = 8
+        dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+        df = pl.DataFrame({"unique_id": ["tiny"] * n, "ds": dates, "y": [1.0] * n})
+
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(df)
+        assert report.detected_period is None
+
+    def test_short_series_no_lookback(self, short_series):
+        """Short series (<40) should not recommend lookback."""
+        from polars_ts.agents.curator import CuratorAgent
+
+        agent = CuratorAgent()
+        report = agent.curate(short_series)
+        assert report.recommended_lookback is None
+
+    def test_empty_dataframe(self):
+        """Empty DataFrame should not crash diagnostics."""
+        from polars_ts.agents.curator import CuratorAgent
+
+        df = pl.DataFrame({"unique_id": [], "ds": [], "y": []}).cast(
+            {"unique_id": pl.Utf8, "ds": pl.Date, "y": pl.Float64}
+        )
+        agent = CuratorAgent()
+        report = agent.curate(df)
+        assert report.n_observations == 0
+        assert report.n_missing == 0
+        assert report.detected_period is None
+        assert report.has_trend is False
+
+
+# ---------------------------------------------------------------------------
+# PlannerAgent edge-case tests
+# ---------------------------------------------------------------------------
+
+
+class TestPlannerEdgeCases:
+    def test_short_series_gets_ses(self, short_series):
+        """Series with <30 obs should get naive + SES only."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(short_series)
+        planner = PlannerAgent()
+        plan = planner.plan(short_series, curation)
+        assert "naive" in plan.candidates
+        assert "ses" in plan.candidates
+        assert "moving_average" not in plan.candidates
+
+    def test_short_series_no_ensemble(self, short_series):
+        """Short series path should have only 2 candidates, no ensemble."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(short_series)
+        planner = PlannerAgent()
+        plan = planner.plan(short_series, curation)
+        assert plan.ensemble is False
+
+    def test_plan_config_has_moving_average_window(self, daily_series):
+        """When moving_average is selected, config should have window_size."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(daily_series)
+        planner = PlannerAgent()
+        plan = planner.plan(daily_series, curation)
+        if "moving_average" in plan.candidates:
+            assert "moving_average" in plan.config
+            assert "window_size" in plan.config["moving_average"]
+            assert plan.config["moving_average"]["window_size"] > 0
+
+    def test_plan_config_has_season_length_for_holt_winters(self, daily_series):
+        """When holt_winters is selected, config should have season_length."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(daily_series)
+        planner = PlannerAgent()
+        plan = planner.plan(daily_series, curation)
+        if "holt_winters" in plan.candidates:
+            assert "holt_winters" in plan.config
+            assert "season_length" in plan.config["holt_winters"]
+
+    def test_plan_always_includes_naive(self, daily_series):
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(daily_series)
+        planner = PlannerAgent()
+        plan = planner.plan(daily_series, curation)
+        assert plan.candidates[0] == "naive"
+
+    def test_plan_with_llm_backend(self, daily_series):
+        """LLM backend should replace rationale."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        class StubBackend:
+            def complete(self, prompt: str) -> str:  # noqa: ARG002
+                return "LLM rationale override"
+
+        curator = CuratorAgent()
+        curation = curator.curate(daily_series)
+        planner = PlannerAgent(backend=StubBackend())
+        plan = planner.plan(daily_series, curation)
+        assert plan.rationale == "LLM rationale override"
+
+
+# ---------------------------------------------------------------------------
+# ForecasterAgent edge-case tests
+# ---------------------------------------------------------------------------
+
+
+class TestForecasterEdgeCases:
+    def test_compute_mae(self):
+        from polars_ts.agents.forecaster import _compute_mae
+
+        actual = np.array([1.0, 2.0, 3.0])
+        predicted = np.array([1.5, 2.5, 3.5])
+        assert abs(_compute_mae(actual, predicted) - 0.5) < 1e-10
+
+    def test_compute_mae_perfect(self):
+        from polars_ts.agents.forecaster import _compute_mae
+
+        arr = np.array([1.0, 2.0, 3.0])
+        assert _compute_mae(arr, arr) == 0.0
+
+    def test_train_val_split_sizes(self, daily_series):
+        from polars_ts.agents.forecaster import ForecasterAgent
+
+        agent = ForecasterAgent()
+        train, val = agent._train_val_split(daily_series, h=10)
+        assert len(train) == len(daily_series) - 10
+        assert len(val) == 10
+
+    def test_train_val_split_no_overlap(self, daily_series):
+        from polars_ts.agents.forecaster import ForecasterAgent
+
+        agent = ForecasterAgent()
+        train, val = agent._train_val_split(daily_series, h=10)
+        train_dates = set(train["ds"].to_list())
+        val_dates = set(val["ds"].to_list())
+        assert train_dates.isdisjoint(val_dates)
+
+    def test_single_model_no_ensemble(self, daily_series):
+        """With ensemble=False, result should not have ensemble weights."""
+        from polars_ts.agents.forecaster import ForecasterAgent
+        from polars_ts.agents.planner import ForecastPlan
+
+        plan = ForecastPlan(candidates=["naive"], horizon=7, rationale="test", ensemble=False)
+        cleaned = daily_series.with_columns(pl.col("y").fill_nan(pl.lit(None)).forward_fill().backward_fill())
+        agent = ForecasterAgent()
+        result = agent.forecast(cleaned, plan)
+        assert result.best_model == "naive"
+        assert result.ensemble_weights == {}
+
+    def test_unknown_model_skipped(self, daily_series):
+        """Unknown model names should be silently skipped."""
+        from polars_ts.agents.forecaster import ForecasterAgent
+        from polars_ts.agents.planner import ForecastPlan
+
+        plan = ForecastPlan(
+            candidates=["naive", "unknown_model_xyz"],
+            horizon=7,
+            rationale="test",
+            ensemble=False,
+        )
+        cleaned = daily_series.with_columns(pl.col("y").fill_nan(pl.lit(None)).forward_fill().backward_fill())
+        agent = ForecasterAgent()
+        result = agent.forecast(cleaned, plan)
+        assert "unknown_model_xyz" not in result.model_scores
+        assert isinstance(result.predictions, pl.DataFrame)
+
+    def test_all_predictions_dict_populated(self, daily_series):
+        """all_predictions should contain per-model DataFrames."""
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.forecaster import ForecasterAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(daily_series)
+        cleaned = curator.curate_and_clean(daily_series)
+        planner = PlannerAgent(horizon=7)
+        plan = planner.plan(cleaned, curation)
+        agent = ForecasterAgent()
+        result = agent.forecast(cleaned, plan)
+        assert len(result.all_predictions) >= 1
+        for _name, preds in result.all_predictions.items():
+            assert isinstance(preds, pl.DataFrame)
+            assert "y_hat" in preds.columns
+
+    def test_forecast_multi_series(self, multi_series):
+        from polars_ts.agents.curator import CuratorAgent
+        from polars_ts.agents.forecaster import ForecasterAgent
+        from polars_ts.agents.planner import PlannerAgent
+
+        curator = CuratorAgent()
+        curation = curator.curate(multi_series)
+        cleaned = curator.curate_and_clean(multi_series)
+        planner = PlannerAgent(horizon=5)
+        plan = planner.plan(cleaned, curation)
+        agent = ForecasterAgent()
+        result = agent.forecast(cleaned, plan)
+        assert isinstance(result.predictions, pl.DataFrame)
+        assert "y_hat" in result.predictions.columns
+
+    def test_score_empty_join_returns_inf(self):
+        """When validation and predictions don't overlap, score should be inf."""
+        import datetime
+
+        from polars_ts.agents.forecaster import ForecasterAgent
+
+        val = pl.DataFrame(
+            {
+                "unique_id": ["A"],
+                "ds": [datetime.date(2023, 1, 1)],
+                "y": [10.0],
+            }
+        )
+        preds = pl.DataFrame(
+            {
+                "unique_id": ["A"],
+                "ds": [datetime.date(2099, 1, 1)],
+                "y_hat": [10.0],
+            }
+        )
+        agent = ForecasterAgent()
+        score = agent._score(val, preds)
+        assert score == float("inf")
+
+
+# ---------------------------------------------------------------------------
+# ReporterAgent edge-case tests
+# ---------------------------------------------------------------------------
+
+
+class TestReporterEdgeCases:
+    def test_report_with_detected_period(self):
+        from polars_ts.agents.curator import CurationReport
+        from polars_ts.agents.forecaster import ForecastAgentResult
+        from polars_ts.agents.planner import ForecastPlan
+        from polars_ts.agents.reporter import ReporterAgent
+
+        curation = CurationReport(
+            n_observations=100,
+            n_series=1,
+            n_missing=0,
+            n_outliers=0,
+            detected_period=7,
+            has_trend=False,
+            is_stationary=True,
+            recommended_lookback=None,
+            summary="test",
+        )
+        plan = ForecastPlan(candidates=["naive"], horizon=10, rationale="test")
+        result = ForecastAgentResult(
+            predictions=pl.DataFrame({"ds": [], "y_hat": []}),
+            best_model="naive",
+            model_scores={"naive": 1.0},
+        )
+        reporter = ReporterAgent()
+        report = reporter.report(curation, plan, result)
+        assert "period" in report.markdown.lower()
+        assert "7" in report.markdown
+
+    def test_report_with_recommended_lookback(self):
+        from polars_ts.agents.curator import CurationReport
+        from polars_ts.agents.forecaster import ForecastAgentResult
+        from polars_ts.agents.planner import ForecastPlan
+        from polars_ts.agents.reporter import ReporterAgent
+
+        curation = CurationReport(
+            n_observations=200,
+            n_series=1,
+            n_missing=0,
+            n_outliers=0,
+            detected_period=None,
+            has_trend=True,
+            is_stationary=False,
+            recommended_lookback=60,
+            summary="test",
+        )
+        plan = ForecastPlan(candidates=["naive"], horizon=10, rationale="test")
+        result = ForecastAgentResult(
+            predictions=pl.DataFrame({"ds": [], "y_hat": []}),
+            best_model="naive",
+            model_scores={"naive": 1.0},
+        )
+        reporter = ReporterAgent()
+        report = reporter.report(curation, plan, result)
+        assert "lookback" in report.markdown.lower()
+        assert "60" in report.markdown
+
+    def test_report_with_llm_has_executive_summary(self):
+        from polars_ts.agents.curator import CurationReport
+        from polars_ts.agents.forecaster import ForecastAgentResult
+        from polars_ts.agents.planner import ForecastPlan
+        from polars_ts.agents.reporter import ReporterAgent
+
+        class StubBackend:
+            def complete(self, prompt: str) -> str:  # noqa: ARG002
+                return "Executive overview text."
+
+        curation = CurationReport(
+            n_observations=100,
+            n_series=1,
+            n_missing=0,
+            n_outliers=0,
+            detected_period=None,
+            has_trend=False,
+            is_stationary=True,
+            recommended_lookback=None,
+            summary="test",
+        )
+        plan = ForecastPlan(candidates=["naive"], horizon=10, rationale="test")
+        result = ForecastAgentResult(
+            predictions=pl.DataFrame({"ds": [], "y_hat": []}),
+            best_model="naive",
+            model_scores={"naive": 1.0},
+        )
+        reporter = ReporterAgent(backend=StubBackend())
+        report = reporter.report(curation, plan, result)
+        assert "Executive Summary" in report.markdown
+        assert "Executive overview text." in report.markdown
+
+
+# ---------------------------------------------------------------------------
+# TimeSeriesScientist edge-case tests
+# ---------------------------------------------------------------------------
+
+
+class TestScientistEdgeCases:
+    def test_custom_column_names(self):
+        import datetime
+
+        n = 80
+        dates = [datetime.date(2023, 1, 1) + datetime.timedelta(days=i) for i in range(n)]
+        rng = np.random.default_rng(42)
+        df = pl.DataFrame({"sid": ["s1"] * n, "timestamp": dates, "value": (10 + rng.normal(0, 1, n)).tolist()})
+
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=5, id_col="sid", time_col="timestamp", target_col="value")
+        result = scientist.run(df)
+        assert isinstance(result.predictions, pl.DataFrame)
+        assert "y_hat" in result.predictions.columns
+
+    def test_no_id_column(self, no_id_series):
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=5)
+        result = scientist.run(no_id_series)
+        assert isinstance(result.predictions, pl.DataFrame)
+        assert "y_hat" in result.predictions.columns
+
+    def test_trim_lookback_false_does_not_trim(self, regime_change_series):
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=7, trim_lookback=False)
+        result = scientist.run(regime_change_series)
+        trim_logs = [h for h in result.context.history if "trim" in h["message"].lower()]
+        assert len(trim_logs) == 0
+
+    def test_empty_events(self, daily_series):
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=7, events=[])
+        result = scientist.run(daily_series)
+        event_logs = [h for h in result.context.history if "event" in h["message"].lower()]
+        assert len(event_logs) == 0
+
+    def test_context_history_has_all_agents(self, daily_series):
+        """History should include curator, planner, forecaster, reporter."""
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=7)
+        result = scientist.run(daily_series)
+        agents_logged = {h["agent"] for h in result.context.history}
+        assert "curator" in agents_logged
+        assert "planner" in agents_logged
+        assert "forecaster" in agents_logged
+        assert "reporter" in agents_logged
+
+    def test_predictions_have_finite_values(self, daily_series):
+        """Predictions should contain finite numeric values."""
+        from polars_ts.agents.scientist import TimeSeriesScientist
+
+        scientist = TimeSeriesScientist(horizon=7)
+        result = scientist.run(daily_series)
+        y_hat = result.predictions["y_hat"].to_numpy()
+        assert np.all(np.isfinite(y_hat))
