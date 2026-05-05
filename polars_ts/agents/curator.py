@@ -174,13 +174,18 @@ class CuratorAgent:
         z = np.abs((values - mean) / std)
         return int(np.sum(z > self.outlier_threshold))
 
-    def _detect_period(self, df: pl.DataFrame) -> int | None:
-        """Detect dominant period via autocorrelation peak."""
+    def _first_series_values(self, df: pl.DataFrame) -> np.ndarray:
+        """Extract target values from the first series, dropping nulls/NaNs."""
+        if len(df) == 0:
+            return np.array([], dtype=np.float64)
         if self.id_col in df.columns:
             first_id = df[self.id_col][0]
-            values = df.filter(pl.col(self.id_col) == first_id)[self.target_col].drop_nulls().drop_nans().to_numpy()
-        else:
-            values = df[self.target_col].drop_nulls().drop_nans().to_numpy()
+            return df.filter(pl.col(self.id_col) == first_id)[self.target_col].drop_nulls().drop_nans().to_numpy()
+        return df[self.target_col].drop_nulls().drop_nans().to_numpy()
+
+    def _detect_period(self, df: pl.DataFrame) -> int | None:
+        """Detect dominant period via autocorrelation peak."""
+        values = self._first_series_values(df)
 
         if len(values) < 10:
             return None
@@ -205,11 +210,7 @@ class CuratorAgent:
         return None
 
     def _detect_trend(self, df: pl.DataFrame) -> bool:
-        if self.id_col in df.columns:
-            first_id = df[self.id_col][0]
-            values = df.filter(pl.col(self.id_col) == first_id)[self.target_col].drop_nulls().drop_nans().to_numpy()
-        else:
-            values = df[self.target_col].drop_nulls().drop_nans().to_numpy()
+        values = self._first_series_values(df)
 
         if len(values) < 5:
             return False
@@ -223,11 +224,7 @@ class CuratorAgent:
 
     def _check_stationarity(self, df: pl.DataFrame) -> bool:
         """Check stationarity by comparing mean/variance of first vs second half."""
-        if self.id_col in df.columns:
-            first_id = df[self.id_col][0]
-            values = df.filter(pl.col(self.id_col) == first_id)[self.target_col].drop_nulls().drop_nans().to_numpy()
-        else:
-            values = df[self.target_col].drop_nulls().drop_nans().to_numpy()
+        values = self._first_series_values(df)
 
         if len(values) < 20:
             return True
@@ -248,11 +245,7 @@ class CuratorAgent:
         Uses a rolling variance ratio to detect the most recent structural break,
         then recommends using only data from after the break.
         """
-        if self.id_col in df.columns:
-            first_id = df[self.id_col][0]
-            values = df.filter(pl.col(self.id_col) == first_id)[self.target_col].drop_nulls().drop_nans().to_numpy()
-        else:
-            values = df[self.target_col].drop_nulls().drop_nans().to_numpy()
+        values = self._first_series_values(df)
 
         n = len(values)
         if n < 40:
