@@ -80,6 +80,7 @@ class TimeSeriesKMeans:
         if self.metric != "dtw":
             raise ValueError(f"Only metric='dtw' is supported for DBA-based k-means, got {self.metric!r}")
 
+        id_dtype = df[id_col].dtype
         ids = sorted(df[id_col].unique().cast(pl.String).to_list())
         n = len(ids)
         if self.n_clusters < 1:
@@ -117,8 +118,8 @@ class TimeSeriesKMeans:
         self.centroids_ = centroids
         self.labels_ = pl.DataFrame(
             {id_col: ids, "cluster": assignments},
-            schema={id_col: df[id_col].dtype, "cluster": pl.Int64},
-        )
+            schema={id_col: pl.String, "cluster": pl.Int64},
+        ).with_columns(pl.col(id_col).cast(id_dtype))
         return self
 
     def _assign(

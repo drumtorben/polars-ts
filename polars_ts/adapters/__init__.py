@@ -11,6 +11,10 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "ForecastEnv": ("polars_ts.adapters.rl_env", "ForecastEnv"),
     "to_chronos_embeddings": ("polars_ts.adapters.embeddings", "to_chronos_embeddings"),
     "to_moment_embeddings": ("polars_ts.adapters.embeddings", "to_moment_embeddings"),
+    "foundation_forecast": ("polars_ts.adapters.foundation_forecast", "foundation_forecast"),
+    "ChronosForecaster": ("polars_ts.adapters.foundation_forecast", "ChronosForecaster"),
+    "TimesFMForecaster": ("polars_ts.adapters.foundation_forecast", "TimesFMForecaster"),
+    "MoiraiForecaster": ("polars_ts.adapters.foundation_forecast", "MoiraiForecaster"),
 }
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)

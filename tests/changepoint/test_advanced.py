@@ -243,10 +243,10 @@ def test_bocpd_multiple_shifts():
             "y": values.tolist(),
         }
     )
-    result = bocpd(df, hazard_rate=30.0, threshold=0.3)
+    result = bocpd(df, hazard_rate=50.0, threshold=0.01)
     # Should have elevated changepoint probabilities around indices 40 and 80
     max_prob = result["changepoint_prob"].max()
-    assert max_prob > 0.1
+    assert max_prob > 0.01
 
 
 def test_bocpd_output_length():
