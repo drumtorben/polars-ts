@@ -17,8 +17,11 @@
 | Pain point | How polars-ts helps |
 |---|---|
 | "I need DTW but scipy is slow" | 12 distance metrics compiled to native code via Rust + Rayon |
-| "I want to cluster time series but tslearn has too many deps" | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical + 6 more — all built-in |
+| "I want to cluster time series but tslearn has too many deps" | K-Medoids, K-Shape, HDBSCAN, Spectral, Contrastive, DEC/IDEC + more — all built-in |
 | "Setting up a forecast pipeline takes too long" | `ForecastPipeline` wires up lags, rolling stats, transforms, and any sklearn model in 5 lines |
+| "I want to use foundation models or LLMs" | Chronos, TimesFM, Moirai zero-shot; Time-LLM, LLM-PS reprogrammed; N-BEATS, PatchTST, iTransformer native |
+| "I need Bayesian methods" | Kalman, BSTS, Bayesian ETS/VAR, GP regression, MCMC, particle filters |
+| "I want automated forecasting" | `TimeSeriesScientist` multi-agent pipeline: diagnostics → model selection → ensemble → report |
 | "I don't know which clustering method to pick" | `auto_cluster` sweeps methods × distances × k and returns the best |
 | "Polars doesn't have time series functions" | Mann-Kendall, Sen's slope, CUSUM, PELT, decomposition, ACF/PACF — all Polars-native |
 
@@ -97,9 +100,13 @@ result = pts.compute_pairwise_dtw(df, df)
 | Category | Highlights |
 |---|---|
 | [**Distance metrics**](distance-metrics.md) | 12 Rust-accelerated metrics (DTW, SBD, MSM, ERP, ...) |
-| [**Clustering**](clustering-guide.md) | K-Medoids, K-Shape, HDBSCAN, DBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA, CLARANS, U-Shapelets, auto_cluster |
-| [**Forecasting**](forecasting-guide.md) | Baselines, ARIMA, exponential smoothing, ML pipelines, global models, ensembles |
-| [**Imaging**](imaging-guide.md) | Recurrence plots, GAF, MTF, spectrograms, scalograms, vision model embeddings |
+| [**Clustering**](clustering-guide.md) | K-Medoids, K-Shape, HDBSCAN, Spectral, Contrastive, DEC/IDEC, auto_cluster |
+| [**Forecasting**](forecasting-guide.md) | Baselines, ARIMA, exponential smoothing, ML pipelines, covariates, backtesting |
+| [**Deep learning**](deep-learning-guide.md) | N-BEATS, PatchTST, iTransformer, Time-LLM, LLM-PS, Chronos, TimesFM, Moirai |
+| [**Bayesian**](bayesian-guide.md) | Kalman, BSTS, Bayesian ETS/VAR, GP, MCMC, particle filters, anomaly scoring |
+| [**Causal inference**](causal-guide.md) | CausalImpact, Synthetic Control, placebo tests |
+| [**Agents**](agents-guide.md) | TimeSeriesScientist, MARL portfolio, anomaly detection agents |
+| [**Imaging**](imaging-guide.md) | Recurrence plots, GAF, MTF, spectrograms, scalograms, vision embeddings |
 | [**Changepoint & anomaly**](changepoint-guide.md) | CUSUM, PELT, BOCPD, regime detection, Isolation Forest |
 | [**Preprocessing**](preprocessing-guide.md) | Imputation, outlier detection, resampling, feature engineering, target transforms |
 
@@ -119,3 +126,6 @@ Interactive notebooks covering the full toolkit:
 | 08 | Multivariate & volatility | [08_multivariate_volatility.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/08_multivariate_volatility.ipynb) |
 | 09 | Ensembles & reconciliation | [09_ensembles_reconciliation.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/09_ensembles_reconciliation.ipynb) |
 | 10 | Ecosystem adapters | [10_ecosystem_adapters.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/10_ecosystem_adapters.ipynb) |
+| 11 | Time series imaging | [11_time_series_imaging.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/11_time_series_imaging.ipynb) |
+| 12 | Advanced feature extraction | [12_advanced_feature_extraction.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/12_advanced_feature_extraction.ipynb) |
+| 13 | Agentic forecasting | [13_agentic_forecasting.ipynb](https://github.com/drumtorben/polars-ts/blob/main/notebooks/13_agentic_forecasting.ipynb) |

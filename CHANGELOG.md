@@ -1,3 +1,33 @@
+## v0.8.0 (2026-05-05)
+
+### Added
+
+- **LLM-based forecasting** (#155): `TimeLLMForecaster` (patch → cross-attention with prototypes → decode) and `LLMPSForecaster` (multi-scale CNN pattern extraction → decode). 15 tests. PR #200.
+- **Agentic forecasting** (#156): `TimeSeriesScientist` multi-agent pipeline with Curator, Planner, Forecaster, and Reporter agents. 87 tests with TDD edge-case coverage. PR #188, #197.
+- **KASBA Rust port** (#189): Port of KASBA clustering algorithm into `src/kasba/` — MSM distance, elastic k-means++ init, triangle inequality fast assignment, stochastic barycenter averaging, empty cluster recovery. 16 Rust unit tests. PR #198, #199.
+- **Contrastive clustering** (#154): Self-supervised contrastive learning with NT-Xent loss. PR #187.
+- **Deep clustering** (#157): DEC/IDEC autoencoder-based deep clustering. PR #187.
+- **Foundation model forecasting** (#151): `ChronosForecaster`, `TimesFMForecaster`, `MoiraiForecaster` for zero-shot forecasting. PR #186.
+- **Native DL forecasters** (#150): `NBEATSForecaster` and `PatchTSTForecaster` with fit/predict API. PR #186.
+- **Deep classifiers** (#152): `RocketClassifier`, `InceptionTimeClassifier`, `ResNetClassifier`. PR #186.
+- **Causal inference** (#153): `CausalImpact` (Bayesian structural counterfactual) and `SyntheticControl` with placebo tests. PR #183.
+- **Covariates support** (#149): Past, future, and static exogenous variables in `ForecastPipeline`. PR #181.
+- **Backtesting framework** (#167): Unified fit → predict → score across rolling windows. PR #184.
+- **Bayesian methods** (9 modules): Kalman Filter (#141), BSTS (#142), UKF/EnKF (#143), Bayesian ETS (#169), Bayesian VAR (#170), MCMC wrapper (#174), GP regression (#175), Bayesian anomaly scoring (#176), Particle Filter (#180).
+
+### Infrastructure
+
+- Registry-based `__init__.py` for lazy imports (#144).
+- Shared lazy-import helper for submodules (#145, PR #172).
+- Notebook normalization pre-commit hook (#146, PR #172).
+- Consolidated test fixtures (#147, PR #173).
+
+### Documentation
+
+- Notebooks 11 (imaging), 12 (advanced features), 13 (agentic forecasting).
+
+---
+
 ## v0.7.0 (2026-04-25)
 
 ### Features

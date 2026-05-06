@@ -40,6 +40,10 @@ nav:
       - Distance Metrics: distance-metrics.md
       - Clustering & Classification: clustering-guide.md
       - Forecasting: forecasting-guide.md
+      - Deep Learning & Foundation Models: deep-learning-guide.md
+      - Bayesian Methods: bayesian-guide.md
+      - Causal Inference: causal-guide.md
+      - Agents & Multi-Agent RL: agents-guide.md
       - Time Series Imaging: imaging-guide.md
       - Changepoint & Anomaly Detection: changepoint-guide.md
       - Preprocessing & Features: preprocessing-guide.md

@@ -91,12 +91,21 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "kmeans_dba": ("polars_ts.clustering.kmeans", "kmeans_dba"),
     "TimeSeriesKMeans": ("polars_ts.clustering.kmeans", "TimeSeriesKMeans"),
     "agglomerative_cluster": ("polars_ts.clustering.hierarchical", "agglomerative_cluster"),
+    "ContrastiveClusterer": ("polars_ts.clustering.contrastive", "ContrastiveClusterer"),
+    "contrastive_cluster": ("polars_ts.clustering.contrastive", "contrastive_cluster"),
+    "DECClusterer": ("polars_ts.clustering.deep_cluster", "DECClusterer"),
+    "IDECClusterer": ("polars_ts.clustering.deep_cluster", "IDECClusterer"),
+    "dec_cluster": ("polars_ts.clustering.deep_cluster", "dec_cluster"),
+    "idec_cluster": ("polars_ts.clustering.deep_cluster", "idec_cluster"),
+    "KASBAClusterer": ("polars_ts.clustering.kasba", "KASBAClusterer"),
+    "kasba": ("polars_ts.clustering.kasba", "kasba"),
     # --- Classification ---
     "knn_classify": ("polars_ts.classification.knn", "knn_classify"),
     "TimeSeriesKNNClassifier": ("polars_ts.classification.knn", "TimeSeriesKNNClassifier"),
     "KShapeClassifier": ("polars_ts.classification.kshape_classifier", "KShapeClassifier"),
     # --- Feature engineering ---
     "lag_features": ("polars_ts.features", "lag_features"),
+    "covariate_lag_features": ("polars_ts.features", "covariate_lag_features"),
     "rolling_features": ("polars_ts.features", "rolling_features"),
     "calendar_features": ("polars_ts.features", "calendar_features"),
     "fourier_features": ("polars_ts.features", "fourier_features"),
@@ -117,6 +126,9 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "expanding_window_cv": ("polars_ts.validation", "expanding_window_cv"),
     "sliding_window_cv": ("polars_ts.validation", "sliding_window_cv"),
     "rolling_origin_cv": ("polars_ts.validation", "rolling_origin_cv"),
+    # --- Backtesting ---
+    "backtest": ("polars_ts.backtesting", "backtest"),
+    "compare_models": ("polars_ts.backtesting", "compare_models"),
     # --- Models & forecasting ---
     "SCUM": ("polars_ts.models", "SCUM"),
     "naive_forecast": ("polars_ts.models", "naive_forecast"),
@@ -149,6 +161,12 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "var_forecast": ("polars_ts.var_model", "var_forecast"),
     "granger_causality": ("polars_ts.var_model", "granger_causality"),
     "VARResult": ("polars_ts.var_model", "VARResult"),
+    # --- Bayesian VAR ---
+    "bayesian_var": ("polars_ts.bayesian_var", "bayesian_var"),
+    "BayesianVAR": ("polars_ts.bayesian_var", "BayesianVAR"),
+    "MinnesotaPrior": ("polars_ts.bayesian_var", "MinnesotaPrior"),
+    "NormalWishartPrior": ("polars_ts.bayesian_var", "NormalWishartPrior"),
+    "BayesianVARResult": ("polars_ts.bayesian_var", "BayesianVARResult"),
     # --- Reconciliation ---
     "reconcile": ("polars_ts.reconciliation", "reconcile"),
     # --- Adapters ---
@@ -160,6 +178,12 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "ForecastEnv": ("polars_ts.adapters", "ForecastEnv"),
     "to_chronos_embeddings": ("polars_ts.adapters", "to_chronos_embeddings"),
     "to_moment_embeddings": ("polars_ts.adapters", "to_moment_embeddings"),
+    "foundation_forecast": ("polars_ts.adapters", "foundation_forecast"),
+    "ChronosForecaster": ("polars_ts.adapters", "ChronosForecaster"),
+    "TimesFMForecaster": ("polars_ts.adapters", "TimesFMForecaster"),
+    "MoiraiForecaster": ("polars_ts.adapters", "MoiraiForecaster"),
+    "TimeLLMForecaster": ("polars_ts.adapters", "TimeLLMForecaster"),
+    "LLMPSForecaster": ("polars_ts.adapters", "LLMPSForecaster"),
     # --- Bias & calibration ---
     "bias_detect": ("polars_ts.bias", "bias_detect"),
     "bias_correct": ("polars_ts.bias", "bias_correct"),
@@ -179,6 +203,47 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "acf": ("polars_ts.diagnostics", "acf"),
     "pacf": ("polars_ts.diagnostics", "pacf"),
     "ljung_box": ("polars_ts.diagnostics", "ljung_box"),
+    # --- Bayesian ETS ---
+    "bayesian_ets": ("polars_ts.models.bayesian_ets", "bayesian_ets"),
+    "BayesianETS": ("polars_ts.models.bayesian_ets", "BayesianETS"),
+    "ETSPriors": ("polars_ts.models.bayesian_ets", "ETSPriors"),
+    # --- Causal Inference ---
+    "CausalImpact": ("polars_ts.causal.causal_impact", "CausalImpact"),
+    "causal_impact": ("polars_ts.causal.causal_impact", "causal_impact"),
+    "CausalImpactResult": ("polars_ts.causal.causal_impact", "CausalImpactResult"),
+    "SyntheticControl": ("polars_ts.causal.synthetic_control", "SyntheticControl"),
+    "synthetic_control": ("polars_ts.causal.synthetic_control", "synthetic_control"),
+    "SyntheticControlResult": ("polars_ts.causal.synthetic_control", "SyntheticControlResult"),
+    # --- Agents ---
+    "TimeSeriesScientist": ("polars_ts.agents", "TimeSeriesScientist"),
+    "ScientistResult": ("polars_ts.agents", "ScientistResult"),
+    "CuratorAgent": ("polars_ts.agents", "CuratorAgent"),
+    "PlannerAgent": ("polars_ts.agents", "PlannerAgent"),
+    "ForecasterAgent": ("polars_ts.agents", "ForecasterAgent"),
+    "ReporterAgent": ("polars_ts.agents", "ReporterAgent"),
+    # --- Multivariate DL ---
+    "MultivariatePatchTST": ("polars_ts.dl", "MultivariatePatchTST"),
+    "iTransformerForecaster": ("polars_ts.dl", "iTransformerForecaster"),
+    # --- Anomaly detection agents ---
+    "AnomalyEnv": ("polars_ts.anomaly_agents", "AnomalyEnv"),
+    "AnomalyOrchestrator": ("polars_ts.anomaly_agents", "AnomalyOrchestrator"),
+    "AnomalyResult": ("polars_ts.anomaly_agents", "AnomalyResult"),
+    "ZScoreAgent": ("polars_ts.anomaly_agents", "ZScoreAgent"),
+    "RollingStdAgent": ("polars_ts.anomaly_agents", "RollingStdAgent"),
+    "MADAgent": ("polars_ts.anomaly_agents", "MADAgent"),
+    "ConsensusAgent": ("polars_ts.anomaly_agents", "ConsensusAgent"),
+    # --- Multi-agent RL ---
+    "PortfolioEnv": ("polars_ts.marl", "PortfolioEnv"),
+    "MARLOrchestrator": ("polars_ts.marl", "MARLOrchestrator"),
+    "MARLResult": ("polars_ts.marl", "MARLResult"),
+    "RiskAgent": ("polars_ts.marl", "RiskAgent"),
+    "ReturnAgent": ("polars_ts.marl", "ReturnAgent"),
+    "AllocationAgent": ("polars_ts.marl", "AllocationAgent"),
+    # --- Streaming / Online Learning ---
+    "StreamingETS": ("polars_ts.streaming", "StreamingETS"),
+    "StreamingKalmanFilter": ("polars_ts.streaming", "StreamingKalmanFilter"),
+    "StreamingGlobalForecaster": ("polars_ts.streaming", "StreamingGlobalForecaster"),
+    "SlidingWindowManager": ("polars_ts.streaming", "SlidingWindowManager"),
 }
 
 
@@ -199,10 +264,8 @@ def __getattr__(name: str) -> Any:
         "bsts_forecast",
         "GaussianProcessTS",
         "gp_forecast",
-        "BayesianAnomalyDetector",
-        "bayesian_anomaly_score",
-        "ParticleFilter",
-        "particle_filter",
+        "MCMCForecaster",
+        "mcmc_forecast",
     }:
         from polars_ts import bayesian as _bayes
 
