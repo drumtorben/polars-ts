@@ -97,6 +97,7 @@ def reconcile(
     if method not in valid_methods:
         raise ValueError(f"Unknown method {method!r}. Choose from {sorted(valid_methods)}")
 
+<<<<<<< feat/grouped-hierarchies-166
     grouped = _normalize_hierarchy(hierarchy)
 
     # Projection-based methods work with grouped hierarchies natively
@@ -117,6 +118,27 @@ def reconcile(
             tree = {k: v[0] for k, v in grouped.items()}
             return _bottom_up(df, tree, forecast_col, id_col, time_col)
         return _bottom_up_grouped(df, grouped, forecast_col, id_col, time_col)
+=======
+    if method == "middle_out":
+        if middle_level is None:
+            raise ValueError("middle_level is required for method='middle_out'")
+        return _middle_out(df, hierarchy, forecast_col, id_col, time_col, middle_level)
+    if method == "permbu":
+        if residuals is None:
+            raise ValueError("residuals is required for method='permbu'")
+        return _permbu(df, hierarchy, forecast_col, id_col, time_col, residuals)
+    if method == "mint_cv":
+        if train_data is None:
+            raise ValueError("train_data is required for method='mint_cv'")
+        return _mint_cv(df, hierarchy, forecast_col, id_col, time_col, train_data, n_folds)
+
+    # Methods that support interval_cols via projection matrix
+    if method == "bottom_up":
+        return _bottom_up(df, hierarchy, forecast_col, id_col, time_col)
+    if method == "top_down":
+        return _top_down(df, hierarchy, forecast_col, id_col, time_col)
+    return _ols(df, hierarchy, forecast_col, id_col, time_col, interval_cols=interval_cols)
+>>>>>>> main
 
     # Tree-only methods
     tree = _to_tree(grouped) if not _is_tree(grouped) else {k: v[0] for k, v in grouped.items()}
@@ -295,6 +317,7 @@ def _top_down(
 
 
 def _build_summing_matrix(
+<<<<<<< feat/grouped-hierarchies-166
     hierarchy: dict[str, list[str]],
 ) -> tuple[np.ndarray, list[str], list[str], dict[str, int]]:
     """Build the summing matrix S for tree or grouped hierarchies.
@@ -307,12 +330,20 @@ def _build_summing_matrix(
         all_parents.update(parents)
     all_nodes = sorted(set(hierarchy.keys()) | all_parents)
     bottom = _get_bottom_nodes_grouped(hierarchy)
+=======
+    hierarchy: dict[str, str],
+) -> tuple[np.ndarray, list[str], list[str], dict[str, int]]:
+    """Build the summing matrix S and return (S, all_nodes, bottom, node_idx)."""
+    all_nodes = sorted(set(hierarchy.keys()) | set(hierarchy.values()))
+    bottom = _get_bottom_nodes(hierarchy)
+>>>>>>> main
     n_total = len(all_nodes)
     n_bottom = len(bottom)
     node_idx = {node: i for i, node in enumerate(all_nodes)}
 
     S = np.zeros((n_total, n_bottom))
     for j, b in enumerate(bottom):
+<<<<<<< feat/grouped-hierarchies-166
         # BFS to find all ancestors
         S[node_idx[b], j] = 1.0
         queue = [b]
@@ -381,6 +412,75 @@ def _ols(
     where S is the summing matrix.
     """
     S, all_nodes, _bottom, node_idx = _build_summing_matrix(hierarchy)
+=======
+        current = b
+        S[node_idx[current], j] = 1.0
+        while current in hierarchy:
+            current = hierarchy[current]
+            S[node_idx[current], j] = 1.0
+>>>>>>> main
+
+    return S, all_nodes, bottom, node_idx
+
+
+<<<<<<< feat/grouped-hierarchies-166
+    return _apply_projection(df, P, all_nodes, node_idx, forecast_col, id_col, time_col, extra_cols=interval_cols)
+
+=======
+def _apply_projection(
+    df: pl.DataFrame,
+    P: np.ndarray,
+    all_nodes: list[str],
+    node_idx: dict[str, int],
+    forecast_col: str,
+    id_col: str,
+    time_col: str,
+    extra_cols: list[str] | None = None,
+) -> pl.DataFrame:
+    """Apply projection matrix P to forecasts, optionally to extra columns too."""
+    cols_to_project = [forecast_col] + (extra_cols or [])
+    n_total = len(all_nodes)
+    times = sorted(df[time_col].unique().to_list())
+    result_rows: list[dict[str, Any]] = []
+
+    for t in times:
+        t_data = df.filter(pl.col(time_col) == t)
+        row_map = {row[id_col]: row for row in t_data.iter_rows(named=True)}
+
+        for col in cols_to_project:
+            y_hat = np.zeros(n_total)
+            for node, idx in node_idx.items():
+                if node in row_map:
+                    y_hat[idx] = row_map[node][col]
+            if col == cols_to_project[0]:
+                y_tildes = {col: P @ y_hat}
+            else:
+                y_tildes[col] = P @ y_hat
+
+        for node, idx in node_idx.items():
+            row_dict: dict[str, Any] = {id_col: node, time_col: t}
+            for col in cols_to_project:
+                row_dict[col] = y_tildes[col][idx]
+            result_rows.append(row_dict)
+
+    return pl.DataFrame(result_rows).sort(id_col, time_col)
+
+
+def _ols(
+    df: pl.DataFrame,
+    hierarchy: dict[str, str],
+    forecast_col: str,
+    id_col: str,
+    time_col: str,
+    *,
+    interval_cols: list[str] | None = None,
+) -> pl.DataFrame:
+    """MinTrace-OLS reconciliation.
+
+    Computes reconciled forecasts as: y_tilde = S @ (S'S)^{-1} @ S' @ y_hat
+    where S is the summing matrix.
+    """
+    S, all_nodes, _bottom, node_idx = _build_summing_matrix(hierarchy)
 
     # Reconciliation: P = S @ (S'S)^{-1} @ S'
     StS_inv = np.linalg.pinv(S.T @ S)
@@ -388,6 +488,7 @@ def _ols(
 
     return _apply_projection(df, P, all_nodes, node_idx, forecast_col, id_col, time_col, extra_cols=interval_cols)
 
+>>>>>>> main
 
 def _middle_out(
     df: pl.DataFrame,
@@ -402,7 +503,11 @@ def _middle_out(
     Below the middle level: disaggregate using historical proportions.
     Above the middle level: aggregate by summing children.
     """
+<<<<<<< feat/grouped-hierarchies-166
     bottom = _get_bottom_nodes_tree(hierarchy)
+=======
+    bottom = _get_bottom_nodes(hierarchy)
+>>>>>>> main
 
     # --- Disaggregate downward from middle to bottom ---
     # For each middle node, find its descendant bottom nodes
@@ -482,7 +587,11 @@ def _middle_out(
 
 def _permbu(
     df: pl.DataFrame,
+<<<<<<< feat/grouped-hierarchies-166
     hierarchy: dict[str, list[str]],
+=======
+    hierarchy: dict[str, str],
+>>>>>>> main
     forecast_col: str,
     id_col: str,
     time_col: str,
@@ -524,7 +633,11 @@ def _permbu(
 
 def _mint_cv(
     df: pl.DataFrame,
+<<<<<<< feat/grouped-hierarchies-166
     hierarchy: dict[str, list[str]],
+=======
+    hierarchy: dict[str, str],
+>>>>>>> main
     forecast_col: str,
     id_col: str,
     time_col: str,
