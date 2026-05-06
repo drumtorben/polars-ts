@@ -325,6 +325,130 @@ class TestProbabilisticReconciliation:
         assert (result["y_lower"] <= result["y_upper"]).all()
 
 
+class TestGroupedHierarchy:
+    """Grouped/cross-sectional hierarchies (product × region, not just trees).
+
+    Example: 2 products × 2 regions = 4 bottom nodes.
+    Aggregates: product totals (P1, P2), region totals (R1, R2), grand total.
+    A bottom node like P1_R1 rolls up to both P1 and R1 — a DAG, not a tree.
+    """
+
+    @staticmethod
+    def _make_grouped_hierarchy() -> dict[str, list[str]]:
+        """Return a grouped hierarchy where each bottom node has multiple parents."""
+        return {
+            "P1_R1": ["P1", "R1"],
+            "P1_R2": ["P1", "R2"],
+            "P2_R1": ["P2", "R1"],
+            "P2_R2": ["P2", "R2"],
+            "P1": ["Total"],
+            "P2": ["Total"],
+            "R1": ["Total"],
+            "R2": ["Total"],
+        }
+
+    @staticmethod
+    def _make_grouped_forecasts() -> pl.DataFrame:
+        """Incoherent forecasts for a 2×2 grouped hierarchy."""
+        return pl.DataFrame(
+            {
+                "unique_id": [
+                    "P1_R1",
+                    "P1_R2",
+                    "P2_R1",
+                    "P2_R2",
+                    "P1",
+                    "P2",
+                    "R1",
+                    "R2",
+                    "Total",
+                ],
+                "ds": [date(2024, 1, 1)] * 9,
+                "y_hat": [
+                    10.0,
+                    20.0,
+                    30.0,
+                    40.0,  # bottom
+                    35.0,
+                    65.0,  # product totals (incoherent)
+                    45.0,
+                    55.0,  # region totals (incoherent)
+                    90.0,  # grand total (incoherent)
+                ],
+            }
+        )
+
+    def test_grouped_ols_coherent_product(self):
+        """Product totals should equal sum of their bottom nodes."""
+        result = reconcile(
+            self._make_grouped_forecasts(),
+            self._make_grouped_hierarchy(),
+            method="ols",
+        )
+        t1 = result.filter(pl.col("ds") == date(2024, 1, 1))
+        p1_r1 = t1.filter(pl.col("unique_id") == "P1_R1")["y_hat"][0]
+        p1_r2 = t1.filter(pl.col("unique_id") == "P1_R2")["y_hat"][0]
+        p1 = t1.filter(pl.col("unique_id") == "P1")["y_hat"][0]
+        assert p1 == pytest.approx(p1_r1 + p1_r2, abs=0.1)
+
+    def test_grouped_ols_coherent_region(self):
+        """Region totals should equal sum of their bottom nodes."""
+        result = reconcile(
+            self._make_grouped_forecasts(),
+            self._make_grouped_hierarchy(),
+            method="ols",
+        )
+        t1 = result.filter(pl.col("ds") == date(2024, 1, 1))
+        p1_r1 = t1.filter(pl.col("unique_id") == "P1_R1")["y_hat"][0]
+        p2_r1 = t1.filter(pl.col("unique_id") == "P2_R1")["y_hat"][0]
+        r1 = t1.filter(pl.col("unique_id") == "R1")["y_hat"][0]
+        assert r1 == pytest.approx(p1_r1 + p2_r1, abs=0.1)
+
+    def test_grouped_ols_coherent_total(self):
+        """Grand total should equal sum of all bottom nodes."""
+        result = reconcile(
+            self._make_grouped_forecasts(),
+            self._make_grouped_hierarchy(),
+            method="ols",
+        )
+        t1 = result.filter(pl.col("ds") == date(2024, 1, 1))
+        bottom_sum = sum(
+            t1.filter(pl.col("unique_id") == uid)["y_hat"][0] for uid in ["P1_R1", "P1_R2", "P2_R1", "P2_R2"]
+        )
+        total = t1.filter(pl.col("unique_id") == "Total")["y_hat"][0]
+        assert total == pytest.approx(bottom_sum, abs=0.1)
+
+    def test_grouped_bottom_up(self):
+        """Bottom-up should produce all aggregate nodes."""
+        result = reconcile(
+            self._make_grouped_forecasts(),
+            self._make_grouped_hierarchy(),
+            method="bottom_up",
+        )
+        ids = sorted(result["unique_id"].unique().to_list())
+        assert "P1" in ids
+        assert "R1" in ids
+        assert "Total" in ids
+
+    def test_grouped_all_nodes_present(self):
+        """All 9 nodes should be in the output."""
+        result = reconcile(
+            self._make_grouped_forecasts(),
+            self._make_grouped_hierarchy(),
+            method="ols",
+        )
+        assert len(result["unique_id"].unique()) == 9
+
+    def test_tree_hierarchy_still_works(self):
+        """Passing a dict[str, str] tree hierarchy should still work."""
+        result = reconcile(_make_forecasts(), _make_hierarchy(), method="ols")
+        t1 = result.filter(pl.col("ds") == date(2024, 1, 1))
+        a = t1.filter(pl.col("unique_id") == "A")["y_hat"][0]
+        b = t1.filter(pl.col("unique_id") == "B")["y_hat"][0]
+        x = t1.filter(pl.col("unique_id") == "X")["y_hat"][0]
+        assert x == pytest.approx(a + b, abs=0.1)
+
+
 def test_top_level_import():
     import polars_ts
 

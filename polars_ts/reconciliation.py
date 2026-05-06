@@ -7,10 +7,40 @@ from typing import Any
 import numpy as np
 import polars as pl
 
+Hierarchy = dict[str, str] | dict[str, list[str]]
+
+
+def _normalize_hierarchy(hierarchy: Hierarchy) -> dict[str, list[str]]:
+    """Convert tree ``dict[str, str]`` to grouped ``dict[str, list[str]]``."""
+    result: dict[str, list[str]] = {}
+    for child, parents in hierarchy.items():
+        if isinstance(parents, str):
+            result[child] = [parents]
+        else:
+            result[child] = list(parents)
+    return result
+
+
+def _to_tree(hierarchy: dict[str, list[str]]) -> dict[str, str]:
+    """Convert grouped hierarchy back to tree (raises if not a tree)."""
+    tree: dict[str, str] = {}
+    for child, parents in hierarchy.items():
+        if len(parents) != 1:
+            raise ValueError(
+                f"Node {child!r} has {len(parents)} parents; " "this method requires a tree hierarchy (dict[str, str])"
+            )
+        tree[child] = parents[0]
+    return tree
+
+
+def _is_tree(hierarchy: dict[str, list[str]]) -> bool:
+    """Check if all nodes have exactly one parent."""
+    return all(len(parents) == 1 for parents in hierarchy.values())
+
 
 def reconcile(
     df: pl.DataFrame,
-    hierarchy: dict[str, str],
+    hierarchy: Hierarchy,
     method: str = "bottom_up",
     forecast_col: str = "y_hat",
     id_col: str = "unique_id",
@@ -29,9 +59,10 @@ def reconcile(
     df
         DataFrame with forecasts at all levels, identified by ``id_col``.
     hierarchy
-        Mapping from child node to parent node (e.g.
-        ``{"product_A": "category_1", "product_B": "category_1",
-          "category_1": "total"}``).
+        Mapping from child node to parent(s). For tree hierarchies use
+        ``dict[str, str]``; for grouped/cross-sectional hierarchies use
+        ``dict[str, list[str]]`` where a bottom node can map to multiple
+        aggregate parents.
     method
         Reconciliation method: ``"bottom_up"``, ``"top_down"``, ``"ols"``
         (MinTrace-OLS), ``"middle_out"``, ``"permbu"``, or ``"mint_cv"``
@@ -66,32 +97,51 @@ def reconcile(
     if method not in valid_methods:
         raise ValueError(f"Unknown method {method!r}. Choose from {sorted(valid_methods)}")
 
-    if method == "middle_out":
-        if middle_level is None:
-            raise ValueError("middle_level is required for method='middle_out'")
-        return _middle_out(df, hierarchy, forecast_col, id_col, time_col, middle_level)
+    grouped = _normalize_hierarchy(hierarchy)
+
+    # Projection-based methods work with grouped hierarchies natively
+    if method == "ols":
+        return _ols(df, grouped, forecast_col, id_col, time_col, interval_cols=interval_cols)
     if method == "permbu":
         if residuals is None:
             raise ValueError("residuals is required for method='permbu'")
-        return _permbu(df, hierarchy, forecast_col, id_col, time_col, residuals)
+        return _permbu(df, grouped, forecast_col, id_col, time_col, residuals)
     if method == "mint_cv":
         if train_data is None:
             raise ValueError("train_data is required for method='mint_cv'")
-        return _mint_cv(df, hierarchy, forecast_col, id_col, time_col, train_data, n_folds)
+        return _mint_cv(df, grouped, forecast_col, id_col, time_col, train_data, n_folds)
 
-    # Methods that support interval_cols via projection matrix
+    # bottom_up works for grouped hierarchies via summing matrix
     if method == "bottom_up":
-        return _bottom_up(df, hierarchy, forecast_col, id_col, time_col)
-    if method == "top_down":
-        return _top_down(df, hierarchy, forecast_col, id_col, time_col)
-    return _ols(df, hierarchy, forecast_col, id_col, time_col, interval_cols=interval_cols)
+        if _is_tree(grouped):
+            tree = {k: v[0] for k, v in grouped.items()}
+            return _bottom_up(df, tree, forecast_col, id_col, time_col)
+        return _bottom_up_grouped(df, grouped, forecast_col, id_col, time_col)
+
+    # Tree-only methods
+    tree = _to_tree(grouped) if not _is_tree(grouped) else {k: v[0] for k, v in grouped.items()}
+
+    if method == "middle_out":
+        if middle_level is None:
+            raise ValueError("middle_level is required for method='middle_out'")
+        return _middle_out(df, tree, forecast_col, id_col, time_col, middle_level)
+    return _top_down(df, tree, forecast_col, id_col, time_col)
 
 
-def _get_bottom_nodes(hierarchy: dict[str, str]) -> list[str]:
-    """Return nodes that are not parents of anything (leaf nodes)."""
+def _get_bottom_nodes_tree(hierarchy: dict[str, str]) -> list[str]:
+    """Return leaf nodes for a tree hierarchy."""
     parents = set(hierarchy.values())
     children = set(hierarchy.keys())
     return sorted(children - parents)
+
+
+def _get_bottom_nodes_grouped(hierarchy: dict[str, list[str]]) -> list[str]:
+    """Return leaf nodes for a grouped hierarchy."""
+    all_parents: set[str] = set()
+    for parents in hierarchy.values():
+        all_parents.update(parents)
+    children = set(hierarchy.keys())
+    return sorted(children - all_parents)
 
 
 def _get_top_node(hierarchy: dict[str, str]) -> str:
@@ -117,7 +167,7 @@ def _bottom_up(
     time_col: str,
 ) -> pl.DataFrame:
     """Aggregate bottom-level forecasts upward."""
-    bottom = _get_bottom_nodes(hierarchy)
+    bottom = _get_bottom_nodes_tree(hierarchy)
     bottom_df = df.filter(pl.col(id_col).is_in(bottom))
 
     # Build aggregation levels
@@ -161,6 +211,39 @@ def _bottom_up(
     return pl.concat(result_frames).sort(id_col, time_col)
 
 
+def _bottom_up_grouped(
+    df: pl.DataFrame,
+    hierarchy: dict[str, list[str]],
+    forecast_col: str,
+    id_col: str,
+    time_col: str,
+) -> pl.DataFrame:
+    """Bottom-up for grouped hierarchies using the summing matrix.
+
+    Keeps bottom-level forecasts and recomputes all aggregates via S matrix.
+    """
+    S, all_nodes, bottom, node_idx = _build_summing_matrix(hierarchy)
+    times = sorted(df[time_col].unique().to_list())
+    result_rows: list[dict[str, Any]] = []
+
+    for t in times:
+        t_data = df.filter(pl.col(time_col) == t)
+        row_map = {row[id_col]: row for row in t_data.iter_rows(named=True)}
+
+        # Extract bottom-level forecasts
+        b_hat = np.zeros(len(bottom))
+        for j, b in enumerate(bottom):
+            if b in row_map:
+                b_hat[j] = row_map[b][forecast_col]
+
+        # Aggregate: y = S @ b_hat
+        y = S @ b_hat
+        for node, idx in node_idx.items():
+            result_rows.append({id_col: node, time_col: t, forecast_col: y[idx]})
+
+    return pl.DataFrame(result_rows).sort(id_col, time_col)
+
+
 def _top_down(
     df: pl.DataFrame,
     hierarchy: dict[str, str],
@@ -170,7 +253,7 @@ def _top_down(
 ) -> pl.DataFrame:
     """Disaggregate top-level forecast using historical proportions."""
     top = _get_top_node(hierarchy)
-    bottom = _get_bottom_nodes(hierarchy)
+    bottom = _get_bottom_nodes_tree(hierarchy)
 
     top_forecasts = df.filter(pl.col(id_col) == top)
     bottom_actuals = df.filter(pl.col(id_col).is_in(bottom))
@@ -212,22 +295,34 @@ def _top_down(
 
 
 def _build_summing_matrix(
-    hierarchy: dict[str, str],
+    hierarchy: dict[str, list[str]],
 ) -> tuple[np.ndarray, list[str], list[str], dict[str, int]]:
-    """Build the summing matrix S and return (S, all_nodes, bottom, node_idx)."""
-    all_nodes = sorted(set(hierarchy.keys()) | set(hierarchy.values()))
-    bottom = _get_bottom_nodes(hierarchy)
+    """Build the summing matrix S for tree or grouped hierarchies.
+
+    For grouped hierarchies (DAGs), traces all ancestor paths from each
+    bottom node via BFS, handling nodes with multiple parents.
+    """
+    all_parents: set[str] = set()
+    for parents in hierarchy.values():
+        all_parents.update(parents)
+    all_nodes = sorted(set(hierarchy.keys()) | all_parents)
+    bottom = _get_bottom_nodes_grouped(hierarchy)
     n_total = len(all_nodes)
     n_bottom = len(bottom)
     node_idx = {node: i for i, node in enumerate(all_nodes)}
 
     S = np.zeros((n_total, n_bottom))
     for j, b in enumerate(bottom):
-        current = b
-        S[node_idx[current], j] = 1.0
-        while current in hierarchy:
-            current = hierarchy[current]
-            S[node_idx[current], j] = 1.0
+        # BFS to find all ancestors
+        S[node_idx[b], j] = 1.0
+        queue = [b]
+        while queue:
+            current = queue.pop(0)
+            if current in hierarchy:
+                for parent in hierarchy[current]:
+                    if S[node_idx[parent], j] == 0.0:
+                        S[node_idx[parent], j] = 1.0
+                        queue.append(parent)
 
     return S, all_nodes, bottom, node_idx
 
@@ -273,7 +368,7 @@ def _apply_projection(
 
 def _ols(
     df: pl.DataFrame,
-    hierarchy: dict[str, str],
+    hierarchy: dict[str, list[str]],
     forecast_col: str,
     id_col: str,
     time_col: str,
@@ -307,7 +402,7 @@ def _middle_out(
     Below the middle level: disaggregate using historical proportions.
     Above the middle level: aggregate by summing children.
     """
-    bottom = _get_bottom_nodes(hierarchy)
+    bottom = _get_bottom_nodes_tree(hierarchy)
 
     # --- Disaggregate downward from middle to bottom ---
     # For each middle node, find its descendant bottom nodes
@@ -387,7 +482,7 @@ def _middle_out(
 
 def _permbu(
     df: pl.DataFrame,
-    hierarchy: dict[str, str],
+    hierarchy: dict[str, list[str]],
     forecast_col: str,
     id_col: str,
     time_col: str,
@@ -429,7 +524,7 @@ def _permbu(
 
 def _mint_cv(
     df: pl.DataFrame,
-    hierarchy: dict[str, str],
+    hierarchy: dict[str, list[str]],
     forecast_col: str,
     id_col: str,
     time_col: str,
