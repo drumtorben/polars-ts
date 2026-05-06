@@ -172,8 +172,8 @@ mod tests {
     fn test_two_clusters_separated() {
         // Two groups: 0,1,2 close together, 100,101,102 close together
         let n = 6;
-        let points = [0.0, 1.0, 2.0, 100.0, 101.0, 102.0];
-        let mut dist = vec![0.0; n * n];
+        let points: [f64; 6] = [0.0, 1.0, 2.0, 100.0, 101.0, 102.0];
+        let mut dist = vec![0.0f64; n * n];
         for i in 0..n {
             for j in 0..n {
                 dist[i * n + j] = (points[i] - points[j]).abs();

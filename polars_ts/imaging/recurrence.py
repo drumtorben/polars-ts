@@ -7,6 +7,8 @@ entropy, trapping time).
 
 from __future__ import annotations
 
+from typing import Any, cast
+
 import numpy as np
 import polars as pl
 
@@ -30,7 +32,7 @@ def _recurrence_matrix(
     from scipy.spatial.distance import cdist
 
     X = x.reshape(-1, 1)
-    D = cdist(X, X, metric=metric)
+    D: np.ndarray = cdist(X, X, metric=cast(Any, metric))
 
     if threshold is not None:
         return (D <= threshold).astype(np.float64)
