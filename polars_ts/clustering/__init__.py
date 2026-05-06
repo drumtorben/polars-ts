@@ -26,6 +26,8 @@ _IMPORTS: dict[str, tuple[str, str]] = {
     "IDECClusterer": ("polars_ts.clustering.deep_cluster", "IDECClusterer"),
     "dec_cluster": ("polars_ts.clustering.deep_cluster", "dec_cluster"),
     "idec_cluster": ("polars_ts.clustering.deep_cluster", "idec_cluster"),
+    "KASBAClusterer": ("polars_ts.clustering.kasba", "KASBAClusterer"),
+    "kasba": ("polars_ts.clustering.kasba", "kasba"),
 }
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
