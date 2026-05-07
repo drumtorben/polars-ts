@@ -6,9 +6,15 @@ import numpy as np
 import polars as pl
 import pytest
 from polars_ts_rs.polars_ts_rs import kasba_fit
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
 from polars_ts.clustering.kasba import kasba
+
+try:
+    from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
 
 try:
     from aeon.clustering import TimeSeriesKMeans
@@ -68,6 +74,7 @@ def make_synthetic_clusters(
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.skipif(not HAS_SKLEARN, reason="scikit-learn not installed")
 class TestKASBAValidation:
     """Validate KASBA clustering quality against known ground truth."""
 
