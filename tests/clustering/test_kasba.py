@@ -1,4 +1,4 @@
-"""Tests for KASBAClusterer Python wrapper (issue #193)."""
+"""Tests for KASBAClusterer Python wrapper (issue #193, #194)."""
 
 from __future__ import annotations
 
@@ -7,6 +7,52 @@ import polars as pl
 import pytest
 
 from polars_ts.clustering.kasba import KASBAClusterer, kasba
+
+# ---------------------------------------------------------------------------
+# Helper factories for edge-case tests (#194)
+# ---------------------------------------------------------------------------
+
+
+def make_n_series(n: int, length: int, *, seed: int = 0) -> pl.DataFrame:
+    """Create *n* random series each of *length* timepoints."""
+    rng = np.random.default_rng(seed)
+    rows: dict[str, list] = {"unique_id": [], "y": []}
+    for i in range(n):
+        uid = f"S{i}"
+        vals = rng.normal(loc=i * 10.0, scale=1.0, size=length)
+        rows["unique_id"].extend([uid] * length)
+        rows["y"].extend(vals.tolist())
+    return pl.DataFrame(rows)
+
+
+def make_well_separated_series(
+    k: int = 2, n_per_cluster: int = 5, length: int = 20, separation: float = 100.0, *, seed: int = 0
+) -> pl.DataFrame:
+    """Create well-separated clusters that should converge quickly."""
+    rng = np.random.default_rng(seed)
+    rows: dict[str, list] = {"unique_id": [], "y": []}
+    idx = 0
+    for cluster_idx in range(k):
+        for _ in range(n_per_cluster):
+            vals = rng.normal(loc=cluster_idx * separation, scale=0.01, size=length)
+            uid = f"S{idx}"
+            rows["unique_id"].extend([uid] * length)
+            rows["y"].extend(vals.tolist())
+            idx += 1
+    return pl.DataFrame(rows)
+
+
+def make_borderline_series(*, seed: int = 0) -> pl.DataFrame:
+    """Create borderline-separable series for parameter sensitivity tests."""
+    rng = np.random.default_rng(seed)
+    rows: dict[str, list] = {"unique_id": [], "y": []}
+    for i in range(10):
+        uid = f"S{i}"
+        # Two groups with slight offset — sensitive to distance parameter
+        base = rng.normal(loc=(i % 2) * 2.0, scale=1.5, size=15)
+        rows["unique_id"].extend([uid] * 15)
+        rows["y"].extend(base.tolist())
+    return pl.DataFrame(rows)
 
 
 @pytest.fixture
@@ -110,3 +156,70 @@ class TestKASBAMultivariate:
         # Both produce valid output
         assert labels_ind.shape == labels_dep.shape
         assert labels_ind.shape[0] == 6
+
+
+class TestKASBAEdgeCases:
+    """Edge-case and robustness tests for KASBA clustering (issue #194)."""
+
+    def test_single_series_single_cluster(self):
+        """One series, one cluster — should assign to cluster 0."""
+        df = pl.DataFrame({"unique_id": ["A"] * 10, "y": list(range(10))})
+        result = kasba(df, k=1)
+        assert result["cluster"].to_list() == [0]
+
+    def test_k_equals_n(self):
+        """K == number of series — each series its own cluster."""
+        df = make_n_series(n=5, length=20)
+        result = kasba(df, k=5)
+        assert result["cluster"].n_unique() == 5
+
+    def test_k_greater_than_n_raises(self):
+        """K > n_series should raise ValueError."""
+        df = make_n_series(n=3, length=20)
+        with pytest.raises(ValueError, match="n_clusters.*must be <= n_cases"):
+            kasba(df, k=10)
+
+    def test_empty_cluster_recovery(self):
+        """Verify no cluster label is unused in output when k=3."""
+        df = make_well_separated_series(k=3, n_per_cluster=7, length=15, separation=200.0, seed=0)
+        result = kasba(df, k=3, seed=0)
+        assert result["cluster"].n_unique() == 3
+
+    def test_convergence_before_max_iter(self):
+        """Well-separated clusters should converge in < max_iter."""
+        df = make_well_separated_series(k=2, separation=100.0)
+        clf = KASBAClusterer(n_clusters=2, max_iter=50).fit(df)
+        assert clf.n_iter_ < 50
+
+    def test_all_identical_series(self):
+        """All series identical — should still produce valid labels."""
+        vals = [1.0, 2.0, 3.0, 4.0, 5.0]
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 5 + ["B"] * 5 + ["C"] * 5,
+                "y": vals * 3,
+            }
+        )
+        result = kasba(df, k=2)
+        assert result.shape[0] == 3
+        assert result["cluster"].min() >= 0
+
+    def test_different_length_series_padded(self):
+        """Series of different lengths should be zero-padded."""
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3 + ["B"] * 5 + ["C"] * 7,
+                "y": [1.0, 2.0, 3.0] + [4.0, 5.0, 6.0, 7.0, 8.0] + [1.0] * 7,
+            }
+        )
+        result = kasba(df, k=2)
+        assert result.shape[0] == 3
+
+    def test_msm_cost_parameter_effect(self):
+        """Different c values should produce valid clusterings."""
+        df = make_borderline_series()
+        labels_low_c = kasba(df, k=2, c=0.01)
+        labels_high_c = kasba(df, k=2, c=100.0)
+        assert labels_low_c.shape == labels_high_c.shape
+        assert labels_low_c["cluster"].n_unique() >= 1
+        assert labels_high_c["cluster"].n_unique() >= 1
