@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal
 
 import polars as pl
 
@@ -14,14 +14,26 @@ if TYPE_CHECKING:
 class CausalImpactReportingMixin:
     """Mixin providing summary, to_frame, and placebo_test methods.
 
-    Expects the consuming class to define:
-    - ``self.is_fitted_: bool``
-    - ``self._states: dict[Any, _FitState]``
-    - ``self.id_col: str``
-    - ``self.time_col: str``
-    - ``self._intervention_date``
-    - Constructor kwargs for cloning (trend, seasonal, sigma_*, coverage, etc.)
+    Attributes below are declared for mypy — they are set by the
+    consuming ``CausalImpact`` class.
     """
+
+    # Declared for type checking — set by CausalImpact.__init__
+    is_fitted_: bool
+    _states: dict[Any, Any]
+    _intervention_date: date | datetime | None
+    id_col: str
+    time_col: str
+    target_col: str
+    trend: str
+    seasonal: int | None
+    sigma_obs: float
+    sigma_level: float
+    sigma_trend: float
+    sigma_seasonal: float
+    coverage: float
+    covariates: list[str]
+    covariate_role: dict[str, Literal["pre_only", "always"]] | None
 
     def results(self) -> dict[Any, CausalImpactResult]:
         """Return per-series CausalImpactResult objects.
