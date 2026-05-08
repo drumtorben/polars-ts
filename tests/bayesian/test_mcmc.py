@@ -16,6 +16,71 @@ from polars_ts.bayesian.mcmc import (
     mcmc_forecast,
 )
 
+
+class TestMCMCSplitStructure:
+    """Verify the file split preserves imports and keeps files under 500 lines."""
+
+    def test_samplers_importable(self):
+        from polars_ts.bayesian.mcmc_samplers import _ar_logpost as ap
+        from polars_ts.bayesian.mcmc_samplers import _local_level_logpost as llp
+        from polars_ts.bayesian.mcmc_samplers import _mh_sample as mh
+        from polars_ts.bayesian.mcmc_samplers import _seasonal_logpost as sp
+
+        assert llp is _local_level_logpost
+        assert ap is _ar_logpost
+        assert sp is _seasonal_logpost
+        assert mh is _mh_sample
+
+    def test_forecast_fns_importable(self):
+        from polars_ts.bayesian.mcmc_forecast import _forecast_ar, _forecast_local_level, _forecast_seasonal
+
+        assert callable(_forecast_local_level)
+        assert callable(_forecast_ar)
+        assert callable(_forecast_seasonal)
+
+    def test_backends_importable(self):
+        from polars_ts.bayesian.mcmc_backends import _run_numpyro, _run_pymc
+
+        assert callable(_run_numpyro)
+        assert callable(_run_pymc)
+
+    def test_backward_compat_import(self):
+        from polars_ts.bayesian.mcmc import (
+            MCMCForecaster,
+            MCMCResult,
+            _ar_logpost,
+            _local_level_logpost,
+            _mh_sample,
+            _seasonal_logpost,
+            mcmc_forecast,
+        )
+
+        assert all(
+            x is not None
+            for x in [
+                MCMCForecaster,
+                MCMCResult,
+                _ar_logpost,
+                _local_level_logpost,
+                _mh_sample,
+                _seasonal_logpost,
+                mcmc_forecast,
+            ]
+        )
+
+    def test_bayesian_init_lazy_import(self):
+        from polars_ts.bayesian import MCMCForecaster as MF
+
+        assert MF is MCMCForecaster
+
+    def test_mcmc_under_500_lines(self):
+        import polars_ts.bayesian.mcmc as mod
+
+        with open(mod.__file__) as f:
+            lines = sum(1 for _ in f)
+        assert lines <= 500, f"mcmc.py has {lines} lines, expected <= 500"
+
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
