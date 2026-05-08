@@ -244,6 +244,10 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "StreamingKalmanFilter": ("polars_ts.streaming", "StreamingKalmanFilter"),
     "StreamingGlobalForecaster": ("polars_ts.streaming", "StreamingGlobalForecaster"),
     "SlidingWindowManager": ("polars_ts.streaming", "SlidingWindowManager"),
+    # --- Registry / Experiment Tracking ---
+    "ModelRegistry": ("polars_ts.registry", "ModelRegistry"),
+    "Experiment": ("polars_ts.registry", "Experiment"),
+    "Run": ("polars_ts.registry", "Run"),
 }
 
 
