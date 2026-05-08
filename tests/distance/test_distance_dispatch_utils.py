@@ -1,4 +1,5 @@
 import pytest
+import polars as pl
 from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
 from polars_ts_rs.polars_ts_rs import compute_pairwise_dtw, compute_pairwise_wdtw
 
@@ -26,3 +27,13 @@ class TestDistanceDispatchUtils:
         df = compute_distances(two_series, two_series, method="dtw")
         d = pairwise_to_dict(df)
         assert d[("A", "B")] == d[("B", "A")]
+
+    def test_pairwise_to_dict_empty_df(self):
+        df = pl.DataFrame({"id_1": [], "id_2": [], "dtw": []})
+        assert pairwise_to_dict(df) == {}
+
+    def test_pairwise_to_dict_coerces_int_ids_to_str(self):
+        df = pl.DataFrame({"id_1": [1], "id_2": [2], "dtw": [0.5]})
+        d = pairwise_to_dict(df)
+        assert d[("1", "2")] == 0.5
+        assert d[("2", "1")] == 0.5
