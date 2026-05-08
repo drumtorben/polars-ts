@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../kmedoids/">
+        <link rel="prev" href="../__init__/">
       
       
-        <link rel="next" href="../scalable/">
+        <link rel="next" href="../boxcox/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Kshape - Polars Time Series Extension</title>
+        <title>inverse - Polars Time Series Extension</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.clustering.kshape" class="md-skip">
+        <a href="#polars_ts.transforms._inverse" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kshape
+               inverse
             
           </span>
         </div>
@@ -2513,8 +2513,6 @@
                 
   
   
-    
-  
   
   
     
@@ -2525,15 +2523,17 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_26" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_26" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -2552,7 +2552,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_26_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_26_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_1_1_26">
             <span class="md-nav__icon md-icon"></span>
             Clustering
@@ -2566,7 +2566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_augmentation/" class="md-nav__link">
+      <a href="../../clustering/_augmentation/" class="md-nav__link">
         
   
   
@@ -2589,7 +2589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_autoencoder/" class="md-nav__link">
+      <a href="../../clustering/_autoencoder/" class="md-nav__link">
         
   
   
@@ -2612,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_contrastive_loss/" class="md-nav__link">
+      <a href="../../clustering/_contrastive_loss/" class="md-nav__link">
         
   
   
@@ -2635,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../auto/" class="md-nav__link">
+      <a href="../../clustering/auto/" class="md-nav__link">
         
   
   
@@ -2658,7 +2658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contrastive/" class="md-nav__link">
+      <a href="../../clustering/contrastive/" class="md-nav__link">
         
   
   
@@ -2681,7 +2681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dba/" class="md-nav__link">
+      <a href="../../clustering/dba/" class="md-nav__link">
         
   
   
@@ -2704,7 +2704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deep_cluster/" class="md-nav__link">
+      <a href="../../clustering/deep_cluster/" class="md-nav__link">
         
   
   
@@ -2727,7 +2727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../density/" class="md-nav__link">
+      <a href="../../clustering/density/" class="md-nav__link">
         
   
   
@@ -2750,7 +2750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../evaluation/" class="md-nav__link">
+      <a href="../../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -2773,7 +2773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hierarchical/" class="md-nav__link">
+      <a href="../../clustering/hierarchical/" class="md-nav__link">
         
   
   
@@ -2796,7 +2796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kasba/" class="md-nav__link">
+      <a href="../../clustering/kasba/" class="md-nav__link">
         
   
   
@@ -2819,7 +2819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kmeans/" class="md-nav__link">
+      <a href="../../clustering/kmeans/" class="md-nav__link">
         
   
   
@@ -2842,7 +2842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kmedoids/" class="md-nav__link">
+      <a href="../../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -2862,30 +2862,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Kshape
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -2896,90 +2876,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" kshape">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" KShape">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2992,7 +2888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scalable/" class="md-nav__link">
+      <a href="../../clustering/scalable/" class="md-nav__link">
         
   
   
@@ -3015,7 +2911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../shapelets/" class="md-nav__link">
+      <a href="../../clustering/shapelets/" class="md-nav__link">
         
   
   
@@ -3038,7 +2934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../spectral/" class="md-nav__link">
+      <a href="../../clustering/spectral/" class="md-nav__link">
         
   
   
@@ -4670,8 +4566,10 @@
                 
   
   
+    
   
   
+  
     
     
     
@@ -4680,17 +4578,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1_38" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_38" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../transforms/__init__/" class="md-nav__link ">
+            <a href="../__init__/" class="md-nav__link ">
               
   
   
@@ -4709,7 +4605,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_38_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_38_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1_1_38">
             <span class="md-nav__icon md-icon"></span>
             Transforms
@@ -4720,10 +4616,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../transforms/_inverse/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+     inverse
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4734,6 +4650,57 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#polars_ts.transforms._inverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_inverse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" _inverse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.transforms._inverse.inverse_single" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;inverse_single
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.transforms._inverse.transform_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;transform_buffer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4746,7 +4713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/boxcox/" class="md-nav__link">
+      <a href="../boxcox/" class="md-nav__link">
         
   
   
@@ -4769,7 +4736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/differencing/" class="md-nav__link">
+      <a href="../differencing/" class="md-nav__link">
         
   
   
@@ -4792,7 +4759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/log/" class="md-nav__link">
+      <a href="../log/" class="md-nav__link">
         
   
   
@@ -5455,61 +5422,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape" class="md-nav__link">
+  <a href="#polars_ts.transforms._inverse" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;kshape
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;_inverse
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" kshape">
+    <nav class="md-nav" aria-label=" _inverse">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape" class="md-nav__link">
+  <a href="#polars_ts.transforms._inverse.inverse_single" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;KShape
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" KShape">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape.KShape.fit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._zscore" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_zscore
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;inverse_single
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._sbd" class="md-nav__link">
+  <a href="#polars_ts.transforms._inverse.transform_buffer" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_sbd
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.clustering.kshape._shape_extraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_shape_extraction
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;transform_buffer
     </span>
   </a>
   
@@ -5539,113 +5473,23 @@
   
 
 
-  <h1>Kshape</h1>
+  <h1> inverse</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.clustering.kshape" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.clustering.kshape</code>
+<h2 id="polars_ts.transforms._inverse" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.transforms._inverse</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>k-Shape clustering for time series using Shape-Based Distance (SBD).</p>
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="polars_ts.clustering.kshape.KShape" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>KShape</code>
-
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-
-        <p>k-Shape clustering for time series.</p>
-<p>Uses Shape-Based Distance (SBD) and shape extraction to iteratively
-refine cluster centroids and assignments.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>n_clusters</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Number of clusters. Default 2.</p>
-              </div>
-            </td>
-            <td>
-                  <code>2</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>max_iter</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Maximum number of iterations. Default 100.</p>
-              </div>
-            </td>
-            <td>
-                  <code>100</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Examples:</span></p>
-    <div class="language-pycon highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span> <span class="o">=</span> <span class="n">KShape</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">&gt;&gt;&gt; </span><span class="n">ks</span><span class="o">.</span><span class="n">labels_</span>
-</span></code></pre></div>
-
+        <p>Shared inverse-transform helpers for pipeline and global model.</p>
+<p>Canonical location for inverse_single and transform_buffer,
+previously duplicated across pipeline.py and global_model.py.</p>
 
 
 
@@ -5670,96 +5514,15 @@ refine cluster centroids and assignments.</p>
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.clustering.kshape.KShape.fit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
-
-</h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Fit k-Shape clustering.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>df</code>
-            </td>
-            <td>
-                  <code><span title="polars.DataFrame">DataFrame</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>DataFrame with columns <code>unique_id</code> and <code>y</code>.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="            KShape (polars_ts.clustering.kshape.KShape)" href="#polars_ts.clustering.kshape.KShape">KShape</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>self, with <code>labels_</code> and <code>centroids_</code> populated.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.clustering.kshape._zscore" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_zscore</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+<h3 id="polars_ts.transforms._inverse.inverse_single" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">inverse_single</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">target_transform</span><span class="p">,</span> <span class="n">transform_state</span><span class="p">,</span> <span class="n">orig_values</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Z-normalize a 1-D array. Returns zeros if std is zero.</p>
+        <p>Inverse-transform a single prediction to original scale.</p>
 
 
     </div>
@@ -5769,36 +5532,15 @@ refine cluster centroids and assignments.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.clustering.kshape._sbd" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_sbd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></code>
+<h3 id="polars_ts.transforms._inverse.transform_buffer" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">transform_buffer</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">target_transform</span><span class="p">,</span> <span class="n">transform_state</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Shape-Based Distance between two z-normalized series.</p>
-<p>Returns (distance, y_shifted) where y_shifted is y aligned to x.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.clustering.kshape._shape_extraction" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_shape_extraction</span><span class="p">(</span><span class="n">cluster_series</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Extract centroid shape via eigenvalue decomposition (Paparrizos &amp; Gravano).</p>
-<p>Computes the first eigenvector of the cross-correlation matrix S^T * S,
-which maximizes the sum of squared normalized cross-correlations.</p>
+        <p>Transform raw values into the model's working space.</p>
 
 
     </div>
