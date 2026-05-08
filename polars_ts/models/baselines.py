@@ -7,28 +7,11 @@ These serve as simple benchmarks against which more complex models are compared.
 
 from __future__ import annotations
 
-from datetime import timedelta
 from typing import Any
 
 import polars as pl
 
-
-def _infer_freq(times: pl.Series) -> timedelta:
-    """Infer the time frequency from a sorted datetime/date series."""
-    if len(times) < 2:
-        raise ValueError("Need at least 2 timestamps to infer frequency")
-    diffs = times.diff().drop_nulls()
-    if diffs.dtype == pl.Duration:
-        return diffs.median()  # type: ignore[return-value]
-    # Date column → cast to duration via subtraction
-    casted = times.cast(pl.Datetime("ms"))
-    diffs = casted.diff().drop_nulls()
-    return diffs.median()  # type: ignore[return-value]
-
-
-def _make_future_dates(last_time: Any, freq: timedelta, h: int) -> list[Any]:
-    """Generate h future timestamps starting from last_time + freq."""
-    return [last_time + freq * (i + 1) for i in range(h)]
+from polars_ts.models._time_utils import _infer_freq, _make_future_dates  # noqa: F401
 
 
 def naive_forecast(

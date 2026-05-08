@@ -8,35 +8,11 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
 from typing import Any
 
 import polars as pl
 
-# ---------------------------------------------------------------------------
-# Internal helpers
-# ---------------------------------------------------------------------------
-
-
-def _infer_freq(dates: pl.Series) -> timedelta:
-    """Return the most common time delta in a sorted date/datetime column."""
-    diffs = dates.diff().drop_nulls()
-    if diffs.dtype == pl.Duration:
-        # datetime column – diffs are already durations
-        return diffs.mode().to_list()[0]
-    # date column – diffs are i32 day counts
-    day_count = diffs.cast(pl.Int64).mode().to_list()[0]
-    return timedelta(days=int(day_count))
-
-
-def _make_future_dates(
-    last_date: Any,
-    freq: timedelta,
-    h: int,
-) -> list[Any]:
-    """Generate *h* future timestamps starting one step after *last_date*."""
-    return [last_date + freq * (i + 1) for i in range(h)]
-
+from polars_ts.models._time_utils import _infer_freq, _make_future_dates  # noqa: F401
 
 # ---------------------------------------------------------------------------
 # auto_arima  (statsforecast backend)

@@ -8,12 +8,12 @@
 - [x] T1.5: Run distance tests — 318/318 passed
 
 ## Phase 2: Extract Shared Pipeline Helpers
-- [ ] T2.1: Extract `_inverse_single` + `_transform_buffer` to `transforms/_inverse.py`
-- [ ] T2.2: Update `pipeline.py` and `global_model.py` imports
-- [ ] T2.3: Consolidate `_infer_freq` + `_make_future_dates` into `models/_time_utils.py`
-- [ ] T2.4: Update `baselines.py`, `arima.py`, `pipeline.py`, `global_model.py`
-- [ ] T2.5: Resolve `_infer_freq` behavior divergence (median vs mode)
-- [ ] T2.6: Run full test suite
+- [x] T2.1: Extract `inverse_single` + `transform_buffer` to `transforms/_inverse.py`
+- [x] T2.2: Update `pipeline.py` and `global_model.py` to use shared helpers
+- [x] T2.3: Consolidate `_infer_freq` + `_make_future_dates` into `models/_time_utils.py`
+- [x] T2.4: Update `baselines.py`, `arima.py`, `pipeline.py`, `global_model.py`
+- [x] T2.5: Resolved — arima.py now uses shared median-based `_infer_freq` (mode version removed; 156 model tests pass)
+- [x] T2.6: 181 tests passed (25 new + 156 existing)
 
 ## Phase 3: Standardize Lazy Imports
 - [ ] T3.1: Convert `streaming/__init__.py` to `make_getattr` pattern

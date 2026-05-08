@@ -12,8 +12,9 @@ from typing import Any
 import numpy as np
 import polars as pl
 
-from polars_ts.models.baselines import _infer_freq, _make_future_dates
+from polars_ts.models._time_utils import _infer_freq, _make_future_dates
 from polars_ts.models.multistep import Estimator
+from polars_ts.transforms._inverse import inverse_single, transform_buffer
 
 # ---------------------------------------------------------------------------
 # Shared helpers (also imported by global_model.py)
@@ -406,29 +407,7 @@ class ForecastPipeline:
         for group_id, group_df in sorted_df.group_by(self.id_col, maintain_order=True):
             gid = group_id[0]
             values = group_df[self.target_col].to_list()
-            # If transform is differencing, work in the transformed space
-            if self.target_transform == "difference":
-                order = self.transform_state_.get("order", 1)
-                period = self.transform_state_.get("period", 1)
-                # Difference the values for the buffer
-                diff_values = list(values)
-                for _ in range(order):
-                    diff_values = [
-                        diff_values[i] - diff_values[i - period] if i >= period else float("nan")
-                        for i in range(len(diff_values))
-                    ]
-                buffer = [v for v in diff_values if not (isinstance(v, float) and np.isnan(v))]
-            else:
-                if self.target_transform == "log":
-                    buffer = [float(np.log1p(v)) for v in values]
-                elif self.target_transform == "boxcox":
-                    lam = self.transform_state_.get("lam", 1.0)
-                    if lam == 0:
-                        buffer = [float(np.log(v)) for v in values]
-                    else:
-                        buffer = [float((v**lam - 1) / lam) for v in values]
-                else:
-                    buffer = list(values)
+            buffer = transform_buffer(values, self.target_transform, self.transform_state_)
 
             last_time = group_df[self.time_col][-1]
             future_times = _make_future_dates(last_time, freq, h)
@@ -470,7 +449,7 @@ class ForecastPipeline:
                 buffer.append(pred_transformed)
 
                 # Inverse transform to original scale
-                pred = self._inverse_single(pred_transformed, orig_values)
+                pred = inverse_single(pred_transformed, self.target_transform, self.transform_state_, orig_values)
                 orig_values.append(pred)
 
                 rows.append({self.id_col: gid, self.time_col: future_times[step], "y_hat": pred})
@@ -481,20 +460,3 @@ class ForecastPipeline:
             "y_hat": pl.Float64(),
         }
         return pl.DataFrame(rows, schema=schema).sort(self.id_col, self.time_col)
-
-    def _inverse_single(self, pred: float, orig_values: list[float]) -> float:
-        """Inverse-transform a single prediction to original scale."""
-        if self.target_transform == "log":
-            return float(np.expm1(pred))
-        if self.target_transform == "boxcox":
-            lam = self.transform_state_.get("lam", 1.0)
-            if lam == 0:
-                return float(np.exp(pred))
-            return float((pred * lam + 1) ** (1.0 / lam))
-        if self.target_transform == "difference":
-            period = self.transform_state_.get("period", 1)
-            # y_t = diff_t + y_{t-period}
-            if len(orig_values) >= period:
-                return pred + orig_values[-period]
-            return pred
-        return pred
