@@ -10,6 +10,60 @@ import pytest
 from polars_ts.causal.causal_impact import CausalImpact, CausalImpactResult, causal_impact
 
 
+class TestCausalImpactSplitStructure:
+    """Verify the file split preserves all import paths and keeps files under 500 lines."""
+
+    def test_result_importable_from_results_module(self):
+        """CausalImpactResult should live in its own module."""
+        from polars_ts.causal.causal_impact_results import CausalImpactResult as R
+
+        assert R is CausalImpactResult
+
+    def test_reporting_mixin_importable(self):
+        """Reporting methods should live in a separate module."""
+        from polars_ts.causal.causal_impact_reporting import CausalImpactReportingMixin
+
+        assert hasattr(CausalImpactReportingMixin, "summary")
+        assert hasattr(CausalImpactReportingMixin, "to_frame")
+        assert hasattr(CausalImpactReportingMixin, "placebo_test")
+
+    def test_backward_compat_import_from_causal_impact(self):
+        """Existing import path must still work."""
+        from polars_ts.causal.causal_impact import CausalImpact, CausalImpactResult, causal_impact
+
+        assert CausalImpact is not None
+        assert CausalImpactResult is not None
+        assert callable(causal_impact)
+
+    def test_causal_init_lazy_import_still_works(self):
+        """polars_ts.causal.CausalImpact must still resolve."""
+        from polars_ts.causal import CausalImpact as CI
+
+        assert CI is CausalImpact
+
+    def test_top_level_lazy_import_still_works(self):
+        """polars_ts.CausalImpact must still resolve."""
+        import polars_ts
+
+        assert polars_ts.CausalImpact is CausalImpact
+        assert polars_ts.CausalImpactResult is CausalImpactResult
+        assert polars_ts.causal_impact is causal_impact
+
+    def test_main_file_under_500_lines(self):
+        """After split, causal_impact.py must be under 500 lines."""
+        import polars_ts.causal.causal_impact as mod
+
+        with open(mod.__file__) as f:
+            line_count = sum(1 for _ in f)
+        assert line_count <= 500, f"causal_impact.py has {line_count} lines, expected <= 500"
+
+    def test_causal_impact_inherits_reporting_mixin(self):
+        """CausalImpact should inherit from CausalImpactReportingMixin."""
+        from polars_ts.causal.causal_impact_reporting import CausalImpactReportingMixin
+
+        assert issubclass(CausalImpact, CausalImpactReportingMixin)
+
+
 class TestCausalImpactValidation:
     def test_fit_before_results(self):
         ci = CausalImpact()
