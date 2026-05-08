@@ -12,13 +12,14 @@ from typing import Any
 import numpy as np
 import polars as pl
 
-from polars_ts.models.baselines import _infer_freq, _make_future_dates
+from polars_ts.models._time_utils import _infer_freq, _make_future_dates
 from polars_ts.models.multistep import Estimator
 from polars_ts.pipeline import (
     _apply_transform,
     _build_feature_df,
     _build_step_features,
 )
+from polars_ts.transforms._inverse import inverse_single, transform_buffer
 
 
 class GlobalForecaster:
@@ -274,7 +275,7 @@ class GlobalForecaster:
             values = group_df[self.target_col].to_list()
 
             # Build buffer in transformed space
-            buffer = self._transform_buffer(values)
+            buffer = transform_buffer(values, self.target_transform, self.transform_state_)
             last_time = group_df[self.time_col][-1]
             future_times = _make_future_dates(last_time, freq, h)
             orig_values = list(values)
@@ -314,7 +315,7 @@ class GlobalForecaster:
                 pred_transformed = float(self.estimator.predict(x_row)[0])
                 buffer.append(pred_transformed)
 
-                pred = self._inverse_single(pred_transformed, orig_values)
+                pred = inverse_single(pred_transformed, self.target_transform, self.transform_state_, orig_values)
                 orig_values.append(pred)
 
                 rows.append({self.id_col: gid, self.time_col: future_times[step], "y_hat": pred})
@@ -379,37 +380,3 @@ class GlobalForecaster:
                     extra.append(float(val) if val is not None else 0.0)
 
         return extra
-
-    def _transform_buffer(self, values: list[float]) -> list[float]:
-        """Transform raw values into the model's working space."""
-        if self.target_transform == "log":
-            return [float(np.log1p(v)) for v in values]
-        if self.target_transform == "boxcox":
-            lam = self.transform_state_.get("lam", 1.0)
-            if lam == 0:
-                return [float(np.log(v)) for v in values]
-            return [float((v**lam - 1) / lam) for v in values]
-        if self.target_transform == "difference":
-            period = self.transform_state_.get("period", 1)
-            order = self.transform_state_.get("order", 1)
-            result = list(values)
-            for _ in range(order):
-                result = [result[i] - result[i - period] if i >= period else float("nan") for i in range(len(result))]
-            return [v for v in result if not (isinstance(v, float) and np.isnan(v))]
-        return list(values)
-
-    def _inverse_single(self, pred: float, orig_values: list[float]) -> float:
-        """Inverse-transform a single prediction to original scale."""
-        if self.target_transform == "log":
-            return float(np.expm1(pred))
-        if self.target_transform == "boxcox":
-            lam = self.transform_state_.get("lam", 1.0)
-            if lam == 0:
-                return float(np.exp(pred))
-            return float((pred * lam + 1) ** (1.0 / lam))
-        if self.target_transform == "difference":
-            period = self.transform_state_.get("period", 1)
-            if len(orig_values) >= period:
-                return pred + orig_values[-period]
-            return pred
-        return pred

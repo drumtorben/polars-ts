@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import Any, Literal
 
 import polars as pl
-from polars_ts_rs.polars_ts_rs import (
+
+from polars_ts._distance_dispatch import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,

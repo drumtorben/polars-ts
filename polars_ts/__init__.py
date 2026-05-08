@@ -5,7 +5,8 @@ import polars as pl
 import polars_ts_rs as _rs_mod
 from polars._typing import IntoExpr
 from polars.plugins import register_plugin_function
-from polars_ts_rs.polars_ts_rs import (
+
+from polars_ts._distance_dispatch import (
     compute_pairwise_ddtw,
     compute_pairwise_dtw,
     compute_pairwise_dtw_multi,
@@ -19,7 +20,6 @@ from polars_ts_rs.polars_ts_rs import (
     compute_pairwise_twe,
     compute_pairwise_wdtw,
 )
-
 from polars_ts.distance import compute_pairwise_distance
 
 PLUGIN_PATH = Path(_rs_mod.__file__).parent
