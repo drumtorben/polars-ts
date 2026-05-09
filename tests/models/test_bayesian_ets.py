@@ -23,6 +23,78 @@ from polars_ts.models.bayesian_ets import (  # noqa: E402
     bayesian_ets,
 )
 
+
+class TestBayesianETSSplitStructure:
+    """Verify the file split preserves imports and keeps files under 500 lines."""
+
+    def test_priors_importable(self):
+        from polars_ts.models.bayesian_ets.priors import ETSPriors as EP
+
+        assert EP is ETSPriors
+
+    def test_inference_importable(self):
+        from polars_ts.models.bayesian_ets.inference import _ses_loglik as sl
+
+        assert sl is _ses_loglik
+
+    def test_model_importable(self):
+        from polars_ts.models.bayesian_ets.model import BayesianETS as BE
+
+        assert BE is BayesianETS
+
+    def test_backward_compat_import(self):
+        from polars_ts.models.bayesian_ets import (
+            BayesianETS,
+            BayesianETSResult,
+            ETSPriors,
+            _forecast_from_params,
+            _holt_loglik,
+            _hw_loglik,
+            _log_posterior,
+            _map_estimate,
+            _pack_params,
+            _ses_loglik,
+            _unpack_params,
+            bayesian_ets,
+        )
+
+        assert all(
+            x is not None
+            for x in [
+                BayesianETS,
+                BayesianETSResult,
+                ETSPriors,
+                _forecast_from_params,
+                _holt_loglik,
+                _hw_loglik,
+                _log_posterior,
+                _map_estimate,
+                _pack_params,
+                _ses_loglik,
+                _unpack_params,
+                bayesian_ets,
+            ]
+        )
+
+    def test_models_init_lazy_import(self):
+        from polars_ts.models import BayesianETS as BE
+
+        assert BE is BayesianETS
+
+    def test_no_file_over_500_lines(self):
+        import os
+
+        import polars_ts.models.bayesian_ets as pkg
+
+        pkg_dir = os.path.dirname(pkg.__file__)
+        for fname in os.listdir(pkg_dir):
+            if fname.endswith(".py"):
+                fpath = os.path.join(pkg_dir, fname)
+                with open(fpath) as f:
+                    lines = sum(1 for _ in f)
+                assert lines <= 500, f"bayesian_ets/{fname} has {lines} lines, expected <= 500"
+
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------

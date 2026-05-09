@@ -58,6 +58,8 @@ class ModelRegistry:
                 seq += 1
         else:
             model_dir = self._models_dir / name / version
+        version = version or datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+        model_dir = self._models_dir / name / version
         model_dir.mkdir(parents=True, exist_ok=True)
 
         with open(model_dir / "model.pkl", "wb") as f:
