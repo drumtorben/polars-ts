@@ -19,6 +19,85 @@ from polars_ts.bayesian_var import (  # noqa: E402
     bayesian_var,
 )
 
+
+class TestBayesianVarSplitStructure:
+    """Verify the file split preserves all import paths and keeps files under 500 lines."""
+
+    def test_priors_importable_from_submodule(self):
+        from polars_ts.bayesian_var.priors import MinnesotaPrior as MP
+        from polars_ts.bayesian_var.priors import NormalWishartPrior as NWP
+
+        assert MP is MinnesotaPrior
+        assert NWP is NormalWishartPrior
+
+    def test_result_importable_from_submodule(self):
+        from polars_ts.bayesian_var.results import BayesianVARResult as R
+
+        assert R is BayesianVARResult
+
+    def test_model_importable_from_submodule(self):
+        from polars_ts.bayesian_var.model import BayesianVAR as BV
+        from polars_ts.bayesian_var.model import bayesian_var as bv
+
+        assert BV is BayesianVAR
+        assert bv is bayesian_var
+
+    def test_internals_importable_from_submodules(self):
+        from polars_ts.bayesian_var.model import _build_var_matrices as bvm
+        from polars_ts.bayesian_var.priors import _estimate_sigma_from_ar as esa
+        from polars_ts.bayesian_var.priors import _minnesota_prior_precision as mpp
+
+        assert bvm is _build_var_matrices
+        assert esa is _estimate_sigma_from_ar
+        assert mpp is _minnesota_prior_precision
+
+    def test_backward_compat_import_from_package(self):
+        from polars_ts.bayesian_var import (
+            BayesianVAR,
+            BayesianVARResult,
+            MinnesotaPrior,
+            NormalWishartPrior,
+            _build_var_matrices,
+            _estimate_sigma_from_ar,
+            _minnesota_prior_precision,
+            bayesian_var,
+        )
+
+        assert all(
+            x is not None
+            for x in [
+                BayesianVAR,
+                BayesianVARResult,
+                MinnesotaPrior,
+                NormalWishartPrior,
+                _build_var_matrices,
+                _estimate_sigma_from_ar,
+                _minnesota_prior_precision,
+                bayesian_var,
+            ]
+        )
+
+    def test_top_level_lazy_import(self):
+        import polars_ts
+
+        assert polars_ts.BayesianVAR is BayesianVAR
+        assert polars_ts.BayesianVARResult is BayesianVARResult
+        assert polars_ts.MinnesotaPrior is MinnesotaPrior
+
+    def test_no_file_over_500_lines(self):
+        import os
+
+        import polars_ts.bayesian_var as pkg
+
+        pkg_dir = os.path.dirname(pkg.__file__)
+        for fname in os.listdir(pkg_dir):
+            if fname.endswith(".py"):
+                fpath = os.path.join(pkg_dir, fname)
+                with open(fpath) as f:
+                    lines = sum(1 for _ in f)
+                assert lines <= 500, f"bayesian_var/{fname} has {lines} lines, expected <= 500"
+
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------

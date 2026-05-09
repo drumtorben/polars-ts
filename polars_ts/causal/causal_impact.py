@@ -31,80 +31,9 @@ from typing import Any, Literal
 import numpy as np
 import polars as pl
 
-from polars_ts.bayesian.bsts import BSTS, BSTSResult
-
-
-@dataclass
-class CausalImpactResult:
-    """Result container for a CausalImpact analysis.
-
-    All effect arrays have length equal to the post-intervention period.
-
-    Attributes
-    ----------
-    point_effect
-        Pointwise causal effect (observed - counterfactual).
-    point_effect_lower
-        Lower credible bound of the pointwise effect.
-    point_effect_upper
-        Upper credible bound of the pointwise effect.
-    cumulative_effect
-        Cumulative sum of pointwise effects.
-    cumulative_effect_lower
-        Conservative lower bound of cumulative effect (sum of
-        pointwise lower bounds). This is wider than a proper
-        posterior-based interval because it does not account for
-        cross-timestep correlation.
-    cumulative_effect_upper
-        Conservative upper bound of cumulative effect.
-    total_effect
-        Sum of pointwise effects over the post period.
-    total_effect_lower
-        Lower credible bound of total effect.
-    total_effect_upper
-        Upper credible bound of total effect.
-    relative_effect
-        Total effect divided by sum of counterfactual.
-    relative_effect_lower
-        Lower credible bound of relative effect.
-    relative_effect_upper
-        Upper credible bound of relative effect.
-    counterfactual
-        Predicted counterfactual series for the post period.
-    counterfactual_lower
-        Lower credible bound of counterfactual.
-    counterfactual_upper
-        Upper credible bound of counterfactual.
-    observed_post
-        Observed values in the post period.
-    bsts_result
-        Underlying BSTS model result.
-    pre_mape
-        Mean absolute percentage error on the pre-period (diagnostic).
-    pre_coverage
-        Fraction of pre-period observations inside the credible interval.
-
-    """
-
-    point_effect: np.ndarray
-    point_effect_lower: np.ndarray
-    point_effect_upper: np.ndarray
-    cumulative_effect: np.ndarray
-    cumulative_effect_lower: np.ndarray
-    cumulative_effect_upper: np.ndarray
-    total_effect: float
-    total_effect_lower: float
-    total_effect_upper: float
-    relative_effect: float
-    relative_effect_lower: float
-    relative_effect_upper: float
-    counterfactual: np.ndarray
-    counterfactual_lower: np.ndarray
-    counterfactual_upper: np.ndarray
-    observed_post: np.ndarray
-    bsts_result: BSTSResult
-    pre_mape: float
-    pre_coverage: float
+from polars_ts.bayesian.bsts import BSTS
+from polars_ts.causal.causal_impact_reporting import CausalImpactReportingMixin
+from polars_ts.causal.causal_impact_results import CausalImpactResult
 
 
 @dataclass
@@ -180,7 +109,7 @@ def _fit_regression(
     return beta, X_mean, y_mean
 
 
-class CausalImpact:
+class CausalImpact(CausalImpactReportingMixin):
     """Bayesian CausalImpact estimator.
 
     Parameters
@@ -457,134 +386,6 @@ class CausalImpact:
 
         self.is_fitted_ = True
         return self
-
-    def results(self) -> dict[Any, CausalImpactResult]:
-        """Return per-series CausalImpactResult objects.
-
-        Returns
-        -------
-        dict[Any, CausalImpactResult]
-            Mapping from series ID to result.
-
-        """
-        if not self.is_fitted_:
-            raise RuntimeError("Call fit() before results().")
-        return {gid: s.result for gid, s in self._states.items() if s.result is not None}
-
-    def summary(self) -> pl.DataFrame:
-        """Return a summary DataFrame with one row per series.
-
-        Columns: id_col, total_effect, total_effect_lower, total_effect_upper,
-        relative_effect, relative_effect_lower, relative_effect_upper,
-        pre_mape, pre_coverage.
-
-        """
-        if not self.is_fitted_:
-            raise RuntimeError("Call fit() before summary().")
-
-        rows: list[dict[str, Any]] = []
-        for gid, state in self._states.items():
-            r = state.result
-            assert r is not None
-            rows.append(
-                {
-                    self.id_col: gid,
-                    "total_effect": r.total_effect,
-                    "total_effect_lower": r.total_effect_lower,
-                    "total_effect_upper": r.total_effect_upper,
-                    "relative_effect": r.relative_effect,
-                    "relative_effect_lower": r.relative_effect_lower,
-                    "relative_effect_upper": r.relative_effect_upper,
-                    "pre_mape": r.pre_mape,
-                    "pre_coverage": r.pre_coverage,
-                }
-            )
-        return pl.DataFrame(rows)
-
-    def to_frame(self) -> pl.DataFrame:
-        """Return pointwise results as a DataFrame.
-
-        Columns: id_col, step, observed, counterfactual, counterfactual_lower,
-        counterfactual_upper, point_effect, point_effect_lower,
-        point_effect_upper, cumulative_effect, cumulative_effect_lower,
-        cumulative_effect_upper.
-
-        """
-        if not self.is_fitted_:
-            raise RuntimeError("Call fit() before to_frame().")
-
-        all_rows: list[dict[str, Any]] = []
-        for gid, state in self._states.items():
-            r = state.result
-            assert r is not None
-            for t in range(state.post_len):
-                all_rows.append(
-                    {
-                        self.id_col: gid,
-                        "step": t + 1,
-                        "observed": float(r.observed_post[t]),
-                        "counterfactual": float(r.counterfactual[t]),
-                        "counterfactual_lower": float(r.counterfactual_lower[t]),
-                        "counterfactual_upper": float(r.counterfactual_upper[t]),
-                        "point_effect": float(r.point_effect[t]),
-                        "point_effect_lower": float(r.point_effect_lower[t]),
-                        "point_effect_upper": float(r.point_effect_upper[t]),
-                        "cumulative_effect": float(r.cumulative_effect[t]),
-                        "cumulative_effect_lower": float(r.cumulative_effect_lower[t]),
-                        "cumulative_effect_upper": float(r.cumulative_effect_upper[t]),
-                    }
-                )
-        return pl.DataFrame(all_rows)
-
-    def placebo_test(
-        self,
-        df: pl.DataFrame,
-        placebo_date: date | datetime,
-    ) -> pl.DataFrame:
-        """Run a placebo test at a date before the actual intervention.
-
-        Fits the model pretending ``placebo_date`` is the intervention,
-        using only data from the pre-intervention period (data after
-        the real intervention is excluded to avoid contamination).
-        If the model is well-specified, the estimated effect should
-        be near zero.
-
-        Parameters
-        ----------
-        df
-            Same panel DataFrame used in ``fit()``.
-        placebo_date
-            A date strictly before the actual intervention.
-
-        Returns
-        -------
-        pl.DataFrame
-            Summary with columns: id_col, total_effect, total_effect_lower,
-            total_effect_upper, relative_effect.
-
-        """
-        if not self.is_fitted_ or self._intervention_date is None:
-            raise RuntimeError("Call fit() before placebo_test().")
-
-        # Filter out post-intervention data to avoid contamination
-        pre_only = df.filter(pl.col(self.time_col) < self._intervention_date)
-
-        placebo = CausalImpact(
-            trend=self.trend,
-            seasonal=self.seasonal,
-            sigma_obs=self.sigma_obs,
-            sigma_level=self.sigma_level,
-            sigma_trend=self.sigma_trend,
-            sigma_seasonal=self.sigma_seasonal,
-            coverage=self.coverage,
-            covariates=self.covariates if self.covariates else None,
-            covariate_role=self.covariate_role,
-            id_col=self.id_col,
-            time_col=self.time_col,
-            target_col=self.target_col,
-        )
-        placebo.fit(pre_only, intervention_date=placebo_date)
-        return placebo.summary()
 
 
 def causal_impact(
