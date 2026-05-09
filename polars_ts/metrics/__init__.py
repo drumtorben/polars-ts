@@ -1,3 +1,6 @@
+# NOTE: This module intentionally uses eager imports (not make_getattr) because
+# the @pl.api.register_dataframe_namespace("pts") decorator must execute at
+# import time to register the Polars DataFrame namespace.
 from collections.abc import Generator
 from dataclasses import dataclass
 

@@ -248,6 +248,18 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "ModelRegistry": ("polars_ts.registry", "ModelRegistry"),
     "Experiment": ("polars_ts.registry", "Experiment"),
     "Run": ("polars_ts.registry", "Run"),
+    # --- Bayesian ---
+    "KalmanFilter": ("polars_ts.bayesian", "KalmanFilter"),
+    "kalman_filter": ("polars_ts.bayesian", "kalman_filter"),
+    "UnscentedKalmanFilter": ("polars_ts.bayesian", "UnscentedKalmanFilter"),
+    "EnsembleKalmanFilter": ("polars_ts.bayesian", "EnsembleKalmanFilter"),
+    "BSTS": ("polars_ts.bayesian", "BSTS"),
+    "bsts_fit": ("polars_ts.bayesian", "bsts_fit"),
+    "bsts_forecast": ("polars_ts.bayesian", "bsts_forecast"),
+    "GaussianProcessTS": ("polars_ts.bayesian", "GaussianProcessTS"),
+    "gp_forecast": ("polars_ts.bayesian", "gp_forecast"),
+    "MCMCForecaster": ("polars_ts.bayesian", "MCMCForecaster"),
+    "mcmc_forecast": ("polars_ts.bayesian", "mcmc_forecast"),
 }
 
 
@@ -258,22 +270,6 @@ def __getattr__(name: str) -> Any:
         mod_path, attr = _LAZY_IMPORTS[name]
         mod = importlib.import_module(mod_path)
         return getattr(mod, attr)
-    if name in {
-        "KalmanFilter",
-        "kalman_filter",
-        "UnscentedKalmanFilter",
-        "EnsembleKalmanFilter",
-        "BSTS",
-        "bsts_fit",
-        "bsts_forecast",
-        "GaussianProcessTS",
-        "gp_forecast",
-        "MCMCForecaster",
-        "mcmc_forecast",
-    }:
-        from polars_ts import bayesian as _bayes
-
-        return getattr(_bayes, name)
     raise AttributeError(f"module 'polars_ts' has no attribute {name!r}")
 
 
