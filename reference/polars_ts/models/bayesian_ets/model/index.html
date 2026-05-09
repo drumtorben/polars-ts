@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../baselines/">
+        <link rel="prev" href="../inference/">
       
       
-        <link rel="next" href="../exponential_smoothing/">
+        <link rel="next" href="../priors/">
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
-        <title>Bayesian ets - Polars Time Series Extension</title>
+        <title>Model - Polars Time Series Extension</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#polars_ts.models.bayesian_ets" class="md-skip">
+        <a href="#polars_ts.models.bayesian_ets.model" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../../../.." title="Polars Time Series Extension" class="md-header__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bayesian ets
+              Model
             
           </span>
         </div>
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../../../.." class="md-tabs__link">
         
   
   
@@ -246,7 +246,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../distance-metrics/" class="md-tabs__link">
+        <a href="../../../../../distance-metrics/" class="md-tabs__link">
           
   
   
@@ -277,7 +277,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../__init__/" class="md-tabs__link">
+        <a href="../../../__init__/" class="md-tabs__link">
           
   
   
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../contributing/" class="md-tabs__link">
+      <a href="../../../../../contributing/" class="md-tabs__link">
         
   
   
@@ -339,7 +339,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
+    <a href="../../../../.." title="Polars Time Series Extension" class="md-nav__button md-logo" aria-label="Polars Time Series Extension" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -369,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   
@@ -434,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../distance-metrics/" class="md-nav__link">
+      <a href="../../../../../distance-metrics/" class="md-nav__link">
         
   
   
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../clustering-guide/" class="md-nav__link">
+      <a href="../../../../../clustering-guide/" class="md-nav__link">
         
   
   
@@ -480,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../forecasting-guide/" class="md-nav__link">
+      <a href="../../../../../forecasting-guide/" class="md-nav__link">
         
   
   
@@ -503,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../deep-learning-guide/" class="md-nav__link">
+      <a href="../../../../../deep-learning-guide/" class="md-nav__link">
         
   
   
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../bayesian-guide/" class="md-nav__link">
+      <a href="../../../../../bayesian-guide/" class="md-nav__link">
         
   
   
@@ -549,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../causal-guide/" class="md-nav__link">
+      <a href="../../../../../causal-guide/" class="md-nav__link">
         
   
   
@@ -572,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../agents-guide/" class="md-nav__link">
+      <a href="../../../../../agents-guide/" class="md-nav__link">
         
   
   
@@ -595,7 +595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../imaging-guide/" class="md-nav__link">
+      <a href="../../../../../imaging-guide/" class="md-nav__link">
         
   
   
@@ -618,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../changepoint-guide/" class="md-nav__link">
+      <a href="../../../../../changepoint-guide/" class="md-nav__link">
         
   
   
@@ -641,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../preprocessing-guide/" class="md-nav__link">
+      <a href="../../../../../preprocessing-guide/" class="md-nav__link">
         
   
   
@@ -777,7 +777,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../__init__/" class="md-nav__link ">
+            <a href="../../../__init__/" class="md-nav__link ">
               
   
   
@@ -810,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../_distance_dispatch/" class="md-nav__link">
+      <a href="../../../_distance_dispatch/" class="md-nav__link">
         
   
   
@@ -833,7 +833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../_lazy/" class="md-nav__link">
+      <a href="../../../_lazy/" class="md-nav__link">
         
   
   
@@ -856,7 +856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../anomaly_forest/" class="md-nav__link">
+      <a href="../../../anomaly_forest/" class="md-nav__link">
         
   
   
@@ -879,7 +879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bias/" class="md-nav__link">
+      <a href="../../../bias/" class="md-nav__link">
         
   
   
@@ -902,7 +902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../calibration/" class="md-nav__link">
+      <a href="../../../calibration/" class="md-nav__link">
         
   
   
@@ -925,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagnostics/" class="md-nav__link">
+      <a href="../../../diagnostics/" class="md-nav__link">
         
   
   
@@ -948,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distance/" class="md-nav__link">
+      <a href="../../../distance/" class="md-nav__link">
         
   
   
@@ -971,7 +971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../global_model/" class="md-nav__link">
+      <a href="../../../global_model/" class="md-nav__link">
         
   
   
@@ -994,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../importance/" class="md-nav__link">
+      <a href="../../../importance/" class="md-nav__link">
         
   
   
@@ -1017,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imputation/" class="md-nav__link">
+      <a href="../../../imputation/" class="md-nav__link">
         
   
   
@@ -1040,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../outliers/" class="md-nav__link">
+      <a href="../../../outliers/" class="md-nav__link">
         
   
   
@@ -1063,7 +1063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pipeline/" class="md-nav__link">
+      <a href="../../../pipeline/" class="md-nav__link">
         
   
   
@@ -1086,7 +1086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reconciliation/" class="md-nav__link">
+      <a href="../../../reconciliation/" class="md-nav__link">
         
   
   
@@ -1109,7 +1109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resampling/" class="md-nav__link">
+      <a href="../../../resampling/" class="md-nav__link">
         
   
   
@@ -1132,7 +1132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../var_model/" class="md-nav__link">
+      <a href="../../../var_model/" class="md-nav__link">
         
   
   
@@ -1155,7 +1155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../volatility/" class="md-nav__link">
+      <a href="../../../volatility/" class="md-nav__link">
         
   
   
@@ -1195,7 +1195,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../adapters/__init__/" class="md-nav__link ">
+            <a href="../../../adapters/__init__/" class="md-nav__link ">
               
   
   
@@ -1228,7 +1228,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/embeddings/" class="md-nav__link">
+      <a href="../../../adapters/embeddings/" class="md-nav__link">
         
   
   
@@ -1251,7 +1251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/foundation_forecast/" class="md-nav__link">
+      <a href="../../../adapters/foundation_forecast/" class="md-nav__link">
         
   
   
@@ -1274,7 +1274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/huggingface/" class="md-nav__link">
+      <a href="../../../adapters/huggingface/" class="md-nav__link">
         
   
   
@@ -1297,7 +1297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/llm_forecast/" class="md-nav__link">
+      <a href="../../../adapters/llm_forecast/" class="md-nav__link">
         
   
   
@@ -1320,7 +1320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/neuralforecast/" class="md-nav__link">
+      <a href="../../../adapters/neuralforecast/" class="md-nav__link">
         
   
   
@@ -1343,7 +1343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/pytorch_forecasting/" class="md-nav__link">
+      <a href="../../../adapters/pytorch_forecasting/" class="md-nav__link">
         
   
   
@@ -1366,7 +1366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adapters/rl_env/" class="md-nav__link">
+      <a href="../../../adapters/rl_env/" class="md-nav__link">
         
   
   
@@ -1414,7 +1414,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../agents/__init__/" class="md-nav__link ">
+            <a href="../../../agents/__init__/" class="md-nav__link ">
               
   
   
@@ -1447,7 +1447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/_protocol/" class="md-nav__link">
+      <a href="../../../agents/_protocol/" class="md-nav__link">
         
   
   
@@ -1470,7 +1470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/curator/" class="md-nav__link">
+      <a href="../../../agents/curator/" class="md-nav__link">
         
   
   
@@ -1493,7 +1493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/forecaster/" class="md-nav__link">
+      <a href="../../../agents/forecaster/" class="md-nav__link">
         
   
   
@@ -1516,7 +1516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/planner/" class="md-nav__link">
+      <a href="../../../agents/planner/" class="md-nav__link">
         
   
   
@@ -1539,7 +1539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/reporter/" class="md-nav__link">
+      <a href="../../../agents/reporter/" class="md-nav__link">
         
   
   
@@ -1562,7 +1562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../agents/scientist/" class="md-nav__link">
+      <a href="../../../agents/scientist/" class="md-nav__link">
         
   
   
@@ -1610,7 +1610,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../anomaly_agents/__init__/" class="md-nav__link ">
+            <a href="../../../anomaly_agents/__init__/" class="md-nav__link ">
               
   
   
@@ -1643,7 +1643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../anomaly_agents/agents/" class="md-nav__link">
+      <a href="../../../anomaly_agents/agents/" class="md-nav__link">
         
   
   
@@ -1666,7 +1666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../anomaly_agents/env/" class="md-nav__link">
+      <a href="../../../anomaly_agents/env/" class="md-nav__link">
         
   
   
@@ -1689,7 +1689,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../anomaly_agents/orchestrator/" class="md-nav__link">
+      <a href="../../../anomaly_agents/orchestrator/" class="md-nav__link">
         
   
   
@@ -1737,7 +1737,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../backtesting/__init__/" class="md-nav__link ">
+            <a href="../../../backtesting/__init__/" class="md-nav__link ">
               
   
   
@@ -1770,7 +1770,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../backtesting/backtest/" class="md-nav__link">
+      <a href="../../../backtesting/backtest/" class="md-nav__link">
         
   
   
@@ -1818,7 +1818,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian/__init__/" class="md-nav__link ">
+            <a href="../../../bayesian/__init__/" class="md-nav__link ">
               
   
   
@@ -1851,7 +1851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/anomaly/" class="md-nav__link">
+      <a href="../../../bayesian/anomaly/" class="md-nav__link">
         
   
   
@@ -1874,7 +1874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/bsts/" class="md-nav__link">
+      <a href="../../../bayesian/bsts/" class="md-nav__link">
         
   
   
@@ -1897,7 +1897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/enkf/" class="md-nav__link">
+      <a href="../../../bayesian/enkf/" class="md-nav__link">
         
   
   
@@ -1920,7 +1920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/gp/" class="md-nav__link">
+      <a href="../../../bayesian/gp/" class="md-nav__link">
         
   
   
@@ -1943,7 +1943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/kalman/" class="md-nav__link">
+      <a href="../../../bayesian/kalman/" class="md-nav__link">
         
   
   
@@ -1966,7 +1966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/mcmc/" class="md-nav__link">
+      <a href="../../../bayesian/mcmc/" class="md-nav__link">
         
   
   
@@ -1989,7 +1989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/particle_filter/" class="md-nav__link">
+      <a href="../../../bayesian/particle_filter/" class="md-nav__link">
         
   
   
@@ -2012,7 +2012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian/ukf/" class="md-nav__link">
+      <a href="../../../bayesian/ukf/" class="md-nav__link">
         
   
   
@@ -2060,7 +2060,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bayesian_var/__init__/" class="md-nav__link ">
+            <a href="../../../bayesian_var/__init__/" class="md-nav__link ">
               
   
   
@@ -2093,7 +2093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian_var/inference/" class="md-nav__link">
+      <a href="../../../bayesian_var/inference/" class="md-nav__link">
         
   
   
@@ -2116,7 +2116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian_var/model/" class="md-nav__link">
+      <a href="../../../bayesian_var/model/" class="md-nav__link">
         
   
   
@@ -2139,7 +2139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian_var/priors/" class="md-nav__link">
+      <a href="../../../bayesian_var/priors/" class="md-nav__link">
         
   
   
@@ -2162,7 +2162,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bayesian_var/results/" class="md-nav__link">
+      <a href="../../../bayesian_var/results/" class="md-nav__link">
         
   
   
@@ -2210,7 +2210,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../causal/__init__/" class="md-nav__link ">
+            <a href="../../../causal/__init__/" class="md-nav__link ">
               
   
   
@@ -2243,7 +2243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../causal/causal_impact/" class="md-nav__link">
+      <a href="../../../causal/causal_impact/" class="md-nav__link">
         
   
   
@@ -2266,7 +2266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../causal/causal_impact_reporting/" class="md-nav__link">
+      <a href="../../../causal/causal_impact_reporting/" class="md-nav__link">
         
   
   
@@ -2289,7 +2289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../causal/causal_impact_results/" class="md-nav__link">
+      <a href="../../../causal/causal_impact_results/" class="md-nav__link">
         
   
   
@@ -2312,7 +2312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../causal/synthetic_control/" class="md-nav__link">
+      <a href="../../../causal/synthetic_control/" class="md-nav__link">
         
   
   
@@ -2360,7 +2360,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../changepoint/__init__/" class="md-nav__link ">
+            <a href="../../../changepoint/__init__/" class="md-nav__link ">
               
   
   
@@ -2393,7 +2393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/bocpd/" class="md-nav__link">
+      <a href="../../../changepoint/bocpd/" class="md-nav__link">
         
   
   
@@ -2416,7 +2416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/cusum/" class="md-nav__link">
+      <a href="../../../changepoint/cusum/" class="md-nav__link">
         
   
   
@@ -2439,7 +2439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/pelt/" class="md-nav__link">
+      <a href="../../../changepoint/pelt/" class="md-nav__link">
         
   
   
@@ -2462,7 +2462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changepoint/regime/" class="md-nav__link">
+      <a href="../../../changepoint/regime/" class="md-nav__link">
         
   
   
@@ -2510,7 +2510,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../classification/__init__/" class="md-nav__link ">
+            <a href="../../../classification/__init__/" class="md-nav__link ">
               
   
   
@@ -2543,7 +2543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/_dl_utils/" class="md-nav__link">
+      <a href="../../../classification/_dl_utils/" class="md-nav__link">
         
   
   
@@ -2566,7 +2566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/inception_time/" class="md-nav__link">
+      <a href="../../../classification/inception_time/" class="md-nav__link">
         
   
   
@@ -2589,7 +2589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/knn/" class="md-nav__link">
+      <a href="../../../classification/knn/" class="md-nav__link">
         
   
   
@@ -2612,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/kshape_classifier/" class="md-nav__link">
+      <a href="../../../classification/kshape_classifier/" class="md-nav__link">
         
   
   
@@ -2635,7 +2635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/resnet_classifier/" class="md-nav__link">
+      <a href="../../../classification/resnet_classifier/" class="md-nav__link">
         
   
   
@@ -2658,7 +2658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classification/rocket_classifier/" class="md-nav__link">
+      <a href="../../../classification/rocket_classifier/" class="md-nav__link">
         
   
   
@@ -2706,7 +2706,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../clustering/__init__/" class="md-nav__link ">
+            <a href="../../../clustering/__init__/" class="md-nav__link ">
               
   
   
@@ -2739,7 +2739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/_augmentation/" class="md-nav__link">
+      <a href="../../../clustering/_augmentation/" class="md-nav__link">
         
   
   
@@ -2762,7 +2762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/_autoencoder/" class="md-nav__link">
+      <a href="../../../clustering/_autoencoder/" class="md-nav__link">
         
   
   
@@ -2785,7 +2785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/_contrastive_loss/" class="md-nav__link">
+      <a href="../../../clustering/_contrastive_loss/" class="md-nav__link">
         
   
   
@@ -2808,7 +2808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/auto/" class="md-nav__link">
+      <a href="../../../clustering/auto/" class="md-nav__link">
         
   
   
@@ -2831,7 +2831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/contrastive/" class="md-nav__link">
+      <a href="../../../clustering/contrastive/" class="md-nav__link">
         
   
   
@@ -2854,7 +2854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/dba/" class="md-nav__link">
+      <a href="../../../clustering/dba/" class="md-nav__link">
         
   
   
@@ -2877,7 +2877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/deep_cluster/" class="md-nav__link">
+      <a href="../../../clustering/deep_cluster/" class="md-nav__link">
         
   
   
@@ -2900,7 +2900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/density/" class="md-nav__link">
+      <a href="../../../clustering/density/" class="md-nav__link">
         
   
   
@@ -2923,7 +2923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/evaluation/" class="md-nav__link">
+      <a href="../../../clustering/evaluation/" class="md-nav__link">
         
   
   
@@ -2946,7 +2946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/hierarchical/" class="md-nav__link">
+      <a href="../../../clustering/hierarchical/" class="md-nav__link">
         
   
   
@@ -2969,7 +2969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kasba/" class="md-nav__link">
+      <a href="../../../clustering/kasba/" class="md-nav__link">
         
   
   
@@ -2992,7 +2992,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmeans/" class="md-nav__link">
+      <a href="../../../clustering/kmeans/" class="md-nav__link">
         
   
   
@@ -3015,7 +3015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kmedoids/" class="md-nav__link">
+      <a href="../../../clustering/kmedoids/" class="md-nav__link">
         
   
   
@@ -3038,7 +3038,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/kshape/" class="md-nav__link">
+      <a href="../../../clustering/kshape/" class="md-nav__link">
         
   
   
@@ -3061,7 +3061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/scalable/" class="md-nav__link">
+      <a href="../../../clustering/scalable/" class="md-nav__link">
         
   
   
@@ -3084,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/shapelets/" class="md-nav__link">
+      <a href="../../../clustering/shapelets/" class="md-nav__link">
         
   
   
@@ -3107,7 +3107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../clustering/spectral/" class="md-nav__link">
+      <a href="../../../clustering/spectral/" class="md-nav__link">
         
   
   
@@ -3155,7 +3155,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../decomposition/__init__/" class="md-nav__link ">
+            <a href="../../../decomposition/__init__/" class="md-nav__link ">
               
   
   
@@ -3188,7 +3188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/fourier_decomposition/" class="md-nav__link">
+      <a href="../../../decomposition/fourier_decomposition/" class="md-nav__link">
         
   
   
@@ -3211,7 +3211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decompose_features/" class="md-nav__link">
+      <a href="../../../decomposition/seasonal_decompose_features/" class="md-nav__link">
         
   
   
@@ -3234,7 +3234,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../decomposition/seasonal_decomposition/" class="md-nav__link">
+      <a href="../../../decomposition/seasonal_decomposition/" class="md-nav__link">
         
   
   
@@ -3282,7 +3282,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../dl/__init__/" class="md-nav__link ">
+            <a href="../../../dl/__init__/" class="md-nav__link ">
               
   
   
@@ -3315,7 +3315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dl/_training/" class="md-nav__link">
+      <a href="../../../dl/_training/" class="md-nav__link">
         
   
   
@@ -3338,7 +3338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dl/multivariate/" class="md-nav__link">
+      <a href="../../../dl/multivariate/" class="md-nav__link">
         
   
   
@@ -3361,7 +3361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dl/nbeats/" class="md-nav__link">
+      <a href="../../../dl/nbeats/" class="md-nav__link">
         
   
   
@@ -3384,7 +3384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dl/patchtst/" class="md-nav__link">
+      <a href="../../../dl/patchtst/" class="md-nav__link">
         
   
   
@@ -3432,7 +3432,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ensemble/__init__/" class="md-nav__link ">
+            <a href="../../../ensemble/__init__/" class="md-nav__link ">
               
   
   
@@ -3465,7 +3465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ensemble/stacking/" class="md-nav__link">
+      <a href="../../../ensemble/stacking/" class="md-nav__link">
         
   
   
@@ -3488,7 +3488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ensemble/weighted/" class="md-nav__link">
+      <a href="../../../ensemble/weighted/" class="md-nav__link">
         
   
   
@@ -3536,7 +3536,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../features/__init__/" class="md-nav__link ">
+            <a href="../../../features/__init__/" class="md-nav__link ">
               
   
   
@@ -3569,7 +3569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/advanced/" class="md-nav__link">
+      <a href="../../../features/advanced/" class="md-nav__link">
         
   
   
@@ -3592,7 +3592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/calendar/" class="md-nav__link">
+      <a href="../../../features/calendar/" class="md-nav__link">
         
   
   
@@ -3615,7 +3615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/fourier/" class="md-nav__link">
+      <a href="../../../features/fourier/" class="md-nav__link">
         
   
   
@@ -3638,7 +3638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/lags/" class="md-nav__link">
+      <a href="../../../features/lags/" class="md-nav__link">
         
   
   
@@ -3661,7 +3661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/rocket/" class="md-nav__link">
+      <a href="../../../features/rocket/" class="md-nav__link">
         
   
   
@@ -3684,7 +3684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../features/rolling/" class="md-nav__link">
+      <a href="../../../features/rolling/" class="md-nav__link">
         
   
   
@@ -3732,7 +3732,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../imaging/__init__/" class="md-nav__link ">
+            <a href="../../../imaging/__init__/" class="md-nav__link ">
               
   
   
@@ -3765,7 +3765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/_utils/" class="md-nav__link">
+      <a href="../../../imaging/_utils/" class="md-nav__link">
         
   
   
@@ -3788,7 +3788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/angular/" class="md-nav__link">
+      <a href="../../../imaging/angular/" class="md-nav__link">
         
   
   
@@ -3811,7 +3811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/embeddings/" class="md-nav__link">
+      <a href="../../../imaging/embeddings/" class="md-nav__link">
         
   
   
@@ -3834,7 +3834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/recurrence/" class="md-nav__link">
+      <a href="../../../imaging/recurrence/" class="md-nav__link">
         
   
   
@@ -3857,7 +3857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/signature/" class="md-nav__link">
+      <a href="../../../imaging/signature/" class="md-nav__link">
         
   
   
@@ -3880,7 +3880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/spectral/" class="md-nav__link">
+      <a href="../../../imaging/spectral/" class="md-nav__link">
         
   
   
@@ -3903,7 +3903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../imaging/transition/" class="md-nav__link">
+      <a href="../../../imaging/transition/" class="md-nav__link">
         
   
   
@@ -3951,7 +3951,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../marl/__init__/" class="md-nav__link ">
+            <a href="../../../marl/__init__/" class="md-nav__link ">
               
   
   
@@ -3984,7 +3984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../marl/agents/" class="md-nav__link">
+      <a href="../../../marl/agents/" class="md-nav__link">
         
   
   
@@ -4007,7 +4007,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../marl/env/" class="md-nav__link">
+      <a href="../../../marl/env/" class="md-nav__link">
         
   
   
@@ -4030,7 +4030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../marl/orchestrator/" class="md-nav__link">
+      <a href="../../../marl/orchestrator/" class="md-nav__link">
         
   
   
@@ -4078,7 +4078,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../metrics/__init__/" class="md-nav__link ">
+            <a href="../../../metrics/__init__/" class="md-nav__link ">
               
   
   
@@ -4111,7 +4111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../metrics/forecast/" class="md-nav__link">
+      <a href="../../../metrics/forecast/" class="md-nav__link">
         
   
   
@@ -4134,7 +4134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../metrics/kaboudan/" class="md-nav__link">
+      <a href="../../../metrics/kaboudan/" class="md-nav__link">
         
   
   
@@ -4182,7 +4182,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../__init__/" class="md-nav__link ">
+            <a href="../../__init__/" class="md-nav__link ">
               
   
   
@@ -4215,7 +4215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../_time_utils/" class="md-nav__link">
+      <a href="../../_time_utils/" class="md-nav__link">
         
   
   
@@ -4238,7 +4238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arima/" class="md-nav__link">
+      <a href="../../arima/" class="md-nav__link">
         
   
   
@@ -4261,12 +4261,154 @@
   
   
     <li class="md-nav__item">
-      <a href="../baselines/" class="md-nav__link">
+      <a href="../../baselines/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Baselines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exponential_smoothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exponential smoothing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multistep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multistep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Scum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_34_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../__init__/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Bayesian ets
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_1_1_34_7" id="__nav_3_1_1_34_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_34_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1_1_34_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bayesian ets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inference
     
   </span>
   
@@ -4296,7 +4438,7 @@
   
   
   <span class="md-ellipsis">
-    Bayesian ets
+    Model
     
   </span>
   
@@ -4309,7 +4451,7 @@
   
   
   <span class="md-ellipsis">
-    Bayesian ets
+    Model
     
   </span>
   
@@ -4330,74 +4472,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;bayesian_ets
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;model
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" bayesian_ets">
+    <nav class="md-nav" aria-label=" model">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets--references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.ETSPriors" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ETSPriors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" ETSPriors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.ETSPriors--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETSResult" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETSResult" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianETSResult
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" BayesianETSResult">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETSResult--attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Attributes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianETS
     </span>
@@ -4407,78 +4501,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS.fit" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" fit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS.predict" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" predict">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -4487,125 +4524,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._ses_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_ses_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._holt_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_holt_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._hw_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_hw_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._log_prior_smoothing" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_log_prior_smoothing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._pack_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pack_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._unpack_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_unpack_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._log_posterior" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_log_posterior
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._map_estimate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_map_estimate
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._mcmc_sample" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_mcmc_sample
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._forecast_from_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_forecast_from_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.bayesian_ets" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bayesian_ets
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label=" bayesian_ets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -4630,12 +4553,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../exponential_smoothing/" class="md-nav__link">
+      <a href="../priors/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Exponential smoothing
+    Priors
     
   </span>
   
@@ -4646,47 +4569,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../multistep/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Multistep
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../scum/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Scum
-    
-  </span>
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -4724,7 +4609,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../probabilistic/__init__/" class="md-nav__link ">
+            <a href="../../../probabilistic/__init__/" class="md-nav__link ">
               
   
   
@@ -4757,7 +4642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../probabilistic/conformal/" class="md-nav__link">
+      <a href="../../../probabilistic/conformal/" class="md-nav__link">
         
   
   
@@ -4780,7 +4665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../probabilistic/quantile_regression/" class="md-nav__link">
+      <a href="../../../probabilistic/quantile_regression/" class="md-nav__link">
         
   
   
@@ -4828,7 +4713,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../registry/__init__/" class="md-nav__link ">
+            <a href="../../../registry/__init__/" class="md-nav__link ">
               
   
   
@@ -4861,7 +4746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../registry/experiment/" class="md-nav__link">
+      <a href="../../../registry/experiment/" class="md-nav__link">
         
   
   
@@ -4884,7 +4769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../registry/registry/" class="md-nav__link">
+      <a href="../../../registry/registry/" class="md-nav__link">
         
   
   
@@ -4932,7 +4817,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../streaming/__init__/" class="md-nav__link ">
+            <a href="../../../streaming/__init__/" class="md-nav__link ">
               
   
   
@@ -4965,7 +4850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../streaming/ets/" class="md-nav__link">
+      <a href="../../../streaming/ets/" class="md-nav__link">
         
   
   
@@ -4988,7 +4873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../streaming/global_model/" class="md-nav__link">
+      <a href="../../../streaming/global_model/" class="md-nav__link">
         
   
   
@@ -5011,7 +4896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../streaming/kalman/" class="md-nav__link">
+      <a href="../../../streaming/kalman/" class="md-nav__link">
         
   
   
@@ -5034,7 +4919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../streaming/window/" class="md-nav__link">
+      <a href="../../../streaming/window/" class="md-nav__link">
         
   
   
@@ -5082,7 +4967,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../transforms/__init__/" class="md-nav__link ">
+            <a href="../../../transforms/__init__/" class="md-nav__link ">
               
   
   
@@ -5115,7 +5000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/_inverse/" class="md-nav__link">
+      <a href="../../../transforms/_inverse/" class="md-nav__link">
         
   
   
@@ -5138,7 +5023,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/boxcox/" class="md-nav__link">
+      <a href="../../../transforms/boxcox/" class="md-nav__link">
         
   
   
@@ -5161,7 +5046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/differencing/" class="md-nav__link">
+      <a href="../../../transforms/differencing/" class="md-nav__link">
         
   
   
@@ -5184,7 +5069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../transforms/log/" class="md-nav__link">
+      <a href="../../../transforms/log/" class="md-nav__link">
         
   
   
@@ -5232,7 +5117,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../validation/__init__/" class="md-nav__link ">
+            <a href="../../../validation/__init__/" class="md-nav__link ">
               
   
   
@@ -5265,7 +5150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../validation/splits/" class="md-nav__link">
+      <a href="../../../validation/splits/" class="md-nav__link">
         
   
   
@@ -5355,7 +5240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/ddtw/" class="md-nav__link">
+      <a href="../../../../rust/ddtw/" class="md-nav__link">
         
   
   
@@ -5378,7 +5263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw/" class="md-nav__link">
+      <a href="../../../../rust/dtw/" class="md-nav__link">
         
   
   
@@ -5401,7 +5286,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/dtw_multi/" class="md-nav__link">
+      <a href="../../../../rust/dtw_multi/" class="md-nav__link">
         
   
   
@@ -5424,7 +5309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/edr/" class="md-nav__link">
+      <a href="../../../../rust/edr/" class="md-nav__link">
         
   
   
@@ -5447,7 +5332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/erp/" class="md-nav__link">
+      <a href="../../../../rust/erp/" class="md-nav__link">
         
   
   
@@ -5470,7 +5355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/ets/" class="md-nav__link">
+      <a href="../../../../rust/ets/" class="md-nav__link">
         
   
   
@@ -5493,7 +5378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/frechet/" class="md-nav__link">
+      <a href="../../../../rust/frechet/" class="md-nav__link">
         
   
   
@@ -5516,7 +5401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/kasba_py/" class="md-nav__link">
+      <a href="../../../../rust/kasba_py/" class="md-nav__link">
         
   
   
@@ -5539,7 +5424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/kmedoids/" class="md-nav__link">
+      <a href="../../../../rust/kmedoids/" class="md-nav__link">
         
   
   
@@ -5562,7 +5447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/lcss/" class="md-nav__link">
+      <a href="../../../../rust/lcss/" class="md-nav__link">
         
   
   
@@ -5585,7 +5470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/mann_kendall/" class="md-nav__link">
+      <a href="../../../../rust/mann_kendall/" class="md-nav__link">
         
   
   
@@ -5608,7 +5493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm/" class="md-nav__link">
+      <a href="../../../../rust/msm/" class="md-nav__link">
         
   
   
@@ -5631,7 +5516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/msm_multi/" class="md-nav__link">
+      <a href="../../../../rust/msm_multi/" class="md-nav__link">
         
   
   
@@ -5654,7 +5539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/pelt/" class="md-nav__link">
+      <a href="../../../../rust/pelt/" class="md-nav__link">
         
   
   
@@ -5677,7 +5562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/sbd/" class="md-nav__link">
+      <a href="../../../../rust/sbd/" class="md-nav__link">
         
   
   
@@ -5700,7 +5585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/sens_slope/" class="md-nav__link">
+      <a href="../../../../rust/sens_slope/" class="md-nav__link">
         
   
   
@@ -5723,7 +5608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/twe/" class="md-nav__link">
+      <a href="../../../../rust/twe/" class="md-nav__link">
         
   
   
@@ -5746,7 +5631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/utils/" class="md-nav__link">
+      <a href="../../../../rust/utils/" class="md-nav__link">
         
   
   
@@ -5769,7 +5654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../rust/wdtw/" class="md-nav__link">
+      <a href="../../../../rust/wdtw/" class="md-nav__link">
         
   
   
@@ -5807,7 +5692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/" class="md-nav__link">
+      <a href="../../../../../contributing/" class="md-nav__link">
         
   
   
@@ -5847,74 +5732,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model" class="md-nav__link">
     <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;bayesian_ets
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;model
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" bayesian_ets">
+    <nav class="md-nav" aria-label=" model">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets--references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.ETSPriors" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ETSPriors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=" ETSPriors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.ETSPriors--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETSResult" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETSResult" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianETSResult
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" BayesianETSResult">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETSResult--attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Attributes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;BayesianETS
     </span>
@@ -5924,78 +5761,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS.fit" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;fit
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" fit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.fit--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.BayesianETS.predict" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;predict
     </span>
   </a>
   
-    <nav class="md-nav" aria-label=" predict">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.BayesianETS.predict--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
       </ul>
@@ -6004,125 +5784,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._ses_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_ses_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._holt_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_holt_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._hw_loglik" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_hw_loglik
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._log_prior_smoothing" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_log_prior_smoothing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._pack_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_pack_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._unpack_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_unpack_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._log_posterior" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_log_posterior
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._map_estimate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_map_estimate
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._mcmc_sample" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_mcmc_sample
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets._forecast_from_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;_forecast_from_params
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets" class="md-nav__link">
+  <a href="#polars_ts.models.bayesian_ets.model.bayesian_ets" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;bayesian_ets
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label=" bayesian_ets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#polars_ts.models.bayesian_ets.bayesian_ets--returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Returns
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -6150,31 +5816,21 @@
   
 
 
-  <h1>Bayesian ets</h1>
+  <h1>Model</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<h2 id="polars_ts.models.bayesian_ets" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.bayesian_ets</code>
+<h2 id="polars_ts.models.bayesian_ets.model" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <code>polars_ts.models.bayesian_ets.model</code>
 
 
 </h2>
 
     <div class="doc doc-contents first">
 
-        <p>Bayesian Exponential Smoothing (Bayesian ETS).</p>
-<p>Places priors over smoothing parameters and initial states, producing
-posterior predictive distributions instead of point forecasts.</p>
-<p>Supports SES, Holt, and Holt-Winters (additive/multiplicative) with
-MAP estimation via L-BFGS-B or full posterior via Metropolis-Hastings MCMC.</p>
-<h4 id="polars_ts.models.bayesian_ets--references">References</h4>
-<ul>
-<li>Hyndman et al. (2008), <em>Forecasting with Exponential Smoothing</em></li>
-<li>Smyl (2020), <em>A hybrid method of exponential smoothing and recurrent
-  neural networks for time series forecasting</em></li>
-</ul>
+        <p>BayesianETS model class, result container, and convenience function.</p>
 
 
 
@@ -6199,71 +5855,7 @@ MAP estimation via L-BFGS-B or full posterior via Metropolis-Hastings MCMC.</p>
 
 
 
-<h3 id="polars_ts.models.bayesian_ets.ETSPriors" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>ETSPriors</code>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
-  </span>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-
-        <p>Prior distributions for ETS smoothing parameters and initial states.</p>
-<p>Smoothing parameters (alpha, beta, gamma) use Beta priors on (0, 1).
-Initial level/trend use Normal priors.</p>
-<h5 id="polars_ts.models.bayesian_ets.ETSPriors--parameters">Parameters</h5>
-<p>alpha_a, alpha_b
-    Beta prior shape parameters for <em>alpha</em>.
-beta_a, beta_b
-    Beta prior shape parameters for <em>beta</em> (Holt / Holt-Winters).
-gamma_a, gamma_b
-    Beta prior shape parameters for <em>gamma</em> (Holt-Winters).
-level_mu, level_sigma
-    Normal prior mean/std for initial level.
-trend_mu, trend_sigma
-    Normal prior mean/std for initial trend.
-sigma_shape, sigma_scale
-    Inverse-Gamma prior shape/scale for observation noise variance.</p>
-
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h3 id="polars_ts.models.bayesian_ets.BayesianETSResult" class="doc doc-heading">
+<h3 id="polars_ts.models.bayesian_ets.model.BayesianETSResult" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BayesianETSResult</code>
 
 
@@ -6278,12 +5870,6 @@ sigma_shape, sigma_scale
 
 
         <p>Fitted result from BayesianETS.</p>
-<h5 id="polars_ts.models.bayesian_ets.BayesianETSResult--attributes">Attributes</h5>
-<p>map_params
-    MAP parameter estimates (dict).
-posterior_samples
-    MCMC posterior samples, shape <code>(n_samples, n_params)</code>.
-    <code>None</code> for MAP inference.</p>
 
 
 
@@ -6318,7 +5904,7 @@ posterior_samples
 
 
 
-<h3 id="polars_ts.models.bayesian_ets.BayesianETS" class="doc doc-heading">
+<h3 id="polars_ts.models.bayesian_ets.model.BayesianETS" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <code>BayesianETS</code>
 
 
@@ -6329,33 +5915,6 @@ posterior_samples
 
 
         <p>Bayesian Exponential Smoothing forecaster.</p>
-<p>Places priors over smoothing parameters and initial states, producing
-posterior predictive forecasts with credible intervals.</p>
-<h5 id="polars_ts.models.bayesian_ets.BayesianETS--parameters">Parameters</h5>
-<p>model
-    Model type: <code>"ses"</code>, <code>"holt"</code>, or <code>"holt_winters"</code>.
-inference
-    Inference method: <code>"map"</code> (fast) or <code>"mcmc"</code> (full posterior).
-season_length
-    Number of observations per season (required for <code>"holt_winters"</code>).
-seasonal
-    <code>"additive"</code> or <code>"multiplicative"</code> (Holt-Winters only).
-priors
-    Prior specification. Uses default <code>ETSPriors()</code> if not provided.
-coverage
-    Credible interval coverage level (e.g. 0.9 for 90%).
-n_samples
-    Number of MCMC samples to draw (after burn-in).
-burn_in
-    Number of MCMC burn-in samples to discard.
-seed
-    Random seed for MCMC.
-target_col
-    Column with target values.
-id_col
-    Column identifying each time series.
-time_col
-    Column with timestamps.</p>
 
 
 
@@ -6381,7 +5940,7 @@ time_col
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.models.bayesian_ets.BayesianETS.fit" class="doc doc-heading">
+<h4 id="polars_ts.models.bayesian_ets.model.BayesianETS.fit" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
 
 </h4>
@@ -6390,12 +5949,6 @@ time_col
     <div class="doc doc-contents ">
 
         <p>Fit the Bayesian ETS model.</p>
-<h6 id="polars_ts.models.bayesian_ets.BayesianETS.fit--parameters">Parameters</h6>
-<p>df
-    Input DataFrame with time series data.</p>
-<h6 id="polars_ts.models.bayesian_ets.BayesianETS.fit--returns">Returns</h6>
-<p>BayesianETS
-    Fitted instance (<code>self</code>).</p>
 
 
     </div>
@@ -6405,7 +5958,7 @@ time_col
 <div class="doc doc-object doc-function">
 
 
-<h4 id="polars_ts.models.bayesian_ets.BayesianETS.predict" class="doc doc-heading">
+<h4 id="polars_ts.models.bayesian_ets.model.BayesianETS.predict" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
 
 </h4>
@@ -6414,15 +5967,6 @@ time_col
     <div class="doc doc-contents ">
 
         <p>Generate h-step-ahead forecasts with credible intervals.</p>
-<h6 id="polars_ts.models.bayesian_ets.BayesianETS.predict--parameters">Parameters</h6>
-<p>df
-    DataFrame containing history to predict from.
-h
-    Forecast horizon.</p>
-<h6 id="polars_ts.models.bayesian_ets.BayesianETS.predict--returns">Returns</h6>
-<p>pl.DataFrame
-    DataFrame with columns <code>[id_col, time_col, "y_hat",
-    "y_hat_lower", "y_hat_upper"]</code>.</p>
 
 
     </div>
@@ -6441,188 +5985,7 @@ h
 <div class="doc doc-object doc-function">
 
 
-<h3 id="polars_ts.models.bayesian_ets._ses_loglik" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_ses_loglik</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Gaussian log-likelihood for SES state-space model.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._holt_loglik" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_holt_loglik</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">trend0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Gaussian log-likelihood for Holt's linear trend model.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._hw_loglik" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_hw_loglik</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">trend0</span><span class="p">,</span> <span class="n">seasons0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">additive</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Gaussian log-likelihood for Holt-Winters model.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._log_prior_smoothing" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_log_prior_smoothing</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Log-density of Beta(a, b) prior, clamped to valid domain.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._pack_params" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_pack_params</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">level0</span><span class="p">,</span> <span class="n">trend0</span><span class="p">,</span> <span class="n">seasons0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Pack parameters into a flat array for optimization.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._unpack_params" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_unpack_params</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Unpack flat parameter array into named parameters.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._log_posterior" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_log_posterior</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">additive</span><span class="p">,</span> <span class="n">priors</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Compute unnormalized log-posterior.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._map_estimate" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_map_estimate</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">additive</span><span class="p">,</span> <span class="n">priors</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Find MAP estimate via L-BFGS-B.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._mcmc_sample" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_mcmc_sample</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">additive</span><span class="p">,</span> <span class="n">priors</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">burn_in</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Draw posterior samples via Metropolis-Hastings.</p>
-<p>Returns array of shape <code>(n_samples, n_params)</code>.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets._forecast_from_params" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">_forecast_from_params</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">additive</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">sigma_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Run ETS forward to get h-step forecasts from fitted parameters.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="polars_ts.models.bayesian_ets.bayesian_ets" class="doc doc-heading">
+<h3 id="polars_ts.models.bayesian_ets.model.bayesian_ets" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bayesian_ets</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;ses&#39;</span><span class="p">,</span> <span class="n">inference</span><span class="o">=</span><span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="n">season_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">priors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">burn_in</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
 
 </h3>
@@ -6631,36 +5994,6 @@ h
     <div class="doc doc-contents ">
 
         <p>Bayesian ETS convenience function.</p>
-<p>Fits a Bayesian ETS model and returns posterior predictive forecasts
-with credible intervals in a single call.</p>
-<h5 id="polars_ts.models.bayesian_ets.bayesian_ets--parameters">Parameters</h5>
-<p>df
-    Input DataFrame.
-h
-    Forecast horizon.
-model
-    <code>"ses"</code>, <code>"holt"</code>, or <code>"holt_winters"</code>.
-inference
-    <code>"map"</code> or <code>"mcmc"</code>.
-season_length
-    Observations per season (Holt-Winters).
-seasonal
-    <code>"additive"</code> or <code>"multiplicative"</code>.
-priors
-    Prior specification.
-coverage
-    Credible interval coverage (default 0.9).
-n_samples
-    MCMC samples (after burn-in).
-burn_in
-    MCMC burn-in samples.
-seed
-    Random seed.
-target_col, id_col, time_col
-    Column names.</p>
-<h5 id="polars_ts.models.bayesian_ets.bayesian_ets--returns">Returns</h5>
-<p>pl.DataFrame
-    Forecasts with <code>y_hat</code>, <code>y_hat_lower</code>, <code>y_hat_upper</code>.</p>
 
 
     </div>
@@ -6730,10 +6063,10 @@ target_col, id_col, time_col
     
     
       
-      <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
     
   </body>
