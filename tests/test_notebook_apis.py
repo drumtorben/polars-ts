@@ -6,6 +6,7 @@ ensuring they don't crash after the refactoring. Tests are offline-friendly
 """
 
 import datetime
+import importlib.util
 
 import numpy as np
 import polars as pl
@@ -156,6 +157,159 @@ class TestNB05:
         df = pl.DataFrame({"y": [1.0, 2.0], "y_hat": [1.5, 2.5]})
         assert isinstance(mae(df, "y", "y_hat"), float)
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
+    def test_quantile_regressor(self, small_ts):
+        from sklearn.ensemble import GradientBoostingRegressor
+
+        from polars_ts import QuantileRegressor
+
+        qr = QuantileRegressor(
+            estimator_factory=lambda q: GradientBoostingRegressor(
+                loss="quantile", alpha=q, n_estimators=10, max_depth=2, random_state=42
+            ),
+            quantiles=[0.1, 0.5, 0.9],
+            lags=[1, 2],
+        )
+        qr.fit(small_ts)
+        preds = qr.predict(small_ts, h=3)
+        assert isinstance(preds, pl.DataFrame)
+        assert "q_0.5" in preds.columns
+
+    def test_conformal_interval(self, small_ts):
+        from polars_ts import conformal_interval, holt_winters_forecast
+
+        fc = holt_winters_forecast(small_ts, h=5, season_length=7)
+        # Build mock residuals
+        cal = small_ts.group_by("unique_id", maintain_order=True).map_groups(lambda g: g.tail(5))
+        cal_fc = holt_winters_forecast(
+            small_ts.group_by("unique_id", maintain_order=True).map_groups(lambda g: g.head(len(g) - 5)),
+            h=5,
+            season_length=7,
+        )
+        cal_merged = cal.join(cal_fc, on=["unique_id", "ds"], how="left")
+        cal_residuals = cal_merged.with_columns((pl.col("y") - pl.col("y_hat")).abs().alias("residual"))
+
+        conf = conformal_interval(cal_residuals, fc, coverage=0.9)
+        assert "y_hat_lower" in conf.columns
+        assert "y_hat_upper" in conf.columns
+
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
+    def test_enbpi(self, small_ts):
+        from sklearn.linear_model import Ridge
+
+        from polars_ts import EnbPI
+
+        enbpi = EnbPI(
+            estimator_factory=lambda: Ridge(alpha=1.0),
+            lags=[1, 2],
+            coverage=0.9,
+        )
+        enbpi.fit(small_ts)
+        preds = enbpi.predict(small_ts, h=3)
+        assert isinstance(preds, pl.DataFrame)
+
+    def test_crps(self):
+        from polars_ts import crps
+
+        df = pl.DataFrame(
+            {
+                "y": [10.0, 20.0, 30.0],
+                "q_0.1": [8.0, 18.0, 28.0],
+                "q_0.5": [10.0, 20.0, 30.0],
+                "q_0.9": [12.0, 22.0, 32.0],
+            }
+        )
+        result = crps(df, actual_col="y", quantile_cols=["q_0.1", "q_0.5", "q_0.9"], quantiles=[0.1, 0.5, 0.9])
+        assert isinstance(result, (float, pl.DataFrame))
+
+    def test_bias_detect_and_correct(self):
+        from polars_ts import bias_correct, bias_detect
+
+        df = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 10,
+                "y": [10.0] * 10,
+                "y_hat": [12.0] * 10,  # systematic over-prediction
+            }
+        )
+        bias = bias_detect(df, actual_col="y", predicted_col="y_hat")
+        assert isinstance(bias, pl.DataFrame)
+
+        corrected = bias_correct(df, actual_col="y", predicted_col="y_hat", method="mean")
+        assert isinstance(corrected, pl.DataFrame)
+
+
+# ---------------------------------------------------------------------------
+# NB 06: Changepoint & Anomaly Detection
+# ---------------------------------------------------------------------------
+
+
+class TestNB06:
+    @pytest.fixture
+    def changepoint_df(self):
+        rng = np.random.default_rng(42)
+        return pl.DataFrame(
+            {
+                "unique_id": ["S1"] * 100,
+                "ds": list(range(100)),
+                "y": np.concatenate([rng.normal(10, 1, 50), rng.normal(20, 1, 50)]).tolist(),
+            }
+        )
+
+    def test_cusum(self, changepoint_df):
+        from polars_ts import cusum
+
+        result = cusum(changepoint_df, normalize=True)
+        assert "cusum" in result.columns
+
+    def test_pelt(self, changepoint_df):
+        from polars_ts import pelt
+
+        result = pelt(changepoint_df, cost="mean", penalty=None, min_size=2)
+        assert isinstance(result, pl.DataFrame)
+        assert "ds" in result.columns
+
+    def test_bocpd(self, changepoint_df):
+        from polars_ts import bocpd
+
+        result = bocpd(changepoint_df, hazard_rate=50.0, threshold=0.5)
+        assert "is_changepoint" in result.columns
+        assert "changepoint_prob" in result.columns
+
+    def test_detect_outliers_zscore(self, changepoint_df):
+        from polars_ts import detect_outliers
+
+        result = detect_outliers(changepoint_df, method="zscore", threshold=3.0)
+        assert "is_outlier" in result.columns
+
+    def test_detect_outliers_iqr(self, changepoint_df):
+        from polars_ts import detect_outliers
+
+        result = detect_outliers(changepoint_df, method="iqr")
+        assert "is_outlier" in result.columns
+
+    def test_treat_outliers(self, changepoint_df):
+        from polars_ts import treat_outliers
+
+        clipped = treat_outliers(changepoint_df, method="zscore", replacement="clip")
+        assert isinstance(clipped, pl.DataFrame)
+        interp = treat_outliers(changepoint_df, method="zscore", replacement="interpolate")
+        assert isinstance(interp, pl.DataFrame)
+
+    def test_regime_detect(self, changepoint_df):
+        from polars_ts import regime_detect
+
+        result = regime_detect(changepoint_df, n_states=2, seed=42)
+        assert "regime" in result.columns
+
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
+    def test_isolation_forest(self, changepoint_df):
+        from polars_ts import isolation_forest_detect
+
+        result = isolation_forest_detect(changepoint_df, feature_cols=["y"], contamination=0.05)
+        assert "is_anomaly" in result.columns
+        assert "anomaly_score" in result.columns
+
 
 # ---------------------------------------------------------------------------
 # NB 07: Similarity & Clustering — CRITICAL: DataFrame labels
@@ -214,6 +368,7 @@ class TestNB07:
         score = silhouette_score(ts_df_no_time, kshape.labels_, method="sbd")
         assert isinstance(score, float)
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_hdbscan_cluster(self, ts_df_no_time):
         from polars_ts import hdbscan_cluster
 
@@ -221,6 +376,7 @@ class TestNB07:
         assert isinstance(clusters, pl.DataFrame)
         assert "cluster" in clusters.columns
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_dbscan_cluster(self, ts_df_no_time):
         from polars_ts import dbscan_cluster
 
@@ -228,6 +384,7 @@ class TestNB07:
         assert isinstance(clusters, pl.DataFrame)
         assert "cluster" in clusters.columns
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_spectral_cluster(self, ts_df_no_time):
         from polars_ts import spectral_cluster
 
@@ -235,6 +392,7 @@ class TestNB07:
         assert isinstance(clusters, pl.DataFrame)
         assert "cluster" in clusters.columns
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_auto_cluster(self, ts_df_no_time):
         from polars_ts import auto_cluster
 
@@ -248,6 +406,89 @@ class TestNB07:
         assert hasattr(result, "best_method")
         assert hasattr(result, "best_labels")
         assert isinstance(result.best_labels, pl.DataFrame)
+
+
+# ---------------------------------------------------------------------------
+# NB 08: Multivariate & Volatility
+# ---------------------------------------------------------------------------
+
+
+class TestNB08:
+    @pytest.fixture
+    def var_df(self):
+        rng = np.random.default_rng(42)
+        return pl.DataFrame(
+            {
+                "ds": list(range(100)),
+                "y1": rng.normal(0, 1, 100).tolist(),
+                "y2": rng.normal(0, 1, 100).tolist(),
+            }
+        )
+
+    @pytest.fixture
+    def long_df(self, var_df):
+        return pl.concat(
+            [
+                var_df.select(pl.lit("y1").alias("unique_id"), pl.col("ds"), pl.col("y1").alias("y")),
+                var_df.select(pl.lit("y2").alias("unique_id"), pl.col("ds"), pl.col("y2").alias("y")),
+            ]
+        )
+
+    def test_acf(self, long_df):
+        from polars_ts import acf
+
+        result = acf(long_df, max_lags=10)
+        assert "acf" in result.columns
+        assert "lag" in result.columns
+
+    def test_pacf(self, long_df):
+        from polars_ts import pacf
+
+        result = pacf(long_df, max_lags=10)
+        assert "pacf" in result.columns
+
+    def test_ljung_box(self, long_df):
+        from polars_ts import ljung_box
+
+        result = ljung_box(long_df, lags=[5])
+        assert isinstance(result, pl.DataFrame)
+
+    def test_var_fit_and_forecast(self, var_df):
+        from polars_ts import var_fit, var_forecast
+
+        model = var_fit(var_df, target_cols=["y1", "y2"], p=1)
+        assert hasattr(model, "coefficients")
+        assert hasattr(model, "residuals")
+
+        fc = var_forecast(model, horizon=5)
+        assert isinstance(fc, pl.DataFrame)
+        assert "y1" in fc.columns
+        assert "y2" in fc.columns
+        assert fc.height == 5
+
+    def test_granger_causality(self, var_df):
+        from polars_ts import granger_causality
+
+        result = granger_causality(var_df, cause_col="y1", effect_col="y2", max_lag=3)
+        assert isinstance(result, pl.DataFrame)
+
+    def test_garch_fit_and_forecast(self):
+        from polars_ts import garch_fit, garch_forecast
+
+        rng = np.random.default_rng(42)
+        df = pl.DataFrame(
+            {
+                "unique_id": ["R1"] * 100,
+                "ds": list(range(100)),
+                "y": rng.normal(0, 1, 100).tolist(),
+            }
+        )
+        models = garch_fit(df, p=1, q=1)
+        assert "R1" in models
+        assert hasattr(models["R1"], "conditional_variance")
+
+        fc = garch_forecast(models["R1"], horizon=5)
+        assert len(fc) == 5
 
 
 # ---------------------------------------------------------------------------
@@ -426,6 +667,7 @@ class TestNB12:
         assert isinstance(images, dict)
         assert len(images) == ts_df_no_time["unique_id"].n_unique()
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_rocket_features(self, ts_df_no_time):
         from polars_ts import rocket_features
 
@@ -435,6 +677,7 @@ class TestNB12:
         # n_kernels * 2 features + unique_id
         assert feat.width > 2
 
+    @pytest.mark.skipif(not importlib.util.find_spec("sklearn"), reason="sklearn not installed")
     def test_shapelet_cluster(self, ts_df_no_time):
         from polars_ts import shapelet_cluster
 
@@ -478,6 +721,57 @@ class TestNB13:
         assert hasattr(result, "predictions")
         assert hasattr(result, "report")
         assert isinstance(result.predictions, pl.DataFrame)
+
+
+# ---------------------------------------------------------------------------
+# NB 14: KASBA Clustering
+# ---------------------------------------------------------------------------
+
+
+class TestNB10:
+    def test_to_neuralforecast(self, small_ts):
+        from polars_ts import to_neuralforecast
+
+        result = to_neuralforecast(small_ts)
+        assert set(result.columns) == {"unique_id", "ds", "y"}
+        assert result.height == small_ts.height
+
+    def test_from_neuralforecast(self):
+        from polars_ts import from_neuralforecast
+
+        # Simulate a NeuralForecast output (has model column instead of y)
+        mock_result = pl.DataFrame(
+            {
+                "unique_id": ["A"] * 3,
+                "ds": [datetime.datetime(2023, 1, 1, h) for h in range(3)],
+                "NHITS": [10.0, 11.0, 12.0],
+            }
+        )
+        back = from_neuralforecast(mock_result)
+        assert isinstance(back, pl.DataFrame)
+        assert "y_hat" in back.columns
+
+    def test_to_pytorch_forecasting(self, small_ts):
+        from polars_ts import to_pytorch_forecasting
+
+        result = to_pytorch_forecasting(small_ts)
+        assert "data" in result
+        assert "metadata" in result
+        assert "time_idx" in result["metadata"]
+
+    def test_forecast_env(self, small_ts):
+        from polars_ts import ForecastEnv
+
+        actuals = small_ts.filter(pl.col("unique_id") == "A").tail(10)["y"].to_numpy()
+        forecasts = actuals + 1.0  # simple offset
+
+        env = ForecastEnv(data=actuals, forecasts=forecasts, window_size=3)
+        obs = env.reset()
+        assert obs.ndim == 1
+        assert len(obs) > 0
+
+        obs, reward, done, info = env.step(obs[-1])
+        assert isinstance(reward, float)
 
 
 # ---------------------------------------------------------------------------
