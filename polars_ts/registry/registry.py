@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import pickle
 import shutil
-import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -47,7 +47,7 @@ class ModelRegistry:
 
         Returns the version string used.
         """
-        version = version or uuid.uuid4().hex[:12]
+        version = version or datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
         model_dir = self._models_dir / name / version
         model_dir.mkdir(parents=True, exist_ok=True)
 
@@ -67,8 +67,8 @@ class ModelRegistry:
             raise FileNotFoundError(f"model {name!r} not found in registry")
 
         if version is None:
-            # Pick the latest by directory modification time
-            versions = sorted(name_dir.iterdir(), key=lambda p: p.stat().st_mtime)
+            # Pick the latest by mtime, then name as tiebreaker (for equal timestamps)
+            versions = sorted(name_dir.iterdir(), key=lambda p: (p.stat().st_mtime, p.name))
             if not versions:
                 raise FileNotFoundError(f"no versions found for model {name!r}")
             version_dir = versions[-1]
@@ -87,7 +87,7 @@ class ModelRegistry:
             raise FileNotFoundError(f"model {name!r} not found in registry")
 
         if version is None:
-            versions = sorted(name_dir.iterdir(), key=lambda p: p.stat().st_mtime)
+            versions = sorted(name_dir.iterdir(), key=lambda p: (p.stat().st_mtime, p.name))
             if not versions:
                 raise FileNotFoundError(f"no versions found for model {name!r}")
             version_dir = versions[-1]
