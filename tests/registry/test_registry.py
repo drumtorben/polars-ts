@@ -175,6 +175,26 @@ class TestModelRegistry:
         assert loaded.bias == 42.0
         assert loaded.is_fitted_
 
+    def test_save_uses_joblib_format(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        registry.save_model(_DummyModel(), "fmt-test", version="v1")
+        assert (tmp_path / "models" / "fmt-test" / "v1" / "model.joblib").exists()
+        assert not (tmp_path / "models" / "fmt-test" / "v1" / "model.pkl").exists()
+
+    def test_load_legacy_pickle_fallback(self, tmp_path: Path):
+        import pickle
+
+        registry = ModelRegistry(tmp_path)
+        # Simulate a legacy pickle file
+        legacy_dir = tmp_path / "models" / "legacy" / "v1"
+        legacy_dir.mkdir(parents=True)
+        with open(legacy_dir / "model.pkl", "wb") as f:
+            pickle.dump(_DummyModel(bias=99.0), f)
+
+        loaded = registry.load_model("legacy", version="v1")
+        assert isinstance(loaded, _DummyModel)
+        assert loaded.bias == 99.0
+
     def test_save_model_auto_version(self, tmp_path: Path):
         registry = ModelRegistry(tmp_path)
         model = _DummyModel()
