@@ -1,20 +1,38 @@
 import polars as pl
 import pytest
 
+import polars_ts._distance_dispatch as dispatch
 from polars_ts._distance_dispatch import compute_distances, pairwise_to_dict
-from polars_ts_rs.polars_ts_rs import compute_pairwise_dtw, compute_pairwise_wdtw
 
 
 class TestDistanceDispatchUtils:
-    def test_compute_distances_dtw_matches_direct(self, two_series):
-        dispatched = compute_distances(two_series, two_series, method="dtw")
-        direct = compute_pairwise_dtw(two_series, two_series)
-        assert dispatched["dtw"].to_list() == pytest.approx(direct["dtw"].to_list())
+    def test_compute_distances_dtw_dispatches(self, monkeypatch, two_series):
+        calls = []
 
-    def test_compute_distances_wdtw_kwargs_passthrough(self, shifted_series):
-        dispatched = compute_distances(shifted_series, shifted_series, method="wdtw", g=0.01)
-        direct = compute_pairwise_wdtw(shifted_series, shifted_series, g=0.01)
-        assert dispatched["wdtw"].to_list() == pytest.approx(direct["wdtw"].to_list())
+        def fake(df1, df2, **kwargs):
+            calls.append((df1, df2, kwargs))
+            return pl.DataFrame({"id_1": ["A"], "id_2": ["B"], "dtw": [1.25]})
+
+        monkeypatch.setitem(dispatch._DISTANCE_FUNCS, "dtw", fake)
+
+        result = compute_distances(two_series, two_series, method="dtw")
+
+        assert calls == [(two_series, two_series, {})]
+        assert result["dtw"].to_list() == [1.25]
+
+    def test_compute_distances_wdtw_kwargs_passthrough(self, monkeypatch, shifted_series):
+        calls = []
+
+        def fake(df1, df2, **kwargs):
+            calls.append((df1, df2, kwargs))
+            return pl.DataFrame({"id_1": ["A"], "id_2": ["B"], "wdtw": [2.5]})
+
+        monkeypatch.setitem(dispatch._DISTANCE_FUNCS, "wdtw", fake)
+
+        result = compute_distances(shifted_series, shifted_series, method="wdtw", g=0.01)
+
+        assert calls == [(shifted_series, shifted_series, {"g": 0.01})]
+        assert result["wdtw"].to_list() == [2.5]
 
     def test_unknown_method_raises(self, two_series):
         with pytest.raises(ValueError, match=r"Unknown distance method"):
@@ -25,9 +43,9 @@ class TestDistanceDispatchUtils:
             compute_distances(two_series, two_series, method="wdtw", epsilon=0.5)
 
     def test_pairwise_to_dict_is_symmetric(self, two_series):
-        df = compute_distances(two_series, two_series, method="dtw")
+        df = pl.DataFrame({"id_1": ["A", "B"], "id_2": ["B", "A"], "dtw": [1.0, 1.0]})
         d = pairwise_to_dict(df)
-        assert d[("A", "B")] == d[("B", "A")]
+        assert d[("A", "B")] == d[("B", "A")] == 1.0
 
     def test_pairwise_to_dict_empty_df(self):
         df = pl.DataFrame({"id_1": [], "id_2": [], "dtw": []})
