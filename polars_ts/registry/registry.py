@@ -32,6 +32,13 @@ class ModelRegistry:
         self._models_dir.mkdir(parents=True, exist_ok=True)
         self._experiments_dir.mkdir(parents=True, exist_ok=True)
 
+    def _validate_path(self, base: Path, *parts: str) -> Path:
+        """Resolve a path and ensure it stays within *base*."""
+        target = (base / Path(*parts)).resolve()
+        if not target.is_relative_to(base.resolve()):
+            raise ValueError(f"Path traversal detected: {'/'.join(parts)!r}")
+        return target
+
     # ------------------------------------------------------------------
     # Model persistence
     # ------------------------------------------------------------------
@@ -48,6 +55,7 @@ class ModelRegistry:
 
         Returns the version string used.
         """
+        self._validate_path(self._models_dir, name)
         if version is None:
             base = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
             version = base
@@ -58,6 +66,7 @@ class ModelRegistry:
                 model_dir = self._models_dir / name / version
                 seq += 1
         else:
+            self._validate_path(self._models_dir, name, version)
             model_dir = self._models_dir / name / version
         version = version or datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
         model_dir = self._models_dir / name / version
@@ -73,6 +82,9 @@ class ModelRegistry:
 
     def load_model(self, name: str, *, version: str | None = None) -> Any:
         """Load a model from disk. Loads latest version if *version* is None."""
+        self._validate_path(self._models_dir, name)
+        if version is not None:
+            self._validate_path(self._models_dir, name, version)
         name_dir = self._models_dir / name
         if not name_dir.exists():
             raise FileNotFoundError(f"model {name!r} not found in registry")
@@ -102,6 +114,9 @@ class ModelRegistry:
 
     def get_metadata(self, name: str, *, version: str | None = None) -> dict[str, Any]:
         """Retrieve metadata for a saved model."""
+        self._validate_path(self._models_dir, name)
+        if version is not None:
+            self._validate_path(self._models_dir, name, version)
         name_dir = self._models_dir / name
         if not name_dir.exists():
             raise FileNotFoundError(f"model {name!r} not found in registry")
@@ -135,12 +150,14 @@ class ModelRegistry:
 
     def delete_model(self, name: str) -> None:
         """Remove a model and all its versions."""
+        self._validate_path(self._models_dir, name)
         name_dir = self._models_dir / name
         if name_dir.exists():
             shutil.rmtree(name_dir)
 
     def delete_version(self, name: str, version: str) -> None:
         """Remove a specific version of a model."""
+        self._validate_path(self._models_dir, name, version)
         version_dir = self._models_dir / name / version
         if version_dir.exists():
             shutil.rmtree(version_dir)
