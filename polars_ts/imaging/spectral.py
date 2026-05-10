@@ -22,8 +22,11 @@ def _spectrogram(
     """Compute STFT spectrogram for a single 1D series."""
     from scipy.signal import stft
 
+    # Clamp nperseg to input length to avoid scipy ValueError
+    nperseg = min(nperseg, len(x))
     if noverlap is None:
         noverlap = nperseg // 2
+    noverlap = min(noverlap, nperseg - 1)
 
     _, _, Zxx = stft(x, nperseg=nperseg, noverlap=noverlap, window=window)
     mag = np.abs(Zxx)
