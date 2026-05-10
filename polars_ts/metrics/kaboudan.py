@@ -4,9 +4,9 @@ Provides the `Kaboudan` class for computing Kaboudan and modified Kaboudan metri
 time series forecasting models using backtesting and block shuffling techniques.
 """
 
-import random
 from dataclasses import dataclass
 
+import numpy as np
 import polars as pl
 
 try:
@@ -83,10 +83,8 @@ class Kaboudan:
             )
             .partition_by(self.id_col, "__chunk_id")
         )
-        if self.seed is not None:
-            # set seed
-            random.seed(self.seed)
-        random.shuffle(dfs)
+        rng = np.random.default_rng(self.seed)
+        rng.shuffle(dfs)
         df = (
             pl.concat(dfs)
             .drop("__row_in_group", "__chunk_id")
