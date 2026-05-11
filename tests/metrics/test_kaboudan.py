@@ -344,3 +344,22 @@ def test_single_group(sample_df):
     assert "block" in split_df.columns
     assert split_df["block"].min() >= 1
     assert split_df["block"].max() <= kaboudan.n_folds
+
+
+@pytest.mark.skipif(not forecast_available, reason="statsforecast/utilsforecast not installed")
+class TestNumpyRandomness:
+    """#256: block_shuffle_by_id should use numpy.random instead of stdlib random."""
+
+    def test_uses_numpy_rng_not_stdlib(self):
+        """Kaboudan should not import or use stdlib random for shuffling."""
+        import inspect
+
+        source = inspect.getsource(Kaboudan.block_shuffle_by_id)
+        assert "random.seed" not in source
+        assert "random.shuffle" not in source
+
+    def test_shuffle_is_reproducible_with_seed(self, sample_df):
+        k = Kaboudan(sf=None, backtesting_start=0.7, n_folds=5, block_size=2, seed=99)
+        r1 = k.block_shuffle_by_id(sample_df)
+        r2 = k.block_shuffle_by_id(sample_df)
+        assert r1.equals(r2)

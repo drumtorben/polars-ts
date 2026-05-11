@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import json
-import pickle
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+import joblib
 
 from polars_ts.registry.experiment import Experiment, Run
 
@@ -31,6 +32,13 @@ class ModelRegistry:
         self._models_dir.mkdir(parents=True, exist_ok=True)
         self._experiments_dir.mkdir(parents=True, exist_ok=True)
 
+    def _validate_path(self, base: Path, *parts: str) -> Path:
+        """Resolve a path and ensure it stays within *base*."""
+        target = (base / Path(*parts)).resolve()
+        if not target.is_relative_to(base.resolve()):
+            raise ValueError(f"Path traversal detected: {'/'.join(parts)!r}")
+        return target
+
     # ------------------------------------------------------------------
     # Model persistence
     # ------------------------------------------------------------------
@@ -47,6 +55,7 @@ class ModelRegistry:
 
         Returns the version string used.
         """
+        self._validate_path(self._models_dir, name)
         if version is None:
             base = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
             version = base
@@ -57,13 +66,13 @@ class ModelRegistry:
                 model_dir = self._models_dir / name / version
                 seq += 1
         else:
+            self._validate_path(self._models_dir, name, version)
             model_dir = self._models_dir / name / version
         version = version or datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
         model_dir = self._models_dir / name / version
         model_dir.mkdir(parents=True, exist_ok=True)
 
-        with open(model_dir / "model.pkl", "wb") as f:
-            pickle.dump(model, f)
+        joblib.dump(model, model_dir / "model.joblib")
 
         meta = metadata or {}
         with open(model_dir / "metadata.json", "w") as f:
@@ -73,6 +82,9 @@ class ModelRegistry:
 
     def load_model(self, name: str, *, version: str | None = None) -> Any:
         """Load a model from disk. Loads latest version if *version* is None."""
+        self._validate_path(self._models_dir, name)
+        if version is not None:
+            self._validate_path(self._models_dir, name, version)
         name_dir = self._models_dir / name
         if not name_dir.exists():
             raise FileNotFoundError(f"model {name!r} not found in registry")
@@ -88,11 +100,23 @@ class ModelRegistry:
             if not version_dir.exists():
                 raise FileNotFoundError(f"version {version!r} not found for model {name!r}")
 
-        with open(version_dir / "model.pkl", "rb") as f:
-            return pickle.load(f)  # noqa: S301
+        model_path = version_dir / "model.joblib"
+        # Backwards compatibility: fall back to legacy pickle files
+        if not model_path.exists():
+            legacy = version_dir / "model.pkl"
+            if legacy.exists():
+                import pickle  # noqa: S403
+
+                with open(legacy, "rb") as f:
+                    return pickle.load(f)  # noqa: S301
+            raise FileNotFoundError(f"no model file found in {version_dir}")
+        return joblib.load(model_path)
 
     def get_metadata(self, name: str, *, version: str | None = None) -> dict[str, Any]:
         """Retrieve metadata for a saved model."""
+        self._validate_path(self._models_dir, name)
+        if version is not None:
+            self._validate_path(self._models_dir, name, version)
         name_dir = self._models_dir / name
         if not name_dir.exists():
             raise FileNotFoundError(f"model {name!r} not found in registry")
@@ -126,12 +150,14 @@ class ModelRegistry:
 
     def delete_model(self, name: str) -> None:
         """Remove a model and all its versions."""
+        self._validate_path(self._models_dir, name)
         name_dir = self._models_dir / name
         if name_dir.exists():
             shutil.rmtree(name_dir)
 
     def delete_version(self, name: str, version: str) -> None:
         """Remove a specific version of a model."""
+        self._validate_path(self._models_dir, name, version)
         version_dir = self._models_dir / name / version
         if version_dir.exists():
             shutil.rmtree(version_dir)

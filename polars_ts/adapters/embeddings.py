@@ -52,6 +52,7 @@ def to_chronos_embeddings(
     time_col: str = "ds",
     device: str = "cpu",
     batch_size: int = 32,
+    trust_remote_code: bool = False,
 ) -> pl.DataFrame:
     """Extract embeddings from a Chronos foundation model.
 
@@ -76,6 +77,10 @@ def to_chronos_embeddings(
         Torch device (``"cpu"``, ``"cuda"``, etc.).
     batch_size
         Number of series to process at once.
+    trust_remote_code
+        Whether to allow executing code from the model repository.
+        **Security warning:** enabling this allows arbitrary code execution
+        from the remote model. Only set to ``True`` for models you trust.
 
     Returns
     -------
@@ -97,8 +102,8 @@ def to_chronos_embeddings(
 
     ids, arrays = _extract_series(df, target_col, id_col, time_col)
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-    model = AutoModel.from_pretrained(model_name, trust_remote_code=True).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=trust_remote_code)
+    model = AutoModel.from_pretrained(model_name, trust_remote_code=trust_remote_code).to(device)
     model.eval()
 
     all_embeddings: list[np.ndarray] = []

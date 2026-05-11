@@ -1,95 +1,81 @@
-# Tech Debt Refactoring Plan
+# Tech Debt & Simplification Plan
 
 ## Executive Summary
 
 The polars-ts codebase has grown rapidly with 80+ Python modules and 30+ Rust source files.
-The main tech debt categories are: **duplicated code** (distance imports, pipeline helpers),
-**inconsistent module patterns** (lazy vs eager imports), and **large monolithic files**.
+This plan covers: **duplicated code** (distance imports, pipeline helpers, `_extract_series`),
+**inconsistent module patterns** (lazy vs eager imports, stdlib vs numpy random),
+**large monolithic files**, **security hardening cleanups**, and **public API gaps**.
 
-## Dependency Graph (relevant components)
+Phases 1-2 are complete. Phases 3-8 remain, ordered by effort/value.
+
+**Dependencies:** Phases 6-8 depend on resolution of #247 (security hardening) and #214.
+
+## Dependency Graph
 
 ```
 polars_ts/__init__.py
   -> polars_ts_rs (Rust FFI)
-  -> polars_ts.distance          (also imports polars_ts_rs)
-  -> polars_ts._distance_dispatch (also imports polars_ts_rs)
-  -> polars_ts.pipeline
-       -> polars_ts.models.baselines (_infer_freq, _make_future_dates)
-       -> polars_ts.models.multistep (Estimator protocol)
-  -> polars_ts.global_model
-       -> polars_ts.pipeline (shared helpers)
-       -> polars_ts.models.baselines (_infer_freq, _make_future_dates)
-  -> polars_ts.models.arima
-       -> own _infer_freq / _make_future_dates (DUPLICATE)
+  -> polars_ts._distance_dispatch (canonical Rust imports)
+  -> polars_ts.pipeline -> polars_ts.models._time_utils (shared)
+  -> polars_ts.global_model -> polars_ts.pipeline (shared helpers)
+  -> polars_ts.registry -> joblib (model persistence)
+  -> polars_ts.datasets (dataset loader with SHA-256)
 
-clustering/classification modules -> _distance_dispatch.py
+clustering/* -> _distance_dispatch.py
+clustering/{kmeans,kmedoids,scalable} -> stdlib random (INCONSISTENT)
+adapters/embeddings.py -> trust_remote_code (Chronos only, missing from MOMENT)
 ```
 
 ## Phases
 
-### Phase 1 — Centralize Distance Imports (LOW EFFORT / HIGH VALUE)
+### Phase 1 — Centralize Distance Imports ✅ COMPLETE
 
-**Goal:** Single source of truth for Rust FFI distance functions.
+### Phase 2 — Extract Shared Pipeline Helpers ✅ COMPLETE
 
-**Why:** 4 files (`__init__.py`, `distance.py`, `_distance_dispatch.py`, `clustering/kasba.py`)
-all independently import the same 12 Rust functions. Adding a new distance metric requires
-touching all 4 files.
+---
 
-**Tasks:**
-- T1.1: Make `_distance_dispatch.py` the canonical import location
-- T1.2: Update `distance.py` to import from `_distance_dispatch` instead of `polars_ts_rs`
-- T1.3: Update `__init__.py` to re-export from `distance.py` (already partly done)
-- T1.4: Update `clustering/kasba.py` to import from `_distance_dispatch`
-- T1.5: Run tests to verify no regressions
-
-**Acceptance:** `rg "from polars_ts_rs" polars_ts/` shows only `_distance_dispatch.py` and `__init__.py` (for PLUGIN_PATH).
-
-### Phase 2 — Extract Shared Pipeline Helpers (LOW EFFORT / MEDIUM VALUE)
-
-**Goal:** Eliminate duplicate `_inverse_single`, `_transform_buffer`, `_infer_freq`, `_make_future_dates`.
-
-**Tasks:**
-- T2.1: Extract `_inverse_single` and `_transform_buffer` to `polars_ts/transforms/_inverse.py`
-- T2.2: Update `pipeline.py` and `global_model.py` to import from `_inverse.py`
-- T2.3: Consolidate `_infer_freq` and `_make_future_dates` into `polars_ts/models/_time_utils.py`
-- T2.4: Update `baselines.py`, `arima.py`, `pipeline.py`, `global_model.py` to import from `_time_utils.py`
-- T2.5: Decide on `_infer_freq` behavior: `median` (baselines) vs `mode` (arima) — pick one or make configurable
-- T2.6: Run full test suite
-
-**Acceptance:** No duplicated `_inverse_single`, `_transform_buffer`, `_infer_freq`, or `_make_future_dates` across codebase.
-
-### Phase 3 — Standardize Lazy Import Pattern (LOW EFFORT / MEDIUM VALUE)
+### Phase 3 — Standardize Lazy Imports (LOW EFFORT / MEDIUM VALUE)
 
 **Goal:** All submodule `__init__.py` files use `_lazy.py:make_getattr`.
 
-**Tasks:**
-- T3.1: Convert `streaming/__init__.py` from eager imports to `make_getattr` pattern
-- T3.2: Move bayesian special-case from `__init__.py` into `_LAZY_IMPORTS` dict
-- T3.3: Audit `metrics/__init__.py` — keep Metrics class (it's a Polars namespace, not lazy-importable) but document the reason
-- T3.4: Run `test_lazy_imports.py` to verify all lazy imports still resolve
+**Status:** T3.1 and T3.2 are already done (confirmed by scan). Remaining:
 
-**Acceptance:** `streaming/__init__.py` uses `make_getattr`; bayesian names are in `_LAZY_IMPORTS`; no special-case `if` blocks in `__init__.py`.
+**Tasks:**
+- T3.1: ✅ `streaming/__init__.py` already uses `make_getattr`
+- T3.2: ✅ Bayesian names already in `_LAZY_IMPORTS`, no special-case block
+- T3.3: Convert `bayesian_var/__init__.py` from eager imports to `make_getattr`
+- T3.4: Convert `models/bayesian_ets/__init__.py` from eager imports to `make_getattr`
+- T3.5: Document `metrics/__init__.py` Polars namespace rationale
+- T3.6: Run `test_lazy_imports.py`
+
+**Acceptance:** All subpackage `__init__.py` files use `make_getattr`; no eager import blocks.
 
 ---
 
 ### Phase 4 — Split Large Files (MEDIUM EFFORT / MEDIUM VALUE)
 
-**Goal:** No file exceeds ~500 lines; complex modules are split by responsibility.
+**Goal:** No source file exceeds ~500 lines.
 
-**Priority targets (by size and complexity):**
+**Priority targets:**
 
 | File | Lines | Split Strategy |
 |------|-------|----------------|
-| `bayesian_var.py` | 892 | Split into `bayesian_var/{model,priors,results}.py` |
-| `models/bayesian_ets.py` | 854 | Split into `{model,gibbs_sampler,priors}.py` |
-| `bayesian/mcmc.py` | 691 | Split into `{samplers,diagnostics,utils}.py` |
-| `causal/causal_impact.py` | 648 | Split into `{model,inference,results}.py` |
+| `reconciliation.py` | 590 | Split into `reconciliation/{bottom_up,top_down,mintrace,middle_out}.py` |
+| `causal/synthetic_control.py` | 540 | Split model + inference |
+| `bayesian/gp.py` | 539 | Extract kernels to `bayesian/gp_kernels.py` |
+| `dl/multivariate.py` | 523 | Split `_MVPatchTST` and `iTransformer` into separate files |
+| `pipeline.py` | 462 | Monitor (shared helpers already extracted) |
+| `models/multistep.py` | 450 | Split `RecursiveForecaster` and `DirectForecaster` |
+| `adapters/foundation_forecast.py` | 408 | One class per file |
+
+**Note:** `bayesian_var.py` and `bayesian/mcmc.py` were already split in prior work.
 
 **Tasks:**
-- T4.1: Split `bayesian_var.py` into subpackage
-- T4.2: Split `models/bayesian_ets.py` into subpackage
-- T4.3: Split `bayesian/mcmc.py` into focused modules
-- T4.4: Split `causal/causal_impact.py`
+- T4.1: Split `reconciliation.py` (590L) into subpackage
+- T4.2: Split `bayesian/gp.py` — extract kernels
+- T4.3: Split `dl/multivariate.py` — two unrelated models
+- T4.4: Split `causal/synthetic_control.py`
 - T4.5: Update all imports and re-exports
 - T4.6: Run full test suite after each split
 
@@ -97,14 +83,105 @@ touching all 4 files.
 
 ---
 
-### Phase 5 — Minor Cleanups (LOW EFFORT / LOW VALUE)
+### Phase 5 — Deduplicate Shared Patterns (LOW EFFORT / HIGH VALUE)
+
+**Goal:** Eliminate cross-module code duplication discovered by simplification scan.
 
 **Tasks:**
-- T5.1: Ensure `_distance_dispatch.py` has a test (currently only tested indirectly)
-- T5.2: Add `py.typed` marker check to CI (already exists as file)
-- T5.3: Audit `__all__` exports match actual public API across all modules
 
-**Acceptance:** Direct test for `_distance_dispatch.py`; CI validates typed marker.
+- T5.1: **Extract `_extract_series`** — 3 near-identical copies in `adapters/embeddings.py:16`, `clustering/shapelets.py:21`, `features/rocket.py:22`. Create `polars_ts/_array_utils.py` with canonical version.
+
+- T5.2: **Extract `_validate_horizon`** — 14 copies of `raise ValueError("Horizon h must be a positive integer")` across 8+ files. Create helper in `models/_time_utils.py`.
+
+- T5.3: **Extract `_forecast_schema`** — schema dict `{id_col: ..., time_col: ..., "y_hat": pl.Float64}` repeated 9+ times in baselines/exponential_smoothing/multistep. Create helper in `models/_time_utils.py`.
+
+**Acceptance:** `grep -r "_extract_series" polars_ts/ | wc -l` returns 1; horizon validation and schema construction are single-source.
+
+---
+
+### Phase 6 — Standardize Randomness (LOW EFFORT / MEDIUM VALUE)
+
+**Goal:** All modules use `numpy.random.default_rng()` consistently.
+
+**Depends on:** #247 merged (security hardening PR contains kaboudan.py fix).
+
+**Remaining files using `stdlib random`:**
+
+| File | Lines | Pattern |
+|------|-------|---------|
+| `clustering/kmeans.py` | 10, 100, 168 | `random.Random(seed).sample()`, `random.Random(seed+ci).randint()` |
+| `clustering/kmedoids.py` | 9, 155 | `random.Random(seed).sample()` |
+| `clustering/scalable.py` | 17, 93, 217, 224 | `random.Random(seed).sample()`, `.randint()`, `.choice()` |
+
+**Files using legacy `np.random.RandomState`:**
+
+| File | Lines |
+|------|-------|
+| `clustering/deep_cluster.py` | 216 |
+| `clustering/contrastive.py` | 172 |
+
+**Hard-coded seeds (not user-controllable):**
+
+| File | Line | Issue |
+|------|------|-------|
+| `clustering/kshape.py` | 49 | `np.random.default_rng(42)` — no seed param |
+| `probabilistic/conformal.py` | 265 | `np.random.default_rng(42)` — hard-coded |
+
+**Tasks:**
+- T6.1: Migrate `kmeans.py`, `kmedoids.py`, `scalable.py` from `stdlib random` to `np.random.default_rng`
+- T6.2: Migrate `deep_cluster.py`, `contrastive.py` from `RandomState` to `default_rng`
+- T6.3: Expose seed parameter in `kshape.py` and `conformal.py`
+- T6.4: Run clustering + probabilistic tests
+
+**Acceptance:** `grep -r "import random" polars_ts/` returns 0; no `np.random.RandomState` usage.
+
+---
+
+### Phase 7 — Security Hardening Cleanups (LOW EFFORT / MEDIUM VALUE)
+
+**Goal:** Clean up issues found during the security review code quality scan.
+
+**Depends on:** #247 merged.
+
+**Tasks:**
+
+- T7.1: **Remove dead code in `registry.py:71-72`** — `version = version or ...` is unreachable after the if/else block; `model_dir` reassignment is redundant.
+
+- T7.2: **Cache `base.resolve()` in `_validate_path`** — currently calls `Path.resolve()` twice per validation (target + base comparison).
+
+- T7.3: **Stream hash verification in `datasets.py`** — `read_bytes()` loads entire file (85MB for m5_y) into memory. Use chunked `hashlib.update()`.
+
+- T7.4: **Atomic downloads in `datasets.py`** — download to `.tmp` then rename, so interrupted downloads don't leave partial files.
+
+- T7.5: **Add `trust_remote_code` to `to_moment_embeddings()`** — inconsistent with `to_chronos_embeddings()` which already has this parameter.
+
+- T7.6: Run registry + dataset + embedding tests.
+
+**Acceptance:** No dead code in registry; hash streaming works for 85MB files; downloads are atomic.
+
+---
+
+### Phase 8 — Public API & Export Consistency (LOW EFFORT / HIGH VALUE)
+
+**Goal:** Consistent public API surface — all public classes accessible from root `polars_ts`.
+
+**Tasks:**
+
+- T8.1: **Remove private functions from `__all__`** in `bayesian_var/__init__.py` (`_build_var_matrices`, `_estimate_sigma_from_ar`, `_minnesota_prior_precision`) and `models/bayesian_ets/__init__.py` (9 private `_` functions).
+
+- T8.2: **Add missing entries to root `_LAZY_IMPORTS`:**
+  - `MCMCResult` (in `bayesian/__init__` but missing from root)
+  - `BayesianETSResult`
+  - `NBEATSForecaster`, `PatchTSTForecaster`
+  - `InceptionTimeClassifier`, `ResNetClassifier`, `RocketClassifier`, `MiniRocketClassifier`
+  - `ParticleFilter`, `BayesianAnomalyDetector`
+  - `Kaboudan`
+
+- T8.3: **Audit `__all__` exports** across all modules to match actual public API.
+
+- T8.4: Run `test_lazy_imports.py` + full import test.
+
+**Acceptance:** All public classes importable from `polars_ts` directly; no private functions in `__all__`.
 
 ---
 
@@ -112,14 +189,18 @@ touching all 4 files.
 
 | After Phase | Verify |
 |-------------|--------|
-| Phase 1 | `pytest tests/distance/` passes; single import location |
-| Phase 2 | `pytest tests/models/ tests/test_pipeline.py tests/test_global_model.py` passes |
-| Phase 3 | `pytest tests/test_lazy_imports.py` passes; grep shows no eager streaming imports |
+| Phase 3 | `pytest tests/test_lazy_imports.py` passes; all `__init__.py` use `make_getattr` |
 | Phase 4 | Full `pytest` passes; `wc -l` confirms no file >500 lines |
-| Phase 5 | Full CI green |
+| Phase 5 | Grep confirms single-source for `_extract_series`, horizon validation, schema construction |
+| Phase 6 | No `import random` or `RandomState` in source; clustering tests pass |
+| Phase 7 | No dead code; streaming hash; atomic downloads; tests pass |
+| Phase 8 | All public classes in root `_LAZY_IMPORTS`; no private `__all__` entries |
 
 ## Risk Assessment
 
-- **Phase 1-3:** Low risk — import reorganization with full test coverage
-- **Phase 4:** Medium risk — file splits may break imports in notebooks/downstream code
-- **Phase 5:** Negligible risk
+- **Phase 3:** Low risk — import pattern change with test coverage
+- **Phase 4:** Medium risk — file splits may break notebooks/downstream
+- **Phase 5:** Low risk — extracting shared code with tests
+- **Phase 6:** Low risk — stdlib→numpy migration, well-tested
+- **Phase 7:** Low risk — cleanup of recently added code
+- **Phase 8:** Low risk — additive changes to import registry

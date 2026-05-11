@@ -125,6 +125,10 @@ class TestChronosEmbeddings:
         assert all(c.startswith("emb_") for c in result.columns[1:])
         assert sorted(result["unique_id"].to_list()) == ["A", "B", "C"]
 
+        # trust_remote_code defaults to False
+        MockAutoModel.from_pretrained.assert_called_with("fake/model", trust_remote_code=False)
+        MockAutoTokenizer.from_pretrained.assert_called_with("fake/model", trust_remote_code=False)
+
     def test_mocked_chronos_batch_size(self):
         torch = pytest.importorskip("torch")
 

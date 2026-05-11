@@ -175,6 +175,26 @@ class TestModelRegistry:
         assert loaded.bias == 42.0
         assert loaded.is_fitted_
 
+    def test_save_uses_joblib_format(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        registry.save_model(_DummyModel(), "fmt-test", version="v1")
+        assert (tmp_path / "models" / "fmt-test" / "v1" / "model.joblib").exists()
+        assert not (tmp_path / "models" / "fmt-test" / "v1" / "model.pkl").exists()
+
+    def test_load_legacy_pickle_fallback(self, tmp_path: Path):
+        import pickle
+
+        registry = ModelRegistry(tmp_path)
+        # Simulate a legacy pickle file
+        legacy_dir = tmp_path / "models" / "legacy" / "v1"
+        legacy_dir.mkdir(parents=True)
+        with open(legacy_dir / "model.pkl", "wb") as f:
+            pickle.dump(_DummyModel(bias=99.0), f)
+
+        loaded = registry.load_model("legacy", version="v1")
+        assert isinstance(loaded, _DummyModel)
+        assert loaded.bias == 99.0
+
     def test_save_model_auto_version(self, tmp_path: Path):
         registry = ModelRegistry(tmp_path)
         model = _DummyModel()
@@ -314,3 +334,49 @@ class TestModelRegistry:
 
         exp = registry.load_experiment("seed-exp")
         assert exp.runs[0].config["seed"] == 42
+
+
+class TestPathTraversalProtection:
+    """#250: name and version params must not escape the registry root."""
+
+    def test_save_model_rejects_traversal_in_name(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.save_model(_DummyModel(), "../../etc/evil", version="v1")
+
+    def test_save_model_rejects_traversal_in_version(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.save_model(_DummyModel(), "safe-model", version="../../etc/evil")
+
+    def test_load_model_rejects_traversal_in_name(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.load_model("../../../etc/passwd")
+
+    def test_load_model_rejects_traversal_in_version(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        registry.save_model(_DummyModel(), "legit", version="v1")
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.load_model("legit", version="../../etc/evil")
+
+    def test_get_metadata_rejects_traversal(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.get_metadata("../../../etc/passwd")
+
+    def test_delete_model_rejects_traversal(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.delete_model("../../etc/evil")
+
+    def test_delete_version_rejects_traversal(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        with pytest.raises(ValueError, match="[Pp]ath traversal"):
+            registry.delete_version("legit", "../../etc/evil")
+
+    def test_safe_names_still_work(self, tmp_path: Path):
+        registry = ModelRegistry(tmp_path)
+        registry.save_model(_DummyModel(bias=1.0), "my-model_v2", version="2024-01-01")
+        loaded = registry.load_model("my-model_v2", version="2024-01-01")
+        assert loaded.bias == 1.0
