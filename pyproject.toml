@@ -49,6 +49,7 @@ docs = [
 [tool.uv]
 cache-keys = [{ file = "**/*.toml" }, { file = "**/src/*.rs"}]
 default-groups = ["dev", "docs"]
+override-dependencies = ["urllib3>=2.7.0"]
 
 [build-system]
 requires = ["maturin>=1.0,<2.0"]
