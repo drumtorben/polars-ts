@@ -158,7 +158,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
       - name: Run ty
-        run: uvx ty check --python-version 3.12 polars_ts/
+        # ty is informational: all currently-noisy rules are downgraded to
+        # warnings in [tool.ty.rules] (unresolved optional/Rust-compiled
+        # modules, Polars union return types). Exit 0 when only warnings are
+        # present so the check reports green, while still failing on genuine
+        # error-level diagnostics.
+        run: uvx ty check --python-version 3.12 --exit-zero-on-warning polars_ts/
 
   docs:
     name: Documentation
