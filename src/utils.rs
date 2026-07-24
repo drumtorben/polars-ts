@@ -51,22 +51,23 @@ pub fn df_to_hashmap(df: &DataFrame) -> PyResult<HashMap<String, Vec<f64>>> {
     let unique_ids: Vec<String> = unique_id_col
         .str()
         .map_err(|e| PyValueError::new_err(format!("Column 'unique_id' must be string type: {e}")))?
-        .into_no_null_iter()
+        .iter()
+        .flatten()
         .map(|s| s.to_string())
         .collect();
 
     let y_lists: Vec<Vec<f64>> = y_col
         .list()
         .map_err(|e| PyValueError::new_err(format!("Column 'y' must be list type: {e}")))?
-        .into_iter()
+        .amortized_iter()
         .map(|opt_series| {
             let series = opt_series.ok_or_else(|| {
                 PyValueError::new_err("Null entry found in 'y' list column. Ensure no null values in 'y'.")
             })?;
-            let chunked = series.f64().map_err(|e| {
+            let chunked = series.as_ref().f64().map_err(|e| {
                 PyValueError::new_err(format!("Values in 'y' column must be f64: {e}"))
             })?;
-            Ok(chunked.into_no_null_iter().collect::<Vec<f64>>())
+            Ok(chunked.iter().flatten().collect::<Vec<f64>>())
         })
         .collect::<PyResult<Vec<Vec<f64>>>>()?;
 
@@ -114,7 +115,8 @@ pub fn df_to_hashmap_multivariate(df: &DataFrame) -> PyResult<HashMap<String, Ve
     let unique_ids: Vec<String> = unique_id_col
         .str()
         .map_err(|e| PyValueError::new_err(format!("Column 'unique_id' must be string type: {e}")))?
-        .into_no_null_iter()
+        .iter()
+        .flatten()
         .map(|s| s.to_string())
         .collect();
 
@@ -131,15 +133,15 @@ pub fn df_to_hashmap_multivariate(df: &DataFrame) -> PyResult<HashMap<String, Ve
         let lists: Vec<Vec<f64>> = col_series
             .list()
             .map_err(|e| PyValueError::new_err(format!("Column '{d}' must be list type: {e}")))?
-            .into_iter()
+            .amortized_iter()
             .map(|opt_series| {
                 let series = opt_series.ok_or_else(|| {
                     PyValueError::new_err(format!("Null entry in dimension column '{d}'"))
                 })?;
-                let chunked = series.f64().map_err(|e| {
+                let chunked = series.as_ref().f64().map_err(|e| {
                     PyValueError::new_err(format!("Values in column '{d}' must be f64: {e}"))
                 })?;
-                Ok(chunked.into_no_null_iter().collect::<Vec<f64>>())
+                Ok(chunked.iter().flatten().collect::<Vec<f64>>())
             })
             .collect::<PyResult<Vec<Vec<f64>>>>()?;
         dims_data.push(lists);
@@ -314,7 +316,7 @@ fn build_output_df(
         Column::new("id_2".into(), id2s),
         Column::new(distance_col.into(), vals),
     ];
-    let mut out_df = DataFrame::new(columns)
+    let mut out_df = DataFrame::new_infer_height(columns)
         .map_err(|e| PyValueError::new_err(e.to_string()))?;
 
     let id1_casted = out_df.column("id_1")

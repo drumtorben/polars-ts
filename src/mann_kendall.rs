@@ -26,7 +26,7 @@ pub fn mann_kendall(inputs: &[Series]) -> PolarsResult<Series> {
     let s = &inputs[0];
 
     // Collect non-null f64 values
-    let vals = s.f64()?.into_no_null_iter().collect::<Vec<_>>();
+    let vals = s.f64()?.iter().flatten().collect::<Vec<_>>();
     let n = vals.len() as f64;
     if n < 2.0 {
         return Ok(Series::new(s.name().clone(), [0.0f64]));

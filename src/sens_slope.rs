@@ -21,7 +21,7 @@ use pyo3_polars::derive::polars_expr;
 pub fn sens_slope(inputs: &[Series]) -> PolarsResult<Series> {
     let s = &inputs[0];
     // Filter out null values instead of panicking
-    let vals: Vec<f64> = s.f64()?.into_iter().flatten().collect();
+    let vals: Vec<f64> = s.f64()?.iter().flatten().collect();
     let n = vals.len();
 
     if n < 2 {

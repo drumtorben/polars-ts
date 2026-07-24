@@ -222,7 +222,7 @@ pub fn pelt(
         }
     }
 
-    let out_df = DataFrame::new(vec![
+    let out_df = DataFrame::new_infer_height(vec![
         Column::new(id_col.into(), &id_vals),
         Column::new("changepoint_idx".into(), &cp_vals),
     ])
