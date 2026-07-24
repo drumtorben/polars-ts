@@ -8,16 +8,28 @@ name = "polars_ts_rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.25.0", features = ["extension-module", "abi3-py312"] }
-pyo3-polars = { version = "0.22.0", features = ["derive"] }
+pyo3 = { version = "0.28.0", features = ["extension-module", "abi3-py312"] }
+pyo3-polars = { version = "0.27.0", features = ["derive"] }
 ordered-float = "5"
 rayon = "1.10.0"
 serde = { version = "1", features = ["derive"] }
 itertools = "0.14.0"
-polars = { version = "0.49.1", features = ["lazy", "ndarray"] }
-polars-core = "0.49.1"
-polars-arrow = "0.49.1"
-numpy = "0.25"
+# `strings` is required because polars-stream 0.54.4 references the strings-gated
+# IRFunctionExpr::StringExpr variant from within a dtype-datetime cfg block; without
+# it the new-streaming engine fails to compile in this feature combination.
+polars = { version = "0.54.4", features = ["lazy", "ndarray", "strings"] }
+polars-core = "0.54.4"
+polars-arrow = "0.54.4"
+# Feature-unification fix: some transitive dep enables polars-core/object (adding
+# the DataType::Object enum variant) but not polars-ops/object (which gates the
+# matching arm), causing a non-exhaustive-match build error in polars-ops 0.54.4.
+polars-ops = { version = "0.54.4", features = ["object"] }
+# pyo3-polars/derive enables polars-plan/python (adding IR::PythonScan and
+# DeletionFilesList::Delta variants) but not polars-lazy/python, which is the switch
+# that coordinates the matching python arms in polars-mem-engine and polars-stream.
+# Enable it directly so every consumer crate handles those variants consistently.
+polars-lazy = { version = "0.54.4", features = ["python"] }
+numpy = "0.28"
 ndarray = "0.16"
 rand = "0.8"
 rand_chacha = "0.3"
