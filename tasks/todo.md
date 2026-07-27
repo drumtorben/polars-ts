@@ -42,7 +42,7 @@
 - [ ] T7.6: Run registry + dataset + embedding tests
 
 ## Phase 8: Public API & Export Consistency
-- [ ] T8.1: Remove private `_` functions from `__all__` in `bayesian_var/` and `bayesian_ets/`
+- [x] T8.1: Remove private `_` functions from `__all__` in `bayesian_var/` and `bayesian_ets/` (kept as backward-compat re-exports)
 - [ ] T8.2: Add missing classes to root `_LAZY_IMPORTS` (MCMCResult, Kaboudan, DL forecasters, etc.)
-- [ ] T8.3: Audit `__all__` exports across all modules
-- [ ] T8.4: Run `test_lazy_imports.py`
+- [x] T8.3: Audit `__all__` exports across all modules (added `__all__` to `metrics/`; regression test `TestAllExportHygiene`)
+- [x] T8.4: Run `test_lazy_imports.py`
