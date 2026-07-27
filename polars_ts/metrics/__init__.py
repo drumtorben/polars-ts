@@ -20,6 +20,16 @@ try:
 except ImportError:
     _StatsForecast = None
 
+__all__ = [
+    "Metrics",
+    "crps",
+    "mae",
+    "mape",
+    "mase",
+    "rmse",
+    "smape",
+]
+
 
 @dataclass
 @pl.api.register_dataframe_namespace("pts")

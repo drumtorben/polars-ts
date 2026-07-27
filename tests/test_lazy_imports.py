@@ -76,9 +76,9 @@ class TestBayesianLazyImports:
     @pytest.mark.parametrize("name", BAYESIAN_NAMES)
     def test_bayesian_in_lazy_imports(self, name):
         """Every bayesian name should be registered in _LAZY_IMPORTS."""
-        assert name in polars_ts._LAZY_IMPORTS, (
-            f"{name!r} is not in polars_ts._LAZY_IMPORTS — " f"it may still be in a special-case if-block"
-        )
+        assert (
+            name in polars_ts._LAZY_IMPORTS
+        ), f"{name!r} is not in polars_ts._LAZY_IMPORTS — it may still be in a special-case if-block"
 
     @pytest.mark.parametrize("name", BAYESIAN_NAMES)
     def test_bayesian_resolves_from_top_level(self, name):
@@ -91,9 +91,9 @@ class TestBayesianLazyImports:
         import inspect
 
         source = inspect.getsource(polars_ts.__getattr__)
-        assert "KalmanFilter" not in source, (
-            "__getattr__ still contains hardcoded 'KalmanFilter' — " "bayesian names should be in _LAZY_IMPORTS"
-        )
+        assert (
+            "KalmanFilter" not in source
+        ), "__getattr__ still contains hardcoded 'KalmanFilter' — bayesian names should be in _LAZY_IMPORTS"
 
     def test_bayesian_in_all(self):
         """All bayesian names should appear in __all__."""
@@ -199,3 +199,42 @@ class TestMetricsIntentionalEager:
             "metrics/__init__.py should use @pl.api.register_dataframe_namespace — "
             "it needs eager imports, not make_getattr"
         )
+
+
+class TestAllExportHygiene:
+    """T5.2 (#219): __all__ across every package must declare only public API."""
+
+    @staticmethod
+    def _iter_init_alls():
+        """Yield (module_name, __all__) for every package __init__ that defines __all__."""
+        import pathlib
+
+        root = pathlib.Path(polars_ts.__file__).parent
+        for init in sorted(root.rglob("__init__.py")):
+            rel = init.relative_to(root.parent).with_suffix("")
+            modname = ".".join(rel.parts)
+            if modname.endswith(".__init__"):
+                modname = modname[: -len(".__init__")]
+            mod = importlib.import_module(modname)
+            names = getattr(mod, "__all__", None)
+            if names is not None:
+                yield modname, list(names)
+
+    def test_no_private_names_in_all(self):
+        """No __all__ may advertise a private (underscore-prefixed) name as public API."""
+        offenders = {modname: [n for n in names if n.startswith("_")] for modname, names in self._iter_init_alls()}
+        offenders = {m: p for m, p in offenders.items() if p}
+        assert not offenders, f"Private names leaked into __all__: {offenders}"
+
+    def test_all_entries_are_strings_and_unique(self):
+        """Each __all__ must be a list of unique string identifiers."""
+        for modname, names in self._iter_init_alls():
+            assert all(isinstance(n, str) for n in names), f"{modname}.__all__ has non-string entries"
+            assert len(names) == len(set(names)), f"{modname}.__all__ has duplicates"
+
+    def test_metrics_declares_all(self):
+        """metrics/__init__.py must declare __all__ (eager namespace module, previously missing)."""
+        import polars_ts.metrics as metrics_mod
+
+        assert hasattr(metrics_mod, "__all__"), "polars_ts.metrics is missing __all__"
+        assert "Metrics" in metrics_mod.__all__

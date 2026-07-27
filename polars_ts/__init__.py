@@ -240,6 +240,23 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "WeatherContextAgent": ("polars_ts.energy_agents", "WeatherContextAgent"),
     "RenewableAgent": ("polars_ts.energy_agents", "RenewableAgent"),
     "DemandResponseAgent": ("polars_ts.energy_agents", "DemandResponseAgent"),
+    # --- Industrial IoT predictive maintenance agents ---
+    "MachineEnv": ("polars_ts.iiot_agents", "MachineEnv"),
+    "MaintenanceOrchestrator": ("polars_ts.iiot_agents", "MaintenanceOrchestrator"),
+    "MaintenanceResult": ("polars_ts.iiot_agents", "MaintenanceResult"),
+    "SpectralFeatureAgent": ("polars_ts.iiot_agents", "SpectralFeatureAgent"),
+    "HealthIndexAgent": ("polars_ts.iiot_agents", "HealthIndexAgent"),
+    "RULEstimator": ("polars_ts.iiot_agents", "RULEstimator"),
+    "MaintenanceSchedulerAgent": ("polars_ts.iiot_agents", "MaintenanceSchedulerAgent"),
+    # --- Healthcare agents (clinical decision support) ---
+    "ClinicalEnv": ("polars_ts.healthcare_agents", "ClinicalEnv"),
+    "ClinicalOrchestrator": ("polars_ts.healthcare_agents", "ClinicalOrchestrator"),
+    "ClinicalResult": ("polars_ts.healthcare_agents", "ClinicalResult"),
+    "SepsisWarningAgent": ("polars_ts.healthcare_agents", "SepsisWarningAgent"),
+    "VitalMonitorAgent": ("polars_ts.healthcare_agents", "VitalMonitorAgent"),
+    "EscalationAgent": ("polars_ts.healthcare_agents", "EscalationAgent"),
+    "TreatmentAgent": ("polars_ts.healthcare_agents", "TreatmentAgent"),
+    "federated_average": ("polars_ts.healthcare_agents", "federated_average"),
     # --- Multi-agent RL ---
     "PortfolioEnv": ("polars_ts.marl", "PortfolioEnv"),
     "MARLOrchestrator": ("polars_ts.marl", "MARLOrchestrator"),
