@@ -232,6 +232,14 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "RollingStdAgent": ("polars_ts.anomaly_agents", "RollingStdAgent"),
     "MADAgent": ("polars_ts.anomaly_agents", "MADAgent"),
     "ConsensusAgent": ("polars_ts.anomaly_agents", "ConsensusAgent"),
+    # --- Industrial IoT predictive maintenance agents ---
+    "MachineEnv": ("polars_ts.iiot_agents", "MachineEnv"),
+    "MaintenanceOrchestrator": ("polars_ts.iiot_agents", "MaintenanceOrchestrator"),
+    "MaintenanceResult": ("polars_ts.iiot_agents", "MaintenanceResult"),
+    "SpectralFeatureAgent": ("polars_ts.iiot_agents", "SpectralFeatureAgent"),
+    "HealthIndexAgent": ("polars_ts.iiot_agents", "HealthIndexAgent"),
+    "RULEstimator": ("polars_ts.iiot_agents", "RULEstimator"),
+    "MaintenanceSchedulerAgent": ("polars_ts.iiot_agents", "MaintenanceSchedulerAgent"),
     # --- Healthcare agents (clinical decision support) ---
     "ClinicalEnv": ("polars_ts.healthcare_agents", "ClinicalEnv"),
     "ClinicalOrchestrator": ("polars_ts.healthcare_agents", "ClinicalOrchestrator"),
