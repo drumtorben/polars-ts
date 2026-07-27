@@ -232,6 +232,13 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     "RollingStdAgent": ("polars_ts.anomaly_agents", "RollingStdAgent"),
     "MADAgent": ("polars_ts.anomaly_agents", "MADAgent"),
     "ConsensusAgent": ("polars_ts.anomaly_agents", "ConsensusAgent"),
+    # --- Supply chain demand-sensing agents ---
+    "SupplyChainOrchestrator": ("polars_ts.supply_chain_agents", "SupplyChainOrchestrator"),
+    "SupplyChainResult": ("polars_ts.supply_chain_agents", "SupplyChainResult"),
+    "DemandSensingAgent": ("polars_ts.supply_chain_agents", "DemandSensingAgent"),
+    "PromotionEffectAgent": ("polars_ts.supply_chain_agents", "PromotionEffectAgent"),
+    "InventoryAgent": ("polars_ts.supply_chain_agents", "InventoryAgent"),
+    "EchelonCoordinatorAgent": ("polars_ts.supply_chain_agents", "EchelonCoordinatorAgent"),
     # --- Energy/demand forecasting agents ---
     "GridHierarchy": ("polars_ts.energy_agents", "GridHierarchy"),
     "EnergyGridOrchestrator": ("polars_ts.energy_agents", "EnergyGridOrchestrator"),
