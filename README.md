@@ -19,17 +19,18 @@
 
 ---
 
-**polars-ts** is a batteries-included time series toolkit built on [Polars](https://pola.rs/). It gives you Rust-accelerated distance metrics, 10+ clustering algorithms, a full forecasting stack, and diagnostics — all from a single `pip install`, no heavyweight frameworks required.
+**polars-ts** is a batteries-included time series toolkit built on [Polars](https://pola.rs/). It gives you Rust-accelerated distance metrics, 10+ clustering algorithms, a full forecasting stack (classical → deep → foundation-model → agentic), Bayesian and causal inference, streaming/online learning, and multi-agent domain applications — all from a single `pip install`, no heavyweight frameworks required.
 
 ### Why polars-ts?
 
 | Pain point | How polars-ts helps |
 |---|---|
 | **"I need DTW but scipy is slow"** | 12 distance metrics compiled to native code via Rust + Rayon, orders of magnitude faster on large panels |
-| **"I want to cluster time series but tslearn/sktime have too many deps"** | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical, K-Means DBA, CLARA/CLARANS, U-Shapelets, Contrastive, DEC/IDEC — all built-in |
+| **"I want to cluster time series but tslearn/sktime have too many deps"** | K-Medoids, K-Shape, HDBSCAN, Spectral, Hierarchical, K-Means DBA, KASBA, CLARA/CLARANS, U-Shapelets, Contrastive, DEC/IDEC — all built-in |
 | **"Setting up a forecast pipeline takes too long"** | `ForecastPipeline` wires up lags, rolling stats, calendar features, target transforms, and any sklearn model in 5 lines |
 | **"I want to use foundation models / LLMs for forecasting"** | Chronos, TimesFM, Moirai adapters for zero-shot; Time-LLM, LLM-PS for reprogrammed LLM forecasting; N-BEATS, PatchTST native DL |
 | **"I need Bayesian methods"** | Kalman filters, BSTS, Bayesian ETS, Bayesian VAR, GP regression, MCMC wrapper, particle filters — all built-in |
+| **"I want multi-agent forecasting for my domain"** | Hierarchical agent systems for energy, supply chain, healthcare, and industrial IoT, plus portfolio MARL and RL anomaly detection |
 | **"I don't know which clustering method to pick"** | `auto_cluster` sweeps methods × distances × k values and returns the best result with evaluation scores |
 | **"Polars doesn't have time series functions"** | Mann-Kendall, Sen's slope, CUSUM, PELT, decomposition, ACF/PACF — all group-aware and Polars-native |
 
@@ -245,6 +246,7 @@ All distance functions return a tidy DataFrame with columns `[id_1, id_2, <metri
 | **DBSCAN** | `dbscan_cluster` | Fixed-radius neighbourhood, noise detection |
 | **Hierarchical** | `agglomerative_cluster` | Dendrogram visualization, flexible linkage |
 | **K-Means DBA** | `kmeans_dba` | DTW Barycentric Averaging centroids |
+| **KASBA** | `kasba`, `KASBAClusterer` | k-means-accelerated Rust clustering for large panels |
 | **CLARA** | `clara` | Scalable k-medoids via sampling |
 | **CLARANS** | `clarans` | Randomized k-medoids neighbourhood search |
 | **U-Shapelets** | `shapelet_cluster` | Interpretable sub-sequence patterns |
@@ -312,7 +314,8 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 - **Multi-step strategies** &mdash; `RecursiveForecaster` and `DirectForecaster`
 - **ForecastPipeline** &mdash; end-to-end ML pipeline with feature engineering + transforms
 - **GlobalForecaster** &mdash; cross-series panel model with optional ID encoding
-- **N-BEATS / PatchTST** &mdash; native deep learning forecasters (requires `torch`)
+- **N-BEATS / PatchTST** &mdash; native deep learning forecasters (`NBEATSForecaster`, `PatchTSTForecaster`, requires `torch`)
+- **Native multivariate deep** &mdash; `MultivariatePatchTST`, `iTransformerForecaster` for jointly forecasting correlated series
 - **Time-LLM / LLM-PS** &mdash; LLM-reprogrammed forecasting adapters (requires `torch`)
 - **Foundation models** &mdash; Chronos, TimesFM, Moirai zero-shot forecasting
 - **Agentic forecasting** &mdash; `TimeSeriesScientist` multi-agent pipeline (Curator → Planner → Forecaster → Reporter)
@@ -342,7 +345,8 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 - **VAR** &mdash; Vector Autoregression with OLS fitting and multi-step forecasts
 - **Granger causality** &mdash; F-test for causal relationships between series
 - **GARCH** &mdash; volatility modelling and conditional variance forecasting
-- **Forecast reconciliation** &mdash; bottom-up, top-down, and MinTrace-OLS
+- **Forecast reconciliation** &mdash; bottom-up, top-down, middle-out, MinTrace (OLS/shrink/covariance/CV), and PERMBU
+- **Grouped / cross-sectional hierarchies** &mdash; reconcile across multiple non-nested grouping dimensions
 
 ### Bayesian methods
 
@@ -364,12 +368,45 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 
 ### Backtesting
 
-- **Unified backtest framework** &mdash; fit → predict → score across rolling windows with multiple models
+- **Unified backtest framework** &mdash; `backtest` and `compare_models` for fit → predict → score across rolling windows with multiple models
+
+### Streaming / online learning
+
+- **StreamingETS** &mdash; online exponential smoothing (SES, Holt, Holt-Winters) with single-observation updates
+- **StreamingKalmanFilter** &mdash; incremental Kalman filtering for state-space models
+- **StreamingGlobalForecaster** &mdash; incremental panel model for SGD-compatible estimators
+- **SlidingWindowManager** &mdash; memory-efficient windowed state management
 
 ### Anomaly detection
 
 - **Decomposition-based** &mdash; residual threshold anomaly flagging
 - **Isolation Forest** &mdash; unsupervised anomaly detection on engineered features
+- **RL anomaly agents** &mdash; multi-agent consensus (`AnomalyOrchestrator` over Z-score, rolling-std, and MAD agents) for adaptive thresholding
+
+### Reinforcement learning & multi-agent
+
+- **Portfolio MARL** &mdash; cooperating risk, return, and allocation agents (`MARLOrchestrator`, `PortfolioEnv`) for decision optimization
+- **ForecastEnv / PortfolioEnv / AnomalyEnv** &mdash; Gymnasium-compatible environments for RL over time series
+
+### Domain agents
+
+Hierarchical multi-agent systems for specific verticals, built on the core forecasting stack:
+
+- **Energy / demand** &mdash; `EnergyGridOrchestrator`: regional → grid → household hierarchy with weather, renewable, and demand-response agents
+- **Supply chain** &mdash; `SupplyChainOrchestrator`: demand sensing, promotion effects, inventory, and multi-echelon coordination
+- **Healthcare** &mdash; `ClinicalOrchestrator`: EHR/vital monitoring, sepsis warning, escalation, and treatment agents (with federated averaging)
+- **Industrial IoT** &mdash; `MaintenanceOrchestrator`: spectral features, health index, RUL estimation, and predictive maintenance scheduling
+
+### Model registry & experiment tracking
+
+- **ModelRegistry** &mdash; version, persist, and load models with metadata
+- **Experiment / Run** &mdash; track parameters, metrics, and artifacts across runs
+
+### Time series imaging
+
+- **Imaging transforms** &mdash; GASF/GADF (`to_gasf`, `to_gadf`), Markov Transition Field (`to_mtf`), recurrence plots (`to_recurrence_plot`), spectrogram/scalogram, and path-signature images
+- **RQA & signature features** &mdash; recurrence quantification (`rqa_features`) and signature features for downstream models
+- **Vision embeddings** &mdash; `extract_vision_embeddings` for pretrained-CNN features over imaged series
 
 ### Integration adapters
 
@@ -385,7 +422,7 @@ All transforms are group-aware, invertible, and accessible via the `df.pts` name
 
 ## Tutorials
 
-The `notebooks/` directory contains 13 end-to-end tutorials:
+The `notebooks/` directory contains 14 end-to-end tutorials:
 
 | # | Topic | Notebook |
 |---|---|---|
@@ -402,6 +439,7 @@ The `notebooks/` directory contains 13 end-to-end tutorials:
 | 11 | Time series imaging | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/11_time_series_imaging.ipynb) |
 | 12 | Advanced feature extraction | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/12_advanced_feature_extraction.ipynb) |
 | 13 | Agentic forecasting | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/13_agentic_forecasting.ipynb) |
+| 14 | KASBA clustering | [Open](https://github.com/drumtorben/polars-ts/blob/main/notebooks/14_kasba_clustering.ipynb) |
 
 ---
 
