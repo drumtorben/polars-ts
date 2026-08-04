@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Tuple
+from typing import Literal, Tuple, cast
 
 import polars as pl
 
@@ -132,11 +132,11 @@ def fourier_decomposition(
     # The centered rolling trend consumes ts_freq-1 rows per series; the Fourier
     # regression then needs more rows than harmonics or the fit is underdetermined
     n_features = len(independent_vars)
-    min_rows = detrended.group_by(id_col).len()["len"].min() if detrended.height > 0 else 0
-    if min_rows is None or int(min_rows) <= n_features:
+    min_rows = cast("int | None", detrended.group_by(id_col).len()["len"].min()) if detrended.height > 0 else 0
+    if min_rows is None or min_rows <= n_features:
         raise ValueError(
             f"After the centered rolling-trend margin (window={ts_freq}), the shortest series has "
-            f"{int(min_rows or 0)} rows but the Fourier regression uses {n_features} harmonics. "
+            f"{min_rows or 0} rows but the Fourier regression uses {n_features} harmonics. "
             "Reduce ts_freq, lower n_fourier_terms, or provide longer series."
         )
 
