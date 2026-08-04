@@ -246,3 +246,20 @@ def test_models_submodule_imports():
     assert callable(seasonal_naive_forecast)
     assert callable(moving_average_forecast)
     assert callable(fft_forecast)
+
+
+# ---------- integer time columns (regression: notebooks 05/09) ----------
+
+
+class TestIntegerTimeColumn:
+    def test_naive_forecast_int_ds(self):
+        df = pl.DataFrame({"unique_id": ["A"] * 10, "ds": list(range(10)), "y": [float(i) for i in range(10)]})
+        result = naive_forecast(df, h=3)
+        assert result["ds"].to_list() == [10, 11, 12]
+        assert result["ds"].dtype == pl.Int64
+        assert result["y_hat"].to_list() == [9.0, 9.0, 9.0]
+
+    def test_seasonal_naive_int_ds_with_step(self):
+        df = pl.DataFrame({"unique_id": ["A"] * 8, "ds": list(range(0, 16, 2)), "y": [float(i % 4) for i in range(8)]})
+        result = seasonal_naive_forecast(df, h=2, season_length=4)
+        assert result["ds"].to_list() == [16, 18]
