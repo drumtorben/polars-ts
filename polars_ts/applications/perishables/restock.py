@@ -13,6 +13,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from statistics import NormalDist
+from typing import cast
 
 import polars as pl
 
@@ -154,7 +155,7 @@ def recommend_orders(
 
     """
     policy = policy or RestockPolicy()
-    horizon = forecast.group_by(id_col).agg(pl.len().alias("__h"))["__h"].min()
+    horizon = cast("int | None", forecast.group_by(id_col).agg(pl.len().alias("__h"))["__h"].min())
     if horizon is not None and horizon < policy.protection_days:
         raise ValueError(f"Forecast horizon ({horizon}) shorter than protection period ({policy.protection_days})")
 

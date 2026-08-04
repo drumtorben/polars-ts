@@ -18,7 +18,7 @@ cluster's SKUs into this module.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 import polars as pl
@@ -59,7 +59,7 @@ def _launch_profiles(df: pl.DataFrame, id_col: str, time_col: str, target_col: s
     """Return each SKU's launch-aligned demand array, sorted by date."""
     profiles: dict[str, np.ndarray] = {}
     for group_id, group_df in df.sort(id_col, time_col).group_by(id_col, maintain_order=True):
-        profiles[group_id[0]] = group_df[target_col].to_numpy().astype(np.float64)
+        profiles[cast(str, group_id[0])] = group_df[target_col].to_numpy().astype(np.float64)
     return profiles
 
 
