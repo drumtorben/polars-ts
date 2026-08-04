@@ -146,3 +146,24 @@ def test_top_level_import() -> None:
 
     assert hasattr(polars_ts, "auto_arima")
     assert callable(polars_ts.auto_arima)
+
+
+class TestArimaForecastTimeline:
+    def test_df_continues_timeline(self) -> None:
+        pytest.importorskip("statsmodels")
+        from polars_ts.models.arima import arima_fit, arima_forecast
+
+        df = _make_df(n=30)
+        fitted = arima_fit(df, order=(1, 0, 0))
+        result = arima_forecast(fitted, h=3, df=df)
+        last = df["ds"].max()
+        assert result["ds"].to_list() == [last + timedelta(days=i + 1) for i in range(3)]
+
+    def test_without_df_uses_step_index(self) -> None:
+        pytest.importorskip("statsmodels")
+        from polars_ts.models.arima import arima_fit, arima_forecast
+
+        df = _make_df(n=30)
+        fitted = arima_fit(df, order=(1, 0, 0))
+        result = arima_forecast(fitted, h=3)
+        assert result["ds"].to_list() == [1, 2, 3]
