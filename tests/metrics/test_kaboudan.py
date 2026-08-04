@@ -328,7 +328,7 @@ def test_empty_dataframe():
             "y": [],
         }
     )
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError, match="no data found"):
         kaboudan.backtest(empty_df)
 
 
@@ -363,3 +363,30 @@ class TestNumpyRandomness:
         r1 = k.block_shuffle_by_id(sample_df)
         r2 = k.block_shuffle_by_id(sample_df)
         assert r1.equals(r2)
+
+
+def test_backtest_drops_datetime_cutoff():
+    """Regression: datetime cutoff columns must not leak into score frames (notebook 03)."""
+    from datetime import datetime
+
+    mock_sf = MagicMock()
+    mock_sf.cross_validation.return_value = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 4,
+            "cutoff": [datetime(2024, 1, 1)] * 2 + [datetime(2024, 1, 2)] * 2,
+            "y": [10.0, 11.0, 12.0, 13.0],
+            "model_1": [9.0, 10.0, 11.0, 12.0],
+        }
+    )
+    mock_sf.models = [MagicMock(alias="model_1")]
+    kaboudan = Kaboudan(sf=mock_sf, backtesting_start=0.5, n_folds=2, block_size=2)
+    df = pl.DataFrame(
+        {
+            "unique_id": ["A"] * 10,
+            "ds": [datetime(2024, 1, 1, i) for i in range(10)],
+            "y": [float(i) for i in range(10)],
+        }
+    )
+    errors = kaboudan.backtest(df)
+    assert "cutoff" not in errors.columns
+    assert set(errors.columns) == {"unique_id", "model_1"}
