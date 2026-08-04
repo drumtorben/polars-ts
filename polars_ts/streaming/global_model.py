@@ -54,7 +54,7 @@ class StreamingGlobalForecaster:
         self.is_fitted_ = False
         self.window_manager_: SlidingWindowManager = SlidingWindowManager(window_size)
         self.estimator_: Any = None
-        self._freq: timedelta | None = None
+        self._freq: timedelta | int | float | None = None
         self._schema: dict[str, Any] = {}
         self._last_times: dict[str, Any] = {}
 
