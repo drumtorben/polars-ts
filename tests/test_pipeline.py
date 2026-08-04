@@ -205,3 +205,20 @@ def test_top_level_import():
     import polars_ts
 
     assert polars_ts.ForecastPipeline is ForecastPipeline
+
+
+class TestBuildFeatures:
+    def test_featurizes_with_fitted_columns(self):
+        df = _make_ts(n=40)
+        pipeline = ForecastPipeline(estimator=Ridge(), lags=[1, 2], calendar=["hour"])
+        pipeline.fit(df)
+        featured = pipeline.build_features(df)
+        for col in pipeline.feature_columns_:
+            assert col in featured.columns
+        # rows lacking complete lag features are dropped
+        assert featured.height == df.height - 2 * 2  # max lag 2 rows per series
+
+    def test_requires_fit(self):
+        pipeline = ForecastPipeline(estimator=Ridge(), lags=[1])
+        with pytest.raises(RuntimeError, match="fit"):
+            pipeline.build_features(_make_ts())
