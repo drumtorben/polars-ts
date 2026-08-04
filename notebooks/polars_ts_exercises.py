@@ -393,7 +393,7 @@ def _(np, pl, seasonal_decomposition):
     df_seasonal = pl.DataFrame(
         {
             "unique_id": ["sensor"] * _n,
-            "ds": pl.date_range(pl.date(2024, 1, 1), pl.date(2024, 12, 31), eager=True),
+            "ds": pl.date_range(pl.date(2023, 1, 1), pl.date(2023, 12, 31), eager=True),
             "y": _y.tolist(),
         }
     )
@@ -486,7 +486,7 @@ def _(fourier_decomposition, np, pl):
     df_fourier = pl.DataFrame(
         {
             "unique_id": ["multi_seasonal"] * _n,
-            "ds": pl.date_range(pl.date(2024, 1, 1), pl.date(2024, 12, 31), eager=True),
+            "ds": pl.date_range(pl.date(2023, 1, 1), pl.date(2023, 12, 31), eager=True),
             "y": (_trend + _weekly + _monthly + _noise).tolist(),
         }
     )
@@ -494,7 +494,7 @@ def _(fourier_decomposition, np, pl):
     # Fourier decomposition capturing weekly pattern
     fourier_result = fourier_decomposition(
         df_fourier,
-        ts_freq=365,
+        ts_freq=30,  # trend window: a 365-day window would consume the whole year of data
         freqs=("week",),
         n_fourier_terms=3,
     )

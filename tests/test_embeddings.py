@@ -97,25 +97,13 @@ class TestChronosEmbeddings:
         torch = pytest.importorskip("torch")
 
         hidden_dim = 8
-        mock_output = MagicMock()
-        mock_output.last_hidden_state = torch.randn(3, 5, hidden_dim)
+        mock_pipeline = MagicMock()
+        mock_pipeline.embed.side_effect = lambda context: (torch.randn(len(context), 5, hidden_dim), None)
 
-        mock_model = MagicMock()
-        mock_model.eval = MagicMock(return_value=None)
-        mock_model.to = MagicMock(return_value=mock_model)
-        mock_model.__call__ = MagicMock(return_value=mock_output)
-        mock_model.return_value = mock_output
+        mock_pipeline_cls = MagicMock()
+        mock_pipeline_cls.from_pretrained.return_value = mock_pipeline
 
-        mock_tokenizer = MagicMock()
-        mock_tokenizer.return_value = {"input_ids": torch.ones(3, 5, dtype=torch.long)}
-
-        with (
-            patch("polars_ts.adapters.embeddings.AutoModel") as MockAutoModel,
-            patch("polars_ts.adapters.embeddings.AutoTokenizer") as MockAutoTokenizer,
-        ):
-            MockAutoModel.from_pretrained.return_value = mock_model
-            MockAutoTokenizer.from_pretrained.return_value = mock_tokenizer
-
+        with patch.dict("sys.modules", {"chronos": MagicMock(BaseChronosPipeline=mock_pipeline_cls)}):
             from polars_ts.adapters.embeddings import to_chronos_embeddings
 
             result = to_chronos_embeddings(_make_df(), model_name="fake/model")
@@ -126,47 +114,25 @@ class TestChronosEmbeddings:
         assert sorted(result["unique_id"].to_list()) == ["A", "B", "C"]
 
         # trust_remote_code defaults to False
-        MockAutoModel.from_pretrained.assert_called_with("fake/model", trust_remote_code=False)
-        MockAutoTokenizer.from_pretrained.assert_called_with("fake/model", trust_remote_code=False)
+        mock_pipeline_cls.from_pretrained.assert_called_with("fake/model", device_map="cpu", trust_remote_code=False)
 
     def test_mocked_chronos_batch_size(self):
         torch = pytest.importorskip("torch")
 
         hidden_dim = 4
-
-        def make_output(n):
-            out = MagicMock()
-            out.last_hidden_state = torch.randn(n, 3, hidden_dim)
-            return out
-
         call_count = {"n": 0}
 
-        def model_call(**kwargs):
-            input_ids = kwargs.get("input_ids", list(kwargs.values())[0])
-            n = input_ids.shape[0]
+        def embed(context):
             call_count["n"] += 1
-            return make_output(n)
+            return torch.randn(len(context), 3, hidden_dim), None
 
-        mock_model = MagicMock()
-        mock_model.eval = MagicMock(return_value=None)
-        mock_model.to = MagicMock(return_value=mock_model)
-        mock_model.side_effect = model_call
+        mock_pipeline = MagicMock()
+        mock_pipeline.embed.side_effect = embed
 
-        mock_tokenizer = MagicMock()
+        mock_pipeline_cls = MagicMock()
+        mock_pipeline_cls.from_pretrained.return_value = mock_pipeline
 
-        def tokenize(tensors, **_kw):
-            n = len(tensors)
-            return {"input_ids": torch.ones(n, 3, dtype=torch.long)}
-
-        mock_tokenizer.side_effect = tokenize
-
-        with (
-            patch("polars_ts.adapters.embeddings.AutoModel") as MockAutoModel,
-            patch("polars_ts.adapters.embeddings.AutoTokenizer") as MockAutoTokenizer,
-        ):
-            MockAutoModel.from_pretrained.return_value = mock_model
-            MockAutoTokenizer.from_pretrained.return_value = mock_tokenizer
-
+        with patch.dict("sys.modules", {"chronos": MagicMock(BaseChronosPipeline=mock_pipeline_cls)}):
             from polars_ts.adapters.embeddings import to_chronos_embeddings
 
             result = to_chronos_embeddings(_make_df(), model_name="fake/model", batch_size=2)
@@ -237,11 +203,11 @@ class TestExtractSeriesNoDsColumn:
         assert len(arrays[1]) == 1
 
 
-class TestChronosImportErrorTransformers:
-    def test_import_error_transformers(self):
+class TestChronosImportErrorChronos:
+    def test_import_error_chronos(self):
         pytest.importorskip("torch")
-        with patch.dict("sys.modules", {"transformers": None}):
-            with pytest.raises(ImportError, match="transformers"):
+        with patch.dict("sys.modules", {"chronos": None}):
+            with pytest.raises(ImportError, match="chronos-forecasting"):
                 import importlib
 
                 from polars_ts.adapters import embeddings

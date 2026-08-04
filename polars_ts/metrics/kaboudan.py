@@ -166,7 +166,11 @@ class Kaboudan:
         # 5) Call cross_validation with these derived parameters
         cv_df = self.sf.cross_validation(df=df, h=h, step_size=step_size, n_windows=self.n_folds)
 
-        # Compute SSE (or RMSE, etc.)
+        # Compute SSE (or RMSE, etc.), aggregating across all rolling-origin
+        # folds per series (the datetime `cutoff` column would otherwise leak
+        # into the score frame and break downstream arithmetic)
+        if "cutoff" in cv_df.columns:
+            cv_df = cv_df.drop("cutoff")
         model_names = [m.alias for m in self.sf.models]
         errors = losses.rmse(cv_df, models=model_names, target_col=self.value_col)
         return errors

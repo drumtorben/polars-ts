@@ -360,6 +360,51 @@ class ForecastPipeline:
         self.is_fitted_ = True
         return self
 
+    def build_features(self, df: pl.DataFrame) -> pl.DataFrame:
+        """Apply the fitted pipeline's feature engineering to *df*.
+
+        Applies the target transform and all configured feature steps,
+        then drops rows with incomplete features. Useful for model
+        inspection (e.g. :func:`polars_ts.permutation_importance`) on a
+        held-out window: pass history + holdout concatenated so lag and
+        rolling features can cross the boundary, then filter to the
+        holdout rows.
+
+        Parameters
+        ----------
+        df
+            DataFrame with ``id_col``, ``time_col``, ``target_col``,
+            and any covariate columns.
+
+        Returns
+        -------
+        pl.DataFrame
+            Featured frame containing the original columns plus
+            ``feature_columns_``.
+
+        """
+        if not self.is_fitted_:
+            raise RuntimeError("Call fit() before build_features()")
+        sorted_df = df.sort(self.id_col, self.time_col)
+        transformed, _state = _apply_transform(
+            sorted_df, self.target_transform, self.transform_kwargs, self.target_col, self.id_col, self.time_col
+        )
+        featured = _build_feature_df(
+            transformed,
+            self.lags,
+            self.rolling_windows,
+            self.rolling_aggs,
+            self.calendar,
+            self.fourier,
+            self.target_col,
+            self.id_col,
+            self.time_col,
+            past_covariates=self.past_covariates,
+            past_covariate_lags=self.past_covariate_lags,
+            future_covariates=self.future_covariates,
+        )
+        return featured.drop_nulls(subset=self.feature_columns_)
+
     def predict(
         self,
         df: pl.DataFrame,

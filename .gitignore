@@ -178,3 +178,7 @@ cython_debug/
 
 # temporarily
 .vscode/
+
+# Notebook runtime artifacts
+notebooks/lightning_logs/
+notebooks/__marimo__/

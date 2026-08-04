@@ -8,7 +8,8 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import timedelta
+from typing import Any, cast
 
 import polars as pl
 
@@ -59,9 +60,20 @@ def auto_arima(
         pl.col(target_col).cast(pl.Float64).alias("y"),
     ).to_pandas()
 
+    # statsforecast requires an integer step for numeric time columns and a
+    # pandas offset alias (e.g. "D", "h") for date/datetime columns
+    if df.schema[time_col].is_numeric():
+        freq: int | str = 1
+    else:
+        import pandas as pd
+
+        # non-numeric time column, so _infer_freq returns a timedelta
+        step = cast(timedelta, _infer_freq(df.sort(id_col, time_col)[time_col]))
+        freq = pd.tseries.frequencies.to_offset(step).freqstr
+
     sf = StatsForecast(
         models=[_AutoARIMA(season_length=season_length)],
-        freq=1,
+        freq=freq,
     )
     sf_result = sf.forecast(h=h, df=sf_df)
 
@@ -151,6 +163,7 @@ def arima_forecast(
     h: int,
     id_col: str = "unique_id",
     time_col: str = "ds",
+    df: pl.DataFrame | None = None,
 ) -> pl.DataFrame:
     """Produce *h*-step-ahead forecasts from previously fitted models.
 
@@ -160,6 +173,10 @@ def arima_forecast(
         Output of :func:`arima_fit`.
     h
         Forecast horizon.
+    df
+        Optional training DataFrame. When given, forecast timestamps
+        continue each series' actual timeline (so results join against
+        actuals); otherwise ``time_col`` is a step index ``1..h``.
 
     Returns
     -------
@@ -167,13 +184,24 @@ def arima_forecast(
         Columns ``[id_col, time_col, "y_hat"]``.
 
     """
+    last_times: dict[Any, Any] = {}
+    freq: Any = None
+    if df is not None:
+        sorted_df = df.sort(id_col, time_col)
+        freq = _infer_freq(sorted_df[time_col])
+        last_times = dict(sorted_df.group_by(id_col).agg(pl.col(time_col).max()).iter_rows())
+
     parts: list[pl.DataFrame] = []
     for group_id, model_result in fitted.items():
         forecast_values = model_result.forecast(steps=h)
+        if df is not None:
+            times = _make_future_dates(last_times[group_id], freq, h)
+        else:
+            times = list(range(1, h + 1))
         part = pl.DataFrame(
             {
                 id_col: [group_id] * h,
-                time_col: list(range(1, h + 1)),
+                time_col: times,
                 "y_hat": forecast_values.tolist(),
             }
         )
