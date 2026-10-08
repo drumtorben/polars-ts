@@ -146,6 +146,8 @@ class Kaboudan:
 
         """
         # 1) Compute minimum series length across groups (if multiple series).
+        if df.is_empty():
+            raise ValueError("Cannot compute series length: no data found")
         size_df = df.group_by(self.id_col).agg(pl.count(self.time_col).alias("series_length"))
         min_len_raw = size_df["series_length"].min()
         if min_len_raw is None or not isinstance(min_len_raw, (int, float)):
