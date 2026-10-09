@@ -148,7 +148,7 @@ def _logsumexp(
 ) -> np.ndarray | float:
     """Numerically stable log-sum-exp."""
     a_max = np.max(a, axis=axis, keepdims=True)
-    out = a_max + np.log(np.sum(np.exp(a - a_max), axis=axis, keepdims=keepdims))
+    out = a_max + np.log(np.exp(a - a_max).sum(axis=axis, keepdims=keepdims))
     if not keepdims and axis is not None:
         out = np.squeeze(out, axis=axis)
     # Return a Python float for scalar results to avoid NumPy deprecation
