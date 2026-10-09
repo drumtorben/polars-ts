@@ -8,7 +8,8 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import timedelta
+from typing import Any, cast
 
 import polars as pl
 
@@ -65,7 +66,8 @@ def auto_arima(
         from pandas.tseries.frequencies import to_offset
 
         first_series = df.filter(pl.col(id_col) == df[id_col][0])[time_col].sort()
-        freq = to_offset(_infer_freq(first_series)).freqstr
+        # temporal time column, so _infer_freq returns a timedelta
+        freq = to_offset(cast(timedelta, _infer_freq(first_series))).freqstr
 
     sf = StatsForecast(
         models=[_AutoARIMA(season_length=season_length)],
