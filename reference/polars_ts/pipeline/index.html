@@ -1369,6 +1369,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.pipeline.ForecastPipeline.predict" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7934,6 +7973,45 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;build_features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" build_features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polars_ts.pipeline.ForecastPipeline.build_features--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#polars_ts.pipeline.ForecastPipeline.predict" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -8165,6 +8243,38 @@ time_col
 <h6 id="polars_ts.pipeline.ForecastPipeline.fit--returns">Returns</h6>
 <p>ForecastPipeline
     Fitted pipeline (<code>self</code>).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="polars_ts.pipeline.ForecastPipeline.build_features" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">build_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Apply the fitted pipeline's feature engineering to <em>df</em>.</p>
+<p>Applies the target transform and all configured feature steps,
+then drops rows with incomplete features. Useful for model
+inspection (e.g. :func:<code>polars_ts.permutation_importance</code>) on a
+held-out window: pass history + holdout concatenated so lag and
+rolling features can cross the boundary, then filter to the
+holdout rows.</p>
+<h6 id="polars_ts.pipeline.ForecastPipeline.build_features--parameters">Parameters</h6>
+<p>df
+    DataFrame with <code>id_col</code>, <code>time_col</code>, <code>target_col</code>,
+    and any covariate columns.</p>
+<h6 id="polars_ts.pipeline.ForecastPipeline.build_features--returns">Returns</h6>
+<p>pl.DataFrame
+    Featured frame containing the original columns plus
+    <code>feature_columns_</code>.</p>
 
 
     </div>

@@ -8066,7 +8066,7 @@ seasonal_order
 
 
 <h3 id="polars_ts.models.arima.arima_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">arima_forecast</span><span class="p">(</span><span class="n">fitted</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">arima_forecast</span><span class="p">(</span><span class="n">fitted</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -8078,7 +8078,11 @@ seasonal_order
 <p>fitted
     Output of :func:<code>arima_fit</code>.
 h
-    Forecast horizon.</p>
+    Forecast horizon.
+df
+    Optional training DataFrame. When given, forecast timestamps
+    continue each series' actual timeline (so results join against
+    actuals); otherwise <code>time_col</code> is a step index <code>1..h</code>.</p>
 <h5 id="polars_ts.models.arima.arima_forecast--returns">Returns</h5>
 <p>pl.DataFrame
     Columns <code>[id_col, time_col, "y_hat"]</code>.</p>

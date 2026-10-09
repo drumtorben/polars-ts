@@ -8046,7 +8046,9 @@ clustering or classification.</p>
         <p>Extract embeddings from a Chronos foundation model.</p>
 <p>Loads the specified Chronos model and extracts encoder embeddings
 for each time series, mean-pooled over the time dimension.</p>
-<p>Requires <code>torch</code> and <code>transformers</code>.</p>
+<p>Requires <code>torch</code> and <code>chronos-forecasting</code> (Chronos quantizes
+real values with its own tokenizer; a plain text tokenizer cannot
+process numeric series).</p>
 <h5 id="polars_ts.adapters.embeddings.to_chronos_embeddings--parameters">Parameters</h5>
 <p>df
     Input DataFrame with time series data.
