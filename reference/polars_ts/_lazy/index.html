@@ -7556,8 +7556,8 @@ files.</p>
 <div class="language-text highlight"><pre><span></span><code>from polars_ts._lazy import make_getattr
 
 _IMPORTS: dict[str, tuple[str, str]] = {
-    &quot;KShape&quot;: (&quot;polars_ts.clustering.kshape&quot;, &quot;KShape&quot;),
-    &quot;kmedoids&quot;: (&quot;polars_ts.clustering.kmedoids&quot;, &quot;kmedoids&quot;),
+    "KShape": ("polars_ts.clustering.kshape", "KShape"),
+    "kmedoids": ("polars_ts.clustering.kmedoids", "kmedoids"),
 }
 
 __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
@@ -7567,10 +7567,10 @@ __getattr__, __all__ = make_getattr(_IMPORTS, __name__)
     try:
         from polars_ts.models.scum import SCUM
     except ImportError:
-        raise ImportError(&quot;statsforecast is required for SCUM.&quot;) from None
+        raise ImportError("statsforecast is required for SCUM.") from None
     return SCUM
 
-__getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={&quot;SCUM&quot;: _load_scum})
+__getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={"SCUM": _load_scum})
 </code></pre></div>
 
 
@@ -7582,7 +7582,7 @@ __getattr__, __all__ = make_getattr(_IMPORTS, __name__, overrides={&quot;SCUM&qu
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 

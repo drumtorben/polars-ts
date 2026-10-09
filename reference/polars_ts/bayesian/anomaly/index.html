@@ -7966,7 +7966,7 @@ tail-area probabilities and Bayes factors.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7994,6 +7994,7 @@ tail-area probabilities and Bayes factors.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Container for Bayesian anomaly scoring output.</p>
 <h5 id="polars_ts.bayesian.anomaly.BayesianAnomalyResult--attributes">Attributes</h5>
 <p>scores
@@ -8011,7 +8012,7 @@ n_anomalies
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8048,6 +8049,7 @@ n_anomalies
     <div class="doc doc-contents ">
 
 
+
         <p>Normal-Inverse-Gamma sufficient statistics for online updating.</p>
 
 
@@ -8065,7 +8067,7 @@ n_anomalies
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8152,6 +8154,7 @@ n_anomalies
     <div class="doc doc-contents ">
 
 
+
         <p>Bayesian anomaly detector using posterior predictive p-values.</p>
 <p>Maintains an online Normal-Inverse-Gamma conjugate model per series,
 scoring each observation via its posterior predictive tail probability.</p>
@@ -8188,7 +8191,7 @@ time_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8311,7 +8314,7 @@ H1: y ~ predictive(state, scale * anomaly_scale)</p>
 
 
 <h3 id="polars_ts.bayesian.anomaly.bayesian_anomaly_score" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bayesian_anomaly_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">prior_mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prior_kappa</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">prior_alpha</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">prior_beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">anomaly_scale</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bayesian_anomaly_score</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">prior_mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prior_kappa</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">prior_alpha</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">prior_beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">anomaly_scale</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">)</span></code>
 
 </h3>
 

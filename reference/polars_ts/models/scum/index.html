@@ -7556,7 +7556,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7581,6 +7581,28 @@
             <p class="doc doc-class-bases">
               Bases: <code><span title="statsforecast.models._TS">_TS</span></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            SCUM (polars_ts.models.scum.SCUM)" href="#polars_ts.models.scum.SCUM" id="mermaid-link-polars_ts.models.scum.SCUM"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.models.scum.SCUM">
+              flowchart TD
+              polars_ts.models.scum.SCUM[SCUM]
+
+              
+
+              click polars_ts.models.scum.SCUM href "" "polars_ts.models.scum.SCUM"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.models.scum.SCUM');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
 
 
 
@@ -7592,7 +7614,8 @@
 
 
 
-  <div class="doc doc-children">
+
+<div class="doc doc-children">
 
 
 
@@ -7607,7 +7630,7 @@
 
 
 <h4 id="polars_ts.models.scum.SCUM.fit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 
@@ -7627,7 +7650,7 @@ re-create it here or adapt your sub-model usage.</p>
 
 
 <h4 id="polars_ts.models.scum.SCUM.predict" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h4>
 

@@ -8008,7 +8008,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8032,6 +8032,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Base kernel class.</p>
 
 
@@ -8044,7 +8045,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8078,6 +8079,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            RBFKernel (polars_ts.bayesian.gp.RBFKernel)" href="#polars_ts.bayesian.gp.RBFKernel" id="mermaid-link-polars_ts.bayesian.gp.RBFKernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.RBFKernel">
+              flowchart TD
+              polars_ts.bayesian.gp.RBFKernel[RBFKernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.RBFKernel
+                
+
+
+              click polars_ts.bayesian.gp.RBFKernel href "" "polars_ts.bayesian.gp.RBFKernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.RBFKernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Radial Basis Function (squared exponential) kernel.</p>
 
@@ -8091,7 +8120,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8125,6 +8154,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            Matern32Kernel (polars_ts.bayesian.gp.Matern32Kernel)" href="#polars_ts.bayesian.gp.Matern32Kernel" id="mermaid-link-polars_ts.bayesian.gp.Matern32Kernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.Matern32Kernel">
+              flowchart TD
+              polars_ts.bayesian.gp.Matern32Kernel[Matern32Kernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.Matern32Kernel
+                
+
+
+              click polars_ts.bayesian.gp.Matern32Kernel href "" "polars_ts.bayesian.gp.Matern32Kernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.Matern32Kernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Matern 3/2 kernel.</p>
 
@@ -8138,7 +8195,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8172,6 +8229,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            Matern52Kernel (polars_ts.bayesian.gp.Matern52Kernel)" href="#polars_ts.bayesian.gp.Matern52Kernel" id="mermaid-link-polars_ts.bayesian.gp.Matern52Kernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.Matern52Kernel">
+              flowchart TD
+              polars_ts.bayesian.gp.Matern52Kernel[Matern52Kernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.Matern52Kernel
+                
+
+
+              click polars_ts.bayesian.gp.Matern52Kernel href "" "polars_ts.bayesian.gp.Matern52Kernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.Matern52Kernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Matern 5/2 kernel.</p>
 
@@ -8185,7 +8270,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8219,6 +8304,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            PeriodicKernel (polars_ts.bayesian.gp.PeriodicKernel)" href="#polars_ts.bayesian.gp.PeriodicKernel" id="mermaid-link-polars_ts.bayesian.gp.PeriodicKernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.PeriodicKernel">
+              flowchart TD
+              polars_ts.bayesian.gp.PeriodicKernel[PeriodicKernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.PeriodicKernel
+                
+
+
+              click polars_ts.bayesian.gp.PeriodicKernel href "" "polars_ts.bayesian.gp.PeriodicKernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.PeriodicKernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Periodic kernel for repeating patterns.</p>
 
@@ -8232,7 +8345,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8266,6 +8379,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            SpectralMixtureKernel (polars_ts.bayesian.gp.SpectralMixtureKernel)" href="#polars_ts.bayesian.gp.SpectralMixtureKernel" id="mermaid-link-polars_ts.bayesian.gp.SpectralMixtureKernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.SpectralMixtureKernel">
+              flowchart TD
+              polars_ts.bayesian.gp.SpectralMixtureKernel[SpectralMixtureKernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.SpectralMixtureKernel
+                
+
+
+              click polars_ts.bayesian.gp.SpectralMixtureKernel href "" "polars_ts.bayesian.gp.SpectralMixtureKernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.SpectralMixtureKernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Spectral mixture kernel (Wilson &amp; Adams 2013).</p>
 
@@ -8279,7 +8420,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8313,6 +8454,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            SumKernel (polars_ts.bayesian.gp.SumKernel)" href="#polars_ts.bayesian.gp.SumKernel" id="mermaid-link-polars_ts.bayesian.gp.SumKernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.SumKernel">
+              flowchart TD
+              polars_ts.bayesian.gp.SumKernel[SumKernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.SumKernel
+                
+
+
+              click polars_ts.bayesian.gp.SumKernel href "" "polars_ts.bayesian.gp.SumKernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.SumKernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Sum of two kernels.</p>
 
@@ -8326,7 +8495,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8360,6 +8529,34 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel">Kernel</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            ProductKernel (polars_ts.bayesian.gp.ProductKernel)" href="#polars_ts.bayesian.gp.ProductKernel" id="mermaid-link-polars_ts.bayesian.gp.ProductKernel"></a>
+                  <a class="autorefs autorefs-internal" title="            Kernel (polars_ts.bayesian.gp.Kernel)" href="#polars_ts.bayesian.gp.Kernel" id="mermaid-link-polars_ts.bayesian.gp.Kernel"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.bayesian.gp.ProductKernel">
+              flowchart TD
+              polars_ts.bayesian.gp.ProductKernel[ProductKernel]
+              polars_ts.bayesian.gp.Kernel[Kernel]
+
+                              polars_ts.bayesian.gp.Kernel --> polars_ts.bayesian.gp.ProductKernel
+                
+
+
+              click polars_ts.bayesian.gp.ProductKernel href "" "polars_ts.bayesian.gp.ProductKernel"
+              click polars_ts.bayesian.gp.Kernel href "" "polars_ts.bayesian.gp.Kernel"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.bayesian.gp.ProductKernel');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Product of two kernels.</p>
 
@@ -8373,7 +8570,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8410,6 +8607,7 @@ data. Supports exact GP (Cholesky) and sparse GP (inducing points).</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Gaussian Process regression result.</p>
 <h5 id="polars_ts.bayesian.gp.GPResult--attributes">Attributes</h5>
 <p>kernel
@@ -8435,7 +8633,7 @@ L
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8468,6 +8666,7 @@ L
     <div class="doc doc-contents ">
 
 
+
         <p>Gaussian Process time series forecaster.</p>
 <h5 id="polars_ts.bayesian.gp.GaussianProcessTS--parameters">Parameters</h5>
 <p>kernel
@@ -8495,7 +8694,7 @@ time_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8627,7 +8826,7 @@ time_col
 
 
 <h3 id="polars_ts.bayesian.gp.gp_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">gp_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">noise_var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">gp_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">'rbf'</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">noise_var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">)</span></code>
 
 </h3>
 

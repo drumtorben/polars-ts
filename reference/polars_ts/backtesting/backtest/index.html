@@ -7682,7 +7682,7 @@ and provides aggregated summaries and optional per-horizon breakdowns.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7733,7 +7733,7 @@ and provides aggregated summaries and optional per-horizon breakdowns.</p>
 
 
 <h3 id="polars_ts.backtesting.backtest.backtest" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">backtest</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">actual_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">&#39;y_hat&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_predictions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">per_horizon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">backtest</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">actual_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">'y_hat'</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_predictions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">per_horizon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h3>
 
@@ -7775,13 +7775,13 @@ per_horizon
 <h5 id="polars_ts.backtesting.backtest.backtest--returns">Returns</h5>
 <p>dict[str, pl.DataFrame]
     Always contains:</p>
-<div class="language-text highlight"><pre><span></span><code>- ``&quot;fold_scores&quot;`` — one row per fold with metric columns.
-- ``&quot;summary&quot;`` — mean and std of each metric across folds.
+<div class="language-text highlight"><pre><span></span><code>- ``"fold_scores"`` — one row per fold with metric columns.
+- ``"summary"`` — mean and std of each metric across folds.
 
 Optionally:
 
-- ``&quot;per_horizon&quot;`` — metric scores broken down by horizon step.
-- ``&quot;predictions&quot;`` — concatenated predictions with fold column.
+- ``"per_horizon"`` — metric scores broken down by horizon step.
+- ``"predictions"`` — concatenated predictions with fold column.
 </code></pre></div>
 
 
@@ -7793,7 +7793,7 @@ Optionally:
 
 
 <h3 id="polars_ts.backtesting.backtest.compare_models" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">compare_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">cv_kwargs</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">actual_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">&#39;y_hat&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">compare_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">cv_kwargs</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">actual_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">predicted_col</span><span class="o">=</span><span class="s1">'y_hat'</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h3>
 

@@ -7817,7 +7817,7 @@ structural time series models.</em> Annals of Applied Statistics.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7845,6 +7845,7 @@ structural time series models.</em> Annals of Applied Statistics.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Internal per-series fit state.</p>
 
 
@@ -7857,7 +7858,7 @@ structural time series models.</em> Annals of Applied Statistics.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7891,6 +7892,34 @@ structural time series models.</em> Annals of Applied Statistics.</p>
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            CausalImpactReportingMixin (polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin)" href="../causal_impact_reporting/#polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin">CausalImpactReportingMixin</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            CausalImpact (polars_ts.causal.causal_impact.CausalImpact)" href="#polars_ts.causal.causal_impact.CausalImpact" id="mermaid-link-polars_ts.causal.causal_impact.CausalImpact"></a>
+                  <a class="autorefs autorefs-internal" title="            CausalImpactReportingMixin (polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin)" href="../causal_impact_reporting/#polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin" id="mermaid-link-polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.causal.causal_impact.CausalImpact">
+              flowchart TD
+              polars_ts.causal.causal_impact.CausalImpact[CausalImpact]
+              polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin[CausalImpactReportingMixin]
+
+                              polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin --> polars_ts.causal.causal_impact.CausalImpact
+                
+
+
+              click polars_ts.causal.causal_impact.CausalImpact href "" "polars_ts.causal.causal_impact.CausalImpact"
+              click polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin href "" "polars_ts.causal.causal_impact_reporting.CausalImpactReportingMixin"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.causal.causal_impact.CausalImpact');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Bayesian CausalImpact estimator.</p>
 <h5 id="polars_ts.causal.causal_impact.CausalImpact--parameters">Parameters</h5>
@@ -7915,12 +7944,12 @@ covariates
     component is added to the BSTS counterfactual.
 covariate_role
     Mapping from covariate name to role:</p>
-<div class="language-text highlight"><pre><span></span><code>- ``&quot;always&quot;``: covariate is used in both pre- and post-period.
-- ``&quot;pre_only&quot;``: covariate is used only for pre-period fitting
+<div class="language-text highlight"><pre><span></span><code>- ``"always"``: covariate is used in both pre- and post-period.
+- ``"pre_only"``: covariate is used only for pre-period fitting
   and excluded from post-period counterfactual projection
   (prevents post-treatment bias).
 
-Covariates not listed default to ``&quot;always&quot;`` with a warning.
+Covariates not listed default to ``"always"`` with a warning.
 </code></pre></div>
 <p>id_col
     Column identifying each time series.
@@ -7948,7 +7977,7 @@ for any variable that may be affected by the intervention.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8042,7 +8071,7 @@ where beta is shape <code>(n_covariates,)</code>.</p>
 
 
 <h3 id="polars_ts.causal.causal_impact.causal_impact" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">causal_impact</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">intervention_date</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;local_linear&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">covariate_role</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">causal_impact</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">intervention_date</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">'local_linear'</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">covariate_role</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">time_col</span><span class="o">=</span><span class="s1">'ds'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span></code>
 
 </h3>
 

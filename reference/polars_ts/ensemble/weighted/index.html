@@ -7672,7 +7672,7 @@ inverse-error-optimized weights.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7696,14 +7696,15 @@ inverse-error-optimized weights.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Combine multiple forecasts using weighted averaging.</p>
 <p>Accepts pre-computed forecast DataFrames and combines them.
 No model training is performed.</p>
 <h5 id="polars_ts.ensemble.weighted.WeightedEnsemble--parameters">Parameters</h5>
 <p>weights
     Weighting strategy:</p>
-<div class="language-text highlight"><pre><span></span><code>- ``&quot;equal&quot;`` (default): all models get equal weight ``1/n``.
-- ``&quot;inverse_error&quot;``: weights are ``1/MAE`` normalized to sum
+<div class="language-text highlight"><pre><span></span><code>- ``"equal"`` (default): all models get equal weight ``1/n``.
+- ``"inverse_error"``: weights are ``1/MAE`` normalized to sum
   to 1. Requires ``validation_pairs`` in :meth:`combine`.
 - A ``list[float]``: explicit weights (will be normalized).
 </code></pre></div>
@@ -7722,7 +7723,7 @@ time_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 

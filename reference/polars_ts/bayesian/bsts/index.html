@@ -8026,7 +8026,7 @@ Structural Time Series</em>.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8052,6 +8052,7 @@ Structural Time Series</em>.</p>
 
 
     <div class="doc doc-contents ">
+
 
 
         <p>Container for BSTS fit / forecast output.</p>
@@ -8081,7 +8082,7 @@ forecast_var
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8114,6 +8115,7 @@ forecast_var
     <div class="doc doc-contents ">
 
 
+
         <p>Bayesian Structural Time Series model.</p>
 <p>Assembles a state-space model from structural components and
 estimates states via the Kalman filter/smoother.</p>
@@ -8143,7 +8145,7 @@ sigma_seasonal
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8309,7 +8311,7 @@ seasonal effects sum to zero over a full cycle.</p>
 
 
 <h3 id="polars_ts.bayesian.bsts.bsts_fit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;local_linear&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_fit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">'local_linear'</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span></code>
 
 </h3>
 
@@ -8344,7 +8346,7 @@ target_col
 
 
 <h3 id="polars_ts.bayesian.bsts.bsts_forecast" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">&#39;local_linear&#39;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">bsts_forecast</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s1">'local_linear'</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma_obs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sigma_level</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma_trend</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_seasonal</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span></code>
 
 </h3>
 

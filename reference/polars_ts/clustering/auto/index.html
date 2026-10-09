@@ -7704,7 +7704,7 @@ the best result according to the chosen evaluation metric.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7730,6 +7730,7 @@ the best result according to the chosen evaluation metric.</p>
 
 
     <div class="doc doc-contents ">
+
 
 
         <p>Result of an <code>auto_cluster</code> search.</p>
@@ -7758,7 +7759,7 @@ results_table
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7818,7 +7819,7 @@ results_table
 
 
 <h3 id="polars_ts.clustering.auto.auto_cluster" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">auto_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distances</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">k_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;silhouette&#39;</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">hdbscan_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dbscan_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">auto_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distances</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">k_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">'silhouette'</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">hdbscan_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dbscan_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 </h3>
 
@@ -7832,7 +7833,7 @@ chosen metric, and returns the best result.</p>
 <p>df
     DataFrame with columns <code>id_col</code> and <code>target_col</code>.</p>
 <h5 id="polars_ts.clustering.auto.auto_cluster--methods">Methods</h5>
-<div class="language-text highlight"><pre><span></span><code>Clustering methods to try. Default ``[&quot;kmedoids&quot;, &quot;spectral&quot;]``.
+<div class="language-text highlight"><pre><span></span><code>Clustering methods to try. Default ``["kmedoids", "spectral"]``.
 </code></pre></div>
 <p>distances
     Distance metrics to try. Default <code>["sbd", "dtw"]</code>.

@@ -7868,7 +7868,7 @@ reconstruction loss during fine-tuning.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7890,6 +7890,7 @@ reconstruction loss during fine-tuning.</p>
 
 
     <div class="doc doc-contents ">
+
 
 
         <p>Deep Embedded Clustering for time series.</p>
@@ -7926,7 +7927,7 @@ id_col, target_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8054,6 +8055,34 @@ id_col, target_col
             <p class="doc doc-class-bases">
               Bases: <code><a class="autorefs autorefs-internal" title="            DECClusterer (polars_ts.clustering.deep_cluster.DECClusterer)" href="#polars_ts.clustering.deep_cluster.DECClusterer">DECClusterer</a></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            IDECClusterer (polars_ts.clustering.deep_cluster.IDECClusterer)" href="#polars_ts.clustering.deep_cluster.IDECClusterer" id="mermaid-link-polars_ts.clustering.deep_cluster.IDECClusterer"></a>
+                  <a class="autorefs autorefs-internal" title="            DECClusterer (polars_ts.clustering.deep_cluster.DECClusterer)" href="#polars_ts.clustering.deep_cluster.DECClusterer" id="mermaid-link-polars_ts.clustering.deep_cluster.DECClusterer"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.clustering.deep_cluster.IDECClusterer">
+              flowchart TD
+              polars_ts.clustering.deep_cluster.IDECClusterer[IDECClusterer]
+              polars_ts.clustering.deep_cluster.DECClusterer[DECClusterer]
+
+                              polars_ts.clustering.deep_cluster.DECClusterer --> polars_ts.clustering.deep_cluster.IDECClusterer
+                
+
+
+              click polars_ts.clustering.deep_cluster.IDECClusterer href "" "polars_ts.clustering.deep_cluster.IDECClusterer"
+              click polars_ts.clustering.deep_cluster.DECClusterer href "" "polars_ts.clustering.deep_cluster.DECClusterer"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.clustering.deep_cluster.IDECClusterer');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Improved Deep Embedded Clustering for time series.</p>
 <p>Like DEC but keeps the reconstruction loss during fine-tuning,
@@ -8073,7 +8102,7 @@ weighted by <code>gamma</code>.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8115,7 +8144,7 @@ weighted by <code>gamma</code>.</p>
 
 
 <h3 id="polars_ts.clustering.deep_cluster.dec_cluster" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">dec_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">pretrain_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">finetune_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">dec_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">pretrain_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">finetune_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
@@ -8136,7 +8165,7 @@ weighted by <code>gamma</code>.</p>
 
 
 <h3 id="polars_ts.clustering.deep_cluster.idec_cluster" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">idec_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">pretrain_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">finetune_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">idec_cluster</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">pretrain_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">finetune_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'unique_id'</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 

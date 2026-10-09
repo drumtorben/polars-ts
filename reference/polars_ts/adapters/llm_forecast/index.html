@@ -7936,7 +7936,7 @@ LLM-PS (2025). arXiv:2503.09656.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7961,6 +7961,29 @@ LLM-PS (2025). arXiv:2503.09656.</p>
             <p class="doc doc-class-bases">
               Bases: <code><span title="torch.nn.Module">Module</span></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            _TimeLLMNet (polars_ts.adapters.llm_forecast._TimeLLMNet)" href="#polars_ts.adapters.llm_forecast._TimeLLMNet" id="mermaid-link-polars_ts.adapters.llm_forecast._TimeLLMNet"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.adapters.llm_forecast._TimeLLMNet">
+              flowchart TD
+              polars_ts.adapters.llm_forecast._TimeLLMNet[_TimeLLMNet]
+
+              
+
+              click polars_ts.adapters.llm_forecast._TimeLLMNet href "" "polars_ts.adapters.llm_forecast._TimeLLMNet"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.adapters.llm_forecast._TimeLLMNet');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Simplified Time-LLM: patch embedding → cross-attention → MLP decoder.</p>
 <p>Converts time series patches into a sequence of tokens, applies learned
@@ -7976,7 +7999,7 @@ cross-attention with text-like prototypes, then decodes forecasts.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8032,6 +8055,29 @@ cross-attention with text-like prototypes, then decodes forecasts.</p>
             <p class="doc doc-class-bases">
               Bases: <code><span title="torch.nn.Module">Module</span></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            _LLMPSNet (polars_ts.adapters.llm_forecast._LLMPSNet)" href="#polars_ts.adapters.llm_forecast._LLMPSNet" id="mermaid-link-polars_ts.adapters.llm_forecast._LLMPSNet"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.adapters.llm_forecast._LLMPSNet">
+              flowchart TD
+              polars_ts.adapters.llm_forecast._LLMPSNet[_LLMPSNet]
+
+              
+
+              click polars_ts.adapters.llm_forecast._LLMPSNet href "" "polars_ts.adapters.llm_forecast._LLMPSNet"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.adapters.llm_forecast._LLMPSNet');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>LLM-PS: multi-scale CNN pattern extraction + MLP semantic decoder.</p>
 <p>Extracts patterns at multiple temporal scales via parallel convolutions,
@@ -8047,7 +8093,7 @@ concatenates the multi-scale features, and decodes forecasts.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8102,6 +8148,7 @@ concatenates the multi-scale features, and decodes forecasts.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Time-LLM forecaster: patch → cross-attention with prototypes → decode.</p>
 <h5 id="polars_ts.adapters.llm_forecast.TimeLLMForecaster--parameters">Parameters</h5>
 <p>h
@@ -8133,7 +8180,7 @@ id_col, time_col, target_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8202,6 +8249,7 @@ id_col, time_col, target_col
     <div class="doc doc-contents ">
 
 
+
         <p>LLM-PS forecaster: multi-scale CNN pattern extraction → decode.</p>
 <h5 id="polars_ts.adapters.llm_forecast.LLMPSForecaster--parameters">Parameters</h5>
 <p>h
@@ -8229,7 +8277,7 @@ id_col, time_col, target_col
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 

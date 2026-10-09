@@ -7546,7 +7546,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7571,6 +7571,29 @@
             <p class="doc doc-class-bases">
               Bases: <code><span title="typing.Protocol">Protocol</span></code></p>
 
+            <div style="display: none">
+              <a class="autorefs autorefs-internal" title="            LLMBackend (polars_ts.agents._protocol.LLMBackend)" href="#polars_ts.agents._protocol.LLMBackend" id="mermaid-link-polars_ts.agents._protocol.LLMBackend"></a>
+            </div>
+            <pre class="mermaid"><code id="mermaid-diagram-polars_ts.agents._protocol.LLMBackend">
+              flowchart TD
+              polars_ts.agents._protocol.LLMBackend[LLMBackend]
+
+              
+
+              click polars_ts.agents._protocol.LLMBackend href "" "polars_ts.agents._protocol.LLMBackend"
+            </code></pre>
+            <script>
+              var diagram = document.getElementById('mermaid-diagram-polars_ts.agents._protocol.LLMBackend');
+              diagram.innerHTML = diagram.innerHTML.replace(/click ([\w.]+) href "" "\1"/g, function(match, nodeID, offset) {
+                try {
+                  const link = document.getElementById("mermaid-link-" + nodeID).href;
+                  return `click ${nodeID} href "${link}" "${nodeID}"`
+                } catch (e) {
+                  return '';
+                }
+              });
+            </script>
+
 
         <p>Abstraction over any LLM provider.</p>
 <p>Implement <code>complete</code> to plug in OpenAI, Anthropic, local models, etc.</p>
@@ -7585,7 +7608,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7618,6 +7641,7 @@
     <div class="doc doc-contents ">
 
 
+
         <p>Default backend that uses deterministic heuristics instead of an LLM.</p>
 
 
@@ -7630,7 +7654,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7667,6 +7691,7 @@
     <div class="doc doc-contents ">
 
 
+
         <p>Shared mutable state passed between agents in a pipeline run.</p>
 
 
@@ -7679,7 +7704,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 

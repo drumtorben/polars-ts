@@ -7863,7 +7863,7 @@ operate, inspect, or maintain.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7887,6 +7887,7 @@ operate, inspect, or maintain.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Extract vibration band-energy features from a sensor window via FFT.</p>
 <p>A dependency-free complement to the imaging module's <code>to_spectrogram</code> /
 <code>to_scalogram</code>: computes RMS amplitude and the fraction of spectral
@@ -7906,7 +7907,7 @@ degrade.</p>
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -7957,6 +7958,7 @@ degrade.</p>
     <div class="doc doc-contents ">
 
 
+
         <p>Fuse multi-sensor readings into a health index in <code>[0, 1]</code>.</p>
 <p>Degradation is modelled as growth in each sensor's RMS amplitude relative
 to a healthy baseline; per-sensor degradation scores are fused by weighted
@@ -7982,7 +7984,7 @@ weights
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8052,6 +8054,7 @@ weights
     <div class="doc doc-contents ">
 
 
+
         <p>Estimate Remaining Useful Life by extrapolating the health trend.</p>
 <p>Fits a linear trend to the recent health-index history and projects the
 number of steps until it reaches <code>failure_threshold</code>.</p>
@@ -8071,7 +8074,7 @@ min_history
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -8122,6 +8125,7 @@ min_history
     <div class="doc doc-contents ">
 
 
+
         <p>Tabular Q-learning agent that schedules maintenance from health state.</p>
 <p>The health index is discretised into <code>n_states</code> buckets; the agent learns
 a Q-value for each <code>(health_bucket, action)</code> pair from environment reward,
@@ -8146,7 +8150,7 @@ seed
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
