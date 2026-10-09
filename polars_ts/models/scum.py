@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Optional, Tuple, Union
+from collections.abc import Sequence
+from typing import Any, Optional, Union
 
 import numpy as np
 import polars as pl
@@ -8,18 +9,17 @@ from statsforecast.models import _TS, AutoARIMA, AutoCES, AutoETS, DynamicOptimi
 
 
 class SCUM(_TS):
-    # SCUM averages univariate sub-models and ignores exogenous regressors
     uses_exog = False
 
-    def __init__(self, season_length: int = 1, alias: str = "SCUM") -> None:
+    def __init__(self, season_length: int = 1, alias: str = "SCUM", prediction_intervals: Any = None) -> None:
         self.season_length = season_length
         self.sub_model_classes = [AutoARIMA, AutoETS, AutoCES, DynamicOptimizedTheta]
         self.n_models = len(self.sub_model_classes)
         self.sub_models: list[Any] | None = None
         self.alias = alias
-        self.prediction_intervals = None
+        self.prediction_intervals = prediction_intervals
 
-    def fit(self, y: np.ndarray, X: Optional[np.ndarray] = None) -> SCUM:  # noqa: ARG002 — statsforecast interface
+    def fit(self, y: np.ndarray, X: Optional[np.ndarray] = None) -> SCUM:  # noqa: ARG002 - statsforecast passes X
         """StatsForecast will pass y as a 1D array or Series.
 
         If you want each sub-model to see a Polars DataFrame, you'll need to
@@ -36,8 +36,8 @@ class SCUM(_TS):
     def predict(
         self,
         h: int,
-        X: Optional[np.ndarray] = None,  # noqa: ARG002 — statsforecast interface
-        level: Optional[Union[int, Tuple[int, ...]]] = None,
+        X: Optional[np.ndarray] = None,  # noqa: ARG002 - statsforecast passes X
+        level: Optional[Union[int, Sequence[int]]] = None,
     ) -> dict[str, Any]:
         """StatsForecast calls this to produce out-of-sample forecasts.
 
@@ -59,7 +59,7 @@ class SCUM(_TS):
         # If you want intervals, compute them and add to `res` with keys like 'mean-lo-95', 'mean-hi-95'
         if level is None:
             return res
-        sorted_level: list[int] = sorted(level) if isinstance(level, (list, tuple)) else [level]
+        sorted_level: list[int] = [level] if isinstance(level, int) else sorted(level)
         if self.prediction_intervals is not None:
             res = self._add_predict_conformal_intervals(res, sorted_level)
         else:
@@ -76,7 +76,7 @@ class SCUM(_TS):
         h: int,
         X: Optional[np.ndarray] = None,  # noqa: ARG002 — statsforecast interface
         X_future: Optional[np.ndarray] = None,  # noqa: ARG002 — statsforecast interface
-        level: Optional[Union[int, Tuple[int, ...]]] = None,
+        level: Optional[Union[int, Sequence[int]]] = None,
         fitted: bool = False,
     ) -> dict[str, Any]:
         """Fit on ``y`` and forecast ``h`` steps (StatsForecast.forecast entry point)."""

@@ -8,8 +8,7 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
-from typing import Any, cast
+from typing import Any
 
 import polars as pl
 
@@ -43,7 +42,7 @@ def auto_arima(
         from statsforecast.models import AutoARIMA as _AutoARIMA
     except ImportError:
         raise ImportError(
-            "statsforecast is required for auto_arima. " "Install it with: pip install polars-timeseries[forecast]"
+            "statsforecast is required for auto_arima. Install it with: pip install polars-timeseries[forecast]"
         ) from None
 
     # Validate minimum series length per group
@@ -60,16 +59,13 @@ def auto_arima(
         pl.col(target_col).cast(pl.Float64).alias("y"),
     ).to_pandas()
 
-    # statsforecast requires an integer step for numeric time columns and a
-    # pandas offset alias (e.g. "D", "h") for date/datetime columns
-    if df.schema[time_col].is_numeric():
-        freq: int | str = 1
-    else:
-        import pandas as pd
+    # statsforecast rejects integer freq for datetime columns; infer an offset instead
+    freq: int | str = 1
+    if df[time_col].dtype.is_temporal():
+        from pandas.tseries.frequencies import to_offset
 
-        # non-numeric time column, so _infer_freq returns a timedelta
-        step = cast(timedelta, _infer_freq(df.sort(id_col, time_col)[time_col]))
-        freq = pd.tseries.frequencies.to_offset(step).freqstr
+        first_series = df.filter(pl.col(id_col) == df[id_col][0])[time_col].sort()
+        freq = to_offset(_infer_freq(first_series)).freqstr
 
     sf = StatsForecast(
         models=[_AutoARIMA(season_length=season_length)],
@@ -134,7 +130,7 @@ def arima_fit(
         from statsmodels.tsa.statespace.sarimax import SARIMAX
     except ImportError:
         raise ImportError(
-            "statsmodels is required for arima_fit/arima_forecast. " "Install it with: pip install statsmodels"
+            "statsmodels is required for arima_fit/arima_forecast. Install it with: pip install statsmodels"
         ) from None
 
     fitted: dict[str, Any] = {}
@@ -145,7 +141,7 @@ def arima_fit(
 
         if len(endog) < 3:
             raise ValueError(
-                f"Series {group_id!r} is too short for ARIMA estimation " f"(got {len(endog)} observations, need >= 3)."
+                f"Series {group_id!r} is too short for ARIMA estimation (got {len(endog)} observations, need >= 3)."
             )
 
         kw: dict[str, Any] = {"order": order}

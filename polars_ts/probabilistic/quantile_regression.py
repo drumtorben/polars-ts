@@ -158,10 +158,9 @@ class QuantileRegressor:
                     self.id_col: group_id[0],
                     self.time_col: future_times[step],
                 }
-                # Rearrangement: independently fitted estimators can produce
-                # crossing quantiles; sorting restores monotonicity
-                preds = sorted(float(self.estimators_[q].predict(x_row)[0]) for q in self.quantiles)
-                for q, pred in zip(self.quantiles, preds, strict=False):
+                preds = [float(self.estimators_[q].predict(x_row)[0]) for q in self.quantiles]
+                # Independently trained models can cross; sorting restores monotonicity
+                for q, pred in zip(self.quantiles, sorted(preds), strict=True):
                     row[f"q_{q}"] = pred
                 # y_hat = median quantile prediction
                 row["y_hat"] = row[f"q_{median_q}"]

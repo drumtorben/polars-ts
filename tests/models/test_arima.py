@@ -53,6 +53,17 @@ class TestAutoArima:
         assert result.columns == ["unique_id", "ds", "y_hat"]
         assert result.height == 3
 
+    def test_auto_arima_future_dates_follow_freq(self) -> None:
+        sf = pytest.importorskip("statsforecast")  # noqa: F841
+        from polars_ts.models.arima import auto_arima
+
+        df = _make_df(n=50)
+        result = auto_arima(df, h=3)
+
+        last = df["ds"].max()
+        expected = [last + timedelta(days=i) for i in range(1, 4)]
+        assert result["ds"].cast(pl.Date).to_list() == expected
+
     def test_auto_arima_multi_series(self) -> None:
         sf = pytest.importorskip("statsforecast")  # noqa: F841
         from polars_ts.models.arima import auto_arima
