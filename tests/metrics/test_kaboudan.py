@@ -328,7 +328,7 @@ def test_empty_dataframe():
             "y": [],
         }
     )
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError, match="no data found"):
         kaboudan.backtest(empty_df)
 
 
