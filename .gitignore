@@ -179,5 +179,9 @@ cython_debug/
 # temporarily
 .vscode/
 
+# Notebook runtime artifacts
+notebooks/lightning_logs/
+notebooks/__marimo__/
+
 # Perishables application raw data (issue #211)
 data/perishables/

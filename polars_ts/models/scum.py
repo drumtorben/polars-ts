@@ -69,3 +69,18 @@ class SCUM(_TS):
                 **{f"hi-{quantile}": ensemble[f"hi-{quantile}"] for quantile in sorted_level},
             }
         return res
+
+    def forecast(
+        self,
+        y: np.ndarray,
+        h: int,
+        X: Optional[np.ndarray] = None,  # noqa: ARG002 — statsforecast interface
+        X_future: Optional[np.ndarray] = None,  # noqa: ARG002 — statsforecast interface
+        level: Optional[Union[int, Sequence[int]]] = None,
+        fitted: bool = False,
+    ) -> dict[str, Any]:
+        """Fit on ``y`` and forecast ``h`` steps (StatsForecast.forecast entry point)."""
+        if fitted:
+            raise NotImplementedError("SCUM does not support fitted=True; use fit()/predict() instead")
+        self.fit(y)
+        return self.predict(h=h, level=level)

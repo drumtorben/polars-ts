@@ -67,7 +67,7 @@ class StreamingETS:
 
         self.is_fitted_ = False
         self._state: dict[Any, dict[str, Any]] = {}
-        self._freq: timedelta | None = None
+        self._freq: timedelta | int | float | None = None
         self._schema: dict[str, Any] = {}
 
     @property

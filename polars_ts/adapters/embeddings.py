@@ -59,7 +59,9 @@ def to_chronos_embeddings(
     Loads the specified Chronos model and extracts encoder embeddings
     for each time series, mean-pooled over the time dimension.
 
-    Requires ``torch`` and ``transformers``.
+    Requires ``torch`` and ``chronos-forecasting`` (Chronos quantizes
+    real values with its own tokenizer; a plain text tokenizer cannot
+    process numeric series).
 
     Parameters
     ----------
@@ -94,33 +96,24 @@ def to_chronos_embeddings(
         raise ImportError("torch is required for Chronos embeddings. Install with: pip install torch") from None
 
     try:
-        from transformers import AutoModel, AutoTokenizer
+        from chronos import BaseChronosPipeline
     except ImportError:
         raise ImportError(
-            "transformers is required for Chronos embeddings. Install with: pip install transformers"
+            "chronos-forecasting is required for Chronos embeddings. " "Install with: pip install chronos-forecasting"
         ) from None
 
     ids, arrays = _extract_series(df, target_col, id_col, time_col)
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=trust_remote_code)
-    model = AutoModel.from_pretrained(model_name, trust_remote_code=trust_remote_code).to(device)
-    model.eval()
+    pipeline = BaseChronosPipeline.from_pretrained(model_name, device_map=device, trust_remote_code=trust_remote_code)
 
     all_embeddings: list[np.ndarray] = []
     for start in range(0, len(arrays), batch_size):
         batch = arrays[start : start + batch_size]
-        # Tokenize: Chronos tokenizer expects list of 1-D tensors
-        inputs = tokenizer(
-            [torch.tensor(a, dtype=torch.float32) for a in batch],
-            return_tensors="pt",
-            padding=True,
-        )
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+        context = [torch.tensor(a, dtype=torch.float32) for a in batch]
         with torch.no_grad():
-            outputs = model(**inputs)
+            hidden, _ = pipeline.embed(context)  # (batch, seq_len, hidden_dim)
         # Mean-pool over sequence dimension
-        hidden = outputs.last_hidden_state  # (batch, seq_len, hidden_dim)
-        pooled = hidden.mean(dim=1).cpu().numpy()  # (batch, hidden_dim)
+        pooled = hidden.float().mean(dim=1).cpu().numpy()  # (batch, hidden_dim)
         all_embeddings.append(pooled)
 
     embeddings = np.concatenate(all_embeddings, axis=0)

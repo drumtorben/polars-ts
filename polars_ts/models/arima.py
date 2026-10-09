@@ -8,7 +8,8 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import timedelta
+from typing import Any, cast
 
 import polars as pl
 
@@ -65,7 +66,8 @@ def auto_arima(
         from pandas.tseries.frequencies import to_offset
 
         first_series = df.filter(pl.col(id_col) == df[id_col][0])[time_col].sort()
-        freq = to_offset(_infer_freq(first_series)).freqstr
+        # temporal time column, so _infer_freq returns a timedelta
+        freq = to_offset(cast(timedelta, _infer_freq(first_series))).freqstr
 
     sf = StatsForecast(
         models=[_AutoARIMA(season_length=season_length)],
@@ -159,6 +161,7 @@ def arima_forecast(
     h: int,
     id_col: str = "unique_id",
     time_col: str = "ds",
+    df: pl.DataFrame | None = None,
 ) -> pl.DataFrame:
     """Produce *h*-step-ahead forecasts from previously fitted models.
 
@@ -168,6 +171,10 @@ def arima_forecast(
         Output of :func:`arima_fit`.
     h
         Forecast horizon.
+    df
+        Optional training DataFrame. When given, forecast timestamps
+        continue each series' actual timeline (so results join against
+        actuals); otherwise ``time_col`` is a step index ``1..h``.
 
     Returns
     -------
@@ -175,13 +182,24 @@ def arima_forecast(
         Columns ``[id_col, time_col, "y_hat"]``.
 
     """
+    last_times: dict[Any, Any] = {}
+    freq: Any = None
+    if df is not None:
+        sorted_df = df.sort(id_col, time_col)
+        freq = _infer_freq(sorted_df[time_col])
+        last_times = dict(sorted_df.group_by(id_col).agg(pl.col(time_col).max()).iter_rows())
+
     parts: list[pl.DataFrame] = []
     for group_id, model_result in fitted.items():
         forecast_values = model_result.forecast(steps=h)
+        if df is not None:
+            times = _make_future_dates(last_times[group_id], freq, h)
+        else:
+            times = list(range(1, h + 1))
         part = pl.DataFrame(
             {
                 id_col: [group_id] * h,
-                time_col: list(range(1, h + 1)),
+                time_col: times,
                 "y_hat": forecast_values.tolist(),
             }
         )
