@@ -51,7 +51,7 @@ cache-keys = [{ file = "**/*.toml" }, { file = "**/src/*.rs"}]
 default-groups = ["dev", "docs"]
 # panel>=1.9.0 drops the deprecated `bleach` transitive dependency entirely
 # (resolves bleach Dependabot alerts, incl. GHSA-g75f-g53v-794x which has no patch).
-override-dependencies = ["urllib3>=2.7.0", "idna>=3.15", "tornado>=6.5.7", "pillow>=12.3.0", "panel>=1.9.0"]
+override-dependencies = ["urllib3>=2.7.0", "idna>=3.15", "tornado>=6.5.7", "pillow>=13.0.0", "panel>=1.9.0"]
 
 [build-system]
 requires = ["maturin>=1.0,<2.0"]
