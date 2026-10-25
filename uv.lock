@@ -2159,7 +2159,7 @@ wheels = [
 
 [[package]]
 name = "polars-timeseries"
-version = "0.9.0"
+version = "0.9.1"
 source = { editable = "." }
 default-groups = ["dev", "docs"]
 dependencies = [
